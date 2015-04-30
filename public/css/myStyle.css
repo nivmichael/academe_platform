@@ -1,0 +1,92 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding:10px;
+  background-color: #EDEDED;
+}
+
+
+.form-control {
+
+	max-width:350px;
+	
+
+}
+.center{
+
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+}
+
+.form-signin .form-control {
+    width:92%;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+
+.login_btn{
+	background-color:white;
+	border:0px;
+	position:absolute;
+	bottom:90px;
+	left:230px;
+}
+
+
+.form-signin_fields{
+	
+	top:30px;
+}
+.container-fluid{
+	padding:0;
+	margin:0;
+}
+
+.navbar-default .navbar-brand{
+
+	color:white;
+}
+.navbar-default .navbar-brand:hover{
+	 font-weight: bold;
+	color:white;
+}
+
+
+.navbar-default .navbar-nav > li > a {
+	 
+	color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+   font-weight: bold;
+  color:white;
+}
+
+
+.navbar{
+	background-color:#4E75AD;
+}
+
+.navbar-brand{
+	border-right:2px solid white;
+	
+}
+
+.navbar > .container-fluid .navbar-brand {
+   margin-left: 0px; 
+}
+
+span>.caret{
+  color:white;
+}

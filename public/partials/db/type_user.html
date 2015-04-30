@@ -1,0 +1,135 @@
+
+
+ <div class="container" id="content">
+  		
+	    	
+	      <table class="table table-bordered table-hover table-condensed"> 
+	      	<tr style="font-weight: bold">
+		      <td style="width:5%">id</td>
+		      <td style="width:5%">type</td>
+		      <td style="width:5%">email</td>
+		      <td style="width:5%">password</td>
+		      <td style="width:5%">password_new</td>
+		      <td style="width:5%">first_name</td>
+		      <td style="width:5%">last_name</td>
+		      <td style="width:5%">street_1</td>
+		      <td style="width:5%">street_2</td>
+		      <td style="width:5%">city</td>
+		      <td style="width:5%">state</td>
+		      <td style="width:5%">zipcode</td>
+		      <td style="width:5%">country</td>
+		      <td style="width:5%">phone_1</td>
+		      <td style="width:5%">phone_2</td>
+		      <td style="width:5%">mobile</td>
+		      <td style="width:5%">date_of_birth</td>
+		      <td style="width:5%">registration</td>
+		      <td style="width:5%">last_login</td>
+		      <td style="width:5%">send_newsletters</td>
+		      <td style="width:5%">send_notifications</td>
+		      
+		      <td style="width:5%">Edit</td>
+		    </tr>
+	      	
+	      <tr ng-repeat="param in users " > 
+		      <td e-name="id">{{ param.id }}</td>	
+		      <td><span editable-text="param.type" id="type" class="type" e-name="type" e-form="rowform"  e-required>
+          			{{ param.type || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.email" id="email" class="email" e-name="email" e-form="rowform"  e-required>
+          			{{ param.email || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.password" id="password" class="password" e-name="password" e-form="rowform"  e-required>
+          			{{ param.password || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.password_new" id="password_new" class="password_new" e-name="password_new" e-form="rowform"  e-required>
+          			{{ param.password_new || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.first_name" id="first_name" class="first_name" e-name="first_name" e-form="rowform"  e-required>
+          			{{ param.first_name || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.last_name" id="last_name" class="last_name" e-name="last_name" e-form="rowform"  e-required>
+          			{{ param.last_name || 'empty' }}
+      			  </span>
+      		  </td>		
+      		  <td><span editable-text="param.street_1" id="street_1" class="street_1" e-name="street_1" e-form="rowform"  e-required>
+          			{{ param.street_1 || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.street_2" id="street_2" class="street_2" e-name="street_2" e-form="rowform"  e-required>
+          			{{ param.street_2 || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.city" id="city" class="city" e-name="city" e-form="rowform"  e-required>
+          			{{ param.city || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.state" id="state" class="state" e-name="state" e-form="rowform"  e-required>
+          			{{ param.state || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.zipcode" id="zipcode" class="zipcode" e-name="zipcode" e-form="rowform"  e-required>
+          			{{ param.zipcode || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.country" id="country" class="country" e-name="country" e-form="rowform"  e-required>
+          			{{ param.country || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.phone_1" id="phone_1" class="phone_1" e-name="phone_1" e-form="rowform"  e-required>
+          			{{ param.phone_1 || 'empty' }}
+      			  </span>
+      		  </td>	<br /><td><span editable-text="param.phone_2" id="phone_2" class="phone_2" e-name="phone_2" e-form="rowform"  e-required>
+          			{{ param.phone_2 || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.mobile" id="mobile" class="namobileme" e-name="mobile" e-form="rowform"  e-required>
+          			{{ param.mobile || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.date_of_birth" id="date_of_birth" class="date_of_birth" e-name="date_of_birth" e-form="rowform"  e-required>
+          			{{ param.date_of_birth || 'empty' }}
+      			  </span>
+      		  </td>
+      		  <td><span editable-text="param.registration" id="registration" class="registration" e-name="registration" e-form="rowform"  e-required>
+          			{{ param.registration || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.last_login" id="last_login" class="last_login" e-name="last_login" e-form="rowform"  e-required>
+          			{{ param.last_login || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.send_newsletters" id="send_newsletters" class="send_newsletters" e-name="send_newsletters" e-form="rowform"  e-required>
+          			{{ param.send_newsletters	 || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  <td><span editable-text="param.send_notifications" id="send_notifications" class="send_notifications" e-name="send_notifications" e-form="rowform"  e-required>
+          			{{ param.send_notifications || 'empty' }}
+      			  </span>
+      		  </td>	
+      		  
+		      <td> 
+		      	<form editable-form name="rowform" onbeforesave="saveParam($data, param.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == param">
+			        <button type="submit" ng-disabled="rowform.$waiting"  class="btn btn-primary" >
+			            save
+			        </button>
+			        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+			            cancel
+			        </button>
+		        </form>
+				<div class="buttons" ng-show="!rowform.$visible">
+		          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+		          <button class="btn btn-danger" ng-click="deleteParam(param,index)">del</button>
+       			</div>  
+        	  </td>
+		 
+	
+
+	     	 
+	      </table>  
+<button class="btn btn-default" ng-click="addParam()">Add row</button>
+	   </div>
