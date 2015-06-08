@@ -48,7 +48,7 @@ class Registrar implements RegistrarContract {
 			'phone_2'     	   => $data['phone_2'],
 			'mobile'      	   => $data['mobile'],
 		    'date_of_birth'    => $data['date_of_birth'],
-			'registration'     => $data['registration'],
+			// 'registration'     => $data['registration'],
 			//'send_newsletters' => $data['send_newsletters']
 		]);
 	}

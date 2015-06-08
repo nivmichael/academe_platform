@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- navbar -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -20,18 +18,18 @@
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					@if (Auth::guest())
-						<li><a href="[[ url('/auth/login') ]]">Login</a></li>
-						<li><a href="[[url('/auth/register') ]]">Register</a></li>
-					@else
+					<?php if(Auth::guest()): ?>
+						<li><a href="<?php echo e(url('/auth/login')); ?>">Login</a></li>
+						<li><a href="<?php echo e(url('/auth/register')); ?>">Register</a></li>
+					<?php else: ?>
 						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">[[ Auth::user()->first_name ]] <span class="caret"></span></a>
+							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo e(Auth::user()->first_name); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="[[ url('/') ]]">Edit Profile</a></li>
-								<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
+								<li><a href="<?php echo e(url('/')); ?>">Edit Profile</a></li>
+								<li><a href="<?php echo e(url('/auth/logout')); ?>">Logout</a></li>
 							</ul>
 						</li>
-					@endif
+					<?php endif; ?>
 				</ul>
 			</div>
 		</div>
@@ -39,4 +37,6 @@
 <div ng-view="" class="container">
 	home 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

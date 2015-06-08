@@ -20,6 +20,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
   Route::get('/admin', 'AdminController@index');
 });
+
 Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
         
@@ -28,21 +29,31 @@ Route::get('/students' , 'HomeController@index');
 Route::get('/graduates', 'HomeController@index');
 Route::get('/interns'  , 'HomeController@index');
 
+Route::resource('/params', 'ParamController');
+Route::resource('/users', 'TypeUserController');
+Route::resource('/docParam', 'DocParamController');
+Route::resource('/docType', 'DocTypeController');
+Route::resource('/paramType', 'ParamTypeController');
+Route::resource('/paramValue', 'ParamValueController');
+Route::resource('/sysParamValues', 'sysParamValuesController');
+Route::post('/sysParamValues/params', 'sysParamValuesController@saveParam');
+
+Route::resource('auth/params', 'ParamController');
+Route::resource('auth/users', 'TypeUserController');
+Route::resource('auth/docParam', 'DocParamController');
+Route::resource('auth/docType', 'DocTypeController');
+Route::resource('auth/paramType', 'ParamTypeController');
 
 
-Route::get('/columns'    , 'ParamController@index');
-//type_user_params CRUD
-Route::PUT('/params/{id}'   , 'TypeUserParamController@update');
-Route::get('/params'        , 'TypeUserParamController@index');
-Route::post('/params'       , 'TypeUserParamController@store');
-Route::delete('/params/{id}', 'TypeUserParamController@destroy');
+Route::get('/columns/param'     , 'ParamController@columnIndex');
+Route::get('/columns/user'      , 'TypeUserController@columnIndex');
+Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
+Route::get('/columns/docType'   , 'DocTypeController@columnIndex');
+Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
+Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
+Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
 
-//type_users CRUD
-Route::PUT('/users/{id}'   , 'TypeUserController@update');
-Route::get('/users'        , 'TypeUserController@index');
-Route::get('/users/{id}'   ,'TypeUserController@show');
-Route::post('/users'       , 'TypeUserController@store');
-Route::delete('/users/{id}', 'TypeUserController@destroy');
+
 
 Route::get('/getAuthId'    , function(){
 	return Auth::id();
@@ -53,3 +64,16 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+
+//type_user_params CRUD
+// Route::PUT('/params/{id}'   , 'ParamController@update');
+// Route::get('/params'        , 'ParamController@index');
+// Route::post('/params'       , 'ParamController@store');
+// Route::delete('/params/{id}', 'ParamController@destroy');
+
+//type_users CRUD
+// Route::PUT('/users/{id}'   , 'TypeUserController@update');
+// Route::get('/users'        , 'TypeUserController@index');
+// Route::get('/users/{id}'   ,'TypeUserController@show');
+// Route::post('/users'       , 'TypeUserController@store');
+// Route::delete('/users/{id}', 'TypeUserController@destroy');

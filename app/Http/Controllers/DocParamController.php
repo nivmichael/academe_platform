@@ -5,13 +5,14 @@ use PDO;
 use Response;
 use Input;
 use Schema;
+use App\DocParam;
 use App\Param;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class ParamController extends Controller {
+class DocParamController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -20,29 +21,21 @@ class ParamController extends Controller {
 	 */
 	public function index()
 	{
-		$params = DB::table('param')
-		
-		//->leftJoin('param_value', 'param.id', '=', 'param_value.param_id')
+		$params = DB::table('doc_param')
 		->get();
-		
-// 		
-		// $columns = Schema::getColumnListing('param');
-		// $columns = (object) $columns;
-// 		
-		// return Response::json(array($columns,$params));
+
 		return Response::json($params);
 	}
 	
 	public function columnIndex()
 	{
 		
-		$columns = Schema::getColumnListing('param');
+		$columns = Schema::getColumnListing('doc_param');
 		$columns = (object) $columns;
 // 		
 		// return Response::json(array($columns,$params));
 		return Response::json($columns);
 	}
-	
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -60,20 +53,20 @@ class ParamController extends Controller {
 	 */
 	public function store()
 	{
-		
-		
 		$id = Input::get('id');
-		$param = Param::find($id);
+		$param = DocParam::find($id);
 		if($param){
 			$param->id = $id;	
 		}else{
-			$param = new Param();
+			$param = new DocParam();
 		}
 		$name = Input::get('name');
+		$doc_type_id = Input::get('doc_type_id');
+		
 		$param->name = $name;
-		$param->type_id = Input::get('type_id');
-		$param->doc_param_id = Input::get('doc_param_id');;
+		$param->doc_type_id = $doc_type_id;
 		$param->save();
+		
 		return Response::json(array('param'=>$param,'id'=>$id));
 	}
 
@@ -107,14 +100,7 @@ class ParamController extends Controller {
 	 */
 	public function update($id)
 	{
-		 
-		// $param = TypeUserParams::find($id);
-		// $param->p_name = '$name';
-// 		
-		// $param->save();
-// 		
-		// return Response::json(array('param'=>$param))		 ;
-// 		
+		//
 	}
 
 	/**
@@ -125,7 +111,7 @@ class ParamController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		Param::destroy($id);	
+		DocParam::destroy($id);	
 		return Response::json($id);
 	}
 

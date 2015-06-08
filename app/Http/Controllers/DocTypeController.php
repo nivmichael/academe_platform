@@ -6,12 +6,13 @@ use Response;
 use Input;
 use Schema;
 use App\Param;
+use App\DocType;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class ParamController extends Controller {
+class DocTypeController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -20,9 +21,7 @@ class ParamController extends Controller {
 	 */
 	public function index()
 	{
-		$params = DB::table('param')
-		
-		//->leftJoin('param_value', 'param.id', '=', 'param_value.param_id')
+		$params = DB::table('doc_type')
 		->get();
 		
 // 		
@@ -32,17 +31,16 @@ class ParamController extends Controller {
 		// return Response::json(array($columns,$params));
 		return Response::json($params);
 	}
-	
 	public function columnIndex()
 	{
 		
-		$columns = Schema::getColumnListing('param');
+		$columns = Schema::getColumnListing('doc_type');
 		$columns = (object) $columns;
 // 		
 		// return Response::json(array($columns,$params));
 		return Response::json($columns);
 	}
-	
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -60,19 +58,15 @@ class ParamController extends Controller {
 	 */
 	public function store()
 	{
-		
-		
 		$id = Input::get('id');
-		$param = Param::find($id);
+		$param = DocType::find($id);
 		if($param){
 			$param->id = $id;	
 		}else{
-			$param = new Param();
+			$param = new DocType();
 		}
 		$name = Input::get('name');
 		$param->name = $name;
-		$param->type_id = Input::get('type_id');
-		$param->doc_param_id = Input::get('doc_param_id');;
 		$param->save();
 		return Response::json(array('param'=>$param,'id'=>$id));
 	}
@@ -107,14 +101,7 @@ class ParamController extends Controller {
 	 */
 	public function update($id)
 	{
-		 
-		// $param = TypeUserParams::find($id);
-		// $param->p_name = '$name';
-// 		
-		// $param->save();
-// 		
-		// return Response::json(array('param'=>$param))		 ;
-// 		
+		//
 	}
 
 	/**
@@ -125,7 +112,7 @@ class ParamController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		Param::destroy($id);	
+		DocType::destroy($id);	
 		return Response::json($id);
 	}
 

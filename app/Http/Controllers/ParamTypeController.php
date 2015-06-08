@@ -1,18 +1,17 @@
 <?php namespace App\Http\Controllers;
-
 use DB;
 use PDO;
-use Config;
 use Response;
 use Input;
 use Schema;
+use App\ParamType;
+use App\Param;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\TypeUserParams;
 
 use Illuminate\Http\Request;
 
-class TypeUserParamController extends Controller {
+class ParamTypeController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -21,14 +20,22 @@ class TypeUserParamController extends Controller {
 	 */
 	public function index()
 	{
-		// Config::set('database.fetch', PDO::FETCH_ASSOC);
-		$params = DB::table('type_user_params')
+				$params = DB::table('param_type')
 		->get();
-	
 		
-	
-		return $params;
+		return Response::json($params);
 	}
+	
+	public function columnIndex()
+	{
+		
+		$columns = Schema::getColumnListing('param_type');
+		$columns = (object) $columns;
+// 		
+		// return Response::json(array($columns,$params));
+		return Response::json($columns);
+	}
+	
 
 	/**
 	 * Show the form for creating a new resource.
@@ -47,17 +54,16 @@ class TypeUserParamController extends Controller {
 	 */
 	public function store()
 	{
-		
-		
+			
 		$id = Input::get('id');
-		$param = TypeUserParams::find($id);
+		$param = ParamType::find($id);
 		if($param){
 			$param->id = $id;	
 		}else{
-			$param = new TypeUserParams();
+			$param = new ParamType();
 		}
 		$name = Input::get('name');
-		$param->p_name = $name;
+		$param->name = $name;
 		$param->save();
 		return Response::json(array('param'=>$param,'id'=>$id));
 	}
@@ -92,14 +98,7 @@ class TypeUserParamController extends Controller {
 	 */
 	public function update($id)
 	{
-		 
-		// $param = TypeUserParams::find($id);
-		// $param->p_name = '$name';
-// 		
-		// $param->save();
-// 		
-		// return Response::json(array('param'=>$param))		 ;
-// 		
+		//
 	}
 
 	/**
@@ -110,7 +109,7 @@ class TypeUserParamController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		TypeUserParams::destroy($id);	
+		ParamType::destroy($id);	
 		return Response::json($id);
 	}
 

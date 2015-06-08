@@ -24,11 +24,66 @@ angular.module('acadb.services', []).
 		});
 }])
 
-.factory('ColumnData', ['$resource',
+.factory('DocParamData', ['$resource',
 	function($resource) {
-		return $resource('columns/:id', {id: '@id'}, {
+		return $resource('docParam/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'}
+		});
+}])
+
+.factory('DocTypeData', ['$resource',
+	function($resource) {
+		return $resource('docType/:id', {id: '@id'}, {
+			 'update': { method:'PUT' },
+			 'insertNew': { method:'POST' },
+			 'delete':{method:'DELETE'}
+		});
+}])
+
+.factory('ParamTypeData', ['$resource',
+	function($resource) {
+		return $resource('paramType/:id', {id: '@id'}, {
+			 'update': { method:'PUT' },
+			 'insertNew': { method:'POST' },
+			 'delete':{method:'DELETE'}
+		});
+}])
+
+
+.factory('ColumnData', ['$resource',
+	function($resource) {
+		return $resource('../columns/:name', {id: '@name'}, {
+			 'update': { method:'PUT' },
+			 'insertNew': { method:'POST' },
+			 'delete':{method:'DELETE'},
+			 'query':{method:'GET', transformRequest: function(data, headerFn){
+			 	return JSON.stringify(data);
+			 	}
+			 }
+			
+			 
+		});
+}])
+.factory('ParamValueData', ['$resource',
+	function($resource) {
+		return $resource('paramValue/:id', {id: '@id'}, {
+			 'update': { method:'PUT' },
+			 'insertNew': { method:'POST' },
+			 'delete':{method:'DELETE'},
+			 	
+		});
+			
+			 
+		
+}])
+.factory('SysParamValuesData', ['$resource',
+	function($resource) {
+		return $resource('sysParamValues/:id', {id: '@id'}, {
+			 'update': { method:'PUT' },
+			 'insertNew': { method:'POST' },
+			 'delete':{method:'DELETE'},
+			 	
 		});
 }]);

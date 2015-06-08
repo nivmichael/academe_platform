@@ -34,5 +34,15 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+	
+	public function columnIndex()
+	{
+		
+		$columns = Schema::getColumnListing('type_user');
+		$columns = (object) $columns;
+// 		
+		// return Response::json(array($columns,$params));
+		return Response::json($columns);
+	}
 
 }

@@ -1,104 +1,57 @@
 
 
-<div> 
-	
-  <p>
-    <button class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
-    <button class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
-  </p>
 
-  <label class="checkbox">
-    <input type="checkbox" ng-model="oneAtATime">
-    Open only one at a time
-  </label>
+
+<div >
+
+
+ 
   <accordion close-others="oneAtATime">
-    <!-- <accordion-group heading="Static Header,  expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-      This content is straight in the template.
-    </accordion-group> -->
-    
-    
-    <accordion-group  class='active' is-open="status.isFirstOpen">
-     <accordion-heading is-open="status.open" is-disabled="status.isFirstDisabled">
-            Personal Info <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
-     </accordion-heading>
-    
-    	<div ng-model="user">
-    		<form editable-form name="editableForm" onaftersave="saveUser()">
-		    <div>
-		      <!-- editable username (text with validation) -->
-		      <span class="title">First Name: </span>
-		      <span editable-text="user.first_name" e-name="first_name" e-required>{{ user.first_name }}</span>
-		      <span editable-text="user.last_name" e-name="last_name" e-required>{{ user.last_name }}</span>
-		    </div> 
-		   
-		    <div>
-		      <!-- editable username (text with validation) -->
-		      <span class="title">E-mail:</span>
-		      <span editable-text="user.email" e-name="email" e-required>{{ user.email }}</span>
-		    </div> 
-		    
-		    <div>
-		      <!-- editable username (text with validation) -->
-		      <span class="title">Address:</span>
-		      <span editable-text="user.street_1" e-name="street_1" e-required>{{ user.street_1 }}</span>
-		      <span editable-text="user.street_2" e-name="street_2" placeholder="phone 2">{{ user.street_2 || empty}}</span>
-		      <span editable-text="user.city" e-name="city" e-required>{{ user.city }}</span>
-		      <span editable-text="user.zipcode" e-name="zipcode" e-required>{{ user.zipcode }}</span>
-		      <span editable-text="user.state" e-name="state" e-typeahead="state for state in states | filter:$viewValue | limitTo:8" e-required>{{ user.state }}</span>
-		      <span editable-text="user.country" e-name="country" e-typeahead="country for country in countries | filter:$viewValue | limitTo:8" e-required>{{ user.country }}</span>
-		    </div> 
-		    
-		    <div>
-		      <!-- editable username (text with validation) -->
-		      <span class="title">Phone:</span>
-		      <span editable-text="user.phone_1" e-name="phone_1" >{{ user.phone_1 }}</span>
-		      <span editable-text="user.phone_2" e-name="phone_2" >{{ user.phone_2 || empty}}</span>
-		      <span editable-text="user.mobile" e-name="mobile" e-required>{{ user.mobile }}</span>
-		    </div> 
-		    
-		  <div ng-controller="datePickerController">
-		      <!-- editable username (text with validation) -->
-		      <span class="title">Birthday:</span>
-		      <!-- <span e-class="form-control" editable-text="user.date_of_birth" e-name="date_of_birth" e-placeholder="Date Of Birth" e-required>{{ user.date_of_birth }}</span>
-			 -->
-              <input id="dob" type="text" datepicker-popup="{{format}}" ng-model="dt" is-open="opened"  max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
-              ng-required="true" close-text="Close"/>
 
-              <span ng-show="editableForm.$visible">
-              	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-			 	<button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-			  </span>
-  			  <hr />
-		  </div> 
-		    <div class="buttons">
-      		
-      			<button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
-	      
-	     		<span ng-show="editableForm.$visible">
-		       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-		       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
-	      		</span>
-	    	</div>
-	 	 </form>  
+    
+    <accordion-group ng-repeat="(key, val) in user" class='active' is-open="status.isOpen[$index]">
+   		 <accordion-heading is-open="status.isOpen[$index]" is-disabled="status.isOpen[$index]">
+	           {{ key }}<i class="pull-right glyphicon" ng-class="{'fa-chevron-down': status.isOpen[$index], 'fa-chevron-right': !status.isOpen[$index]}"></i>
+	     </accordion-heading>
+    
+    	<div>
+    	  <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
+	 	     <div class="col-md-12">
+		 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" class="">
+		 	     	<span >
+			 	     	<span class="param_label col-md-2">
+			 	     	   {{k}}:
+			 	     	</span>
+		 	     	</span>
+		 	     	 <span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{key}}.{{k}}" e-name="{{k}}">{{v}}</span>
+		 	     </div>	 
+	 	     </div>		
+	 	     	 
+	 	     		
+	 	     		
+	 	     		 	
+			 	 <div class="buttons">
+	      			<button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
+		     		<span ng-show="editableForm.$visible">
+			       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+			       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+		      		</span>
+		    	</div>
+		    </form>
     	</div>
     </accordion-group>
     
-   
     
-    
-    
-    <accordion-group heading="Education">
-      <p>The body of the accordion group grows to fit the contents</p>
-        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-        <div ng-repeat="item in items">{{item}}</div>
-    </accordion-group>
-    <accordion-group is-open="status.open">
-        <accordion-heading>
-            Work Experience<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-        </accordion-heading>
-        This is just some content to illustrate fancy headings.
-    </accordion-group>
-    
-    
-  </accordion>
- </div> 
+   </accordion>
+</div>
+
+
+
+
+
+
+
+
+
+
+

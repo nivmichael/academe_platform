@@ -15,7 +15,7 @@
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
-		<tr ng-repeat="param in params">
+		<tr ng-repeat="param in paramValues">
 	    	<td style="white-space: nowrap">
 	        	<!-- form -->
 		        <form editable-form name="rowform" onbeforesave="saveParam($data, param.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == param">
@@ -27,15 +27,16 @@
 		          		<button class="btn btn-danger" ng-click="deleteParam(param,$index)">del</button>
 		        	</div>  
 	       	</td>
-	       	<td ng-repeat="(key,val) in notSorted(param)">
+	       	<td ng-repeat="(key,val) in param">
 	        	<!-- editable username (text with validation) -->
-	        	<span editable-select="param.{{val}}" ng-if="selects.indexOf(val)> -1" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
+	  
+	         	<span editable-text="param.{{key}}" ng-if="key != 'param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-text="param.{{val}}" ng-if="selects.indexOf(val) < 0" id="{{val}}" e-name="{{val}}" e-form="rowform" e-class="form-control" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-select="param.{{key}}" ng-if="key == 'param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" onshow="loadGroups(key)" e-ng-options="g.id as g.name for g in groups[key]" e-required>
+	          		{{ val|| 'empty' }}
 	         	</span>
-	         
+	         	
 	      	</td>
 	    </tr>
 	 </table>

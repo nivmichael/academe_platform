@@ -15,7 +15,7 @@
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
-		<tr ng-repeat="param in params">
+		<tr ng-repeat="param in paramTypes">
 	    	<td style="white-space: nowrap">
 	        	<!-- form -->
 		        <form editable-form name="rowform" onbeforesave="saveParam($data, param.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == param">
@@ -29,10 +29,7 @@
 	       	</td>
 	       	<td ng-repeat="(key,val) in notSorted(param)">
 	        	<!-- editable username (text with validation) -->
-	        	<span editable-select="param.{{val}}" ng-if="selects.indexOf(val)> -1" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
-	         	</span>
-	         	<span editable-text="param.{{val}}" ng-if="selects.indexOf(val) < 0" id="{{val}}" e-name="{{val}}" e-form="rowform" e-class="form-control" e-required>
+	         	<span editable-text="param.{{val}}" name="{{val}}" id="{{val}}" e-name="{{val}}" e-form="rowform" e-class="form-control" e-required>
 	          		{{ param[val] || 'empty' }}
 	         	</span>
 	         

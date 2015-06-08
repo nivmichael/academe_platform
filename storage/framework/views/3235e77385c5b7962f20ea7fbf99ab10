@@ -12,7 +12,7 @@
 		<!-- bootstrap css -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- laravel app css -->
-		<link href="[[ asset('/css/app.css') ]]" rel="stylesheet">
+		<link href="<?php echo e(asset('/css/app.css')); ?>" rel="stylesheet">
 		<!-- x-editable css -->
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
@@ -32,7 +32,7 @@
 	
 	
 	<!-- navbar end -->
-	@yield('content')
+	<?php echo $__env->yieldContent('content'); ?>
 
 	<!-- Scripts -->
 	<script src="lib/app.js"></script>

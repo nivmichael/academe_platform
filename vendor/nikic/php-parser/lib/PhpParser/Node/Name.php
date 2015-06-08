@@ -4,7 +4,7 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
-class Name extends NodeAbstract
+editableFormclass Name extends NodeAbstract
 {
     /** @var string[] Parts of the name */
     public $parts;

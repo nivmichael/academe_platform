@@ -87,6 +87,28 @@
    margin-left: 0px; 
 }
 
-span>.caret{
-  color:white;
+.param_label{
+	display:inline-block;
+	min-width:130px;
+	 font-weight: bold;
+	
+}
+.classy{
+	background-color:black;
+}
+.formParameter{
+	margin-bottom:3px;
+	height:34px;
+	word-wrap: break-word
+	width:500px;
+	
+
+
+}
+.formParameterValue{
+	  overflow: hidden;
+	
+}
+.panel-heading{
+	
 }
