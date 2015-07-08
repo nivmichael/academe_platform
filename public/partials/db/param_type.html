@@ -1,20 +1,10 @@
-<!-- <table class="table table-bordered table-hover table-condensed">
-	<th ng-repeat="col in columns">
-		{{col}}
-	</th>
-	<tr ng-repeat="param in params" >
-	 <td ng-repeat="key in notSorted(param)" ng-init="value = param[key]" ng-show='!$last'>
-      
-          {{value}}
-        
-	 </td>
-    </tr> 
-</table> -->
-
 
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
+		
+	
+		
 		<tr ng-repeat="param in paramTypes">
 	    	<td style="white-space: nowrap">
 	        	<!-- form -->
@@ -27,10 +17,10 @@
 		          		<button class="btn btn-danger" ng-click="deleteParam(param,$index)">del</button>
 		        	</div>  
 	       	</td>
-	       	<td ng-repeat="(key,val) in notSorted(param)">
+	       	<td ng-repeat="(key,val) in param">
 	        	<!-- editable username (text with validation) -->
-	         	<span editable-text="param.{{val}}" name="{{val}}" id="{{val}}" e-name="{{val}}" e-form="rowform" e-class="form-control" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-text="param.{{key}}" name="{{key}}" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
 	         
 	      	</td>

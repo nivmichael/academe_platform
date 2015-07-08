@@ -15,10 +15,7 @@
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
-		<th></th>
-		<th ng-repeat="col in notSorted(columns)">
-			{{columns[col]}}
-		</th>
+
 		<tr ng-repeat="param in sysParamValues">
 	    	
 	    	<td style="white-space: nowrap">
@@ -34,25 +31,25 @@
 	       	</td>
 	       	
 	       	
-	       	<td ng-repeat="(key,val) in notSorted(param)">
+	       	<td ng-repeat="(key,val) in param">
 	        	<!-- editable username (text with validation) -->
-	        	<span ng-if="val == 'id'" name="{{val}}" id="{{val}}">
-	        		{{ param.id || 'empty' }}
+	        	<span ng-show="key == 'id'" e-name="{{key}}" id="{{key}}">
+	        		{{ val || 'empty' }}
 	        	</span>
-	         	<span editable-text="param.{{val}}" ng-if="val != 'id' && val != 'value_ref' && val != 'param_id' && val != 'ref_user_id' && val != 'doc_type'" e-class="form-control"  name="{{val}}" id="{{val}}" e-name="{{val}}" e-form="rowform"  e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-text="param.{{key}}" ng-if="key != 'id' && key != 'value_ref' && key != 'param_id' && key != 'ref_user_id' && key != 'doc_type'" e-class="form-control"  name="{{key}}" id="{{key}}" e-name="{{key}}" e-form="rowform"  e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-select="param.{{val}}" ng-if="val == 'value_ref'" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control"  e-ng-options="g.id as g.value for g in groups[val]"  e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-select="param.{{key}}" ng-if="key == 'value_ref'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control"  e-ng-options="g.id as g.value for g in groups[key]"  e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-select="param.{{val}}" ng-if="val == 'param_id'" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control"   e-ng-options="g.id as g.name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-select="param.{{key}}" ng-if="key == 'param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control"   e-ng-options="g.id as g.name for g in groups[key]" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-select="param.{{val}}" ng-if="val == 'ref_user_id'" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control" e-ng-options="g.id as g.id + ' ' + g.first_name + ' ' + g.last_name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-select="param.{{key}}" ng-if="key == 'ref_user_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.id + ' ' + g.first_name + ' ' + g.last_name for g in groups[key]" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-select="param.{{val}}" ng-if="val == 'doc_type'" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-select="param.{{key}}" ng-if="key == 'doc_type'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[key]" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
 	         
 	      	</td>

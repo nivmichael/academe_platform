@@ -21,41 +21,73 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
   Route::get('/admin', 'AdminController@index');
 });
 
-Route::get('/', 'WelcomeController@index');
-Route::get('home', 'HomeController@index');
-        
-Route::get('/employers', 'HomeController@index');
-Route::get('/students' , 'HomeController@index');
-Route::get('/graduates', 'HomeController@index');
-Route::get('/interns'  , 'HomeController@index');
+Route::group(['middleware' => 'App\Http\Middleware\EmployerMiddleware'], function()
+{
+  Route::get('/employer', 'EmployerController@index');
+});
 
+Route::group(['middleware' => 'App\Http\Middleware\HomeMiddleware'], function()
+{
+  Route::get('/home', 'HomeController@index');
+});
+
+ // Route::get('/home', 'HomeController@index');
+
+
+Route::get('/', 'WelcomeController@index');
+// Route::get('home', 'HomeController@index');
+        
+// Route::get('/employers', 'HomeController@index');
+// Route::get('/students' , 'HomeController@index');
+// Route::get('/graduates', 'HomeController@index');
+// Route::get('/interns'  , 'HomeController@index');
+
+// Route::post('/adminStore', 'TypeUserController@adminStore');
 Route::resource('/params', 'ParamController');
 Route::resource('/users', 'TypeUserController');
+
 Route::resource('/docParam', 'DocParamController');
 Route::resource('/docType', 'DocTypeController');
 Route::resource('/paramType', 'ParamTypeController');
 Route::resource('/paramValue', 'ParamValueController');
 Route::resource('/sysParamValues', 'sysParamValuesController');
 Route::post('/sysParamValues/params', 'sysParamValuesController@saveParam');
+Route::post('/savePost', 'TypePostController@savePost');
+Route::get('/getAllJobs', 'TypePostController@index');
 
-Route::resource('auth/params', 'ParamController');
-Route::resource('auth/users', 'TypeUserController');
-Route::resource('auth/docParam', 'DocParamController');
-Route::resource('auth/docType', 'DocTypeController');
-Route::resource('auth/paramType', 'ParamTypeController');
 
+// Route::resource('auth/params', 'ParamController');
+// Route::resource('auth/users', 'TypeUserController');
+// Route::resource('auth/docParam', 'DocParamController');
+// Route::resource('auth/docType', 'DocTypeController');
+// Route::resource('auth/paramType', 'ParamTypeController');
 
 Route::get('/columns/param'     , 'ParamController@columnIndex');
-Route::get('/columns/user'      , 'TypeUserController@columnIndex');
+Route::get('/columns/user', 'TypeUserController@columnIndexJobSeeker');
+Route::get('/columns/registerEmployer', 'TypeUserController@columnIndexEmployer');
+Route::get('/columns/registerJobSeeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
 Route::get('/columns/docType'   , 'DocTypeController@columnIndex');
 Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
 Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
 Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
+Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+
+Route::any('/upload'        ,'SysParamValuesController@upload');
+Route::any('/deleteImage'   ,'SysParamValuesController@deleteimagefromdb');
+Route::post('/setStatus' ,'TypeUserController@setStatus');
+Route::get('/getStatus' ,'TypeUserController@getStatus');
 
 
+Route::get('auth/login_employer', 'Auth\AuthController@getLoginEmployer');
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-Route::get('/getAuthId'    , function(){
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('/getAuthId', function(){
 	return Auth::id();
 });
 
@@ -65,15 +97,6 @@ Route::controllers([
 ]);
 
 
-//type_user_params CRUD
-// Route::PUT('/params/{id}'   , 'ParamController@update');
-// Route::get('/params'        , 'ParamController@index');
-// Route::post('/params'       , 'ParamController@store');
-// Route::delete('/params/{id}', 'ParamController@destroy');
 
-//type_users CRUD
-// Route::PUT('/users/{id}'   , 'TypeUserController@update');
-// Route::get('/users'        , 'TypeUserController@index');
-// Route::get('/users/{id}'   ,'TypeUserController@show');
-// Route::post('/users'       , 'TypeUserController@store');
-// Route::delete('/users/{id}', 'TypeUserController@destroy');
+?>
+

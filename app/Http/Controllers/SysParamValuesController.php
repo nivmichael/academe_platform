@@ -1,18 +1,17 @@
 <?php namespace App\Http\Controllers;
-
-
+use App\ImageResize;
 use DB;
 use PDO;
+use Auth;
 use Response;
 use Input;
 use Schema;
 use App\SysParamValues;
 use App\Param;
 use App\ParamValue;
-
+use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class SysParamValuesController extends Controller {
@@ -40,12 +39,94 @@ class SysParamValuesController extends Controller {
 		return Response::json($columns);
 	}
 	
-	// public function filtered()
-	// {
-		// $paramValue = DB::table('param_value');
-		// $sysParamsValues = SysParamValues::where('param_id','=', )
-		// return Response::json($sysParamsValues);
-	// }
+	public function upload()
+	{
+		$param_ref = Input::all();
+		$param_ref = $param_ref['param_ref'];
+		$userId = Auth::user()->id;
+		$path = 'uploads/userimgs/'.$userId;
+		 if (!is_dir($path)) {    
+		     mkdir($path, 0777, true);   
+			 chmod($path, 0777);
+		 }
+        $request = new \Flow\Request();
+        $config = new \Flow\Config(array(
+            'tempDir' => $path, //With write access
+        ));
+
+        $file = new \Flow\File($config, $request);
+        $response = Response::make('', 200);
+		$fileName = $request->getFileName();
+        $destination = $path.'/'.$request->getFileName();
+		
+		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+           
+            if (!$file->checkChunk()) {
+          
+                return Response::make('', 204);
+            }
+        } else {
+            if ($file->validateChunk()) {
+                $file->saveChunk();
+              
+
+            } else {
+         
+                // error, invalid chunk upload request, retry
+                return Response::make('Error in chunck', 400);
+            }
+        }
+		
+        if ($file->validateFile() && $file->save($destination)) {
+        	$image = new ImageResize($destination);
+			$image->resizeToWidth(250);
+			$image->save($destination);
+           
+            $response = Response::make('upload success', 200);
+        }
+		
+			$photo = new SysParamValues();
+			
+			//check if phot or partams or whateva iexists..if not then insert new
+			
+			$photo->doc_type = '';
+			$photo->ref_user_id = $userId;
+			$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
+			$photo->iteration = null;
+			
+			if(!strlen($destination)){
+				$photo->value_short = null;
+			}else {
+				
+				$photo->value_short = $destination;
+			}
+			$photo->doc_type = 1;	
+			$photo->value_long= $fileName;
+			$photo->value_ref = null;
+			$photo->save();
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+        return $response;
+	}
+
+	public function setProfilePic()
+	{
+		$id = Auth::user()->id;
+		$param_id = DB::table('param')->where('name', 'profile_pic')->pluck('id');										 
+		$profilePic =  DB::table('sys_param_values')->where('ref_user_id',$id)
+													->update(['value_short'=>$_POST['profilePic'],'param_id'=>$param_id]);
+		
+		return Response::json($id);
+	}
+	
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -81,6 +162,7 @@ class SysParamValuesController extends Controller {
 	{
 		
 		$all = Input::all();
+		$all = $all['user'];
 		$param_id = $all['id'];
 		$sys_param_value = SysParamValues::find($param_id);	 
 		
@@ -151,6 +233,30 @@ class SysParamValuesController extends Controller {
 	{
 		SysParamValues::destroy($id);	
 		return Response::json($id);
+	}
+	
+	public function deleteimage()
+	{
+		$path = $_POST['path'];	
+		$path = explode('/',$path);
+		
+		$path[0] = 'public';
+		$path=implode('/',$path);
+		
+		
+		
+		unlink($path);
+		return Response::json($path);
+	}
+	
+	public function deleteimagefromdb()
+	{
+		$id = $_POST['id'];	
+		$path = $_POST['path'];	
+		
+
+		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_user_id', '=', $id)->delete();
+		return Response::json($path);
 	}
 
 }

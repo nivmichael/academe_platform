@@ -48,7 +48,7 @@ class MethodProphecy
         if (!method_exists($double, $methodName)) {
             throw new MethodNotFoundException(sprintf(
                 'Method `%s::%s()` is not defined.', get_class($double), $methodName
-            ), get_class($double), $methodName, $arguments);
+            ), get_class($double), $methodName);
         }
 
         $this->objectProphecy = $objectProphecy;
@@ -140,15 +140,13 @@ class MethodProphecy
     /**
      * Sets return argument promise to the prophecy.
      *
-     * @param int $index The zero-indexed number of the argument to return
-     *
      * @see Prophecy\Promise\ReturnArgumentPromise
      *
      * @return $this
      */
-    public function willReturnArgument($index = 0)
+    public function willReturnArgument()
     {
-        return $this->will(new Promise\ReturnArgumentPromise($index));
+        return $this->will(new Promise\ReturnArgumentPromise);
     }
 
     /**
@@ -360,7 +358,7 @@ class MethodProphecy
     /**
      * Returns predictions that were checked on this object.
      *
-     * @return Prediction\PredictionInterface[]
+     * @return PredictionInterface[]
      */
     public function getCheckedPredictions()
     {

@@ -1,0 +1,222 @@
+[
+  {
+  "name": "registerEmployer.personalInfo",
+   "url": "/employer/personalInfo",
+   "abstract": false,
+   "views": [{    
+     "name": "personalInfo",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "registerEmployer.files",
+   "url": "/employer/files",
+   "abstract": false,
+   "views": [{
+     "name": "files",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "registerEmployer.company",
+   "url": "/employer/company",
+   "abstract": false,
+   "views": [{
+     "name": "company",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "registerJobSeeker.personalInfo",
+   "url": "/jobseeker/personalInfo",
+   "abstract": false,
+   "views": [{    
+     "name": "personalInfo",
+      "controller": "formController",
+     "templateUrl": "../../partials/form/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "registerJobSeeker.education",
+   "url": "/jobseeker/education",
+   "abstract": false,
+   "views": [{
+     "name": "education",
+      "controller": "formController",
+     "templateUrl": "../../partials/form/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "registerJobSeeker.language_skills",
+   "url": "/jobseeker/language_skills",
+   "abstract": false,
+   "views": [{
+     "name": "language_skills",
+      "controller": "formController",
+     "templateUrl": "../../partials/form/personalInfo.html",
+     "cache": false
+   }]
+   },
+   {
+  "name": "registerJobSeeker.files",
+   "url": "/jobseeker/files",
+   "abstract": false,
+   "views": [{
+     "name": "files",
+      "controller": "formController",
+     "templateUrl": "../../partials/form/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.personalInfo",
+   "url": "/employer/personalInfo",
+   "abstract": false,
+   "views": [{
+     "name": "employer.personalInfo",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.company",
+   "url": "/employer/company",
+   "abstract": false,
+   "views": [{
+     "name": "employer.company",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.files",
+   "url": "/employer/files",
+   "abstract": false,
+   "views": [{
+     "name": "employer.files",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.jobs",
+   "url": "/employer/jobs",
+   "abstract": false,
+   "views": [{
+     "name": "employer.jobs",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/jobs.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.jobPost",
+   "url": "/employer/jobPost",
+   "abstract": false,
+   "views": [{
+     "name": "employer.jobPost",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/jobPost.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.edit",
+   "url": "/employer/edit",
+   "abstract": false,
+   "views": [{
+     "name": "employer.edit",
+      "controller": "employerHomeController",
+     "templateUrl": "../../partials/employer/edit.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "type_user",
+   "url": "/type_user",
+   "abstract": false,
+   "views": [{
+     "name": "type_user",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/type_user.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "doc_type",
+   "url": "/doc_type",
+   "abstract": false,
+   "views": [{
+     "name": "doc_type",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/doc_type.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "doc_param",
+   "url": "/doc_param",
+   "abstract": false,
+   "views": [{
+     "name": "doc_param",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/doc_param.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "param",
+   "url": "/param",
+   "abstract": false,
+   "views": [{
+     "name": "param",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/param.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "param_type",
+   "url": "/param_type",
+   "abstract": false,
+   "views": [{
+     "name": "param_type",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/param_type.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "param_value",
+   "url": "/param_value",
+   "abstract": false,
+   "views": [{
+     "name": "param_value",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/param_value.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "sys_param_values",
+   "url": "/sys_param_values",
+   "abstract": false,
+   "views": [{
+     "name": "sys_param_values",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/sys_param_values.html",
+     "cache": false
+   }]
+  }
+]

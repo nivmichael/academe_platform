@@ -23,6 +23,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $fillable = [
+	'subtype',
+	'status',
 	'first_name',
 	'last_name', 
 	'email', 
@@ -44,6 +46,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['remember_token'];
+	protected $hidden = ['remember_token','password'];
 
 }

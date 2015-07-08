@@ -5,13 +5,12 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 use PhpParser\Error;
 
+/**
+ * @property null|Node\Name $name  Name
+ * @property Node[]         $stmts Statements
+ */
 class Namespace_ extends Node\Stmt
 {
-    /** @var null|Node\Name Name */
-    public $name;
-    /** @var Node[] Statements */
-    public $stmts;
-
     protected static $specialNames = array(
         'self'   => true,
         'parent' => true,
@@ -22,13 +21,17 @@ class Namespace_ extends Node\Stmt
      * Constructs a namespace node.
      *
      * @param null|Node\Name $name       Name
-     * @param null|Node[]    $stmts      Statements
+     * @param Node[]         $stmts      Statements
      * @param array          $attributes Additional attributes
      */
     public function __construct(Node\Name $name = null, $stmts = array(), array $attributes = array()) {
-        parent::__construct(null, $attributes);
-        $this->name = $name;
-        $this->stmts = $stmts;
+        parent::__construct(
+            array(
+                'name'  => $name,
+                'stmts' => $stmts,
+            ),
+            $attributes
+        );
 
         if (isset(self::$specialNames[(string) $this->name])) {
             throw new Error(sprintf('Cannot use \'%s\' as namespace name', $this->name));
@@ -41,9 +44,5 @@ class Namespace_ extends Node\Stmt
                 }
             }
         }
-    }
-
-    public function getSubNodeNames() {
-        return array('name', 'stmts');
     }
 }

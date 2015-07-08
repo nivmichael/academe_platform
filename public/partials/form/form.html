@@ -1,0 +1,43 @@
+<!-- form.html -->
+<h1>regular Form</h1>
+<div class="row" ng-model="user">
+<div class="">
+    <div id="form-container">
+
+
+        <div class="">
+    
+            <!-- <ul class="nav nav-sidebar">
+          
+            <li ng-repeat="(doc,param) in user" ng-click="setDoc(doc)" class="docParamLi"><a href="#" ><i class="glyphicon glyphicon-chevron-right"></i>&nbsp {{doc}}</a></li>
+          </ul> -->
+            <!-- the links to our nested states using relative paths -->
+            <!-- add the active class if the state matches our ui-sref -->
+           <ul class="nav nav-sidebar col-md-4">
+            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi">
+                <li ui-sref-active="active" ui-sref=".{{a}}">{{a}}</li>
+               
+            </div>
+          </ul>
+        </div>
+       
+        <!-- use ng-submit to catch the form submission and use our Angular function -->
+        <form id="signup-form" role="form" ng-submit="saveUser(user)" class="col-md-8">
+        	
+			 <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center">
+			                <div ui-view="{{a}}"></div>
+			 </div>
+            <!-- our nested state views will be injected here -->
+            <!-- <div id="form-views" ui-view=""></div> -->
+        </form>
+
+    </div>
+
+    <!-- show our formData as it is being typed -->
+    <!-- <pre>
+        {{ user }}
+    </pre> -->
+
+</div>
+</div>
+ 

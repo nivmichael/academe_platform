@@ -171,11 +171,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
     public function addFile($name, array $coverageData, array $testData, $cacheTokens)
     {
         $file = new PHP_CodeCoverage_Report_Node_File(
-            $name,
-            $this,
-            $coverageData,
-            $testData,
-            $cacheTokens
+            $name, $this, $coverageData, $testData, $cacheTokens
         );
 
         $this->children[] = $file;
@@ -229,8 +225,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
 
             foreach ($this->children as $child) {
                 $this->classes = array_merge(
-                    $this->classes,
-                    $child->getClasses()
+                    $this->classes, $child->getClasses()
                 );
             }
         }
@@ -250,8 +245,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
 
             foreach ($this->children as $child) {
                 $this->traits = array_merge(
-                    $this->traits,
-                    $child->getTraits()
+                    $this->traits, $child->getTraits()
                 );
             }
         }
@@ -271,8 +265,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
 
             foreach ($this->children as $child) {
                 $this->functions = array_merge(
-                    $this->functions,
-                    $child->getFunctions()
+                    $this->functions, $child->getFunctions()
                 );
             }
         }

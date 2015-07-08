@@ -1,0 +1,60 @@
+<nav class="col-md-2 sideNav">
+	<div class="col-md-12" dropdown is-open="status.isopen">
+		
+      <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+        {{user.personalInfo.status }} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+        	{{status.name}}
+        </li>
+      </ul>
+   	 </div>
+    <span>Last Updated - </span>{{user.personalInfo.updated_at}}
+	<div class="col-md-12">
+		<h3 class="text-center">{{user.company.company_name}}</h3>
+		<img class="img-thumbnail col-md-12" src="{{ profilePic || user.files.company_logo }}" alt="Generic placeholder image" width="140" height="140">
+	
+	</div>
+	<div class="">
+	 <ul class="nav nav-sidebar col-md-4">
+           	<li ui-sref-active="active" ui-sref="employer.jobs" class="text-center docParamLi">Job Offers</li>
+            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi" ng-show="a == 'files'">
+                <li ui-sref-active="active" ui-sref=".{{a}}">{{a}}</li>
+               
+            </div>
+     </ul>
+	</div>
+
+<div>
+		<button class="btn btn-primary" ui-sref=".jobPost">
+		Post A New Job
+	</button>
+</div>
+</nav>
+
+
+
+ 
+  <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center">
+		<div ui-view="employer.{{a}}"></div>
+  </div>
+  <div ui-view="employer.edit" class="col-md-8"></div>
+  <div ui-view="employer.jobs" class="col-md-8"></div>
+  <div ui-view="employer.jobPost" class="col-md-8"></div>
+
+
+<footer class="footerNavUl">
+	
+
+   
+</footer>
+
+
+
+
+
+
+
+
+

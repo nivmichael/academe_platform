@@ -61,18 +61,21 @@ class ParamController extends Controller {
 	public function store()
 	{
 		
-		
-		$id = Input::get('id');
+		$all = Input::all();
+		$all = $all['user'];
+		$id = $all['id'];
 		$param = Param::find($id);
 		if($param){
 			$param->id = $id;	
 		}else{
 			$param = new Param();
 		}
-		$name = Input::get('name');
+		$slug = $all['slug'];
+		$name = $all['name'];
 		$param->name = $name;
-		$param->type_id = Input::get('type_id');
-		$param->doc_param_id = Input::get('doc_param_id');;
+		$param->slug = $slug;
+		$param->type_id = $all['type_id'];
+		$param->doc_param_id = $all['doc_param_id'];
 		$param->save();
 		return Response::json(array('param'=>$param,'id'=>$id));
 	}

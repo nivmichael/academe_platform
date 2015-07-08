@@ -17,7 +17,7 @@
 							</ul>
 						</div>
 					@endif
-
+					<img src="../img/usandiego.png">
 					<form class="form-horizontal" role="form" method="POST" action="[[ url('/auth/login') ]]">
 						<input type="hidden" name="_token" value="[[ csrf_token() ]]">
 
@@ -48,9 +48,8 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">Login</button>
-
-								<a class="btn btn-link" href="[[ url('/password/email') ]]">Forgot Your Password?</a>
-								<a class="btn btn-link" href="[[url('/auth/register') ]]">Register</a>
+		<a class="btn btn-link" href="[[ url('/password/email') ]]">Forgot Your Password?</a>
+								<a class="btn btn-link" href="[[url('/auth/register#/registerJobSeeker') ]]">Register</a>
 							</div>
 						</div>
 					</form>

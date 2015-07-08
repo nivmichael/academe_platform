@@ -16,9 +16,9 @@ class AdminMiddleware {
 		
 		if ($request->user()->type != 'tech-admin')
         {
-            return redirect('home');
+            return redirect('/auth/login');
         }
-		return $next($request);
+     	return $next($request);
 	}
 
 }

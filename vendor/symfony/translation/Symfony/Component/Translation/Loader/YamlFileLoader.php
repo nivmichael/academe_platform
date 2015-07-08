@@ -24,7 +24,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
  *
  * @api
  */
-class YamlFileLoader extends ArrayLoader
+class YamlFileLoader extends ArrayLoader implements LoaderInterface
 {
     private $yamlParser;
 

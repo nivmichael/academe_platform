@@ -49,7 +49,7 @@ trait AuthenticatesAndRegistersUsers {
 
 		$this->auth->login($this->registrar->create($request->all()));
 
-		return redirect($this->redirectPath('/'));
+		return redirect($this->redirectPath());
 	}
 
 	/**
@@ -61,7 +61,14 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		return view('auth.login');
 	}
-
+	
+	public function getLoginEmployer()
+	{
+		return view('auth.login_employer');
+	}
+	
+	
+	
 	/**
 	 * Handle a login request to the application.
 	 *
@@ -107,7 +114,7 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		$this->auth->logout();
 
-		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+		return redirect('/');
 	}
 
 	/**
@@ -122,7 +129,7 @@ trait AuthenticatesAndRegistersUsers {
 			return $this->redirectPath;
 		}
 
-		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/admin';
+		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
 	}
 
 	/**

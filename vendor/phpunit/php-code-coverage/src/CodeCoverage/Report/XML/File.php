@@ -42,8 +42,7 @@ class PHP_CodeCoverage_Report_XML_File
         if (!$totalsContainer) {
             $totalsContainer = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'http://schema.phpunit.de/coverage/1.0',
-                    'totals'
+                    'http://schema.phpunit.de/coverage/1.0', 'totals'
                 )
             );
         }
@@ -54,23 +53,20 @@ class PHP_CodeCoverage_Report_XML_File
     public function getLineCoverage($line)
     {
         $coverage = $this->contextNode->getElementsByTagNameNS(
-            'http://schema.phpunit.de/coverage/1.0',
-            'coverage'
+            'http://schema.phpunit.de/coverage/1.0', 'coverage'
         )->item(0);
 
         if (!$coverage) {
             $coverage = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'http://schema.phpunit.de/coverage/1.0',
-                    'coverage'
+                    'http://schema.phpunit.de/coverage/1.0', 'coverage'
                 )
             );
         }
 
         $lineNode = $coverage->appendChild(
             $this->dom->createElementNS(
-                'http://schema.phpunit.de/coverage/1.0',
-                'line'
+                'http://schema.phpunit.de/coverage/1.0', 'line'
             )
         );
 

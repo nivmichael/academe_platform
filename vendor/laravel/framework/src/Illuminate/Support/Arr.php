@@ -91,12 +91,7 @@ class Arr {
 	 */
 	public static function except($array, $keys)
 	{
-		foreach ((array) $keys as $key)
-		{
-			static::forget($array, $key);
-		}
-
-		return $array;
+		return array_diff_key($array, array_flip((array) $keys));
 	}
 
 	/**

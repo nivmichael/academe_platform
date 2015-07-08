@@ -530,7 +530,8 @@ class Grammar extends BaseGrammar {
 			if (isset($order['sql'])) return $order['sql'];
 
 			return $this->wrap($order['column']).' '.$order['direction'];
-		}, $orders));
+		}
+		, $orders));
 	}
 
 	/**

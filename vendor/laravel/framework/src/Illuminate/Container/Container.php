@@ -1013,14 +1013,14 @@ class Container implements ArrayAccess, ContainerContract {
 
 		if ($function->getNumberOfParameters() == 0)
 		{
-			return;
+			return null;
 		}
 
 		$expected = $function->getParameters()[0];
 
 		if ( ! $expected->getClass())
 		{
-			return;
+			return null;
 		}
 
 		return $expected->getClass()->name;

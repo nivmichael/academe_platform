@@ -1,18 +1,22 @@
 
 <html ng-app="acadb">
 <head>
+	
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="../img/acadeMe.ico">
 	<title>Academe</title>
-		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		
+ 		<script src="../lib/ui-router.js"></script>
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+		
 		<link href="../lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<link href="../css/myStyle.css" rel="stylesheet">
+		
 
 	<!-- <link href="{{ asset('/css/app.css') }}" rel="stylesheet"> -->
 
@@ -26,8 +30,24 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>
-	<nav class="navbar navbar-default">
+
+<body ng-controller="RegisterController">
+<pre>
+{{$state.current.name}}
+</pre>
+	<?php if(count($errors) > 0): ?>
+		<div class="alert alert-danger">
+			<strong>Whoops!</strong> There were some problems with your input.<br><br>
+			<ul>
+				<?php foreach($errors->all() as $error): ?>
+					<li><?php echo e($error); ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
+	
+
+<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -49,6 +69,7 @@
 						<li><a href="<?php echo e(url('/auth/login')); ?>">Login</a></li>
 						
 					<?php else: ?>
+				
 						<li class="dropdown">
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo e(Auth::user()->first_name); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
@@ -61,79 +82,20 @@
 			</div>
 		</div>
 	</nav>
-	 <div class="container-fluid" >
- 	
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Register</div>
-				<div class="panel-body">
-					<?php if(count($errors) > 0): ?>
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								<?php foreach($errors->all() as $error): ?>
-									<li><?php echo e($error); ?></li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-					<?php endif; ?>
 
 
-<div ng-model="user" ng-controller="AuthController">
-
-
-  <!-- <label class="checkbox">
-    <input type="checkbox" ng-model="oneAtATime">
-    Open only one at a time
-  </label> -->
-  <accordion close-others="oneAtATime">
-
-    
-    <accordion-group ng-repeat="(key, val) in user" class='active' is-open="status.isOpen[$index]">
-	    
-	     <accordion-heading is-open="status.isOpen[$index]" is-disabled="status.isOpen[$index]">
-	            {{ key }}<i class="pull-right glyphicon" ng-class="{'fa-chevron-down': status.isOpen[$index], 'fa-chevron-right': !status.isOpen[$index]}"></i>
-	     </accordion-heading>
-    
-    	<div>
-    		
-    	 <form editable-form name="editableForm" onaftersave="saveUser(user)" shown="true">
-	 	     <div class="col-md-12">
-		 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" class="">
-		 	     	<span >
-			 	     	<span class="param_label">
-			 	     	   {{k}}:
-			 	     	</span>
-		 	     	</span>
-		 	     	 <span e-class="form-control"  editable-text="user.{{key}}.{{k}}" e-name="{{k}}">{{v}}</span>
-		 	     </div>	 
-	 	     </div>		
-	 	     	 
-	 	     		
-	 	     		
-	 	     		 	
-			 	 <div class="buttons">
-	      			<button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
-		     		<span ng-show="editableForm.$visible">
-			       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-			       	
-		      		</span>
-		    	</div>
-		    </form>
-    		
-    	
-    	</div>
-    </accordion-group>
-    
-    
-   </accordion>
- 
+		<div ng-model="user" class="col-sm-3 col-md-9">
+ 	 				<div ui-view="form">
+ 	 					form
+ 	 				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-
-
+	
 </body>
+
 	<script src="../lib/app.js"></script>
 	<script src="../lib/controllers.js"></script>
 	<script src="../lib/services.js"></script>
@@ -141,12 +103,14 @@
 	<script src="../lib/angular-route.js"></script>
 	<script src="../lib/angular-resource.js"></script>
 	<script src="../lib/xeditable/js/xeditable.js"></script>
+	<script src="../lib/ngFlow/ng-flow-standalone.min.js"></script>
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="../lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
 
 
-
+<script>angular.module("acadb").constant("CSRF_TOKEN", '<?php echo e(csrf_token()); ?>');</script>
 
 
 

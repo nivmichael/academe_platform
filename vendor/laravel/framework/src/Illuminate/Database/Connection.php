@@ -921,7 +921,7 @@ class Connection implements ConnectionInterface {
 	/**
 	 * Get the schema grammar used by the connection.
 	 *
-	 * @return \Illuminate\Database\Schema\Grammars\Grammar
+	 * @return \Illuminate\Database\Query\Grammars\Grammar
 	 */
 	public function getSchemaGrammar()
 	{

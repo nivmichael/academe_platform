@@ -71,7 +71,7 @@ class FailedTableCommand extends Command {
 	{
 		$name = 'create_failed_jobs_table';
 
-		$path = $this->laravel->databasePath().'/migrations';
+		$path = $this->laravel['path.database'].'/migrations';
 
 		return $this->laravel['migration.creator']->create($name, $path);
 	}

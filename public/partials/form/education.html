@@ -1,0 +1,11 @@
+
+
+	<div ng-repeat="(key,val) in user[docParam]">
+		{{key}}<input type='text' class="form-control" name="name" ng-model="user.education[key]">
+	</div>
+
+	<div class="col-xs-6 col-xs-offset-3">
+	    <a ui-sref="form.skills" class="btn btn-block btn-info">
+	    Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	    </a>
+	</div>

@@ -22,7 +22,7 @@ use Symfony\Component\Config\Resource\FileResource;
  *
  * @api
  */
-class CsvFileLoader extends ArrayLoader
+class CsvFileLoader extends ArrayLoader implements LoaderInterface
 {
     private $delimiter = ';';
     private $enclosure = '"';

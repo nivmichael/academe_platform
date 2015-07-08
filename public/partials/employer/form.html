@@ -1,0 +1,28 @@
+<!-- form.html -->
+
+<div class="row" ng-model="user">
+<div class="">
+    <div id="form-container">
+
+<!--ng-hide="a =='job_details' || a == 'personalInfo'"
+-->
+           <ul class="nav nav-sidebar col-md-4">
+            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi" >
+                <li ui-sref-active="active" ui-sref=".{{a}}">{{a}}</li>
+               
+            </div>
+          </ul>
+  
+        <form id="signup-form" role="form" ng-submit="saveUser(user)" >
+        	
+			 <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center">
+			                <div ui-view="{{a}}" class="col-md-8"></div>
+			 </div>
+		
+        </form>
+
+    </div>
+
+</div>
+</div>
+ 

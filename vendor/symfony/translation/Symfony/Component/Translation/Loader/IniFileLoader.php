@@ -20,7 +20,7 @@ use Symfony\Component\Config\Resource\FileResource;
  *
  * @author stealth35
  */
-class IniFileLoader extends ArrayLoader
+class IniFileLoader extends ArrayLoader implements LoaderInterface
 {
     /**
      * {@inheritdoc}

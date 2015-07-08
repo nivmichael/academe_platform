@@ -1,14 +1,18 @@
+
 <!DOCTYPE html>
 <html ng-app="acadb" lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<link rel="icon" href="../img/acadeMe.ico">
+	<title>AcadeME</title>
 		<!-- jquery -->
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<!-- angular -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+			<script src="../lib/ui-router.js"></script>
+		<script src="lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- laravel app css -->
@@ -35,7 +39,7 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="lib/app.js"></script>
+	<script src="lib/app.js"></script>	
 	<script src="lib/controllers.js"></script>
 	<script src="lib/services.js"></script>
 	<script src="lib/directives.js"></script>
@@ -44,10 +48,10 @@
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
-	<script src="lib/ng-order-object-by.js"></script>
+	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 
 	
-
+<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>
 	
 	
 </body>

@@ -53,17 +53,21 @@ class DocParamController extends Controller {
 	 */
 	public function store()
 	{
-		$id = Input::get('id');
+		$all = Input::all();
+		$all = $all['user'];
+		$id = $all['id'];
 		$param = DocParam::find($id);
 		if($param){
 			$param->id = $id;	
 		}else{
 			$param = new DocParam();
 		}
-		$name = Input::get('name');
-		$doc_type_id = Input::get('doc_type_id');
+		$name = $all['name'];
+		$slug = $all['slug'];
+		$doc_type_id = $all['doc_type_id'];
 		
 		$param->name = $name;
+		$param->slug = $slug;
 		$param->doc_type_id = $doc_type_id;
 		$param->save();
 		

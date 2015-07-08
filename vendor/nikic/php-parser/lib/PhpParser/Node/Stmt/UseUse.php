@@ -5,13 +5,12 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 use PhpParser\Error;
 
+/**
+ * @property Node\Name $name  Namespace/Class to alias
+ * @property string    $alias Alias
+ */
 class UseUse extends Node\Stmt
 {
-    /** @var Node\Name Namespace, class, function or constant to alias */
-    public $name;
-    /** @var string Alias */
-    public $alias;
-
     /**
      * Constructs an alias (use) node.
      *
@@ -31,12 +30,12 @@ class UseUse extends Node\Stmt
             ));
         }
 
-        parent::__construct(null, $attributes);
-        $this->name = $name;
-        $this->alias = $alias;
-    }
-
-    public function getSubNodeNames() {
-        return array('name', 'alias');
+        parent::__construct(
+            array(
+                'name'  => $name,
+                'alias' => $alias,
+            ),
+            $attributes
+        );
     }
 }

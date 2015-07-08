@@ -59,30 +59,30 @@ class PdoCaster
 
     public static function castPdo(\PDO $c, array $a, Stub $stub, $isNested)
     {
-        $attr = array();
+        $a = array();
         $errmode = $c->getAttribute(\PDO::ATTR_ERRMODE);
         $c->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        foreach (self::$pdoAttributes as $k => $v) {
-            if (!isset($k[0])) {
-                $k = $v;
-                $v = array();
+        foreach (self::$pdoAttributes as $attr => $values) {
+            if (!isset($attr[0])) {
+                $attr = $values;
+                $values = array();
             }
 
             try {
-                $attr[$k] = 'ERRMODE' === $k ? $errmode : $c->getAttribute(constant('PDO::ATTR_'.$k));
-                if ($v && isset($v[$attr[$k]])) {
-                    $attr[$k] = new ConstStub($v[$attr[$k]], $attr[$k]);
+                $a[$attr] = 'ERRMODE' === $attr ? $errmode : $c->getAttribute(constant("PDO::ATTR_{$attr}"));
+                if ($values && isset($values[$a[$attr]])) {
+                    $a[$attr] = new ConstStub($values[$a[$attr]], $a[$attr]);
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception $m) {
             }
         }
 
         $m = "\0~\0";
-        $a += array(
+        $a = (array) $c + array(
             $m.'inTransaction' => method_exists($c, 'inTransaction'),
             $m.'errorInfo' => $c->errorInfo(),
-            $m.'attributes' => $attr,
+            $m.'attributes' => $a,
         );
 
         if ($a[$m.'inTransaction']) {

@@ -1,20 +1,10 @@
-<!-- <table class="table table-bordered table-hover table-condensed">
-	<th ng-repeat="col in columns">
-		{{col}}
-	</th>
-	<tr ng-repeat="param in params" >
-	 <td ng-repeat="key in notSorted(param)" ng-init="value = param[key]" ng-show='!$last'>
-      
-          {{value}}
-        
-	 </td>
-    </tr> 
-</table> -->
 
 
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
+		
+	
 		<tr ng-repeat="param in params">
 	    	<td style="white-space: nowrap">
 	        	<!-- form -->
@@ -27,13 +17,13 @@
 		          		<button class="btn btn-danger" ng-click="deleteParam(param,$index)">del</button>
 		        	</div>  
 	       	</td>
-	       	<td ng-repeat="(key,val) in notSorted(param)">
+	       	<td ng-repeat="(key,val) in param">
 	        	<!-- editable username (text with validation) -->
-	        	<span editable-select="param.{{val}}" ng-if="selects.indexOf(val)> -1" id="{{val}}" e-name="{{val}}" e-form="rowform" onshow="loadGroups(val)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[val]" e-required>
-	          		{{ param[val] || 'empty' }}
+	        	<span editable-select="param.{{key}}" ng-if="selects.indexOf(key)> -1" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[key]" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-text="param.{{val}}" ng-if="selects.indexOf(val) < 0" id="{{val}}" e-name="{{val}}" e-form="rowform" e-class="form-control" e-required>
-	          		{{ param[val] || 'empty' }}
+	         	<span editable-text="param.{{key}}" ng-if="selects.indexOf(key) < 0" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" e-required>
+	          		{{ val || 'empty' }}
 	         	</span>
 	         
 	      	</td>

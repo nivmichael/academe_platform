@@ -1,3 +1,4 @@
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -10,7 +11,7 @@
 .form-control {
 
 	max-width:350px;
-	
+	display: inline-block; 
 
 }
 .center{
@@ -52,7 +53,9 @@
 	padding:0;
 	margin:0;
 }
-
+/*.nav>li{
+	width:200px;
+}*/
 .navbar-default .navbar-brand{
 
 	color:white;
@@ -80,6 +83,7 @@
 
 .navbar-brand{
 	border-right:2px solid white;
+	  width: 285px;
 	
 }
 
@@ -91,14 +95,23 @@
 	display:inline-block;
 	min-width:130px;
 	 font-weight: bold;
+	  text-align: left;
+	  
+}
+.param_input{
+	width:371px;
 	
+
+}
+.formDiv{
+	margin-bottom:5px;
 }
 .classy{
 	background-color:black;
 }
 .formParameter{
 	margin-bottom:3px;
-	height:34px;
+	
 	word-wrap: break-word
 	width:500px;
 	
@@ -109,6 +122,307 @@
 	  overflow: hidden;
 	
 }
-.panel-heading{
+.editable-wrap .editable-input {
+	width:100px;
+}
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: relative;
+    
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.sidebar {
+     position: relative;
+  
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+  border-right: 1px solid #FFF;
+}
+.nav-sidebar {
 	
+}
+.nav-sidebar > li > a {
+  padding:4px;
+  padding-left:10px;
+  font-size:14px;
+  text-align:middle;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.mainView.ng-enter {
+ 
+  opacity: 0;
+  -webkit-transition: 1s;
+   -moz-transition: 1s;
+}
+
+.mainView.ng-leave {
+  opacity: 1;
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+}
+
+.mainView.ng-enter.ng-enter-active {
+  opacity: 1;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+}
+
+.mainView.ng-leave.ng-leave-active {
+  opacity: 0;
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+}
+.text-center{
+	  text-align: center;
+}
+.panel-default{
+
+ border-color:white!important;
+}
+.panel-heading{
+
+border:none;
+}
+
+
+.openAccordion{
+	
+}
+.closeAccordion{
+	
+}
+.userHomeFooterNavUl{
+	 	  display: inline-block;
+	 	  position:absolute;
+	 	  bottom:0px;
+	 	  right:0px;
+	 	 
+	 	
+}
+.userHomeFooterNavLi {
+	margin-right:1px;
+	  border-radius: 2px!important;
+	background-color:#6d6f70;
+	color:white;	
+	border-radius:1px;
+	font-size:20px;	
+	padding:5px 50px;;
+	text-align: center;	
+    display: inline;    
+    text-align: center;
+    cursor:pointer;
+  
+}
+.modal-content{
+	width:90%;
+	
+}	
+
+.sideNav{
+	height: 1200px;
+
+}
+.statusBtn{
+	color:#4E75AD;
+	background-color:white;
+}
+.statusBtn:hover{
+	color:#4E75AD;
+	background-color:white;
+}
+.statusBtn:active{
+	color:#4E75AD;
+	background-color:white!important;
+}
+.statusBtn:focus{
+	color:#4E75AD;
+	background-color:white!important;
+}
+.dropdown-menu>ul{
+	text-align:center;
+
+}
+.dropdown-menu>li:hover{
+	background-color:#4E75AD!important;
+	color:white;
+}
+.modal-dialog {
+  position:absolute;
+  top:50% !important;
+  transform: translate(0, -50%) !important;
+  -ms-transform: translate(0, -50%) !important;
+  -webkit-transform: translate(0, -50%) !important;
+  margin:auto 5%;
+  width:90%;
+  height:80%;
+}
+.modal-content {
+  min-height:100%;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:-50%;
+  right:0; 
+}
+.modal-body {
+  position:absolute;
+  top:45px; // height of header
+  bottom:45px;  // height of footer
+  left:-50%;
+  right:0;
+  overflow-y:auto;
+}
+.modal-footer {
+  position:absolute;
+  bottom:0;
+  left:-50%;
+  right:0;
+}
+
+
+.thumbnail{
+
+	height:200;
+	max-height:200px;
+	min-height:200px;
+
+	
+}
+.thumbnail>img{
+
+	margin-bottom:2px;
+	
+}
+.thumbnail_title{
+	display:inline-block;
+	min-height:40px;
+}
+.delBtnBtn:hover{
+	background-color:#D43F3A;
+	position:absolute!important;
+	bottom:0px;
+}
+.delBtnIcon:hover{
+	
+	
+	background-color:#D43F3A;
+
+}
+.btn-danger {
+background-color:#D43F3A;
+}
+.delBtnIcon{
+	
+	bottom:0px;
+	margin:1px;
+	color:white;
+	background-color:#D43F3A;
+	border:0px;
+}
+
+.delBtn:hover{
+	color:white;
+	background-color:transparent;
+	border:0px;
+}
+.btn-group, .btn-group-vertical {
+  position: absolute!important;
+  bottom: 24px;
+  /* display: inline-block; */
+  /* vertical-align: middle; */
+}
+.galleryDiv{
+	border: 1px dashed rgb(78, 117, 173);
+  height: auto;
+	width:100%;
+	
+}
+.modal-content{
+	padding:20px;
+}	
+
+.dropClass {
+  
+  border-width: 2px;
+  margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.dropClass {
+  color: #ccc;
+ 
+  line-height: 200px;
+  text-align: center
+}
+.dragNdrop{
+  line-height: 50px;
+  text-align: center
+	
+}
+
+.privacyPolicy {
+	border:1px solid black;
+	padding:10px;
+	max-height:100px;
+	overflow:auto;
+	margin:10px; auto;
+}
+
+.docParamLi{
+	background-color:grey;
+	margin-bottom:2px;
+	width:190px;
+}
+.docParamLi>a {
+	color:white;
+	
+}
+.docParamLi>a:hover,
+.docParamLi>a:focus{
+	background-color:#4E75AD!important;
+}
+.navbar-default .navbar-nav>.dropdown>a:hover .caret, .navbar-default .navbar-nav>.dropdown>a:focus .caret {
+  border-top-color: white;
+  border-bottom-color: white;
+}
+.navbar-default .navbar-nav>.dropdown>a .caret {
+  border-top-color: white;
+  border-bottom-color:white;
+}
+.editBtn{
+	float:right;
+}
+.formDiv{
+	float: left;
 }

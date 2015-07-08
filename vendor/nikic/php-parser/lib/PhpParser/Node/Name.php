@@ -4,11 +4,11 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
-editableFormclass Name extends NodeAbstract
+/**
+ * @property array $parts Parts of the name
+ */
+class Name extends NodeAbstract
 {
-    /** @var string[] Parts of the name */
-    public $parts;
-
     /**
      * Constructs a name node.
      *
@@ -20,12 +20,12 @@ editableFormclass Name extends NodeAbstract
             $parts = explode('\\', $parts);
         }
 
-        parent::__construct(null, $attributes);
-        $this->parts = $parts;
-    }
-
-    public function getSubNodeNames() {
-        return array('parts');
+        parent::__construct(
+            array(
+                'parts' => $parts,
+            ),
+            $attributes
+        );
     }
 
     /**

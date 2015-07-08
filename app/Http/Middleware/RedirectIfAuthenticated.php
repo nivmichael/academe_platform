@@ -33,9 +33,21 @@ class RedirectIfAuthenticated {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->check() )
+		if ($this->auth->check())
 		{
-			return new RedirectResponse(url('home'));
+			
+			
+			
+			if ($request->user()->subtype == 'employer')
+	        {
+	            return redirect('/employer#/employer');
+	        }
+	        else if($request->user()->subtype == 'jobSeeker')
+	        {
+	        	 return redirect('/home#/home');
+	        }
+
+			return new RedirectResponse(url('/'));
 		}
 
 		return $next($request);

@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
-class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface
+class LoggingTranslator implements TranslatorInterface
 {
     /**
      * @var TranslatorInterface
@@ -82,14 +82,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface
     public function getLocale()
     {
         return $this->translator->getLocale();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCatalogue($locale = null)
-    {
-        return $this->translator->getCatalogue($locale);
     }
 
     /**

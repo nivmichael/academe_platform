@@ -2,6 +2,7 @@
 
 @section('content')
 <!-- navbar -->
+<div >	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -16,13 +17,13 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#/type_user">type_user</a></li>
-					<li><a href="#/doc_type">doc_type</a></li>
-					<li><a href="#/doc_param">doc_param</a></li>
-					<li><a href="#/param">param</a></li>
-					<li><a href="#/param_type">param_type</a></li>
-					<li><a href="#/param_value">param_value</a></li>
-					<li><a href="#/sys_param_values">sys_param_value</a></li>
+					<li><a ui-sref="type_user">type_user</a></li>
+					<li><a ui-sref="doc_type">doc_type</a></li>
+					<li><a ui-sref="doc_param">doc_param</a></li>
+					<li><a ui-sref="param">param</a></li>
+					<li><a ui-sref="param_type">param_type</a></li>
+					<li><a ui-sref="param_value">param_value</a></li>
+					<li><a ui-sref="sys_param_values">sys_param_values</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -42,7 +43,16 @@
 			</div>
 		</div>
 	</nav>
-<div ng-view="" class="container">
-	admin
-</div>
+  <div ui-view="type_user" ></div>
+  <div ui-view="doc_type" ></div>
+  <div ui-view="doc_param" ></div>
+  <div ui-view="param" ></div>
+  <div ui-view="param_type" ></div>
+  <div ui-view="param_value" ></div>
+  <div ui-view="sys_param_values" ></div>
+</div>	
+
 @endsection
+	
+			              
+			

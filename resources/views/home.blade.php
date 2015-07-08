@@ -2,6 +2,7 @@
 
 @section('content')
 <!-- navbar -->
+<div ng-controller="UserHomeController">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -11,7 +12,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">My Profile </a>
+				<a class="navbar-brand" href="/home#/">My Profile </a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -25,7 +26,7 @@
 						<li><a href="[[url('/auth/register') ]]">Register</a></li>
 					@else
 						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">[[ Auth::user()->first_name ]] <span class="caret"></span></a>
+							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personalInfo.first_name}}<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="[[ url('/') ]]">Edit Profile</a></li>
 								<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
@@ -36,7 +37,14 @@
 			</div>
 		</div>
 	</nav>
-<div ng-view="" class="container">
-	home 
+<div class="container-fluid" >
+	
+
+<div ui-view="home">
+ 	 		{{user.personalInfo.first_name}} please wait...						
+</div>
+
+
+</div>
 </div>
 @endsection

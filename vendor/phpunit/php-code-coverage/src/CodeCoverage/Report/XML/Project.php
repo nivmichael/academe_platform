@@ -32,8 +32,7 @@ class PHP_CodeCoverage_Report_XML_Project extends PHP_CodeCoverage_Report_XML_No
 
         $this->setContextNode(
             $dom->getElementsByTagNameNS(
-                'http://schema.phpunit.de/coverage/1.0',
-                'project'
+                'http://schema.phpunit.de/coverage/1.0', 'project'
             )->item(0)
         );
     }
@@ -46,15 +45,13 @@ class PHP_CodeCoverage_Report_XML_Project extends PHP_CodeCoverage_Report_XML_No
     public function getTests()
     {
         $testsNode = $this->getContextNode()->getElementsByTagNameNS(
-            'http://schema.phpunit.de/coverage/1.0',
-            'tests'
+            'http://schema.phpunit.de/coverage/1.0', 'tests'
         )->item(0);
 
         if (!$testsNode) {
             $testsNode = $this->getContextNode()->appendChild(
                 $this->getDom()->createElementNS(
-                    'http://schema.phpunit.de/coverage/1.0',
-                    'tests'
+                    'http://schema.phpunit.de/coverage/1.0', 'tests'
                 )
             );
         }

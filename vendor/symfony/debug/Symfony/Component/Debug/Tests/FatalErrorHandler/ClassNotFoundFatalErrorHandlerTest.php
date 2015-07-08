@@ -36,7 +36,6 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideLegacyClassNotFoundData
-     * @group legacy
      */
     public function testLegacyHandleClassNotFound($error, $translatedMessage, $autoloader)
     {

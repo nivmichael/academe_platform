@@ -1,0 +1,32 @@
+ <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
+	 	     <div class="col-md-12">
+		 	    
+		 	    
+		 	    
+		 	     <div ng-repeat="(k,v) in user" class="formParameter col-md-6" class="">
+		 	     	
+		 	     	<div ng-repeat="(m,n) in v">
+			 	     	<span >
+				 	     	<span class="param_label col-md-2">
+				 	     	   {{m}}:
+				 	     	</span>
+			 	     	</span>
+			 	     	<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{k}}.{{m}}" e-name="user.{{k}}.{{m}}">
+			 	     	 	{{n}}
+			 	     	</span>
+		 	     	</div> 
+		 	     </div>	 
+	 	     </div>		
+	 	     	 
+	 	     		
+	 	     		
+	 	     		 	
+			 	 <div class="buttons">
+			 	 	
+	      			<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
+		     		<span ng-show="editableForm.$visible">
+			       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+			       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+		      		</span>
+		    	</div>
+		    </form>

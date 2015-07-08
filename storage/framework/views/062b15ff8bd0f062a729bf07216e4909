@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<link rel="shortcut icon" href="img/acadeMe.ico">
@@ -16,13 +17,13 @@
 		<div class="container-fluid">
 	<div class="container">
 		<div class="col-md-3 col-sm-3 col-xs-3"></div>
-			<img class="col-md-6 col-sm-6 col-xs-6" src="../img/bgu-backround_760x760.png">
+			<img class="col-md-6 col-sm-6 col-xs-6" src="../img/usandiego.png">
 		<div class="col-md-3 col-sm-3 col-xs-3"></div>
 		<div class="clearfix"></div>
-		<a href="/students"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
-		<a href="/interns"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>
-		<a href="/graduates"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/graduate_login_hover.png"></a>
-		<a href="/employers"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/employer_login_hover.png"></a>
+		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
+		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>
+		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/graduate_login_hover.png"></a>
+		<a href="/auth/login_employer"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/employer_login_hover.png"></a>
 
 	</div>
 	

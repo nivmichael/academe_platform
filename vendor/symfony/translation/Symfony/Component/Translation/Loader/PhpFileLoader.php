@@ -22,7 +22,7 @@ use Symfony\Component\Config\Resource\FileResource;
  *
  * @api
  */
-class PhpFileLoader extends ArrayLoader
+class PhpFileLoader extends ArrayLoader implements LoaderInterface
 {
     /**
      * {@inheritdoc}
