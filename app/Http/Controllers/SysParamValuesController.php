@@ -90,7 +90,7 @@ class SysParamValuesController extends Controller {
 			//check if phot or partams or whateva iexists..if not then insert new
 			
 			$photo->doc_type = '';
-			$photo->ref_user_id = $userId;
+			$photo->ref_id = $userId;
 			$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
 			$photo->iteration = null;
 			
@@ -121,7 +121,7 @@ class SysParamValuesController extends Controller {
 	{
 		$id = Auth::user()->id;
 		$param_id = DB::table('param')->where('name', 'profile_pic')->pluck('id');										 
-		$profilePic =  DB::table('sys_param_values')->where('ref_user_id',$id)
+		$profilePic =  DB::table('sys_param_values')->where('ref_id',$id)
 													->update(['value_short'=>$_POST['profilePic'],'param_id'=>$param_id]);
 		
 		return Response::json($id);
@@ -172,15 +172,12 @@ class SysParamValuesController extends Controller {
 		}else{
 				
 			$sys_param_value->doc_type	  = $all['doc_type'];
-			$sys_param_value->ref_user_id = $all['ref_user_id'];
+			$sys_param_value->ref_id      = $all['ref_id'];
 			$sys_param_value->param_id	  = $all['param_id'];
 			$sys_param_value->iteration   = $all['iteration'];
 			$sys_param_value->value_short = $all['value_short'];
 			$sys_param_value->value_long  = $all['value_long'];
 			$sys_param_value->value_ref   = $all['value_ref'];
-			// $sys_param_value->created_at   = $all['created_at'];
-			// $sys_param_value->updated_at   = $all['updated_at'];
-			//$sys_param_value->save();
 		}
 		$sys_param_value->save();
 
@@ -196,7 +193,7 @@ class SysParamValuesController extends Controller {
 	 */
 	public function show($id)
 	{
-		$sysParamValues = SysParamValues::where('ref_user_id','=', $id)->get();
+		$sysParamValues = SysParamValues::where('ref_id','=', $id)->get();
 		
 		return Response::json($sysParamValues);
 	}
@@ -255,7 +252,7 @@ class SysParamValuesController extends Controller {
 		$path = $_POST['path'];	
 		
 
-		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_user_id', '=', $id)->delete();
+		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_id', '=', $id)->delete();
 		return Response::json($path);
 	}
 

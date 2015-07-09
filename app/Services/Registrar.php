@@ -110,17 +110,17 @@ foreach($obj as $doc_param => $values) {
 						};
 						
 						
-						$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+						$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $personalInfo->id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 						if(!$update) {
 							
-							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->insert(['doc_type'=>1,'ref_user_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $personalInfo->id)->insert(['doc_type'=>1,'ref_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 						}
 					} else {
 					
 				
-							$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id',  $personalInfo->id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
+							$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id',  $personalInfo->id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
 							if(!$update) {
-							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->insert(['doc_type'=>1,'ref_user_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
+							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $personalInfo->id)->insert(['doc_type'=>1,'ref_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
 						}
 					}
 				}
@@ -186,17 +186,17 @@ return $personalInfo;
 						// $value_ref = $param_value;
 // 						
 // 						
-						// $update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $param->id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+						// $update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $param->id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 						// if(!$update) {
 // 							
-							// DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $param->id)->insert(['doc_type'=>$param->type,'ref_user_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+							// DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $param->id)->insert(['doc_type'=>$param->type,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 						// }
 					// } else {
 // 					
 // 				
-							// $update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
+							// $update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
 							// if(!$update) {
-							// DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $param->id)->insert(['doc_type'=>$param->type,'ref_user_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
+							// DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $param->id)->insert(['doc_type'=>$param->type,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
 						// }
 					// }
 				// }

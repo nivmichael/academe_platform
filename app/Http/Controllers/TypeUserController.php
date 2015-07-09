@@ -42,7 +42,7 @@ class TypeUserController extends Controller {
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-											   LEFT JOIN type_user ON sys_param_values.ref_user_id = type_user.id
+											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
 											   WHERE doc_type_id = 1 AND doc_param.doc_sub_type = 'jobSeeker'"));
 		if(!Auth::user()){
 			$userPersonalInfo = Schema::getColumnListing('type_user');
@@ -77,7 +77,7 @@ class TypeUserController extends Controller {
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-											   LEFT JOIN type_user ON sys_param_values.ref_user_id = type_user.id
+											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
 											   WHERE doc_type_id = 1 AND doc_param.doc_sub_type = 'employer'"));
 		if(!Auth::user()){
 			$userPersonalInfo = Schema::getColumnListing('type_user');
@@ -211,12 +211,12 @@ class TypeUserController extends Controller {
 					$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');					
 					if(!$value_ref) {						
 								$value_ref = $param_value;								
-								$sys_param_id = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $id)->pluck('id');		
+								$sys_param_id = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->pluck('id');		
 								if($param_value){
 									$update = DB::table('sys_param_values')->where('id', $sys_param_id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 								}							
 					} else {
-							$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
+							$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
 					}
 				}
 			}
@@ -225,48 +225,7 @@ class TypeUserController extends Controller {
 	}
 	
 	
-	// public function adminStore()
-	// {
-		// $all = Input::all();
-// 		
-		// $allPersonalInfo = $all;
-// 		
-	// //personalInfo //no dynamic parameters	
-		// $id = $allPersonalInfo['id'];
-// 	
-		// $param = User::find($id);
-		// if($param){		
-				// $param->id = $id;	
-		// }else{
-			// $param = new User();
-		// }
-		// $param->type       = $allPersonalInfo['type'];
-		// $param->email      = $allPersonalInfo['email'];
-		// $param->password   = Hash::make(Input::get('password'));    
-		// //$param->password_new = Input::get('password_new');
-		// $param->first_name = $allPersonalInfo['first_name'];
-		// $param->last_name  = $allPersonalInfo['last_name'];
-		// $param->street_1   = $allPersonalInfo['street_1'];
-		// $param->street_2   = $allPersonalInfo['street_2'];
-		// $param->city 	   = $allPersonalInfo['city'];
-		// $param->state      = $allPersonalInfo['state'];
-		// $param->zipcode    = $allPersonalInfo['zipcode'];
-		// $param->country    = $allPersonalInfo['country'];
-		// $param->phone_1    = $allPersonalInfo['phone_1'];
-		// $param->phone_2    = $allPersonalInfo['phone_2'];
-		// $param->mobile     = $allPersonalInfo['mobile'];
-// 		
-		// $param->date_of_birth = new DateTime($allPersonalInfo['date_of_birth']);
-		// $param->date_of_birth->format('Y-m-d');
-		// $param->last_login = new DateTime('now');
-// 		
-		// $param->registration   = $allPersonalInfo['registration'];
-		// $param->send_newsletters  = $allPersonalInfo['send_newsletters'];
-		// $param->save();
-// 		
-// // 	
-		// return Response::json($param);
-	// }
+
 	
 	/**
 	 * Display the specified resource.
@@ -288,7 +247,7 @@ class TypeUserController extends Controller {
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_user ON sys_param_values.ref_user_id = type_user.id WHERE type_user.id = ".$id));
+										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id WHERE type_user.id = ".$id));
 
 		$user['personalInfo'] = $userPersonalInfo;
 		foreach($params as $k=>$v) {
@@ -302,7 +261,7 @@ class TypeUserController extends Controller {
 		}		
 		// $param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');										 
 		
-		// $images  =  DB::table('sys_param_values')->where('ref_user_id',$id)
+		// $images  =  DB::table('sys_param_values')->where('ref_id',$id)
 												 // ->where('param_id',$param_id)
 												 // ->whereNotNull('value_short')->get();
 // 		
@@ -314,7 +273,7 @@ class TypeUserController extends Controller {
 	public function getProfilePic()
 	{
 		$param_id =  DB::table('param')->where('name', 'profile_pic')->pluck('id');										 
-		$profilePic =  DB::table('sys_param_values')->where('ref_user_id',$id)
+		$profilePic =  DB::table('sys_param_values')->where('ref_id',$id)
 													->where('param_id',$param_id)->first();
 		return Response::json($profilePic);
 	}

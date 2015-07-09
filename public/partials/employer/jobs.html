@@ -1,3 +1,10 @@
-<div ng-repeat="(j,k) in allJobs">
-	{{j}}
+<div ng-repeat="(k,v) in allJobs" style="border:1px solid black;">	
+	
+	
+	<div ng-repeat="(m,n) in v" >	
+		<span class="param_label">
+			{{m +': '}}
+		</span>
+		{{n}}
+	</div>
 </div>

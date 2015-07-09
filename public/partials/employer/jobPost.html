@@ -1,19 +1,20 @@
 <h1>Post A New Job</h1>
-<form id="signup-form" role="form" ng-submit="savePost(post)" class="col-md-8">
+
+<form id="signup-form" role="form"  class="col-md-8" ng-model="post">
 	<div ng-repeat="(k,v) in jobPost" class="formDiv">
 		<div ng-repeat="(key,val) in v" class="formDiv">	
 			<span class="param_label col-md-2">		
 				{{key}}
 			</span>
 			<span  class="param_input col-md-10">					
-				<input type='text' class="form-control"  ng-model="post[key]">
+				<input type='text' class="form-control" name="jobPost[k][key]" ng-model="jobPost[k][key]">
 			</span>
-	{{post[key]}}
+	{{jobPost[k][key]}}
 		</div>
 	</div>		
 	<div class="col-xs-6 col-xs-offset-3" >
 	
-	    <a ng-click="savePost(user)" class="btn btn-block btn-info">
+	    <a ng-click="savePost(jobPost)" class="btn btn-block btn-info">
 	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 

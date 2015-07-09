@@ -226,7 +226,7 @@ angular.module('acadb.controllers', [])
 	$.getJSON('/getAllJobs', function(data){
     $scope.$apply(function(){
         $scope.allJobs = data;
-         
+         console.log($scope.allJobs);
        
     });
 
@@ -537,7 +537,7 @@ $scope.getColumns = function(){
   
   
    $scope.savePost = function(post) {
-  
+  console.log(post);
    $http.post('/savePost', {
      post:post,
    	_token:CSRF_TOKEN,

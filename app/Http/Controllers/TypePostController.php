@@ -26,64 +26,61 @@ class TypePostController extends Controller {
 	 */
 	public function index()
 	{
-	
-		$users = DB::table('type_post')
+		$postsArr=array();
+		$posts = DB::table('type_post')
 		->get();		
-		return Response::json($users);
+		
+		foreach($posts as $key=>$postParams){
+			// print_r($posts);
+			$sys_param_values = DB::table('sys_param_values')->where('ref_id','=',$postParams->id)->get();
+			
+			foreach ($sys_param_values as $value) {
+
+				$paramId      = $value->param_id;
+	 			$value 	      = $value->value_short;
+				$paramName    = DB::table('param')->where('id','=',$paramId)->pluck('name');
+				$docParamId   = DB::table('param')->where('name','=',$paramName)->pluck('doc_param_id');
+				///print_r($docParamId);die;
+				$docParamName   = DB::table('doc_param')->where('id','=',$docParamId)->pluck('name');
+				$post[$docParamName][$paramName] = $value;
+				
+			}
+				$postsArr[] = $post;
+		}
+
+		return Response::json($postsArr);
 	}
 	
 	public function savePost()
 	{
-		
+		$userId = Auth::user()->id;			
 		$all = Input::all();
-		$personalInfo = $all['post']['personalInfo'];
-	
-
 		foreach($all['post'] as $doc_param => $param_object){
 			foreach ($param_object as $param_key => $param_value) {
 				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
 
-		
 		foreach($obj as $doc_param => $values) {
-			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->pluck('id');
+			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 2)->pluck('id');
 			foreach ($values as $param_name => $param_value) {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
-				
 				if ($param_id) {
 					//checking where the values come from? from param_value? or from short/long?
 					$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
-					
 					if(!$value_ref) {
-						
 						if($param_value){
 							$value_ref = $param_value;
 						} else {
 							$value_ref = NULL;
 						};
-						
-						
-					//	$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
-						//if(!$update) {
-							
-							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->insert(['doc_type'=>2,'ref_user_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
-						// }
-					// } else {
-					
-				
-						//	$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id',  $personalInfo->id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
-							//if(!$update) {
-							DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_user_id', $personalInfo->id)->insert(['doc_type'=>2,'ref_user_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
-						//}
+							$postId = DB::table('type_post')->insertGetId(['user_id'=>$userId,'title'=>'titlex','description_short'=>'desc_short','authorized'=>1]);								
+									  DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$postId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 					}
 				}
 			}
 		}
-
-
-
-		return Response::json($all);
+		return Response::json($obj);
 	}
 	
 	public function jobPostColumnIndex()
@@ -97,16 +94,14 @@ class TypePostController extends Controller {
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-											   LEFT JOIN type_user ON sys_param_values.ref_user_id = type_user.id 
+											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
 											   WHERE doc_type_id = 2"));
 
 		foreach($params as $k=>$v) {
 			$paramName = $v->paramName;		
 			$post[$v->docParamName][$paramName] = $v->value = '';
 		}	
-		
-		
-				
+
 		return Response::json($post);
 	}
 
