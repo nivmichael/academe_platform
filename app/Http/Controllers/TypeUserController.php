@@ -248,7 +248,8 @@ class TypeUserController extends Controller {
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id WHERE type_user.id = ".$id));
-
+		
+		
 		$user['personalInfo'] = $userPersonalInfo;
 		foreach($params as $k=>$v) {
 			$paramName = $v->paramName;
@@ -259,11 +260,11 @@ class TypeUserController extends Controller {
 			}
 			$user[$v->docParamName][$paramName] = $value;
 		}		
-		// $param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');										 
+		//$param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');										 
 		
-		// $images  =  DB::table('sys_param_values')->where('ref_id',$id)
-												 // ->where('param_id',$param_id)
-												 // ->whereNotNull('value_short')->get();
+	//	$images  =  DB::table('sys_param_values')->where('ref_id',$id)
+											//	 ->where('param_id',$param_id)
+										//		 ->whereNotNull('value_short')->get();
 // 		
 		// $user['files']['gallery'] = $images;		
 		return Response::json($user);

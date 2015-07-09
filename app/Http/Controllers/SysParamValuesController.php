@@ -41,7 +41,9 @@ class SysParamValuesController extends Controller {
 	
 	public function upload()
 	{
+		
 		$param_ref = Input::all();
+		
 		$param_ref = $param_ref['param_ref'];
 		$userId = Auth::user()->id;
 		$path = 'uploads/userimgs/'.$userId;
@@ -91,6 +93,7 @@ class SysParamValuesController extends Controller {
 			
 			$photo->doc_type = '';
 			$photo->ref_id = $userId;
+		//	$docParamId = DB::table('doc_param')->where('name','')->pluck('id');
 			$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
 			$photo->iteration = null;
 			
@@ -137,22 +140,22 @@ class SysParamValuesController extends Controller {
 		//
 	}
 	
-	public function saveParam()
-	{
-		$all = Input::all();
-		$array = array();
-		foreach($all as $key=>$value){
-			$param = Param::where('name','=', $key)->first();
-			$paramVal = ParamValue::where('value','=', $value)->first();
-			$sysParamValue=SysParamValues::where('param_id','=',$param['id'])->first();
-			$sysParamValue->value_ref = $paramVal['id'];
-			$sysParamValue->save();
-			$array[]=$sysParamValue;
-		}
-	 	//$sys_param_value = SysParamValues::find($param_id);
-		
-		return Response::json($array);
-	}
+	// public function saveParam()
+	// {
+		// $all = Input::all();
+		// $array = array();
+		// foreach($all as $key=>$value){
+			// $param = Param::where('name','=', $key)->first();
+			// $paramVal = ParamValue::where('value','=', $value)->first();
+			// $sysParamValue=SysParamValues::where('param_id','=',$param['id'])->first();
+			// $sysParamValue->value_ref = $paramVal['id'];
+			// $sysParamValue->save();
+			// $array[]=$sysParamValue;
+		// }
+	 	// //$sys_param_value = SysParamValues::find($param_id);
+// 		
+		// return Response::json($array);
+	// }
 	/**
 	 * Store a newly created resource in storage.
 	 *

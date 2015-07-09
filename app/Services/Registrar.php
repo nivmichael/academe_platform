@@ -37,8 +37,7 @@ class Registrar implements RegistrarContract {
 
 		$obj = false;
 		$all = Input::all();
-       	
-		
+    
 		// foreach($all as $p=>$v) {
 // 			
 			// $explode = explode("__",$p);
@@ -49,6 +48,7 @@ class Registrar implements RegistrarContract {
 			
 			// 'type'             => $data['type'],
 			'subtype'     	   => $data['user']['personalInfo']['subtype'],
+			'status'     	   => $data['user']['personalInfo']['status'],
 			'first_name'       => $data['user']['personalInfo']['first_name'],
 			'last_name'        => $data['user']['personalInfo']['last_name'],
 			'email'            => $data['user']['personalInfo']['email'],
@@ -70,13 +70,13 @@ class Registrar implements RegistrarContract {
 			
 			
 		]);
-		
 		$obj['personalInfo'] = $personalInfo['original'];
-		foreach($data['user'] as $doc_param => $param_object){
+		foreach($all['user'] as $doc_param => $param_object){
 			foreach ($param_object as $param_key => $param_value) {
 				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
+		//var_dump($obj);die;
 // 		
 			// foreach($data as $k=>$v) {
 				// if($k != '_token') {

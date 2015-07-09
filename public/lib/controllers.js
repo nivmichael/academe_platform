@@ -247,6 +247,7 @@ angular.module('acadb.controllers', [])
 
 $scope.flowOp = function(key){
 		console.log(key);
+		console.log('key');
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 		
 	};

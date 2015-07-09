@@ -26,16 +26,14 @@ class TypePostController extends Controller {
 	 */
 	public function index()
 	{
+		$post = array();
 		$postsArr=array();
 		$posts = DB::table('type_post')
 		->get();		
 		
 		foreach($posts as $key=>$postParams){
-			// print_r($posts);
-			$sys_param_values = DB::table('sys_param_values')->where('ref_id','=',$postParams->id)->get();
-			
-			foreach ($sys_param_values as $value) {
-
+			$sys_param_values = DB::table('sys_param_values')->where('ref_id','=',$postParams->id)->get();			
+			foreach ($sys_param_values as $value) {			
 				$paramId      = $value->param_id;
 	 			$value 	      = $value->value_short;
 				$paramName    = DB::table('param')->where('id','=',$paramId)->pluck('name');
@@ -45,8 +43,13 @@ class TypePostController extends Controller {
 				$post[$docParamName][$paramName] = $value;
 				
 			}
-				$postsArr[] = $post;
+				// $logo_param_id = DB::table('param')->where('name','company_logo')->pluck('id');
+				// $company_logo  = DB::table('sys_param_values')->where('id',$logo_param_id)->get();
+				// $postsArr[] = $post;
 		}
+		//var_dump($company_logo);die;
+
+
 
 		return Response::json($postsArr);
 	}

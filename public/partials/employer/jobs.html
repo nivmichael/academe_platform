@@ -1,10 +1,19 @@
-<div ng-repeat="(k,v) in allJobs" style="border:1px solid black;">	
+<div ng-repeat="(key,job) in allJobs" class="col-md-6" style="border:1px solid black;">	
 	
 	
-	<div ng-repeat="(m,n) in v" >	
-		<span class="param_label">
-			{{m +': '}}
+	<div ng-repeat="(docParamKey,docParamName) in job" >	
+		
+		<span>
+			<img ng-src="">
 		</span>
-		{{n}}
+		
+		<div ng-repeat="(paramName,paramValue) in docParamName" >	
+			<span class="param_label">
+				{{paramName}}
+			</span>
+			<span class="">
+				{{paramValue}}
+			</span>
+		</div>		
 	</div>
 </div>
