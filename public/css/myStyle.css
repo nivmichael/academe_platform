@@ -400,16 +400,21 @@ background-color:#D43F3A;
 }
 
 .docParamLi{
+	padding:5px;
 	background-color:grey;
 	margin-bottom:2px;
 	width:190px;
+	color:white;
+	font-weight:bold;
 }
 .docParamLi>a {
 	color:white;
 	
 }
-.docParamLi>a:hover,
-.docParamLi>a:focus{
+.docParamLi:hover,
+.docParamLi:focus,
+.docParamLi:active{
+	cursor:pointer;
 	background-color:#4E75AD!important;
 }
 .navbar-default .navbar-nav>.dropdown>a:hover .caret, .navbar-default .navbar-nav>.dropdown>a:focus .caret {
@@ -425,4 +430,43 @@ background-color:#D43F3A;
 }
 .formDiv{
 	float: left;
+}
+.postImage
+{
+  position: relative;
+ 
+	
+}
+.postDiv{
+	
+	
+}
+.marginBottom{
+	margin-bottom:2px;
+}
+.padding{
+	width:100%;
+	padding:10px;
+	border: 1px solid grey;
+}
+.employerDetails{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.circle{
+	 
+	color:white;
+	padding-bottom: 1px;
+  	padding-left: 2px;
+  	margin-right: 10px;
+	font-size: 1.1em;
+	border:1px solid grey;
+	border-radius:100%;
+	background-color:rgb(164, 164, 164);
+}
+.postAJob{
+	border-radius:25px;
+	height:85px;
+	weight:150px;
 }

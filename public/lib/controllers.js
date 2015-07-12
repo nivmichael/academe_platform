@@ -508,6 +508,16 @@ $scope.getColumns = function(){
 
 	console.log('formCtrl');
 	
+	$scope.getPost = function(id){ 
+   	$http.get('/job/'+id).
+	success(function(data, status, headers, config) {		
+	      $scope.post = data;	
+	     console.log(data);
+	}).
+	error(function(data, status, headers, config) {
+		    
+	});	
+};
 
 	$scope.flowOp = function(key){
 		console.log(key);

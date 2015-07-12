@@ -121,6 +121,17 @@
    }]
   },
   {
+  "name": "dor",
+   "url": "/dor",
+   "abstract": false,
+   "views": [{
+     "name": "dor",
+      "controller": "formController",
+     "templateUrl": "../../partials/employer/jobs.html",
+     "cache": false
+   }]
+  },
+  {
   "name": "employer.jobPost",
    "url": "/employer/jobPost",
    "abstract": false,
@@ -128,6 +139,17 @@
      "name": "employer.jobPost",
       "controller": "formController",
      "templateUrl": "../../partials/employer/jobPost.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "employer.jobs.159",
+   "url": "/employer/jobs/159",
+   "abstract": false,
+   "views": [{
+     "name": "employer.jobs.159",
+     "controller": "formController",
+     "templateUrl": "../../partials/employer/job.html",
      "cache": false
    }]
   },
@@ -204,7 +226,7 @@
    "views": [{
      "name": "param_value",
      "controller": "TController",
-     "templateUrl": "../../partials/db/param_value.html",
+     "templateUrl": "../../partials/employer/job.html",
      "cache": false
    }]
   },

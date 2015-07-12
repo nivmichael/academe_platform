@@ -54,6 +54,8 @@ Route::resource('/sysParamValues', 'sysParamValuesController');
 Route::post('/sysParamValues/params', 'sysParamValuesController@saveParam');
 Route::post('/savePost', 'TypePostController@savePost');
 Route::get('/getAllJobs', 'TypePostController@index');
+Route::get('/job/{id}', 'TypePostController@show');
+// Route::resource('/job/[id]', 'TypePostController');
 
 
 // Route::resource('auth/params', 'ParamController');

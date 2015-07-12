@@ -1,19 +1,36 @@
-<div ng-repeat="(key,job) in allJobs" class="col-md-6" style="border:1px solid black;">	
+<hr>
+	<div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >	
 	
-	
-	<div ng-repeat="(docParamKey,docParamName) in job" >	
-		
-		<span>
-			<img ng-src="">
-		</span>
-		
-		<div ng-repeat="(paramName,paramValue) in docParamName" >	
-			<span class="param_label">
-				{{paramName}}
+			<div ui-sref="employer.jobs.{{job.postInfo.id}}" ng-click="getPost(job.postInfo.id)">
+		<div class="col-md-12 padding">
+			
+			<div ng-if="user.files.company_logo" class="postImage">		
+				<img ng-src="{{user.files.company_logo}}" class="col-md-3">		
+			</div>
+			<span class="col-md-8">
+				<h4>{{job.postInfo.title}}</h4>
+				<hr>
+				<span class="text-muted">
+					View Job Info - {{job.postInfo.id}}
+				</span>
+				
 			</span>
-			<span class="">
-				{{paramValue}}
-			</span>
-		</div>		
+		<!-- <div ng-repeat="(docParamKey,docParamName) in job" >		
+			
+			<div ng-repeat="(paramName,paramValue) in docParamName" >	
+				<span class="param_label">
+					{{paramName}}
+				</span>
+				<span class="">
+					{{paramValue}}
+				</span>
+			</div>		
+		</div> -->
+		
+		</div>
+		</div>
 	</div>
-</div>
+	
+<div ng-repeat="(key,job) in allJobs">	
+	<div ui-view="employer.jobs.{{job.postInfo.id}}"></div>
+</div>	

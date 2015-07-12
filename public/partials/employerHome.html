@@ -11,38 +11,40 @@
       </ul>
    	 </div>
     <span>Last Updated - </span>{{user.personalInfo.updated_at}}
-	<div class="col-md-12">
+	<div class="col-md-12 employerDetails">
 		<h3 class="text-center">{{user.company.company_name}}</h3>
 		<img class="img-thumbnail col-md-12" src="{{ profilePic || user.files.company_logo }}" alt="Generic placeholder image" width="140" height="140">
 	
 	</div>
 	<div class="">
 	 <ul class="nav nav-sidebar col-md-4">
-           	<li ui-sref-active="active" ui-sref="employer.jobs" class="text-center docParamLi">Job Offers</li>
-            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi" ng-show="a == 'files'">
-                <li ui-sref-active="active" ui-sref=".{{a}}">{{a}}</li>
+           	<li ui-sref-active="active" ui-sref="employer.jobs" class="docParamLi"><span class="circle">▶</span>Job Offers</li>
+            <div ng-repeat="(a,b) in user" id="status-buttons" class="docParamLi" ng-show="a == 'files'">
+                <li ui-sref-active="active" ui-sref=".{{a}}"><span class="circle">▶</span>{{a}}</li>
                
             </div>
-     </ul>
+    </ul>
 	</div>
 
 <div>
-		<button class="btn btn-primary" ui-sref=".jobPost">
-		Post A New Job
-	</button>
+		<button class="btn btn-primary postAJob" ui-sref=".jobPost">
+			 <i class="glyphicon glyphicon-th-list"></i>  	Post A New Job
+		</button>
 </div>
 </nav>
 
 
 
  
+  <!-- <div ui-view="employer.jobs.159" class="col-md-8"></div> -->
   <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center">
 		<div ui-view="employer.{{a}}"></div>
   </div>
   <div ui-view="employer.edit" class="col-md-8"></div>
-  <div ui-view="employer.jobs" class="col-md-8"></div>
+  <div ui-view="employer.job" class="col-md-8"></div>
+  <div ui-view="employer.jobs" class="col-md-10"></div>
   <div ui-view="employer.jobPost" class="col-md-8"></div>
-
+	
 
 <footer class="footerNavUl">
 	
