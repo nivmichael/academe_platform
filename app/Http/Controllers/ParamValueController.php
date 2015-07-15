@@ -57,66 +57,8 @@ class ParamValueController extends Controller {
 	public function store()
 	{
 		
-	 
-	 
-	  // $value = ParamValue::where('param_id','=',$paramId)->first();
-		 // $value = ParamValue::find($id);
-		 // if(!$value){			 	
-			 // $value = new ParamValue();
-		 // }
-// 		
-		// $test = Input::get('param_id');
-// 			
-		// $value->doc_id      = 1;
-		// $value->param_id    = 16;
-		// $value->iteration   = '';
-		// $value->value_short = 'newValShort';
-		// $value->value_long  = 'newValLong';
-		// $value->save();
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	
-		 
-	
-		 // $paramValue=Input::all();
-		 // $array = array();
-// 		 
-// 		 
-		 // foreach($paramValue as $k=>$v){
-		 	// //$value = ParamValue::where('param_id','=',$paramId)->first();	 		
-			// $param = Param::where('name','=',$k)->first();
-			// $value[$param['id']] = $param;
-// 		 
-// 		 	
-// 		 
-// 		 
-// 		 	
-			 // foreach($value as $kk=>$vv){
-// 						 		
-				// $store = ParamValue::where('param_id','=',$kk)->first();
-			 	// //$store = ParamValue::find($kk);
-				// $store->doc_id = 1;
-				// $store->param_id = $kk;
-				// $store->iteration ='';
-				// $store->value_short = $paramValue[$k];
-// 				
-				// $store->save();
-				// $array[]=$kk;
-// 			 	
-			 // }
-		 // } 
-		 
-		 
-		 // $paramId = 
-// 		 
 	  $all = Input::all();	
+	  $all = $all['user'];
 	  $array = array();	 
 	  $paramValue=Input::all();
 	  foreach($paramValue as $paramValueKey=>$paramValueValue){

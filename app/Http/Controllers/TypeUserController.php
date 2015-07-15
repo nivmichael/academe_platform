@@ -43,7 +43,9 @@ class TypeUserController extends Controller {
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
-											   WHERE doc_type_id = 1 AND doc_param.doc_sub_type = 'jobSeeker'"));
+											   WHERE doc_type_id = 1 
+											   AND doc_param.doc_sub_type = 'jobSeeker'
+											   AND authorized = 1"));
 		if(!Auth::user()){
 			$userPersonalInfo = Schema::getColumnListing('type_user');
 			$userPersonalInfo = (object)$userPersonalInfo;			
@@ -78,7 +80,9 @@ class TypeUserController extends Controller {
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
-											   WHERE doc_type_id = 1 AND doc_param.doc_sub_type = 'employer'"));
+											   WHERE doc_type_id = 1 
+											   AND doc_param.doc_sub_type = 'employer'
+											   AND authorized = 1"));
 		if(!Auth::user()){
 			$userPersonalInfo = Schema::getColumnListing('type_user');
 			$userPersonalInfo = (object)$userPersonalInfo;			

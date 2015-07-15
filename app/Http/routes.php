@@ -74,6 +74,7 @@ Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
 Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
 Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
 Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+// Route::get('/columns/{doc_param}' ,'DocParamController@getParams');
 
 Route::any('/upload'        ,'SysParamValuesController@upload');
 Route::any('/deleteImage'   ,'SysParamValuesController@deleteimagefromdb');

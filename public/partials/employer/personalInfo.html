@@ -1,8 +1,8 @@
 <div ng-repeat="t in errors">{{t}}</div>
 
 <div class="">
-	<div ng-repeat="(key,val) in user[docParam]" class="formDiv">
-		<span class="param_label col-md-2">		
+	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
+		<span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
 			{{key}}
 		</span>
 		<span ng-hide="docParam == 'files' && key == 'user_photo' || key == 'profile_pic' || key == 'gallery' || key == 'subtype' || key == 'company_logo'" class="param_input col-md-10">					
@@ -15,18 +15,19 @@
 	<div ng-repeat="(key,val) in user['files']" class="formDiv">
 		<span ng-show="docParam == 'files' ">
 					<div style="height:200px;">
-						<img ng-src="{{val}}" style="width:100px;">
-						
+						<img ng-src="{{val}}" style="width:200px;">	
 					</div>
 					<div flow-init="flowOp(key)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
 					     class="" >					     
-  <br/>
+ 					 <br/>
   					
 					    	
  					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+					
 					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+					
 					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
 					    	
 					      <span class="thumbnail_title">{{file.name}}</span>
@@ -59,14 +60,14 @@
 	</div>
 </div>
 
-	<div class="col-xs-6 col-xs-offset-3" ng-if="nextDoc(docParam)">
+	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
 	    <a ui-sref="registerEmployer.{{nextDoc(docParam)}}" ng-click="saveUser(user)" class="btn btn-block btn-info">
 	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 	    
 	</div>
-	<div class="col-xs-6 col-xs-offset-3" ng-if="nextDoc(docParam)==false">
+	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
 	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">
 	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>

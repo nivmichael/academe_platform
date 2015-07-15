@@ -45,8 +45,9 @@ angular.module('acadb.controllers', [])
    	'doc_type_id' : 'docType',
    	'value_ref'   : 'paramValue',
    	'param_id'   : 'params',
-   	'ref_user_id'   : 'users',
+   	'ref_id'   : 'users',
    	'doc_type'   : 'docType',
+   	
    	
    };
    
@@ -184,6 +185,7 @@ angular.module('acadb.controllers', [])
   $scope.loadGroups = function(param) {
     return $scope.groups.length ? null : $http.get('/' + $scope.select_type[param]).success(function(data) {
       $scope.groups[param] = data;
+      console.log(data);
     
     });
   };
@@ -226,7 +228,7 @@ angular.module('acadb.controllers', [])
 	$.getJSON('/getAllJobs', function(data){
     $scope.$apply(function(){
         $scope.allJobs = data;
-         console.log($scope.allJobs);
+       
        
     });
 
@@ -506,13 +508,26 @@ $scope.getColumns = function(){
 }])
 .controller('formController', function($scope,DocParamData,$state,$http,CSRF_TOKEN) {
 
+
+
 	console.log('formCtrl');
 	
+	
+	Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+	
+		
 	$scope.getPost = function(id){ 
    	$http.get('/job/'+id).
 	success(function(data, status, headers, config) {		
 	      $scope.post = data;	
 	     console.log(data);
+
 	}).
 	error(function(data, status, headers, config) {
 		    
@@ -548,7 +563,7 @@ $scope.getColumns = function(){
   
   
    $scope.savePost = function(post) {
-  console.log(post);
+ 
    $http.post('/savePost', {
      post:post,
    	_token:CSRF_TOKEN,
@@ -570,8 +585,8 @@ $scope.getJobPostFields = function(){
 	$http.get('/columns/jobPost').
 	  success(function(data, status, headers, config) {
 	  	$scope.jobPost = data;
-	 
-	  	console.log($scope.jobPost);
+	 	  console.log($scope.jobPost); 
+
 	  }).error(function(data, status, headers, config){
 	  	
 	  });
@@ -604,6 +619,50 @@ $scope.getColumns = function(){
 	  });
 	
   };
+  
+   $scope.add = function(doc_param_key,param_key,index) {
+   	
+   	
+   	$http.get('/columns/jobPost')
+	  	.success(function(data, status, headers, config) {
+	  		$scope.inserted = data[doc_param_key];
+	  	if(!(angular.isArray($scope.jobPost[doc_param_key]))){
+	  		console.log($scope.inserted);
+	  		$scope.jobPost[doc_param_key] = Array($scope.inserted);
+	  		console.log('not array');
+	  	} else{
+	  		//console.log($scope.jobPost[doc_param_key][tmp]);
+	     	$scope.jobPost[doc_param_key].push($scope.inserted);
+	  		console.log('allready array');
+	  	}
+	  	})
+	  	.error(function(){
+	  		
+	  	});
+
+	//adding to view  				
+   		
+   	
+  	 	   		// $scope.jobPost[doc_param_key].push($scope.inserted);
+		//objToArr.push($scope.inserted);
+
+   	
+//    	
+   	// var id = $scope.jobPost[doc_param_key].length+1;
+	  // $scope.inserted = {
+	      // id: '',
+	      // param_key: '',
+// 	    
+	    // };
+	    // $scope.jobPost[doc_param_key] = Array();
+	    // $scope.jobPost[doc_param_key].push($scope.inserted);
+	    console.log($scope.jobPost);
+	  };
+   	
+	
+ 
+    
+  
   
     
 })

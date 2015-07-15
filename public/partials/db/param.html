@@ -19,12 +19,18 @@
 	       	</td>
 	       	<td ng-repeat="(key,val) in param">
 	        	<!-- editable username (text with validation) -->
-	        	<span editable-select="param.{{key}}" ng-if="selects.indexOf(key)> -1" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[key]" e-required>
+	        	<span editable-select="param.{{key}}"   ng-if="selects.indexOf(key)> -1 && key != 'doc_param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.name for g in groups[key]" e-required>
 	          		{{ val || 'empty' }}
 	         	</span>
-	         	<span editable-text="param.{{key}}" ng-if="selects.indexOf(key) < 0" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" e-required>
+	         	<span editable-select="param.{{key}}"   ng-if="key == 'doc_param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" onshow="loadGroups(key)" e-class="form-control" e-ng-options="g.id as g.name +': ' + g.doc_type_id for g in groups[key]" e-required>
 	          		{{ val || 'empty' }}
 	         	</span>
+	         	<span editable-text="param.{{key}}"  ng-if="selects.indexOf(key) < 0 && key != 'doc_param_id'" id="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" e-required>
+	          		{{ val || 'empty' }}
+	         	</span>
+	         	<!-- <span editable-checkbox="param.{{key}}"  ng-if="key == 'authorized'" name="{{key}}" e-name="{{key}}" e-form="rowform" e-class="form-control" ng-model="param.key">
+	          		{{ val || 'empty' }}
+	         	</span> -->
 	         
 	      	</td>
 	    </tr>

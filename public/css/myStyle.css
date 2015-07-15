@@ -10,7 +10,7 @@
 
 .form-control {
 
-	max-width:350px;
+	
 	display: inline-block; 
 
 }
@@ -79,11 +79,12 @@
 
 .navbar{
 	background-color:#4E75AD;
+	margin:0;
 }
 
 .navbar-brand{
 	border-right:2px solid white;
-	  width: 285px;
+	  width: 235px;
 	
 }
 
@@ -123,7 +124,7 @@
 	
 }
 .editable-wrap .editable-input {
-	width:100px;
+	
 }
 /*
  * Sidebar
@@ -157,7 +158,7 @@
   left: 0;
   z-index: 1000;
   display: block;
-  padding: 20px;
+ 
   overflow-x: hidden;
   overflow-y: auto;
   background-color: white;
@@ -167,8 +168,8 @@
 	
 }
 .nav-sidebar > li > a {
-  padding:4px;
-  padding-left:10px;
+  
+  
   font-size:14px;
   text-align:middle;
 }
@@ -214,7 +215,10 @@
 
 border:none;
 }
+.panel-body{
 
+height:0!important;
+}
 
 .openAccordion{
 	
@@ -251,7 +255,7 @@ border:none;
 
 .sideNav{
 	height: 1200px;
-
+	margin-top:10px;
 }
 .statusBtn{
 	color:#4E75AD;
@@ -403,9 +407,28 @@ background-color:#D43F3A;
 	padding:5px;
 	background-color:grey;
 	margin-bottom:2px;
-	width:190px;
+	text-align:left;
 	color:white;
 	font-weight:bold;
+}
+.postLi{
+	padding:2px;
+	background-color:#E8E8E8;
+	margin-bottom:2px;
+	width:190px;
+	color:black;
+	
+	width:100%;
+}
+.postLi:hover,
+.postLi:focus,
+.postLi:active{
+	padding:2px;
+	background-color:#C1DBF7;
+	margin-bottom:2px;
+	width:190px;
+	color:white;
+	width:100%;
 }
 .docParamLi>a {
 	color:white;
@@ -470,3 +493,36 @@ background-color:#D43F3A;
 	height:85px;
 	weight:150px;
 }
+
+
+.edetail{
+	
+	
+}
+.detail{
+	padding:2px;
+	margin-bottom:5px!important;
+}
+.form-control{
+	border-color:#88AAFF;
+}
+.form-control:hover{
+	border-color:#88AAFF;
+}
+.close {
+	margin-right:10px;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 40px;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+}
+.close:hover {
+  color: #000000;
+  text-decoration: none;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: pointer;

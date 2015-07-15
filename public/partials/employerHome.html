@@ -1,4 +1,4 @@
-<nav class="col-md-2 sideNav">
+<nav class="col-md-2 sideNav text-center">
 	<div class="col-md-12" dropdown is-open="status.isopen">
 		
       <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
@@ -17,7 +17,7 @@
 	
 	</div>
 	<div class="">
-	 <ul class="nav nav-sidebar col-md-4">
+	 <ul class="nav nav-sidebar col-md-12">
            	<li ui-sref-active="active" ui-sref="employer.jobs" class="docParamLi"><span class="circle">▶</span>Job Offers</li>
             <div ng-repeat="(a,b) in user" id="status-buttons" class="docParamLi" ng-show="a == 'files'">
                 <li ui-sref-active="active" ui-sref=".{{a}}"><span class="circle">▶</span>{{a}}</li>
@@ -27,7 +27,7 @@
 	</div>
 
 <div>
-		<button class="btn btn-primary postAJob" ui-sref=".jobPost">
+		<button  class="btn btn-primary postAJob" ui-sref=".jobPost" data-toggle="modal" data-target=".jobPost" >
 			 <i class="glyphicon glyphicon-th-list"></i>  	Post A New Job
 		</button>
 </div>
@@ -41,7 +41,7 @@
 		<div ui-view="employer.{{a}}"></div>
   </div>
   <div ui-view="employer.edit" class="col-md-8"></div>
-  <div ui-view="employer.job" class="col-md-8"></div>
+
   <div ui-view="employer.jobs" class="col-md-10"></div>
   <div ui-view="employer.jobPost" class="col-md-8"></div>
 	

@@ -46,7 +46,7 @@
   <div ui-view="doc_param" ></div>
   <div ui-view="param" ></div>
   <div ui-view="param_type" ></div>
-  <div ui-view="param_value" ></div>
+  <div ui-view="param_value"></div>
   <div ui-view="sys_param_values" ></div>
 </div>	
 

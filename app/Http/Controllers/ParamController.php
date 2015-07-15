@@ -72,6 +72,7 @@ class ParamController extends Controller {
 		}
 		$slug = $all['slug'];
 		$name = $all['name'];
+		$param->authorized = $all['authorized'];
 		$param->name = $name;
 		$param->slug = $slug;
 		$param->type_id = $all['type_id'];

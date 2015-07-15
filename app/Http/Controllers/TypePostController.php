@@ -82,6 +82,8 @@ class TypePostController extends Controller {
 			$post = new Post();
 		}
 		
+		var_dump($all['post']);die;
+		
 	
 		$post->title = $all['post']['postInfo']['title'];
 		$post->user_id = $userId;
@@ -138,12 +140,12 @@ class TypePostController extends Controller {
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.name AS paramName, 
 											   doc_param.name AS docParamName 
-											   FROM	param
+											   FROM	param 
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
-											   WHERE doc_type_id = 2"));
+											   WHERE doc_type_id = 2 AND authorized = 1"));
 
 		$postInfo = Schema::getColumnListing('type_post');
 		
@@ -164,8 +166,9 @@ class TypePostController extends Controller {
 			// }
 // 		
 		 $post['postInfo'] = $postInfoKeys;
+		 
 		// }
-
+		
 		return Response::json($post);
 	}
 
@@ -200,14 +203,14 @@ class TypePostController extends Controller {
 		
 		$post = array();
 		$postInfo = Post::find($id);
-		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
+		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName, 
 										   doc_param.name AS docParamName 
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id WHERE type_user.id = ".$id));
+										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id WHERE type_post.id = ".$id));
 		
 		
 		$post['postInfo'] = $postInfo;

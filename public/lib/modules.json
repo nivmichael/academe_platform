@@ -226,7 +226,7 @@
    "views": [{
      "name": "param_value",
      "controller": "TController",
-     "templateUrl": "../../partials/employer/job.html",
+     "templateUrl": "../../partials/db/param_value.html",
      "cache": false
    }]
   },

@@ -1,36 +1,72 @@
+
 <hr>
 	<div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >	
-	
-			<div ui-sref="employer.jobs.{{job.postInfo.id}}" ng-click="getPost(job.postInfo.id)">
-		<div class="col-md-12 padding">
-			
-			<div ng-if="user.files.company_logo" class="postImage">		
-				<img ng-src="{{user.files.company_logo}}" class="col-md-3">		
+		<span data-toggle="modal" data-target=".job">
+			<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">						
+				<div class="col-md-12 padding">
+					<div ng-if="user.files.company_logo" class="postImage">		
+						<img ng-src="{{user.files.company_logo}}" class="col-md-3">		
+					</div>
+					<span class="col-md-8">
+						<h4>{{job.postInfo.title}}</h4>
+						<hr>
+						<span class="text-muted">
+							View Job Info - {{job.postInfo.id}}
+						</span>			
+					</span>
+				</div>
 			</div>
-			<span class="col-md-8">
-				<h4>{{job.postInfo.title}}</h4>
-				<hr>
-				<span class="text-muted">
-					View Job Info - {{job.postInfo.id}}
-				</span>
-				
-			</span>
-		<!-- <div ng-repeat="(docParamKey,docParamName) in job" >		
-			
-			<div ng-repeat="(paramName,paramValue) in docParamName" >	
-				<span class="param_label">
-					{{paramName}}
-				</span>
-				<span class="">
-					{{paramValue}}
-				</span>
-			</div>		
-		</div> -->
-		
-		</div>
-		</div>
+		</span>
 	</div>
 	
-<div ng-repeat="(key,job) in allJobs">	
-	<div ui-view="employer.jobs.{{job.postInfo.id}}"></div>
-</div>	
+<div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	  <div class="modal-dialog modal-lg">
+		 <div class="modal-content">
+			<div class="panel panel-default">
+				<a class="close" data-toggle="modal" data-target=".job">&times;</a>
+				<div class="panel-heading"><b>Job Offer {{post.postInfo.id}}</b></div>
+					<div class="panel-body">
+					
+						<nav class="col-md-2 sideNav">
+							<div ng-click="!editableForm.$cancel()" class="postLi">
+								Job Details
+							</div>
+							<div ng-click="editableForm.$show()" class="postLi">
+								Edit
+							</div>
+						</nav>
+						<form editable-form name="editableForm" onaftersave="savePost(post)"  >
+				 	     <div class="">
+					 	     <div ng-repeat="(k,v) in post" class="">
+					 	     <!--docParam level -->
+					 	     	<div ng-repeat="(key,val) in v" class="detail" e-class="edetail">
+					 	     		 <!--param level -->
+						 	     	<span >
+							 	     	<span class="param_label ">
+							 	     	   {{key}}:
+							 	     	</span>
+						 	     	</span>
+						 	     	<span e-class="form-control postInput" class="" editable-text="post.{{k}}.{{key}}" e-name="{{key}}">
+						 	     	 	{{val}}
+						 	     	</span>
+					 	     	</div> 
+					 	     </div>	 
+				 	     </div>			 	     		 	
+						 	 <div class="buttons">
+					     		<span ng-show="editableForm.$visible">
+						       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+						       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+					      		</span>
+					    	</div>
+					    </form>
+			    	</div>	
+			    </div>	
+			</div>	
+		 </div>		 
+	  </div>
+	</div> 
+</div>
+
+
+
+
