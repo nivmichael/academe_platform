@@ -585,7 +585,7 @@ $scope.getJobPostFields = function(){
 	$http.get('/columns/jobPost').
 	  success(function(data, status, headers, config) {
 	  	$scope.jobPost = data;
-	 	  console.log($scope.jobPost); 
+	 	  
 
 	  }).error(function(data, status, headers, config){
 	  	
@@ -627,8 +627,8 @@ $scope.getColumns = function(){
 	  	.success(function(data, status, headers, config) {
 	  		$scope.inserted = data[doc_param_key];
 	  	if(!(angular.isArray($scope.jobPost[doc_param_key]))){
-	  		console.log($scope.inserted);
-	  		$scope.jobPost[doc_param_key] = Array($scope.inserted);
+	  		
+	  		$scope.jobPost[doc_param_key] = Array($scope.jobPost[doc_param_key],$scope.inserted);
 	  		console.log('not array');
 	  	} else{
 	  		//console.log($scope.jobPost[doc_param_key][tmp]);

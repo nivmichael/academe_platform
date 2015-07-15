@@ -82,7 +82,7 @@ class TypePostController extends Controller {
 			$post = new Post();
 		}
 		
-		var_dump($all['post']);die;
+		
 		
 	
 		$post->title = $all['post']['postInfo']['title'];
@@ -107,29 +107,51 @@ class TypePostController extends Controller {
 		}
 		
 		$param_id = null;
+		
 		foreach($obj as $doc_param => $values) {
 			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 2)->pluck('id');
+			
 			foreach ($values as $param_name => $param_value) {
-					$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
-					if ($param_id) {
-						//checking where the values come from? from param_value? or from short/long?
-						$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
-						if(!$value_ref) {
-							if($param_value){
-								$value_ref = $param_value;
-							} else {
-								$value_ref = NULL;
-							};
+				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
+
+				if(is_array($param_value)) {
+					$iterable = $param_value;
+					
+					foreach($iterable as $m => $n) {
+						$param_id = DB::table('param')->where('name', $m)->where('doc_param_id', $doc_param_id)->pluck('id');
+
+						if ($param_id) {
+							//checking where the values come from? from param_value? or from short/long?
+							$value_ref = DB::table('param_value')->where('value', $n)->pluck('id');
+							
+							if(!$value_ref) {
+								if($param_value) {
+									$value_ref = $n;
+								} else {
+									$value_ref = NULL;
+								}
+							}
+						}
+
+						$test =	DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);
+					}
+				} elseif ($param_id) {
+					//checking where the values come from? from param_value? or from short/long?
+					$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
+					
+					if(!$value_ref) {
+						if($param_value){
+							$value_ref = $param_value;
+						} else {
+							$value_ref = NULL;
 						}
 					}
-			//	if(!isset($post->id)){
-			//		$post->id = DB::table('type_post')->insertGetId(['user_id'=>$userId,'title'=>$post->title,'description_short'=>$post->description_short,'description'=>$post->description,'authorized'=>1]);																								
-				//}else{
-					
-					DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);
-				//}	
-			}	
+				}
+
+				DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+			}
 		}
+
 		return Response::json($obj);
 	}
 	
@@ -212,24 +234,28 @@ class TypePostController extends Controller {
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id WHERE type_post.id = ".$id));
 		
-		
+	
 		$post['postInfo'] = $postInfo;
 		foreach($params as $k=>$v) {
-			$paramName = $v->paramName;
+			$docParamName = $v->docParamName;
+			$paramName    = $v->paramName;
 			if($v->value_ref == null) {
 				$value = $v->value_short;
 			}else{
 				$value = $v->value;
 			}
-			$post[$v->docParamName][$paramName] = $value;
-		}		
-		//$param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');										 
+			if($paramName){
+				print_r($paramName);
+			}
+			$post[$docParamName][$paramName] = $value;
+			
+		}	
 		
-	//	$images  =  DB::table('sys_param_values')->where('ref_id',$id)
-											//	 ->where('param_id',$param_id)
-										//		 ->whereNotNull('value_short')->get();
-// 		
-		// $user['files']['gallery'] = $images;		
+		
+		
+		
+		
+			
 		return Response::json($post);
 	}
 

@@ -1,13 +1,5 @@
 
 			<form editable-form name="rowform" id="signup-form" role="form"  class="col-md-8" ng-model="post" shown="true">
-				<!-- <div class="formDiv">
-					<span class="param_label col-md-2">		
-						 Job Title
-					</span>	
-				    <span class="param_input col-md-10">
-						<input type='text' class="form-control" name="" ng-model="">		
-					</span>	
-				</div>			 -->
 				<div ng-repeat="(k,v) in jobPost" class="formDiv" >
 						<span class="param_label">
 							
@@ -19,150 +11,47 @@
 						<span  class="param_input col-md-10" ng-hide="k == 'education'">					
 							<input type='text' class="form-control" name="jobPost[k][key]" ng-model="jobPost[k][key]">
 						</span>	
-						<!-- <span  class="param_input col-md-10" ng-if="key">					
-							<input type='text' class="form-control" name="jobPost[k][key]" ng-model="jobPost[k][key]">
-						</span>		 -->
-			
-						<span>
-						</span>				
-				
-						<span ng-if="k == 'education' " ng-hide="jobPost.education.length+1 > 1">
-							
-							
-						      
-						    
-						      
+			<!----------------------------------------------------------------------------------------------------------------------------->							
+						<span ng-if="k == 'education' " ng-hide="jobPost.education.length+1 > 1">				      
 						        <span  class="param_input col-md-10">					
 									<input type='text' class="form-control" name="jobPost[k][key]" ng-model="jobPost[k][key]">
-								</span>	
-						      
-					
-						     
+								</span>					     
 								<span ng-show="$last">
 								  <button class="btn btn-default" ng-click="add(k,key,$index)">+ Add a Record</button>
 								</span>
-							
 						</span>
-						<div ng-if="k == 'education' && jobPost.education.length+1 > 1">
-							
-						
-						
-							<span ng-repeat="(m,n) in val">
-								
-								
-							        <span  class="param_input col-md-10">					
-										<span class="param_label">
+			<!----------------------------------------------------------------------------------------------------------------------------->			
+						<span ng-if="k == 'education' && jobPost.education.length+1 > 1">
+							<span ng-repeat="(m,n) in val" class="formDiv">
+										<span class="param_label col-md-2">
 											{{m}}
 										</span>
-										<span>
-											<input type='text' class="form-control" name=="jobPost[k][key][m]" ng-model="jobPost[k][key][m]">{{n}}
+										<span class="param_input col-md-10">
+											<input type='text' class="form-control" name=="jobPost[k][key][m]" ng-model="jobPost[k][key][m]">
 										</span>
-									</span>	
-						     
 							</span>
-					
-						     
+								<div class="iterationCtrls">
+									<span class="iterationCtrl">
+										X Delete
+									</span>
+									<span class="iterationCtrl">
+										Move Up
+									</span>
+									<span class="iterationCtrl"> 
+										Move Down
+									</span>
+								</div>
 								<span ng-show="$last">
 								  <button class="btn btn-default" ng-click="add(k,key,$index)">+ Add a Record</button>
 								</span>
-								
-						
-						
-							
-						</div>
-				
-					</div>
-				
-				
-					
-							
+						</span>	
+			<!----------------------------------------------------------------------------------------------------------------------------->								
+					</div>					
 				</div>	
 			 </form>				
-				<!------------------------------>
-				
-				
-				
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<!----------------------------->
-				
-				<!-- 
-				<div ng-if="k =='education'">
-					 <form></form>
-					<form editable-form name="editableForm" onaftersave="saveUser(jobPost)"  >
-			 	     <div class="col-md-12">
-				 	     <div ng-repeat="(k,v) in jobPost.education" class="formParameter col-md-6" class="">
-				 	     	<div>
-					 	     	<span >
-						 	     	<span class="param_label col-md-2">
-						 	     	   {{k}}:
-						 	     	</span>
-					 	     	</span>
-					 	     	<span editable-text="jobPost.education.institute" e-class="form-control " class="col-md-4 formParameterValue"  e-name="institute">
-					 	     	 	{{v}}
-					 	     	</span>
-				 	     	</div> 
-				 	     </div>	 
-			 	     </div>		
-			 	     	 
-			 	     		
-			 	     		
-			 	     		 	
-					 	 <div class="buttons">
-					 	 	
-			      			<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
-				     		<span ng-show="editableForm.$visible">
-					       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-					       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
-				      		</span>
-				    	</div>
-				    </form>
-				</div>	
-				 -->
-				
-				
-				
-				
-				
-				
-				
-				
-				<!----------------------->			
-							
-							
-				
-									
-							
-							
-							
-							
-							
-							
-					
-							
-							
-				<div class="col-xs-6 col-xs-offset-3" >
-				
+				<div class="col-xs-6 col-xs-offset-3" >		
 				    <a ng-click="savePost(jobPost)" class="btn btn-block btn-info">
 				   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 				    </a>
-			
-				    
 				</div>
-				
-				
-				
-				
-		
-					
