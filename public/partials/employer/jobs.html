@@ -38,18 +38,51 @@
 						<form editable-form name="editableForm" onaftersave="savePost(post)"  >
 				 	     <div class="">
 					 	     <div ng-repeat="(k,v) in post" class="">
-					 	     <!--docParam level -->
-					 	     	<div ng-repeat="(key,val) in v" class="detail" e-class="edetail">
-					 	     		 <!--param level -->
-						 	     	<span >
-							 	     	<span class="param_label ">
-							 	     	   {{key}}:
-							 	     	</span>
-						 	     	</span>
-						 	     	<span e-class="form-control postInput" class="" editable-text="post.{{k}}.{{key}}" e-name="{{key}}">
-						 	     	 	{{val}}
-						 	     	</span>
+					 	    
+					 	     	<div ng-repeat="(key,val) in v" class="detail" e-class="edetail" >
+					 	     	
+									<span ng-hide="k == 'education'">
+									 	     <span class="param_label ">
+									 	     	{{key}}:
+									 	     </span>
+								 
+								 	     	<span e-class="form-control postInput" class="" editable-text="post[k][key]" e-name="post[k][key]" ng-model="post[k][key]"> 
+								 	     	 	{{val}}
+								 	     	</span>
+									</span>	 	     	
 					 	     	</div> 
+			<!------------------------------------------------------------------------------------------>		 	     	
+					 	     	
+					 	   <div ng-if="k == 'education'"> 
+					 	   	Education
+					 	   </div>  	
+					 	     	<div class="detail" e-class="edetail">
+					 	     		
+					 	     		 <div ng-repeat="(t,j) in post.education" class="formDiv">
+					 	     		 
+							 	     	<div ng-repeat="(m,n) in j" class="formDiv">
+							 	     		
+									 	   <div ng-if="k == 'education'"> 
+									 	   	
+										 	    <span class="param_label">
+										 	     	{{m}}:
+										 	    </span>
+										 	   
+									 	     	<span e-class="form-control postInput" class="" e-name="post[k][t][m]" editable-text="post[k][t][m]" ng-model="post[k][t][m]">
+									 	     	 	{{n}}
+									 	     	</span>
+									 	  <br>
+								 	     	</div>
+								 	     	
+								 	     	<hr>
+								 	     	
+							 	     	</div>
+						 	     	 </div>
+					 	     	</div> 
+					 	     	
+			<!------------------------------------------------------------------------------------------>		 	 		 	     	
+					 	     	
+					 	     	
 					 	     </div>	 
 				 	     </div>			 	     		 	
 						 	 <div class="buttons">

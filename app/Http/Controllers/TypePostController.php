@@ -110,14 +110,19 @@ class TypePostController extends Controller {
 		
 		foreach($obj as $doc_param => $values) {
 			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 2)->pluck('id');
-			
+				$iterableCount = null;
 			foreach ($values as $param_name => $param_value) {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
-
+////////////////////////////////////////////////////////////iterable///////////////////////////////////////////////////////////////////////
+				
+					$iterableCount ++;
 				if(is_array($param_value)) {
 					$iterable = $param_value;
-					
 					foreach($iterable as $m => $n) {
+						
+							//print_r($i);
+						
+						
 						$param_id = DB::table('param')->where('name', $m)->where('doc_param_id', $doc_param_id)->pluck('id');
 
 						if ($param_id) {
@@ -132,10 +137,10 @@ class TypePostController extends Controller {
 								}
 							}
 						}
-
-						$test =	DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);
+					
+					DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);
 					}
-				} elseif ($param_id) {
+				} elseif (!is_array($param_value)) {
 					//checking where the values come from? from param_value? or from short/long?
 					$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
 					
@@ -146,10 +151,11 @@ class TypePostController extends Controller {
 							$value_ref = NULL;
 						}
 					}
+				DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
+			
 				}
 
-				DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
-			}
+}
 		}
 
 		return Response::json($obj);
@@ -234,28 +240,36 @@ class TypePostController extends Controller {
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id WHERE type_post.id = ".$id));
 		
-	
+		$isMultiple = false;
 		$post['postInfo'] = $postInfo;
 		foreach($params as $k=>$v) {
+			
+			
+		
+			$iteration    = $v->iteration;
+			
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
+			
+		
+			
+		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
-			}else{
+			} else {
 				$value = $v->value;
 			}
-			if($paramName){
-				print_r($paramName);
+		
+			if($iteration) {
+				$post[$docParamName][$iteration][$paramName] = $value;
+			}elseif(!$iteration) {
+				$post[$docParamName][$paramName] = $value;
 			}
-			$post[$docParamName][$paramName] = $value;
-			
+	
+		
 		}	
-		
-		
-		
-		
-		
 			
+	
 		return Response::json($post);
 	}
 
