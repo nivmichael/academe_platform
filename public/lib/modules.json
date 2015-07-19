@@ -77,6 +77,17 @@
    }]
   },
   {
+  "name": "registerJobSeeker.experience",
+   "url": "/jobseeker/experience",
+   "abstract": false,
+   "views": [{
+     "name": "experience",
+      "controller": "formController",
+     "templateUrl": "../../partials/form/personalInfo.html",
+     "cache": false
+   }]
+  },
+  {
   "name": "employer.personalInfo",
    "url": "/employer/personalInfo",
    "abstract": false,

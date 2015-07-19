@@ -32,13 +32,13 @@
 										</span>
 							</span>
 								<div class="iterationCtrls">
-									<span class="iterationCtrl">
+									<span class="iterationCtrl" ng-click="remove(jobPost[k],$index)">
 										X Delete
 									</span>
-									<span class="iterationCtrl">
+									<span class="iterationCtrl" ng-click="move(jobPost[k],$index,$index-1)">
 										Move Up
 									</span>
-									<span class="iterationCtrl"> 
+									<span class="iterationCtrl" ng-click="move(jobPost[k],$index,$index+1)">
 										Move Down
 									</span>
 								</div>
@@ -56,3 +56,8 @@
 				   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 				    </a>
 				</div>
+				
+
+
+
+

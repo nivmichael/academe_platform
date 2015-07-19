@@ -640,30 +640,20 @@ $scope.getColumns = function(){
 	  		
 	  	});
 
-	//adding to view  				
-   		
-   	
-  	 	   		// $scope.jobPost[doc_param_key].push($scope.inserted);
-		//objToArr.push($scope.inserted);
 
-   	
-//    	
-   	// var id = $scope.jobPost[doc_param_key].length+1;
-	  // $scope.inserted = {
-	      // id: '',
-	      // param_key: '',
-// 	    
-	    // };
-	    // $scope.jobPost[doc_param_key] = Array();
-	    // $scope.jobPost[doc_param_key].push($scope.inserted);
-	    console.log($scope.jobPost);
+
 	  };
-   	
-	
- 
-    
+   $scope.move = function(array, fromIndex, toIndex){
+   	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+    return array;
+
+   };
+   
+  $scope.remove = function(array,item) { 
   
-  
+   array.splice(item, 1);  
+      
+  };  
     
 })
 .controller("RegisterEmpController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
