@@ -252,8 +252,9 @@ class SysParamValuesController extends Controller {
 	public function deleteimagefromdb()
 	{
 		$id = $_POST['id'];	
-		$path = $_POST['path'];	
-		
+		if($_POST['path']) {
+			$path = $_POST['path'];	
+		};
 
 		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_id', '=', $id)->delete();
 		return Response::json($path);

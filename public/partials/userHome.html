@@ -2,18 +2,27 @@
 <div class="col-md-12 center-modal" ng-repeat="footerNavli in footerNavlis">
 	<div class="modal fade bs-example-modal-lg_{{footerNavli.tag}}" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-lg">
-			    	<div flow-init="flowOp"
+			    	
+			    	
+			    	
+			    	
+			    <div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >	
+			    	
+			    	
+			    	
+			    	
+			    	<div flow-init="flowOp(m)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
 					     class="modal-content" >					     
   <br/>
   					 <div class="">
-					    	<div ng-repeat="image in user.files.gallery" class="gallery-box col-md-2" ng-click="setCurrentImage(image.value_short)">
+					    	
 								<div class="thumbnail" >
-									<span class="thumbnail_title">{{image.value_long}}</span>
-									<img  ng-src="{{image.value_short}}">
+									<span class="thumbnail_title">{{q}}</span>
+									<img  ng-src="{{n}}">
 									<div class="btn-group">
-						       			  <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,image.value_short)">
+						       			  <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,r,q)">
 								         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
 								          </a>
 								          <button>
@@ -23,7 +32,7 @@
 							    	</div>
 								
 								</div>
-					    	</div>
+					    	
  					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
 					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
 					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
@@ -54,6 +63,18 @@
 					    	
 					</div>
 				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+			</div>
+				
+				
+				
 			</div>
 		</div>
 </div>
@@ -85,8 +106,12 @@
 	
 	<div class="col-md-12">
 		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail col-md-12" src="{{ profilePic || user.files.gallery[0].value_short }}" alt="Generic placeholder image" width="140" height="140">
+		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo }}" alt="Generic placeholder image" width="140" height="140">
 	
+	</div>
+	
+	<div class="btn btn-primary col-md-12">
+		Find A Job
 	</div>
 </nav>
 <div class=""></div>

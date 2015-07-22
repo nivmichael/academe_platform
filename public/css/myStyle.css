@@ -217,7 +217,7 @@ border:none;
 }
 .panel-body{
 
-height:0!important;
+height:100%!important;
 }
 
 .openAccordion{

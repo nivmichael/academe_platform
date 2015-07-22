@@ -148,7 +148,7 @@ angular.module('acadb.controllers', [])
 	  		
 		//grabbing the last id in database..if empty starts with one.need to change it to start from real last  		
   		var lastValue;
-  		var lastKey = Object.keys(data).sort().reverse()[0];
+  		var lastKey = Object.keys(data).reverse()[0];
   		if(!lastKey){
   			 lastValue = 0;
   		}else{
@@ -248,8 +248,8 @@ angular.module('acadb.controllers', [])
  
 
 $scope.flowOp = function(key){
-		console.log(key);
-		console.log('key');
+		//console.log(key);
+		//console.log('key');
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 		
 	};
@@ -318,7 +318,7 @@ $scope.addItem = function() {
    $scope.items.push('Item ' + newItemNo);
 };
 $scope.saveUser = function(user) {
-	   console.log(user);
+	  
    return $http.post('/users',{  
    	   user:user,
    	   _token:CSRF_TOKEN,
@@ -337,21 +337,8 @@ $scope.saveUser = function(user) {
     });
   };
  
-  	$scope.removeimagefromview = function(path)
-	{	
-								angular.forEach($scope.user.files.gallery, function(a, b) 
-								{					
-									var index;
-									for(index = 0; index<$scope.user.files.gallery.length;index++)
-									{
-										if(path == $scope.user.files.gallery[index].value_short )
-										{
-											 $scope.user.files.gallery.splice(index, 1);
-										}									
-									}										
-								});
-	};	
-  $scope.deleteImage = function(id,path){
+  
+  $scope.deleteImage = function(id,path,item){
 	{
 		$.ajax(
 			{
@@ -363,8 +350,8 @@ $scope.saveUser = function(user) {
 						_token: CSRF_TOKEN					
 	           		 },
 	            success: function(data)
-	            {	            	
-	            	$scope.removeimagefromview(data);
+	            {	
+	            	delete $scope.user.files[item];		          	
 	            	$scope.$apply();	            	    
 	            }
 			}).done();
@@ -426,24 +413,14 @@ $scope.countries = countries = ['Afghanistan', 'Åland Islands', 'Albania', 'Alg
 
 
 .controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
-	console.log("RegisterController");
+console.log("RegisterController");
 	
  'use strict';
  var state = $location.path();
  state = state.split('/');
  state = state[1];
  $state.go(state);
- // $scope.setDoc = function(doc){
-	// $scope.doc = doc;
-// 	
-// };
-// 
-// $scope.isDoc = function(key){
-	// //console.log(key);
-	// if(key == $scope.doc){
-		// return true;
-	// }
-// };
+
 $scope.getAuthId = function(){
    		$http.get('/getAuthId').
 		success(function(data, status, headers, config) {
@@ -643,6 +620,38 @@ $scope.getColumns = function(){
 
 
 	  };
+	  
+	$scope.add1 = function(doc_param_key,param_key,index) {
+   	console.log(doc_param_key);
+   	console.log(param_key);
+   	console.log(index);
+   	
+   	$http.get('/columns/registerJobSeeker')
+	  	.success(function(data, status, headers, config) {
+	  		$scope.inserted = data[doc_param_key];
+	  		
+	  		
+	  	if(!(angular.isArray($scope.user[doc_param_key]))){
+	  		
+	  		$scope.user[doc_param_key] = Array($scope.user[doc_param_key],$scope.inserted);
+	  		console.log('not array');
+	  	} else{
+	  		//console.log($scope.jobPost[doc_param_key][tmp]);
+	     	$scope.user[doc_param_key].push($scope.inserted);
+	  		console.log('allready array');
+	  		console.log($scope.user[doc_param_key]);
+	  		
+	  	}
+	  	})
+	  	.error(function(){
+	  		
+	  	});
+
+
+
+	  };  
+	  
+	  
    $scope.move = function(array, fromIndex, toIndex){
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
     return array;

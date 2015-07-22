@@ -106,8 +106,7 @@ class TypePostController extends Controller {
 			}
 		}
 		
-		$param_id = null;
-		
+		$param_id = null;		
 		foreach($obj as $doc_param => $values) {
 			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 2)->pluck('id');
 				$iterableCount = null;
@@ -115,7 +114,7 @@ class TypePostController extends Controller {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
 ////////////////////////////////////////////////////////////iterable///////////////////////////////////////////////////////////////////////
 				
-					$iterableCount ++;
+				$iterableCount ++;
 				if(is_array($param_value)) {
 					$iterable = $param_value;
 					foreach($iterable as $m => $n) {

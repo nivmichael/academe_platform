@@ -1,39 +1,76 @@
 <div ng-repeat="t in errors">{{t}}</div>
 
-<nav class="col-md-12 ">
-	<div ng-repeat="(key,val) in user[docParam]" class="formDiv">
-		<span class="param_label col-md-2">		
-			{{key}}
+<div class="">
+	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
+		<span ng-hide="docParam == 'education'">
+			<span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
+				{{key}}
+			</span>
+			<span class="param_input col-md-10">					
+				<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
+			</span>
 		</span>
-		<span ng-hide="docParam == 'files' && key == 'user_photo' || key == 'profile_pic'" class="param_input col-md-10">					
-			<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
-		</span>
+		<!----------------------------------------------------------------------------------------------------------------------------->							
+						<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">				      
+						        <span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
+									{{key}}
+								</span>
+						        <span  class="param_input col-md-10">					
+									<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
+								</span>					     
+								<span ng-show="$last">
+								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>				
+								</span>
+						</span>
+		<!----------------------------------------------------------------------------------------------------------------------------->			
+						<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
+						
+							<span ng-repeat="(m,n) in val" class="formDiv">
+										<span class="param_label col-md-2">
+											{{m}}
+										</span>
+										<span class="param_input col-md-10">
+											<input type='text' class="form-control" name=="user[docParam][key][m]" ng-model="user[docParam][key][m]">
+										</span>
+							</span>
+								<div class="iterationCtrls">
+									<span class="iterationCtrl" ng-click="remove(user[docParam],$index)">
+										X Delete
+									</span>
+									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
+										Move Up
+									</span>
+									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
+										Move Down
+									</span>
+								</div>
+								<span ng-show="$last">
+								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
+								</span>
+						</span>	
+			<!----------------------------------------------------------------------------------------------------------------------------->				
 		
-		<span ng-show="docParam == 'files' && key == 'user_photo'">
-			<div flow-init="flowOp"
+	</div>
+	<div ng-repeat="(key,val) in user['files']" class="formDiv">
+		<span ng-show="docParam == 'files' ">
+					<span class="param_label col-md-2" >		
+						{{key}}
+					</span>
+						
+					<div style="height:200px;">
+						<img ng-src="{{val}}" style="width:200px;">	
+					</div>
+					<div flow-init="flowOp(key)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
 					     class="" >					     
-  <br/>
-  					 <div class="">
-					    	<div ng-repeat="image in user.files.gallery" class="gallery-box col-md-2" ng-click="setCurrentImage(image.value_short)">
-								<div class="thumbnail" >
-									<span class="thumbnail_title">{{image.value_long}}</span>
-									<img  ng-src="{{image.value_short}}">
-									<div class="btn-group">
-						       			  <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,image.value_short)">
-								         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-								          </a>
-								          <button>
-								          	<i class=" btn btn-default btn-xs glyphicon glyphicon-user"></i>
-								          </button>
-						      			
-							    	</div>
-								
-								</div>
-					    	</div>
+ 					 <br/>
+  					
+					    	
  					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+					
 					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+					
 					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
 					    	
 					      <span class="thumbnail_title">{{file.name}}</span>
@@ -60,24 +97,20 @@
 					    <div class="clear"></div>
 					  </div>
 					    	
-					</div>
+				
 				</div>
 		</span>
-		
-		
-		
 	</div>
-</nav>
+</div>
 
-	
-	<div class="col-xs-6 col-xs-offset-3" ng-if="nextDoc(docParam)">
+	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
 	    <a ui-sref="registerJobSeeker.{{nextDoc(docParam)}}" ng-click="saveUser(user)" class="btn btn-block btn-info">
 	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 	    
 	</div>
-	<div class="col-xs-6 col-xs-offset-3" ng-if="nextDoc(docParam)==false">
+	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
 	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">
 	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
@@ -85,3 +118,4 @@
 
 	    
 	</div>
+	
