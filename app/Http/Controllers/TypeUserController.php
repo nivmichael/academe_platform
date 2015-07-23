@@ -57,7 +57,7 @@ class TypeUserController extends Controller {
 			$personalInfo = User::find($id);		
 		}
 		$user['personalInfo'] = $personalInfo;
-		$user['personalInfo']->confirm_password = '';
+		// $user['personalInfo']->password_confirmation = '';
 		foreach($params as $k=>$v) {
 			$paramName = $v->paramName;		
 			$user[$v->docParamName][$paramName] = $v->value = '';
@@ -94,7 +94,7 @@ class TypeUserController extends Controller {
 			$personalInfo = User::find($id);		
 		}
 		$user['personalInfo'] = $personalInfo;
-		$user['personalInfo']->confirm_password = '';
+		// $user['personalInfo']->password_confirmation = '';
 		foreach($params as $k=>$v) {
 			$paramName = $v->paramName;		
 			$user[$v->docParamName][$paramName] = $v->value = '';
@@ -256,13 +256,24 @@ class TypeUserController extends Controller {
 		
 		$user['personalInfo'] = $userPersonalInfo;
 		foreach($params as $k=>$v) {
+			$iteration    = $v->iteration;
+			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
+		
+		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
 			}else{
 				$value = $v->value;
 			}
-			$user[$v->docParamName][$paramName] = $value;
+			
+			if($iteration) {
+				$user[$docParamName][$iteration][$paramName] = $value;
+			}elseif(!$iteration) {
+				$user[$docParamName][$paramName] = $value;
+			}
+			
+			
 		}		
 		//$param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');										 
 		

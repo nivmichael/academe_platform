@@ -40,16 +40,15 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		$validator = $this->registrar->validator($request->all());
 
+			
 		if ($validator->fails())
 		{
-			$this->throwValidationException(
-				$request, $validator
-			);
+			return $validator->errors();
 		}
 
 		$this->auth->login($this->registrar->create($request->all()));
 
-		return redirect($this->redirectPath());
+		// redirect($request);
 	}
 
 	/**

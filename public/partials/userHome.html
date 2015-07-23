@@ -132,7 +132,7 @@
     	<div>
     	 
     	  <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
-	 	     <div class="col-md-12">
+	 	     <div class="col-md-12"  ng-if="key != 'education'">
 		 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" class="">
 		 	     	<div ng-hide="k == 'id' || k == 'type' || k == 'password_new' || k == 'created_at' || k == 'updated_at'">
 			 	     	<span >
@@ -146,6 +146,56 @@
 		 	     	</div> 
 		 	     </div>	 
 	 	     </div>		
+	 	     
+	 	     <!---------------------------------------------------------------------------------------------------------------------->
+	 	     
+	 	     
+	 	       <div ng-if="key == 'education'">
+					 	  
+					 	     	<div class="detail" e-class="edetail">
+					 	     		
+					 	     		 <div ng-repeat="(t,j) in user.education" class="formDiv">
+											 	   
+							 	    	 <div ng-repeat="(m,n) in j" class="formDiv">
+						 	     		 <span class="param_label">
+							 	     		 {{m}}
+										 </span>
+							 	     		
+												<span e-class="form-control postInput" class="" e-name="user[key][t][m]" editable-text="user[key][t][m]" ng-model="user[key][t][m]">
+									 	     	{{n}} 	
+									 	     	</span>
+									 	  <br>
+									 	  <span ng-show="$last">
+											  <button type="button" class="btn btn-default" ng-click="add(user[key],$index)">+ Add a Record</button>
+										</span>
+								 		 </div>
+								<div ng-show="editableForm.$visible">
+		 	     					<div class="iterationCtrls">
+										<span class="iterationCtrl" ng-click="remove(user[key],$index)">
+											X Delete
+										</span>
+										<span class="iterationCtrl" ng-click="move(user[key],$index,$index-1)">
+											Move Up
+										</span>
+										<span class="iterationCtrl" ng-click="move(user[key],$index,$index+1)">
+											Move Down
+										</span>
+									</div>
+									
+	 	   						  </div>
+								 	     	
+								 	 <hr>
+								 	     	
+	 	     
+							 	     </div>
+						 	     </div>
+	 	   
+					 	     	
+	 	     </div> 
+	 	     
+	 	     
+	 	     
+	 	        <!---------------------------------------------------------------------------------------------------------------------->
 	 	     	 
 	 	     		
 	 	     		

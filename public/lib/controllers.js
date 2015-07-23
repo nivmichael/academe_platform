@@ -396,7 +396,46 @@ $scope.saveUser = function(user) {
   	$scope.max = 100; 
     $scope.dynamic = 75;
     $scope.type = 'info';
+  	
+  	
+  	$scope.add = function(doc_param_key,param_key,index) {
+   	
+   	console.log(index);
+   	$http.get('/users/'+ $scope.userId)
+	  	.success(function(data, status, headers, config) {
+	  		$scope.inserted = data[doc_param_key];
+	  	if(!(angular.isArray($scope.user[doc_param_key]))){
+	  		
+	  		$scope.user[doc_param_key] = Array($scope.user[doc_param_key],$scope.inserted);
+	  		console.log('not array');
+	  	} else{
+	  		//console.log($scope.jobPost[doc_param_key][tmp]);
+	     	$scope.user[doc_param_key].push($scope.inserted);
+	  		console.log('allready array');
+	  			
+	  	}
+	  	})
+	  	.error(function(){
+	  		
+	  	});
+
+
+
+	  };
+	  
+	$scope.move = function(array, fromIndex, toIndex){
+		
+   	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+    return array;
+
+   };
+   
+  $scope.remove = function(array,item) { 
   
+   array.splice(item, 1);  
+      
+  };  
+	  
 
 
 $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
@@ -412,7 +451,7 @@ $scope.countries = countries = ['Afghanistan', 'Åland Islands', 'Albania', 'Alg
 
 
 
-.controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
+.controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN) {
 console.log("RegisterController");
 	
  'use strict';
@@ -503,7 +542,7 @@ $scope.getColumns = function(){
    	$http.get('/job/'+id).
 	success(function(data, status, headers, config) {		
 	      $scope.post = data;	
-	     console.log(data);
+	    // // console.log(data);
 
 	}).
 	error(function(data, status, headers, config) {
@@ -512,7 +551,7 @@ $scope.getColumns = function(){
 };
 
 	$scope.flowOp = function(key){
-		console.log(key);
+	//	console.log(key);
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 	};
 	$scope.docParam = $state.current.name.split('.');
@@ -520,21 +559,39 @@ $scope.getColumns = function(){
 	
 	
     // we will store all of our form data in this object
-    
-    $scope.saveUser = function(user) {
-  
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+    $scope.saveUser = function(user,docParam) {
+	var subType = user['personalInfo']['subtype'];
    $http.post('/auth/register', {
-     user:user,
-   	_token:CSRF_TOKEN,
+     user: user,
+   	_token: CSRF_TOKEN,
    	from:'register'
-   	}).success(function(v){
-   	
-   		return user;
+   	}).success(function(errors){
+  	 		$scope.errors = errors;
+  	 	
+  	 	var errorLength = Object.keys($scope.errors[0]).length;
+  	 	if(errorLength > 1 ) {
+	   		
+  	 	console.log($scope.errors);
+  	 		
+  	 	}else{
+  	 		
+  	 		if($scope.nextDoc($scope.docParam) != false)
+  	 		{
+   				$state.go('register'+capitalizeFirstLetter(subType)+'.'+$scope.nextDoc($scope.docParam));
+  	 		}
+  	 		console.log('go');
+  	 	}
+  	 	
+   		
    	  	 
-  }).error(function(err) {
+     }).error(function(err) {
   		
-	$scope.errors = err;
-	 console.log($scope.errors);
+	 console.log('error');
+	
+	 console.log(err);
     });
   };
   
@@ -546,11 +603,13 @@ $scope.getColumns = function(){
    	_token:CSRF_TOKEN,
    	from:'jobPost'
    	}).success(function(v){
-   	
+  
    		return post;
    	  	 
   }).error(function(err) {
-  		
+  		$scope.errors = err;
+	 //console.log($scope.errors);
+	 	
 	
     });
   };
@@ -596,15 +655,27 @@ $scope.getColumns = function(){
 	  });
 	
   };
+ 
+ 
+ $scope.nextDoc = function(doc){
+	
+	if($scope.next_keys[doc]){
+		$scope.doc = $scope.next_keys[doc];
+		return $scope.doc ;
+	}else{
+		return false ;
+	}
+};
   
-   $scope.add = function(doc_param_key,param_key,index) {
+   $scope.add = function(doc_param_key,index) {
    	
-   	
+   
+ 
+
    	$http.get('/columns/jobPost')
 	  	.success(function(data, status, headers, config) {
 	  		$scope.inserted = data[doc_param_key];
-	  	if(!(angular.isArray($scope.jobPost[doc_param_key]))){
-	  		
+	  	if(!(angular.isArray($scope.jobPost[doc_param_key]))) {
 	  		$scope.jobPost[doc_param_key] = Array($scope.jobPost[doc_param_key],$scope.inserted);
 	  		console.log('not array');
 	  	} else{
@@ -622,9 +693,7 @@ $scope.getColumns = function(){
 	  };
 	  
 	$scope.add1 = function(doc_param_key,param_key,index) {
-   	console.log(doc_param_key);
-   	console.log(param_key);
-   	console.log(index);
+
    	
    	$http.get('/columns/registerJobSeeker')
 	  	.success(function(data, status, headers, config) {
@@ -653,6 +722,10 @@ $scope.getColumns = function(){
 	  
 	  
    $scope.move = function(array, fromIndex, toIndex){
+   	console.log(array);
+   	console.log(fromIndex);
+   	console.log(toIndex);
+   	
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
     return array;
 
@@ -663,7 +736,20 @@ $scope.getColumns = function(){
    array.splice(item, 1);  
       
   };  
-    
+  
+  
+$scope.addWhenEdit =function(docParam,$index) {
+		
+		$http.get('/columns/jobPost')
+	  	.success(function(data, status, headers, config) {
+	  		$scope.post[docParam] = $.extend([], $scope.post[docParam]);
+	  		$scope.post[docParam].push(data[docParam]);
+	  	})
+	  	.error(function(){
+	  		alert('ERROR!!');
+	  	});
+
+	};    
 })
 .controller("RegisterEmpController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
 

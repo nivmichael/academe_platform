@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
 <!-- navbar -->
 <div ng-controller="UserHomeController">
 	<nav class="navbar navbar-default">

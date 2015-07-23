@@ -37,7 +37,8 @@
 								Edit
 							</div>
 						</nav>
-						<form editable-form name="editableForm" onaftersave="savePost(post)"  >
+						
+						<form editable-form name="editableForm" onaftersave="savePost(post)">
 				 	     <div class="">
 					 	     <div ng-repeat="(k,v) in post" class="">
 					 	    
@@ -76,10 +77,28 @@
 									 	  <br>
 								 	     	</div>
 								 	     	
+							 	     	 <!-- 
+							 	     	<div class="iterationCtrls">
+												<span class="iterationCtrl" ng-click="remove(post[k],$index)">
+													X Delete
+												</span>
+												<span class="iterationCtrl" ng-click="move(post[k],$index,$index-1)">
+													Move Up
+												</span>
+												<span class="iterationCtrl" ng-click="move(post[k],$index,$index+1)">
+													Move Down
+												</span>
+										 </div>  -->
 								 	     	<hr>
 								 	     	
 							 	     	</div>
+							 	     	
 						 	     	 </div>
+							 	     	
+											
+											<div ng-show="$last && editableForm.$visible">
+											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(k,$index)">+ Add a Record</button>
+											</div>
 					 	     	</div> 
 					 	     	
 			<!------------------------------------------------------------------------------------------>		 	 		 	     	

@@ -1,5 +1,9 @@
-<div ng-repeat="t in errors">{{t}}</div>
-
+<!-- <div class="errors alert alert-danger" ng-if="errors">
+	<ul>	
+		<li ng-repeat="(t,s) in errors">{{s}}</li>	
+	</ul>
+</div> -->
+{{errors}}
 <div class="">
 	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
 		<span ng-hide="docParam == 'education'">
@@ -96,8 +100,6 @@
 					    
 					    <div class="clear"></div>
 					  </div>
-					    	
-				
 				</div>
 		</span>
 	</div>
@@ -105,11 +107,12 @@
 
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
-	    <a ui-sref="registerJobSeeker.{{nextDoc(docParam)}}" ng-click="saveUser(user)" class="btn btn-block btn-info">
+	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
 	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 	    
 	</div>
+	
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
 	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">

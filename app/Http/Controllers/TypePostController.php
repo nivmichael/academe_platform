@@ -31,6 +31,7 @@ class TypePostController extends Controller {
 		$post = array();
 		$postsArr=array();
 		$posts = DB::table('type_post')
+		->where('user_id',Auth::user()->id)
 		->get();		
 		
 		foreach($posts as $key=>$postParams){

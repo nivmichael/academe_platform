@@ -31,20 +31,24 @@
 	<![endif]-->
 </head>
 
-<body ng-controller="RegisterController">
-<pre>
-{{$state.current.name}}
-</pre>
 	<?php if(count($errors) > 0): ?>
 		<div class="alert alert-danger">
 			<strong>Whoops!</strong> There were some problems with your input.<br><br>
+			<pre>
 			<ul>
 				<?php foreach($errors->all() as $error): ?>
 					<li><?php echo e($error); ?></li>
 				<?php endforeach; ?>
 			</ul>
+			</pre>
 		</div>
 	<?php endif; ?>
+<body ng-controller="RegisterController">
+	
+<pre>
+{{$state.current.name}}
+</pre>
+
 	
 
 <nav class="navbar navbar-default">
@@ -107,10 +111,10 @@
 	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="../lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
+	<script>angular.module("acadb").constant("CSRF_TOKEN", '<?php echo e(csrf_token()); ?>');</script>
 
 
 
-<script>angular.module("acadb").constant("CSRF_TOKEN", '<?php echo e(csrf_token()); ?>');</script>
 
 
 
