@@ -453,6 +453,7 @@ $scope.getColumns = function(){
 	  $http.get('/columns/' + state).
 	  success(function(data, status, headers, config) {
 	 	 $scope.user = data;
+	 	 console.log($scope.user);
 	 	 $scope.userCaretName = $scope.user.personalInfo.first_name;
 	 	 //registration steps	 	 
 	 	 $scope.next_keys = [];
@@ -705,20 +706,7 @@ $scope.getColumns = function(){
 	  };  
 	  
 	  
- $scope.objToArr =  function(obj) {
-  	var inputObj = obj;
-	 
-		var output = [];
-		for (var key in inputObj) {
-		  // must create a temp object to set the key using a variable
-		  var tempObj = {};
-		  tempObj = inputObj[key];
-		  output.push(tempObj);
-		  obj = output;
-		}
-		return obj;
-  };
-	  
+
 	  
    $scope.move = function(array, fromIndex, toIndex){
 

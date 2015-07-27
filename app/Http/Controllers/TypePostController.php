@@ -110,12 +110,12 @@ class TypePostController extends Controller {
 		$param_id = null;		
 		foreach($obj as $doc_param => $values) {
 			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 2)->pluck('id');
-				$iterableCount = null;
+				$iterableCount = 0;
 			foreach ($values as $param_name => $param_value) {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
 ////////////////////////////////////////////////////////////iterable///////////////////////////////////////////////////////////////////////
 				
-				$iterableCount ++;
+			
 				if(is_array($param_value)) {
 					$iterable = $param_value;
 					foreach($iterable as $m => $n) {
@@ -154,7 +154,7 @@ class TypePostController extends Controller {
 				DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
 			
 				}
-
+	$iterableCount ++;
 }
 		}
 
@@ -238,7 +238,7 @@ class TypePostController extends Controller {
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id WHERE type_post.id = ".$id));
+										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id  WHERE doc_type_id = 2 AND type_post.id = ".$id));
 		
 		$isMultiple = false;
 		$post['postInfo'] = $postInfo['original'];

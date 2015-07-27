@@ -206,8 +206,12 @@ class TypeUserController extends Controller {
 		}
 		$update = null;
 		// var_dump($all);die;
+		
+		
+		
+		
 		foreach($all['user'] as $doc_param => $values) {
-			$doc_param_id = DB::table('doc_param')->where('name', $docParam)->where('doc_type_id', 1)->where('doc_sub_type', $doc_sub_type)->pluck('id');	
+			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->pluck('id');			
 			foreach ($values as $param_name => $param_value) {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');				
 				if ($param_id) {
@@ -251,7 +255,11 @@ class TypeUserController extends Controller {
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id WHERE type_user.id = ".$id));
+										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
+										   WHERE doc_type_id = 1 
+										   
+										  
+										   AND type_user.id = ".$id));
 		
 		
 		$user['personalInfo'] = $userPersonalInfo;
@@ -267,12 +275,15 @@ class TypeUserController extends Controller {
 				$value = $v->value;
 			}
 			
-			if($iteration) {
-				//$user[$docParamName][] = array($paramName=>$value) ;
+			if($iteration !== NULL) {
+		
 				$user[$docParamName][$iteration][$paramName] = $value;
-			}elseif(!$iteration) {
+		
+			}elseif($iteration == NULL) {
 				$user[$docParamName][$paramName] = $value;
+			
 			}
+			
 			
 			
 		}		
