@@ -1,9 +1,7 @@
 
 			<form editable-form name="rowform" id="signup-form" role="form"  class="col-md-8" ng-model="post" shown="true">
 				<div ng-repeat="(k,v) in jobPost" class="formDiv" >
-						<span class="param_label">
-							
-						</span>
+					
 					<div ng-repeat="(key,val) in v" class="formDiv" >	
 						<span class="param_label col-md-2"  ng-hide="k == 'education' && jobPost.education.length+1 > 1">		
 							{{key}}

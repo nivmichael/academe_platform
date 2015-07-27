@@ -241,7 +241,7 @@ class TypePostController extends Controller {
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id WHERE type_post.id = ".$id));
 		
 		$isMultiple = false;
-		$post['postInfo'] = $postInfo;
+		$post['postInfo'] = $postInfo['original'];
 		foreach($params as $k=>$v) {
 			
 			
@@ -252,7 +252,6 @@ class TypePostController extends Controller {
 			$paramName    = $v->paramName;
 			
 		
-			
 		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
@@ -260,13 +259,16 @@ class TypePostController extends Controller {
 				$value = $v->value;
 			}
 		
-			if($iteration) {
-				$post[$docParamName][$iteration][$paramName] = $value;
-			}elseif(!$iteration) {
-				$post[$docParamName][$paramName] = $value;
-			}
-	
+			if($iteration !== NULL) {
 		
+			$post[$docParamName][$iteration][$paramName] = $value;
+		
+			}elseif($iteration == NULL) {
+				$post[$docParamName][$paramName] = $value;
+			
+			}
+			
+			
 		}	
 			
 	

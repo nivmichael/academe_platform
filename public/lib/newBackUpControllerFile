@@ -223,43 +223,57 @@ angular.module('acadb.controllers', [])
 
 .controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
 
-$scope.allJobs = {};
-$.getJSON('/getAllJobs', function(data){
-  $scope.$apply(function(){
-       $scope.allJobs = data;
+	$scope.allJobs = {};
+
+	$.getJSON('/getAllJobs', function(data){
+    $scope.$apply(function(){
+        $scope.allJobs = data;
+       
+       
     });
+
 });
- var state = $location.path(); 
+
+
+
+
+
+ var state = $location.path();
+ 
  state = state.split('/');
  state = state[1];
+
  $state.go(state);
- $scope.flowOp = function(key){
+
+ 
+
+$scope.flowOp = function(key){
 		//console.log(key);
 		//console.log('key');
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 		
- };
- $scope.userStatuses = [
+	};
+$scope.userStatuses = [
   {id: 'active', name: 'active'},
   {id: 'inactive', name: 'inactive'}
  ];
- $scope.setStatus = function(status) {
+$scope.setStatus = function(status) {
 	 console.log($scope.user.personalInfo.status);
 	 console.log(status);
 	 $scope.user.personalInfo.status = status.name;
 	 $.post('/setStatus',{status:status.name,_token:CSRF_TOKEN,}).success(function(callBack){
 	 	//console.log(callBack);
 	 });
- };
- $scope.footerNavlis = [
+};
+$scope.footerNavlis = [
  	{id: '1', tag:'Resumes'},  
  	{id: '2', tag:'Certifications'},  
  	{id: '3', tag:'References '},  
  	{id: '4', tag:'Gallery '},  
  	{id: '5', tag:'Cover '},  
  ];
- $scope.oneAtATime = true;
- $scope.getAuthId = function(){
+$scope.oneAtATime = true;
+$scope.getAuthId = function(){
    		$http.get('/getAuthId').
 		success(function(data, status, headers, config) {
 			$scope.getUser(data);
@@ -288,7 +302,7 @@ $.getJSON('/getAllJobs', function(data){
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
 	});	
- };
+};
  $scope.nextDoc = function(doc){
 	
 	if($scope.next_keys[doc]){
@@ -297,13 +311,13 @@ $.getJSON('/getAllJobs', function(data){
 	}else{
 		return false ;
 	}
- };
- $scope.getAuthId();
- $scope.addItem = function() {
+};
+$scope.getAuthId();
+$scope.addItem = function() {
    var newItemNo = $scope.items.length + 1;
    $scope.items.push('Item ' + newItemNo);
- };
- $scope.saveUser = function(user) {
+};
+$scope.saveUser = function(user) {
 	  
    return $http.post('/users',{  
    	   user:user,
@@ -324,7 +338,7 @@ $.getJSON('/getAllJobs', function(data){
   };
  
   
-   $scope.deleteImage = function(id,path,item){
+  $scope.deleteImage = function(id,path,item){
 	{
 		$.ajax(
 			{
@@ -342,7 +356,7 @@ $.getJSON('/getAllJobs', function(data){
 	            }
 			}).done();
 	}; 
-   };    
+  };    
 // DatePicker 
    $scope.today = function() {
      $scope.dt = new Date();
@@ -374,46 +388,52 @@ $.getJSON('/getAllJobs', function(data){
     formatYear: 'yy',
     startingDay: 1
   };
+
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
-/* progress bar*/
-  $scope.max = 100; 
-  $scope.dynamic = 75;
-  $scope.type = 'info';
 
-  $scope.add = function(doc_param_key,param_key,index) {  	
+/* progress bar*/
+  	$scope.max = 100; 
+    $scope.dynamic = 75;
+    $scope.type = 'info';
+  	
+  	
+  	$scope.add = function(doc_param_key,param_key,index) {
+   	
+   	console.log(index);
    	$http.get('/users/'+ $scope.userId)
 	  	.success(function(data, status, headers, config) {
 	  		$scope.inserted = data[doc_param_key];
 	  	if(!(angular.isArray($scope.user[doc_param_key]))){
+	  		
 	  		$scope.user[doc_param_key] = Array($scope.user[doc_param_key],$scope.inserted);
+	  		console.log('not array');
 	  	} else{
 	  		//console.log($scope.jobPost[doc_param_key][tmp]);
 	     	$scope.user[doc_param_key].push($scope.inserted);
+	  		console.log('allready array');
+	  			
 	  	}
 	  	})
 	  	.error(function(){
 	  		
 	  	});
-  };
+
+
+
+	  };
 	  
-  $scope.addWhenEdit =function(docParam,$index) {	
-	$http.get('/columns/registerJobSeeker')
-	  	.success(function(data, status, headers, config) {	   
-			$scope.user[docParam].push(data[docParam]);
-	  	})
-	  	.error(function(){
-	  		alert('ERROR!!');
-	  	});
-  };    
-	  
-  $scope.move = function(array, fromIndex, toIndex) {		
-   	   array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-       return array;
-  };
+	$scope.move = function(array, fromIndex, toIndex){
+		
+   	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+    return array;
+
+   };
    
-  $scope.remove = function(array,item) {  
-   array.splice(item, 1);       
+  $scope.remove = function(array,item) { 
+  
+   array.splice(item, 1);  
+      
   };  
 	  
 
@@ -516,17 +536,14 @@ $scope.getColumns = function(){
     }
     return size;
 };
-
-
+	
 		
 	$scope.getPost = function(id){ 
-   	$http.get('/job/'+id ).
+   	$http.get('/job/'+id).
 	success(function(data, status, headers, config) {		
-		 console.log(data);
-
-		
 	      $scope.post = data;	
-	
+	    // // console.log(data);
+
 	}).
 	error(function(data, status, headers, config) {
 		    
@@ -664,8 +681,7 @@ $scope.getColumns = function(){
 	  	} else{
 	  		//console.log($scope.jobPost[doc_param_key][tmp]);
 	     	$scope.jobPost[doc_param_key].push($scope.inserted);
-	     	console.log($scope.jobPost[doc_param_key]);
-	  		console.log('allready array');
+	  		console.log($scope.jobPost);
 	  	}
 	  	})
 	  	.error(function(){
@@ -704,7 +720,9 @@ $scope.getColumns = function(){
 
 	  };  
 	  
-	  
+   
+   
+   
  $scope.objToArr =  function(obj) {
   	var inputObj = obj;
 	 
@@ -719,30 +737,39 @@ $scope.getColumns = function(){
 		return obj;
   };
 	  
-	  
-   $scope.move = function(array, fromIndex, toIndex){
-
-   	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-    return array;
-
+   $scope.move = function(docParam, fromIndex, toIndex){
+  
+   	$scope.post[docParam] = $scope.objToArr( $scope.post[docParam]);
+    $scope.post[docParam].splice(toIndex, 0,  $scope.post[docParam].splice(fromIndex, 1)[0] );
+   
    };
    
-  $scope.remove = function(docParam,docParamName,param) { 
+   
+   
+   
+  $scope.remove = function(docParam,item) { 
+ $scope.post[docParam] =  $scope.objToArr( $scope.post[docParam]); 
 
-
-
-   docParam.splice(param, 1);  
-
-  };  
+ $scope.post[docParam].splice(item, 1);  
+ 		
   
-  
+};  
 $scope.addWhenEdit =function(docParam,$index) {
 		
 		$http.get('/columns/jobPost')
 	  	.success(function(data, status, headers, config) {
 	   
-	  
-			$scope.post[docParam].push(data[docParam]);
+	    var inputObj = $scope.post[docParam];
+	    console.log(inputObj);
+		var output = [];
+		for (var key in inputObj) {
+		  // must create a temp object to set the key using a variable
+		  var tempObj = {};
+		  tempObj = inputObj[key];
+		  output.push(tempObj);
+		  $scope.post[docParam] = output;
+		}
+		$scope.post[docParam].push(data[docParam]);
 	   
 	   
 	   

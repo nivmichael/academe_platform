@@ -58,11 +58,21 @@
 					 	     	
 					 	   <div ng-if="k == 'education'"> 
 					 	   	Education
-					 	   </div>  	
+					 	    	
 					 	     	<div class="detail" e-class="edetail">
 					 	     		
 					 	     		 <div ng-repeat="(t,j) in post.education" class="formDiv">
-					 	     		 
+					 	     		 <div class="iterationCtrls">
+												<span class="iterationCtrl" ng-click="remove(post[k],k,$index)">
+													X Delete
+												</span>
+												<span class="iterationCtrl" ng-click="move(post[k],$index,$index-1)">
+													Move Up
+												</span>
+												<span class="iterationCtrl" ng-click="move(post[k],$index,$index+1)">
+													Move Down
+												</span>
+										 </div>
 							 	     	<div ng-repeat="(m,n) in j" class="formDiv">
 							 	     		
 									 	   <div ng-if="k == 'education'"> 
@@ -78,17 +88,7 @@
 								 	     	</div>
 								 	     	
 							 	     	 <!-- 
-							 	     	<div class="iterationCtrls">
-												<span class="iterationCtrl" ng-click="remove(post[k],$index)">
-													X Delete
-												</span>
-												<span class="iterationCtrl" ng-click="move(post[k],$index,$index-1)">
-													Move Up
-												</span>
-												<span class="iterationCtrl" ng-click="move(post[k],$index,$index+1)">
-													Move Down
-												</span>
-										 </div>  -->
+							 	     	  -->
 								 	     	<hr>
 								 	     	
 							 	     	</div>
@@ -100,7 +100,7 @@
 											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(k,$index)">+ Add a Record</button>
 											</div>
 					 	     	</div> 
-					 	     	
+					 	    </div>  	
 			<!------------------------------------------------------------------------------------------>		 	 		 	     	
 					 	     	
 					 	     	

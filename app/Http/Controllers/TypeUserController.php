@@ -207,7 +207,7 @@ class TypeUserController extends Controller {
 		$update = null;
 		// var_dump($all);die;
 		foreach($all['user'] as $doc_param => $values) {
-			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->pluck('id');			
+			$doc_param_id = DB::table('doc_param')->where('name', $docParam)->where('doc_type_id', 1)->where('doc_sub_type', $doc_sub_type)->pluck('id');	
 			foreach ($values as $param_name => $param_value) {
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');				
 				if ($param_id) {
@@ -268,6 +268,7 @@ class TypeUserController extends Controller {
 			}
 			
 			if($iteration) {
+				//$user[$docParamName][] = array($paramName=>$value) ;
 				$user[$docParamName][$iteration][$paramName] = $value;
 			}elseif(!$iteration) {
 				$user[$docParamName][$paramName] = $value;

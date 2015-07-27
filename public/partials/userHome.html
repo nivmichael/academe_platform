@@ -165,9 +165,7 @@
 									 	     	{{n}} 	
 									 	     	</span>
 									 	  <br>
-									 	  <span ng-show="$last">
-											  <button type="button" class="btn btn-default" ng-click="add(user[key],$index)">+ Add a Record</button>
-										</span>
+									 	
 								 		 </div>
 								<div ng-show="editableForm.$visible">
 		 	     					<div class="iterationCtrls">
@@ -183,9 +181,11 @@
 									</div>
 									
 	 	   						  </div>
+								 	     	<span ng-show="$last">
+											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
+										</span>
 								 	     	
 								 	 <hr>
-								 	     	
 	 	     
 							 	     </div>
 						 	     </div>
