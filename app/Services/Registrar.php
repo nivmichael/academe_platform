@@ -79,18 +79,20 @@ class Registrar implements RegistrarContract {
 			}
 		}
 		unset($obj['personalInfo']);
+	//	print_r($obj);
 		foreach($obj as $docParam=>$values) {
 			$doc_sub_type = DB::table('type_user')->where('id', $personalInfo->id)->pluck('subtype');
 			$doc_param_id = DB::table('doc_param')->where('name', $docParam)->where('doc_type_id', 1)->where('doc_sub_type', $doc_sub_type)->pluck('id');
 			$iterableCount = null;
 			foreach($values as $param_name=>$param_value) {
-				// print_r($param_value);	
+				
 				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
 				$iterableCount ++;
 				if(is_array($param_value)) {
-				print_r('array');
+				
 					$iterable = $param_value;
 					foreach($iterable as $m => $n) {
+						
 						$param_id = DB::table('param')->where('name', $m)->where('doc_param_id', $doc_param_id)->pluck('id');
 						if ($param_id) {
 							$value_ref = DB::table('param_value')->where('value', $n)->pluck('id');
@@ -107,7 +109,7 @@ class Registrar implements RegistrarContract {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');					
 							if(!$value_ref) {						
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>NULL,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
+								DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>NULL,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
 							}else{	 
 								DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$personalInfo->id,'param_id'=>$param_id,'iteration'=>NULL,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);								
 							}

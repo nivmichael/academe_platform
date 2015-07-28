@@ -399,8 +399,14 @@ $.getJSON('/getAllJobs', function(data){
 	  
   $scope.addWhenEdit =function(docParam,$index) {	
 	$http.get('/columns/registerJobSeeker')
-	  	.success(function(data, status, headers, config) {	   
-			$scope.user[docParam].push(data[docParam]);
+	  	.success(function(data, status, headers, config) {
+	  	$scope.inserted = data[docParam];	   
+	  	if(!(angular.isArray($scope.user[docParam]))){
+	  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+	  	}else{
+			$scope.user[docParam].push($scope.inserted);
+	  	}	
+	  		$scope.isDocParamArray = true;
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
@@ -708,11 +714,55 @@ $scope.getColumns = function(){
 	  
 
 	  
-   $scope.move = function(array, fromIndex, toIndex){
+  
+//   
+// $scope.addWhenEdit =function(docParam,$index) {
+// 		
+		// $http.get('/columns/jobPost')
+	  	// .success(function(data, status, headers, config) {
+// 	  		
+	   // $scope.inserted = data[docParam];
+// 	  
+			// if(!(angular.isArray($scope.post[docParam]))){
+	  			// $scope.post[docParam] = Array($scope.post[docParam],$scope.inserted);
+		  	// }else{
+				// $scope.post[docParam].push($scope.inserted);
+		  	// }	
+	   		// console.log($scope.post[docParam]);
+// 	  
+	  	    // $scope.isDocParamArray = true;
+// 	  
+	  	// })
+	  	// .error(function(){
+	  		// alert('ERROR!!');
+	  	// });
+// 
+	// };  
+	
+	
+	$scope.addWhenEdit =function(docParam,$index) {	
+	$http.get('/columns/jobPost')
+	  	.success(function(data, status, headers, config) {
+	  	$scope.inserted = data[docParam];	   
+	  	if(!(angular.isArray($scope.post[docParam]))){
+	  		$scope.post[docParam] = Array($scope.post[docParam],$scope.inserted);
+	  	}else{
+			$scope.post[docParam].push($scope.inserted);
+	  	}	
+	  		$scope.isDocParamArray = true;
+	  	})
+	  	.error(function(){
+	  		alert('ERROR!!');
+	  	});
+  };    
+	  
+	
+	  
+	
+	 $scope.move = function(array, fromIndex, toIndex){
 
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-    return array;
-
+   	
    };
    
   $scope.remove = function(docParam,docParamName,param) { 
@@ -723,23 +773,7 @@ $scope.getColumns = function(){
 
   };  
   
-  
-$scope.addWhenEdit =function(docParam,$index) {
-		
-		$http.get('/columns/jobPost')
-	  	.success(function(data, status, headers, config) {
-	   
-	  
-			$scope.post[docParam].push(data[docParam]);
-	   
-	   
-	   
-	  	})
-	  	.error(function(){
-	  		alert('ERROR!!');
-	  	});
-
-	};    
+	
 })
 .controller("RegisterEmpController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
 

@@ -238,10 +238,12 @@ class TypePostController extends Controller {
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id  WHERE doc_type_id = 2 AND type_post.id = ".$id));
+										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id  
+										   WHERE doc_type_id = 2 
+										   AND type_post.id = ".$id));
 		
 		$isMultiple = false;
-		$post['postInfo'] = $postInfo['original'];
+		$post['postInfo'] = $postInfo;
 		foreach($params as $k=>$v) {
 			
 			
@@ -261,7 +263,7 @@ class TypePostController extends Controller {
 		
 			if($iteration !== NULL) {
 		
-			$post[$docParamName][$iteration][$paramName] = $value;
+				$post[$docParamName][$iteration][$paramName] = $value;
 		
 			}elseif($iteration == NULL) {
 				$post[$docParamName][$paramName] = $value;
@@ -270,9 +272,9 @@ class TypePostController extends Controller {
 			
 			
 		}	
-			
+
 	
-		return Response::json($post);
+		return $post;
 	}
 
 	/**
