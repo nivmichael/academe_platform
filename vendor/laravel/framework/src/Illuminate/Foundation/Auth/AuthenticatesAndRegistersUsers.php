@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-
+use Auth;
 trait AuthenticatesAndRegistersUsers {
 
 	/**
@@ -38,17 +38,20 @@ trait AuthenticatesAndRegistersUsers {
 	 */
 	public function postRegister(Request $request)
 	{
-		$validator = $this->registrar->validator($request->all());
-
-			
-		if ($validator->fails())
-		{
-			return $validator->errors();
+		
+		if(!Auth::user()) {
+			$validator = $this->registrar->validator($request->all());
+	
+				
+			if ($validator->fails())
+			{
+				return $validator->errors();
+			}
+		$this->auth->login($this->registrar->create($request->all()));
 		}
-
 		$this->auth->login($this->registrar->create($request->all()));
 
-		// redirect($request);
+		 redirect($request);
 	}
 
 	/**

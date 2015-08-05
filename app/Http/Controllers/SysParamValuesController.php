@@ -1,8 +1,11 @@
 <?php namespace App\Http\Controllers;
 use App\ImageResize;
 use DB;
+use Route;
 use PDO;
+use App;
 use Auth;
+use App\Post;
 use Response;
 use Input;
 use Schema;
@@ -13,8 +16,9 @@ use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+//use Post;
 
-class SysParamValuesController extends Controller {
+class SysParamValuesController extends Controller  {
 
 	/**
 	 * Display a listing of the resource.
@@ -259,5 +263,38 @@ class SysParamValuesController extends Controller {
 		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_id', '=', $id)->delete();
 		return Response::json($path);
 	}
+	
+	public function deleteIterable()
+	{
+		//$docParamName = $_POST['docParamName'];
+		//$iterable = $_POST['param'];
+		$all = Input::all();
+		$docParamArr = $all['docParam'];
+		
+		if(isset($all['user'])){
+		
+			$all = $all['user'];
+			$info=$all['personalInfo'];
+			$docType = '1';
+			$request = Request::create('/users','POST', array($all));
+		}else if(isset($all['post'])) {
+			$iterable = $all['param'];
+			$all = $all['post'];
+			$info=$all['postInfo'];
+			$docType = '2';
+			$request = Request::create('/savePost','POST', array($all));
+		
+		}
+		
+			
+			
+			$delete       = DB::table('sys_param_values')->where('doc_type',$docType)->where('ref_id',$info['id'])->whereNotNull('iteration')->delete();
+		
+			return Route::dispatch($request)->getContent();
+
+		
+		//return Response::json($request);
+	}
+
 
 }

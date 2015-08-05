@@ -3,7 +3,7 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
-
+use Request;
 class RedirectIfAuthenticated {
 
 	/**
@@ -33,22 +33,29 @@ class RedirectIfAuthenticated {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->check())
-		{
-			
-			
-			
-			if ($request->user()->subtype == 'employer')
-	        {
-	            return redirect('/employer#/employer');
-	        }
-	        else if($request->user()->subtype == 'jobSeeker')
-	        {
-	        	 return redirect('/home#/home');
-	        }
+		 if ($this->auth->check())
+	     {
+			if (!(Request::path() == 'auth/register'))
+	    	{
+	    
+				$employerOrNot = null;
+// 			
+// 			
+				if ($request->user()->subtype == 'employer')
+	       		{
+	           		$employerOrNot = '/employer#/employer';
+	        	}
+	        	else if($request->user()->subtype == 'jobSeeker')
+	        	{
+	        		$employerOrNot = '/home#/home';
+	        	}
 
-			return new RedirectResponse(url('/'));
+				return new RedirectResponse(url($employerOrNot));
+		 	}
+
+	
 		}
+		 // }
 
 		return $next($request);
 	}

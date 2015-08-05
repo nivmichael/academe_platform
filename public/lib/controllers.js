@@ -223,6 +223,9 @@ angular.module('acadb.controllers', [])
 
 .controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
 
+
+$scope.isArray = angular.isArray;
+
 $scope.allJobs = {};
 $.getJSON('/getAllJobs', function(data){
   $scope.$apply(function(){
@@ -419,6 +422,17 @@ $.getJSON('/getAllJobs', function(data){
   };
    
   $scope.remove = function(array,item) {  
+  	
+  	$http.post('/deleteIterable', {docParam:array,user:$scope.user,_token:CSRF_TOKEN}).
+	  then(function(response) {
+	     docParam.splice(item, 1);  
+	  }, function(response) {
+	    // called asynchronously if an error occurs
+	    // or server returns response with an error status.
+	  });
+  	
+  	
+  	
    array.splice(item, 1);       
   };  
 	  
@@ -529,11 +543,10 @@ $scope.getColumns = function(){
 	$scope.getPost = function(id){ 
    	$http.get('/job/'+id ).
 	success(function(data, status, headers, config) {		
-		 console.log(data);
 
 		
 	      $scope.post = data;	
-	
+		
 	}).
 	error(function(data, status, headers, config) {
 		    
@@ -604,15 +617,33 @@ function capitalizeFirstLetter(string) {
     });
   };
   
-  
- 
+
+	
+	
+	
+	
+	
     // function to process the form
 $scope.getJobPostFields = function(){
 	$http.get('/columns/jobPost').
 	  success(function(data, status, headers, config) {
+	 	 console.log(data);
+	 	 
+	 	 angular.forEach(data, function(value, key) {
+		 	angular.forEach(value, function(v, k) {
+		 	
+			//$scope.getInputType(k,key);
+		//	console.log(key);
+		
+			
+		});
+			//console.log(value);
+		//	console.log(key);
+			
+		});
+	 	 
+	 	 
 	  	$scope.jobPost = data;
-	 	  
-
 	  }).error(function(data, status, headers, config){
 	  	
 	  });
@@ -741,6 +772,7 @@ $scope.getColumns = function(){
 	
 	
 	$scope.addWhenEdit =function(docParam,$index) {	
+//	console.log($scope.post);
 	$http.get('/columns/jobPost')
 	  	.success(function(data, status, headers, config) {
 	  	$scope.inserted = data[docParam];	   
@@ -749,11 +781,13 @@ $scope.getColumns = function(){
 	  	}else{
 			$scope.post[docParam].push($scope.inserted);
 	  	}	
-	  		$scope.isDocParamArray = true;
+	  	
+	  		
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
 	  	});
+	  	console.log($scope.post);
   };    
 	  
 	
@@ -766,23 +800,24 @@ $scope.getColumns = function(){
    };
    
   $scope.remove = function(docParam,docParamName,param) { 
-
-
-
-   docParam.splice(param, 1);  
-
+ 	 docParam.splice(param, 1);  
+	$http.post('/deleteIterable', 
+	{ 
+	  docParam:docParam,
+	  post:$scope.post,
+	  docParamName:docParamName,
+	  param:param,_token:CSRF_TOKEN}).
+	  then(function(response) {
+	    
+	  }, function(response) {
+	    // called asynchronously if an error occurs
+	    // or server returns response with an error status.
+	  });
   };  
   
-	
+  
+  
+  
+// $scope.getInputType('profession','experience');
 })
-.controller("RegisterEmpController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state) {
-
-
- console.log('RegisterEmpController');
-
-
-}])
-.controller('RegisterRegController', function($scope,DocParamData,$state,$http,CSRF_TOKEN) {
-	
-	console.log('RegisterRegController');
-});
+;

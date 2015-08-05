@@ -38,73 +38,277 @@
 							</div>
 						</nav>
 						
+						
+						
+						
+						
+						
 						<form editable-form name="editableForm" onaftersave="savePost(post)">
-				 	     <div class="">
-					 	     <div ng-repeat="(k,v) in post" class="">
+				 	  
+					 	    <div ng-repeat="(paramName,paramValues) in post.postInfo">
+					 	    	  <span class="param_label " >	
+					 	    		{{paramName}}
+					 	    	  </span>
+					 	    	  
+					 	    	  <span e-class="form-control postInput" class="" editable-text="post.postInfo[paramName]" e-name="post.postInfo[paramName]" ng-model="post.postInfo[paramName]"> 
+								 	{{paramValues}}
+								  </span>
+					 	    </div>	
 					 	    
-					 	     	<div ng-repeat="(key,val) in v" class="detail" e-class="edetail" >
-					 	     	
-									<span ng-hide="k == 'education'">
-									 	     <span class="param_label ">
-									 	     	{{key}}:
+					 	    
+					 	    
+					 	    
+					 	    
+					 	    <div ng-repeat="(docParamName,docParamValues) in post" >
+					 	    	
+					 	    	<div ng-repeat="(paramKey,paramValues) in docParamValues">
+					 	 
+									<div ng-repeat="(k,v) in paramValues  track by $index" >
+										 
+					 	    			
+						 	    			<span class="param_label " ng-if="k == 'paramName'">	
+						 	    				{{v}}
+						 	   			 	</span>
+						 	   			 	
+						 	   			 	<span ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> 
+									 			{{v}}
+										  	</span>
+									  	
+									  	
+										  	<div ng-repeat="(u,w) in v track by $index" >
+							 	    			
+								 	    			<span class="param_label " ng-if="u == 'paramName'">	
+								 	    				{{w}}
+								 	   			 	</span>
+								 	   			 	
+								 	   			 	<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"> 
+											 			{{w}}
+												  	</span>
+											  
+											  
+											  
+											  
+											  
+						 	   			 	</div>	
+											 
+											 
+					 	   			 	
+					 	   			 	
+					 	   			</div>	
+					 	   			 		
+									<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
+											<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+												X Delete
+											</span>
+											<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+												Move Up
+											</span>
+											<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+												Move Down
+											</span>
+									 </div>
+					 	   		</div>	
+					 	   		
+		 	   					<div ng-show="editableForm.$visible && $last">
+								  <button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
+								</div>
+					 	    
+					 	    </div>	
+					 	    
+					 	    
+					 	    <div class="buttons">
+					     		<span ng-show="editableForm.$visible">
+						       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+						       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+					      		</span>
+					    	</div>	
+					    					   
+						</form>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<!-- <form editable-form name="editableForm" onaftersave="savePost(post)">
+				 	  
+					 	     <div ng-repeat="(k,v) in post" class="">
+					 	   
+					 	     	<div ng-repeat="(key,val) in v" class="detail" e-class="edetail"  >
+					 	     		<div ng-repeat="(m,n) in val" class="detail" e-class="edetail"  ng-show="m =='paramName'">
+									
+									 	     <span class="param_label " >
+									 	     	{{n}}
+									 	     		
 									 	     </span>
 								 
-								 	     	<span e-class="form-control postInput" class="" editable-text="post[k][key]" e-name="post[k][key]" ng-model="post[k][key]"> 
-								 	     	 	{{val}}
+								 	     
+								 	     
+								 	
+								 	     
+								 	     
+								 	     	<span e-class="form-control postInput" class="" editable-text="post[k][key]" e-name="post[k][key][n]" ng-model="post[k][key][n]" ng-show="m =='paramValue'"> 
+								 	     	 	{{n}}
 								 	     	</span>
-									</span>	 	     	
-					 	     	</div> 
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	     	
+								 	    </div> 	
+									</div> 	     	
+					 	
+					 	     
 			<!------------------------------------------------------------------------------------------>		 	     	
 					 	     	
-					 	   <div ng-if="k == 'education'"> 
-					 	   	Education
+					 	
+						<!-- <form editable-form name="editableForm" onaftersave="savePost(post)">
+				 	  
+					 	    <div ng-repeat="(paramName,paramValues) in post.postInfo">
+					 	    	  <span class="param_label " >	
+					 	    		{{paramName}}
+					 	    	  </span>
+					 	    	  
+					 	    	  <span e-class="form-control postInput" class="" editable-text="post.postInfo[paramName]" e-name="post.postInfo[paramName]" ng-model="post.postInfo[paramName]"> 
+								 	{{paramValues}}
+								  </span>
+					 	    </div>	
+					 	    
+					 	    
+					 	    
+					 	    
+					 	    
+					 	    <div ng-repeat="(docParamName,docParamValues) in post" >
 					 	    	
-					 	     	<div class="detail" e-class="edetail">
+					 	    	<div ng-repeat="(paramKey,paramValues) in docParamValues">
+					 	 
+									<div ng-repeat="(k,v) in paramValues" >
+										
+					 	    			<div>
+						 	    			<span class="param_label " ng-if="k == 'paramName'">	
+						 	    				{{v}}
+						 	   			 	</span>
+						 	   			 	
+						 	   			 	<span ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> 
+									 			{{v}}
+										  	</span>
+									  	</div>
+									  	
+									  	<div ng-repeat="(u,w) in v" >
+						 	    			<div>
+							 	    			<span class="param_label " ng-if="u == 'paramName'">	
+							 	    				{{w}}
+							 	   			 	</span>
+							 	   			 	
+							 	   			 	<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"> 
+										 			{{w}}
+											  	</span>
+										  	</div>
+					 	   			 	</div>	
+					 	   			 </div>	
+					 	   			 
+					 	   			 
+					 	   			
+					 	   			 
+					 	   			 
+					 	   			 
+					 	   		</div>	
+					 	    </div>	
+					   
+						</form> -->
+						
+							
+					 	    	
+					 	     	
 					 	     		
-					 	     		 <div ng-repeat="(t,j) in post.education" class="formDiv">
-					 	     		 <div class="iterationCtrls">
-												<span class="iterationCtrl" ng-click="remove(post[k],k,$index)">
-													X Delete
-												</span>
-												<span class="iterationCtrl" ng-click="move(post[k],$index,$index-1)">
-													Move Up
-												</span>
-												<span class="iterationCtrl" ng-click="move(post[k],$index,$index+1)">
-													Move Down
-												</span>
-										 </div>
-							 	     	<div ng-repeat="(m,n) in j" class="formDiv">
-							 	     		
-									 	   <div ng-if="k == 'education'"> 
-									 	   	
-										 	    <span class="param_label">
-										 	     	{{m}}:
-										 	    </span>
-										 	   
-									 	     	<span e-class="form-control postInput" class="" e-name="post[k][t][m]" editable-text="post[k][t][m]" ng-model="post[k][t][m]">
-									 	     	 	{{n}}
-									 	     	</span>
-									 	  <br>
-								 	     	</div>
+					 	     		 <!-- <div ng-repeat="(t,j) in v" class="formDiv" >
+					 	     		 	
 								 	     	
-							 	     	 <!-- 
-							 	     	  -->
-								 	     	<hr>
-								 	     	
-							 	     	</div>
+								 	     	 <div ng-repeat="(m,n) in j" class="formDiv" >
+						 	     		 	<div class="iterationCtrls" ng-show="editableForm.$visible">
+													<span class="iterationCtrl" ng-click="remove(v,'education',$index)">
+														X Delete
+													</span>
+													<span class="iterationCtrl" ng-click="move(v,$index,$index-1)">
+														Move Up
+													</span>
+													<span class="iterationCtrl" ng-click="move(v,$index,$index+1)">
+														Move Down
+													</span>
+											 </div>
+								 	     	 	<div ng-repeat="(r,s) in n" class="formDiv" >
+											 	    <span class="param_label" ng-show="r == 'paramName'">
+											 	     	{{s}}
+											 	    </span>
+											 	   
+										 	     	<span e-class="form-control postInput" class="" e-name="v[t][m]" editable-text="v[t][m]" ng-model="v[t][m]" ng-show="r == 'paramValue'">
+										 	     	 	{{s}}
+										 	     	</span>
+										
+									 	     	<hr>
+									 	     	</div>
+								 	     	 </div>
 							 	     	
-						 	     	 </div>
 							 	     	
 											
-											<div ng-show="$last && editableForm.$visible">
-											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(k,$index)">+ Add a Record</button>
+											<div ng-show="editableForm.$visible && $last">
+											  <button type="button" class="btn btn-default" ng-click="addWhenEdit('education',$index)">+ Add a Record</button>
 											</div>
-					 	     	</div> 
-					 	    </div>  	
-			<!------------------------------------------------------------------------------------------>		 	 		 	     	
+						 	     	 </div>
+					 	     	
+					 	   	
+				 	     	
 					 	     	
 					 	     	
-					 	     </div>	 
+					 	  
 				 	     </div>			 	     		 	
 						 	 <div class="buttons">
 					     		<span ng-show="editableForm.$visible">
@@ -112,9 +316,11 @@
 						       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
 					      		</span>
 					    	</div>
-					    </form>
+					    	
 			    	</div>	
-			    </div>	
+					   
+				</form>  -->
+			    	
 			</div>	
 		 </div>		 
 	  </div>
@@ -123,4 +329,15 @@
 
 
 
-
+  	<!-- <div ng-switch on="inputType">
+								 	     		<div ng-switch-when="text">
+								 	     			file
+								 	     		</div>
+								 	     		<div ng-switch-when="select">
+								 	     			select
+								 	     		</div>	
+								 	     		<div ng-switch-when="file">
+								 	     			file
+								 	     		</div>		
+								 	     	</div> -->
+								 	     

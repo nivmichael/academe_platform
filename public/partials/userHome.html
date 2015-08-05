@@ -1,99 +1,72 @@
-
+<!-- modals of footer sections / files -->
 <div class="col-md-12 center-modal" ng-repeat="footerNavli in footerNavlis">
 	<div class="modal fade bs-example-modal-lg_{{footerNavli.tag}}" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    	
-			    	
-			    	
-			    	
+			  <div class="modal-dialog modal-lg">	
 			    <div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >	
-			    	
-			    	
-			    	
-			    	
 			    	<div flow-init="flowOp(m)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
 					     class="modal-content" >					     
-  <br/>
-  					 <div class="">
-					    	
-								<div class="thumbnail" >
-									<span class="thumbnail_title">{{q}}</span>
-									<img  ng-src="{{n}}">
-									<div class="btn-group">
-						       			  <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,r,q)">
-								         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-								          </a>
-								          <button>
-								          	<i class=" btn btn-default btn-xs glyphicon glyphicon-user"></i>
-								          </button>
-						      			
-							    	</div>
+ 						 <br/>
+						 <div class="thumbnail" >
+							<span class="thumbnail_title">{{q}}</span>
+								<img  ng-src="{{n}}">
+								<div class="btn-group">
+						       		 <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,n,m)">
+								        <i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+								     </a>
+								     <button>
+								        <i class=" btn btn-default btn-xs glyphicon glyphicon-user"></i>
+								     </button>	
+							    </div>
 								
-								</div>
+						</div>
 					    	
- 					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
-					    	
-					      <span class="thumbnail_title">{{file.name}}</span>
-					      <div class="thumbnail" ng-show="$flow.files.length">
-					        <img flow-img="file" />
-					      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-					        <div class="progress-bar" role="progressbar"
-					             aria-valuenow="{{file.progress() * 100}}"
-					             aria-valuemin="0"
-					             aria-valuemax="100"
-					             ng-style="{width: (file.progress() * 100) + '%'}">
-					          <span class="sr-only">{{file.progress()}}% Complete</span>
-					        </div>
-					      </div>
-					      <div class="btn-group">
-					        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-					         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-					        </a>
-					      </div>
-					      </div>
-			
-					    </div>
-					    
-					    <div class="clear"></div>
+ 						<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+						    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+						    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+						    	
+						      <span class="thumbnail_title">{{file.name}}</span>
+						      <div class="thumbnail" ng-show="$flow.files.length">
+						        <img flow-img="file" />
+						      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+						        <div class="progress-bar" role="progressbar"
+						             aria-valuenow="{{file.progress() * 100}}"
+						             aria-valuemin="0"
+						             aria-valuemax="100"
+						             ng-style="{width: (file.progress() * 100) + '%'}">
+						          <span class="sr-only">{{file.progress()}}% Complete</span>
+						        </div>
+						      </div>
+						      <div class="btn-group">
+						        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
+						         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+						        </a>
+						      </div>
+						      </div>
+				
+						    </div>
+						    
+						    <div class="clear"></div>
 					  </div>
-					    	
 					</div>
 				</div>
-				
-				
-				
-				
-				
-				
-				
-				
 			</div>
-				
-				
-				
-			</div>
-		</div>
+	</div>
 </div>
 
 
 
 
-
+<!-- sideBar with the status, picture, and name -->
 
 <nav class="col-md-2 sideNav">
-	
-	
-	
 	<div class="col-md-12">
 		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>	
 	</div>
 	
 	<div class="col-md-12" dropdown is-open="status.isopen">
-		<span>status: graduate  </span>
+	  <span>status: graduate  </span>
       <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
         {{user.personalInfo.status }} <span class="caret"></span>
       </button>
@@ -106,146 +79,109 @@
 	
 	<div class="col-md-12">
 		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo }}" alt="Generic placeholder image" width="140" height="140">
-	
+		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo }}" alt="Generic placeholder image" width="140" height="140">	
 	</div>
 	
 	<div class="btn btn-primary col-md-12">
 		Find A Job
 	</div>
 </nav>
-<div class=""></div>
-
-<div class="">
 
 
- 
+
   <accordion close-others="oneAtATime">
-
-    
     <accordion-group ng-repeat="(key, val) in user" class='active' is-open="status.isOpen[$index]" ng-hide="key == 'files'">
    		 <accordion-heading is-open="status.isOpen[$index]">
    		  <div ng-class="{'openAccordion': status.isOpen[$index], 'closeAccordion': !status.isOpen[$index]}" >
 	           {{ key }}<i class="pull-right glyphicon"></i>
    		  </div>
 	     </accordion-heading>
-    	<div>
+    	
     	 
-    	  <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
-	 	     <div class="col-md-12" ng-if="!isDocParamArray">
-		 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" class="">
-		 	     	<div ng-hide="k == 'id' || k == 'type' || k == 'password_new' || k == 'created_at' || k == 'updated_at'">
-			 	     	<span >
-				 	     	<span class="param_label col-md-2">
-				 	     	   {{k}}:
-				 	     	</span>
-			 	     	</span>
-			 	     	<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{key}}.{{k}}" e-name="{{k}}">
-			 	     	 	{{v}}
-			 	     	</span>
-		 	     	</div> 
-		 	     	<div ng-show="editableForm.$visible">
-		 	     	     	<span ng-show="$last" ng-model="isDocParamArray">
+    	  <form editable-form name="editableForm" onaftersave="saveUser(user)">
+			 	     
+				 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" ng-if="!isArray(val)"> 
+				 	     	
+						 	     
+					 	   		
+					 	   		
+							 	 
+							 	<div ng-if="v == 'select'">
+							 		select
+							 	</div>
+						 	 	<div ng-if="v == 'text'">
+							 		<div ng-hide="k == 'type'">
+					 	   		 
+								 	     	<span class="param_label col-md-2">
+								 	     	   {{k}}:
+								 	     	</span>
+							 	  
+							 	     		<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{key}}.{{k}}" e-name="{{k}}">
+							 	     	 		{{v}}
+							 	     		</span>
+							 		 </div>
+							 	 
+							 	</div>
+			 	    	
+			 	     
+			 	     
+			 	     
+		 	    		 </div>
+		 	     <div ng-show="editableForm.$visible">
+		 	     	     	<span ng-show="$last" >
 									<button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
 							</span>
-					</div>			
-		 	     </div>	 
-	 	     </div>		
+				 </div>			
+		     
+	
+	 	     	
 	 	     
 	 	     <!---------------------------------------------------------------------------------------------------------------------->
 	 	     
 	 	     
-	 	       <div ng-if="isDocParamArray">
+	 	    
 					 	  
-					 	     	<div class="detail" e-class="edetail">
+					 	     	
 					 	     		
-					 	     		 <div ng-repeat="(t,j) in user.education" class="formDiv">
-											 	   
-							 	    	 <div ng-repeat="(m,n) in j" class="formDiv">
-						 	     		 <span class="param_label">
-							 	     		 {{m}}
-										 </span>
-							 	     		
-												<span e-class="form-control postInput" class="" e-name="user[key][t][m]" editable-text="user[key][t][m]" ng-model="user[key][t][m]">
-									 	     	{{n}} 	
-									 	     	</span>
-									 	  <br>
-									 	
-								 		 </div>
-								<div ng-show="editableForm.$visible">
-		 	     					<div class="iterationCtrls">
-										<span class="iterationCtrl" ng-click="remove(user[key],$index)">
-											X Delete
-										</span>
-										<span class="iterationCtrl" ng-click="move(user[key],$index,$index-1)">
-											Move Up
-										</span>
-										<span class="iterationCtrl" ng-click="move(user[key],$index,$index+1)">
-											Move Down
-										</span>
-									</div>
-									
-	 	   						  </div>
-								 	     	<span ng-show="$last && editableForm.$visible">
-											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
-										</span>
-								 	     	
-								 	 <hr>
+				<div ng-repeat="(t,j) in val" class="formDiv"  class="detail" e-class="edetail"  ng-if="isArray(val)">
+										 	  
+		 	    	<div ng-repeat="(m,n) in j" class="formDiv" >
+	 	     		 <span class="param_label">
+		 	     		 {{m}}
+					 </span>
+		 	     		
+					 <span e-class="form-control postInput" class="" e-name="user.education[t][m]" editable-text="user.education[t][m]" ng-model="user.education[t][m]">
+				 	     {{n}} 	
+				 	 </span>
+				 	  <br>
+				 	
+			 		</div>
+					<div ng-show="editableForm.$visible">
+     					<div class="iterationCtrls" >
+							<span class="iterationCtrl" ng-click="remove(user[key],$index)">
+								X Delete
+							</span>
+							<span class="iterationCtrl" ng-click="move(user[key],$index,$index-1)">
+								Move Up
+							</span>
+							<span class="iterationCtrl" ng-click="move(user[key],$index,$index+1)">
+								Move Down
+							</span>
+						</div>
+					</div>
+			 	     	<span ng-show="$last && editableForm.$visible">
+						  <button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
+					</span>
+			 	     	
+			 	 	<hr>
 	 	     
-							 	     </div>
-						 	     </div>
+				</div>
+						 	   
 	 	   
 					 	     	
-	 	     </div> 
-	 	     
-	 	        <!---------------------------------------------------------------------------------------------------------------------->
 	 	     
 	 	     
-	 	       <!-- <div ng-if="false">
-					 	  
-					 	     	<div class="detail" e-class="edetail">
-					 	     		
-					 	     		 <div ng-repeat="(t,j) in user.education" class="formDiv">
-											 	   
-							 	    	 <div ng-repeat="(m,n) in j" class="formDiv">
-						 	     		 <span class="param_label">
-							 	     		 {{m}}
-										 </span>
-							 	     		
-												<span e-class="form-control postInput" class="" e-name="user[key][t][m]" editable-text="user[key][t][m]" ng-model="user[key][t][m]">
-									 	     	{{n}} 	
-									 	     	</span>
-									 	  <br>
-									 	
-								 		 </div>
-								<div ng-show="editableForm.$visible">
-		 	     					<div class="iterationCtrls">
-										<span class="iterationCtrl" ng-click="remove(user[key],$index)">
-											X Delete
-										</span>
-										<span class="iterationCtrl" ng-click="move(user[key],$index,$index-1)">
-											Move Up
-										</span>
-										<span class="iterationCtrl" ng-click="move(user[key],$index,$index+1)">
-											Move Down
-										</span>
-									</div>
-									
-	 	   						  </div>
-								 	     	<span ng-show="$last">
-											  <button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
-										</span>
-								 	     	
-								 	 <hr>
-	 	     
-							 	     </div>
-						 	     </div>
-	 	   
-					 	     	
-	 	     </div>  -->
-	 	     
-	 	     
-	 	        <!---------------------------------------------------------------------------------------------------------------------->
+	 	        
 	 	     	 
 	 	     		
 	 	     		
@@ -264,7 +200,6 @@
     
     
    </accordion>
-</div>
 
 <footer class="footerNavUl">
 	

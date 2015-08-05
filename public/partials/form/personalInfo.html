@@ -18,6 +18,7 @@
 						<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">				      
 						        <span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
 									{{key}}
+									
 								</span>
 						        <span  class="param_input col-md-10">					
 									<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
@@ -115,7 +116,7 @@
 	
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
-	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">
+	    <a href="/home#/home" class="btn btn-block btn-info">
 	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 

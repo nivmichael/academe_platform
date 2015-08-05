@@ -15,7 +15,7 @@ class HomeMiddleware {
 	{
 		if ($request->user()->subtype != 'jobSeeker')
         {
-            return redirect('/');
+             return redirect('/');
         }
 		return $next($request);
 	}	

@@ -11,6 +11,7 @@
 	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
 		<span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
 			{{key}}
+			
 		</span>
 		<span ng-hide="docParam == 'files' && key == 'user_photo' || key == 'profile_pic' || key == 'gallery' || key == 'subtype' || key == 'company_logo'" class="param_input col-md-10">					
 			<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
@@ -74,13 +75,13 @@
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
 	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">
-	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	   	 	Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 	    
 	</div>
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
-	    <a ng-click="saveUser(user)" class="btn btn-block btn-info">
+	    <a href="/employer#/employer" class="btn btn-block btn-info">
 	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
 	    </a>
 

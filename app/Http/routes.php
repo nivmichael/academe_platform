@@ -55,6 +55,7 @@ Route::post('/sysParamValues/params', 'sysParamValuesController@saveParam');
 Route::post('/savePost', 'TypePostController@savePost');
 Route::get('/getAllJobs', 'TypePostController@index');
 Route::get('/job/{id}', 'TypePostController@show');
+Route::get('/inputType', 'TypePostController@getInputType');
 // Route::resource('/job/[id]', 'TypePostController');
 
 
@@ -74,11 +75,13 @@ Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
 Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
 Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
 Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+
 // Route::get('/columns/{doc_param}' ,'DocParamController@getParams');
 
 Route::any('/upload'        ,'SysParamValuesController@upload');
 Route::any('/deleteImage'   ,'SysParamValuesController@deleteimagefromdb');
 Route::post('/setStatus' ,'TypeUserController@setStatus');
+Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
 Route::get('/getStatus' ,'TypeUserController@getStatus');
 
 

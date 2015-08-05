@@ -159,18 +159,12 @@ class TypeUserController extends Controller {
 		if(isset($all['from']) && $all['from'] == 'tables'){
 			$funcFromAdmin = true;
 			$allPersonalInfo = $all['user'];
-			
-			
 		}else{
 			$funcFromAdmin = false;
 			$allPersonalInfo = $all['user']['personalInfo'];
 		}
-			$id = $allPersonalInfo['id'];
-		
-		unset($all['personalInfo']);
-	//personalInfo //no dynamic parameters	
-		
-	
+		$id = $allPersonalInfo['id'];
+		unset($all['personalInfo']);	
 		$param = User::find($id);
 		if($param){		
 				$param->id = $id;	
@@ -201,39 +195,70 @@ class TypeUserController extends Controller {
 		$param->registration   = $allPersonalInfo['registration'];
 		$param->send_newsletters  = $allPersonalInfo['send_newsletters'];
 		$param->save();
+		unset($all['user']['personalInfo']);
 		if($funcFromAdmin){
 			return Response::json('function from admin');die;
 		}
 		$update = null;
-		// var_dump($all);die;
-		
-		
-		
-		
-		foreach($all['user'] as $doc_param => $values) {
-			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->pluck('id');			
-			foreach ($values as $param_name => $param_value) {
-				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');				
-				if ($param_id) {
-					//checking where the values come from? from param_value? or from short/long?
-					$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');					
-					if(!$value_ref) {						
-								$value_ref = $param_value;								
-								$sys_param_id = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->pluck('id');		
-								if($param_value){
-									$update = DB::table('sys_param_values')->where('id', $sys_param_id)->update(['value_ref'=>NULL,'value_short'=>$value_ref,'value_long'=>NULL]);	
-								}							
-					} else {
-							$update = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->update(['value_ref'=>$value_ref,'value_short'=>null,'value_long'=>null]);
-					}
-				}
+		foreach($all['user'] as $doc_param => $param_object){
+			foreach ($param_object as $param_key => $param_value) {
+				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
-		return Response::json($param);
-	}
-	
-	
+		unset($obj['files']);
+		foreach($obj as $doc_param => $values) {
+			$doc_param_id = DB::table('doc_param')->where('name', $doc_param)->where('doc_type_id', 1)->pluck('id');			
+			$iterableCount = 0;
+			foreach ($values as $param_name => $param_value) {
+				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');		
+				if(is_array($param_value)) {
+					$iterable = $param_value;
+					foreach($iterable as $m => $n) {	
+						$param_id = DB::table('param')->where('name', $m)->where('doc_param_id', $doc_param_id)->pluck('id');
+						if ($param_id) {
+							$value_ref = DB::table('param_value')->where('value', $n)->pluck('id');
+							$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$param->id)->where('iteration',$iterableCount)->pluck('id');
+							if($existsId) {
+								
+								if(!$value_ref) {
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$n,'value_long'=>NULL]);
+								} else {
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
+								}
+							}else {
+								if(!$value_ref) {						
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$n,'value_long'=>NULL]);	
+								} else {
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+								}
+							}
+						}
+					}	
+				} elseif (!is_array($param_value)) {
 
+					if ($param_id) {
+						$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
+						$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$param->id)->pluck('id');
+						if($existsId) {						
+							if(!$value_ref) {						
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
+							} else {
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+							}
+						}else {
+							if(!$value_ref) {						
+								DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
+							} else {
+								DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$param->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+							}
+						}	
+					}	
+				}		
+				$iterableCount ++;
+			}
+		}
+		return Response::json($obj);
+	}
 	
 	/**
 	 * Display the specified resource.
@@ -250,22 +275,29 @@ class TypeUserController extends Controller {
 		$userPersonalInfo = User::find($id);
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 										   param.name AS paramName, 
+										   param_type.name AS inputType,
 										   doc_param.name AS docParamName 
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
+										   LEFT JOIN param_type ON param.type_id = param_type.id
 										   WHERE doc_type_id = 1 
 										   AND type_user.id = ".$id));
 		
 		
 		$user['personalInfo'] = $userPersonalInfo;
+		
+		
+		
+		
+		
 		foreach($params as $k=>$v) {
 			$iteration    = $v->iteration;
 			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
-		
+			$inputType = $v->inputType;
 		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
@@ -273,13 +305,64 @@ class TypeUserController extends Controller {
 				$value = $v->value;
 			}
 			
-			if($iteration !== NULL) {		
-				$user[$docParamName][$iteration][$paramName] = $value;		
+			if($iteration !== NULL) {
+								
+									
+								
+						
+						
+					
+			
+				$user[$docParamName][$iteration][$k]['paramName'] = $paramName;		
+				$user[$docParamName][$iteration][$k]['paramValue'] = $value;
+				$user[$docParamName][$iteration][$k]['inputType'] = $inputType;
+							
+				//$user[$docParamName][$iteration][$paramName] = $value;	
+				
+			
+			
 			}elseif($iteration == NULL) {
-				$user[$docParamName][$paramName] = $value;			
+							
+						
+					
+								
+							
+				$user[$docParamName]['paramName'] = $paramName;		
+				$user[$docParamName]['paramValue'] = $value;
+				$user[$docParamName]['inputType'] = $inputType;
+							
+					
+				//$user[$docParamName][$paramName] = $value;			
+					
 			}
 		
 		}		
+		
+		
+		
+		
+		
+		
+		
+		// foreach($params as $k=>$v) {
+			// $iteration    = $v->iteration;
+			// $docParamName = $v->docParamName;
+			// $paramName = $v->paramName;
+			// $inputType = $v->inputType;
+// 		
+			// if($v->value_ref == null) {
+				// $value = $v->value_short;
+			// }else{
+				// $value = $v->value;
+			// }
+// 			
+			// if($iteration !== NULL) {		
+				// $user[$docParamName][$iteration][$paramName] = $value;		
+			// }elseif($iteration == NULL) {
+				// $user[$docParamName][$paramName] = $value;			
+			// }
+// 		
+		// }		
 	
 		return Response::json($user);
 	}
