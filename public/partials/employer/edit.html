@@ -1,4 +1,23 @@
- <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
+ <form editable-form name="editableForm" onaftersave="saveUser(user)">
+ 	  <div ng-repeat="(docParamName,docParamValue) in user" class="">
+ 	  	{{docParamName}}
+ 	  </div>	
+ </form>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
 	 	     <div class="col-md-12">
 		 	    
 		 	    
@@ -15,6 +34,7 @@
 			 	     	 	{{n}}
 			 	     	</span>
 		 	     	</div> 
+		 	     	
 		 	     </div>	 
 	 	     </div>		
 	 	     	 
@@ -29,4 +49,4 @@
 			       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
 		      		</span>
 		    	</div>
-		    </form>
+		    </form> -->

@@ -409,23 +409,24 @@ $.getJSON('/getAllJobs', function(data){
 	  	}else{
 			$scope.user[docParam].push($scope.inserted);
 	  	}	
-	  		$scope.isDocParamArray = true;
+	  		
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
 	  	});
   };    
 	  
-  $scope.move = function(array, fromIndex, toIndex) {		
-   	   array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-       return array;
-  };
+  $scope.move = function(array, fromIndex, toIndex){
+
+   	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+   	
+   };
    
   $scope.remove = function(array,item) {  
   	
   	$http.post('/deleteIterable', {docParam:array,user:$scope.user,_token:CSRF_TOKEN}).
 	  then(function(response) {
-	     docParam.splice(item, 1);  
+	     array.splice(item, 1);  
 	  }, function(response) {
 	    // called asynchronously if an error occurs
 	    // or server returns response with an error status.
@@ -714,24 +715,22 @@ $scope.getColumns = function(){
 
 	  };
 	  
-	$scope.add1 = function(doc_param_key,param_key,index) {
+	  
+	   $scope.add1 = function(docParamName,index) {
+   	console.log(docParamName);
+ 
 
-   	
-   	$http.get('/columns/registerJobSeeker')
+   	$http.get('/columns/jobPost')
 	  	.success(function(data, status, headers, config) {
-	  		$scope.inserted = data[doc_param_key];
-	  		
-	  		
-	  	if(!(angular.isArray($scope.user[doc_param_key]))){
-	  		
-	  		$scope.user[doc_param_key] = Array($scope.user[doc_param_key],$scope.inserted);
+	  		$scope.inserted = data[docParamName];
+	  	if(!(angular.isArray($scope.jobPost[docParamName]))) {
+	  		$scope.jobPost[docParamName] = Array($scope.jobPost[docParamName],$scope.inserted);
 	  		console.log('not array');
 	  	} else{
-	  		//console.log($scope.jobPost[doc_param_key][tmp]);
-	     	$scope.user[doc_param_key].push($scope.inserted);
+	  		//console.log($scope.jobPost[docParamName][tmp]);
+	     	$scope.jobPost[docParamName].push($scope.inserted);
+	     	console.log($scope.jobPost[docParamName]);
 	  		console.log('allready array');
-	  		console.log($scope.user[doc_param_key]);
-	  		
 	  	}
 	  	})
 	  	.error(function(){
@@ -740,9 +739,8 @@ $scope.getColumns = function(){
 
 
 
-	  };  
-	  
-	  
+	  };
+	
 
 	  
   

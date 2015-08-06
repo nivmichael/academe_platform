@@ -12,8 +12,8 @@
    	 </div>
     <span>Last Updated - </span>{{user.personalInfo.updated_at}}
 	<div class="col-md-12 employerDetails">
-		<h3 class="text-center">{{user.company.company_name}}</h3>
-		<img class="img-thumbnail col-md-12" src="{{ profilePic || user.files.company_logo }}" alt="Generic placeholder image" width="140" height="140">
+		<h3 class="text-center">{{user.company.company_name.paramValue}}</h3>
+		<img class="img-thumbnail col-md-12" src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image" width="140" height="140">
 	
 	</div>
 	<div class="">

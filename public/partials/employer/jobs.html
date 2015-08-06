@@ -7,7 +7,7 @@
 			<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">						
 				<div class="col-md-12 padding">
 					<div ng-if="user.files.company_logo" class="postImage">		
-						<img ng-src="{{user.files.company_logo}}" class="col-md-3">		
+						<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">		
 					</div>
 					<span class="col-md-8">
 						<h4>{{job.postInfo.title}}</h4>
@@ -90,23 +90,23 @@
 											  
 											  
 						 	   			 	</div>	
+													<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
+															<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+																X Delete
+															</span>
+															<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+																Move Up
+															</span>
+															<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+																Move Down
+															</span>
+													 </div>
 											 
 											 
 					 	   			 	
 					 	   			 	
 					 	   			</div>	
 					 	   			 		
-									<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
-											<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
-												X Delete
-											</span>
-											<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
-												Move Up
-											</span>
-											<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
-												Move Down
-											</span>
-									 </div>
 					 	   		</div>	
 					 	   		
 		 	   					<div ng-show="editableForm.$visible && $last">

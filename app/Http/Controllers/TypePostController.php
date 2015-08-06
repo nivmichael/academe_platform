@@ -93,7 +93,7 @@ class TypePostController extends Controller {
 			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 2)->pluck('id');
 			$iterableCount = 0;
 			foreach($docParamVals as $param => $props) {
-				
+			
 				if(is_int($param)) {
 					foreach($props as $propKey => $propVal) {
 					$paramValue = $propVal['paramValue'];
@@ -104,10 +104,18 @@ class TypePostController extends Controller {
 						if ($param_id) {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
-							$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
-						
+							
+							if($iterable){
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
+							}else{
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
+							}
+							
+							
+							
 							
 							if($existsId) {
+							
 								if(!$value_ref) {
 									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
 								} else {				
@@ -122,7 +130,8 @@ class TypePostController extends Controller {
 							}
 						}
 					}			
-				}else{
+				}else if(!is_int($param)){
+					
 					$paramValue = $props['paramValue'];
 					$param_id = DB::table('param')->where('name', $param)->where('doc_param_id', $doc_param_id)->pluck('id');
 					
@@ -256,7 +265,7 @@ class TypePostController extends Controller {
 			
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
-				$inputType = $v->paramType;
+			$inputType = $v->paramType;
 		
 		
 			if($v->value_ref == null) {

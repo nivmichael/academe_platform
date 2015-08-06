@@ -1,8 +1,101 @@
+<div class="errors alert alert-danger" ng-if="errors">
+	<ul>	
+		<li ng-repeat="(t,s) in errors">{{s}}</li>	
+	</ul>
+</div>
+
+
+
+
+
+
+
+
+
+<div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" >
+	
+		<span ng-if="docParam == 'personalInfo'">
+			<span class="param_label col-md-2">		
+				{{paramKey}}
+			</span>
+			<span class="param_input col-md-10">					
+				<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
+			</span>
+		</span>
+		
+		<span ng-if="docParam != 'personalInfo'">
+			<span class="param_label col-md-2">		
+				{{paramKey}}
+			</span>
+			<span class="param_input col-md-10">					
+				<input type='text' class="form-control" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+			</span>
+		</span>
+</div>
+
+
+
+
+
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
+		
+	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
+	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	    </a>
+	    
+	</div>
+	
+	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
+	
+	    <a href="/home#/home" class="btn btn-block btn-info">
+	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	    </a>
+
+	    
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- <div class="errors alert alert-danger" ng-if="errors">
 	<ul>	
 		<li ng-repeat="(t,s) in errors">{{s}}</li>	
 	</ul>
-</div> -->
+</div> 
 {{errors}}
 <div class="">
 	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
@@ -14,7 +107,7 @@
 				<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
 			</span>
 		</span>
-		<!----------------------------------------------------------------------------------------------------------------------------->							
+		
 						<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">				      
 						        <span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
 									{{key}}
@@ -27,7 +120,7 @@
 								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>				
 								</span>
 						</span>
-		<!----------------------------------------------------------------------------------------------------------------------------->			
+		
 						<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
 						
 							<span ng-repeat="(m,n) in val" class="formDiv">
@@ -53,7 +146,7 @@
 								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
 								</span>
 						</span>	
-			<!----------------------------------------------------------------------------------------------------------------------------->				
+		
 		
 	</div>
 	<div ng-repeat="(key,val) in user['files']" class="formDiv">
@@ -121,5 +214,5 @@
 	    </a>
 
 	    
-	</div>
+	</div> -->
 	

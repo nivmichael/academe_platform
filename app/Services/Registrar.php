@@ -80,6 +80,7 @@ class Registrar implements RegistrarContract {
 		}else{
 			//print_r(Auth::user()->id);die;
 		$authId = Auth::user()->id;
+		$userId =$authId;
 		$personalInfo = Auth::user();
 		
 		}		
@@ -93,71 +94,75 @@ class Registrar implements RegistrarContract {
 		if($obj['personalInfo']) {
 			unset($obj['personalInfo']);
 		}
+		unset($obj['files']);
+			foreach($obj as $docParamName => $docParamVals) {
+			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->pluck('id');
+			$iterableCount = 0;
+			foreach($docParamVals as $param => $props) {
 			
-		
-		//	print_r($obj);
-		foreach($obj as $docParam=>$values) {
-			$doc_sub_type = DB::table('type_user')->where('id', $authId)->pluck('subtype');
-			$doc_param_id = DB::table('doc_param')->where('name', $docParam)->where('doc_type_id', 1)->where('doc_sub_type', $doc_sub_type)->pluck('id');
-			$iterableCount = null;
-			foreach($values as $param_name=>$param_value) {
-				$param_id = DB::table('param')->where('name', $param_name)->where('doc_param_id', $doc_param_id)->pluck('id');
-				//print_r('a'.$param_value);
-				
-				if(is_array($param_value)) {
-				
-					$iterable = $param_value;
-					foreach($iterable as $m => $n) {
-						
-						$param_id = DB::table('param')->where('name', $m)->where('doc_param_id', $doc_param_id)->pluck('id');
-						if ($param_id) {
-							$value_ref = DB::table('param_value')->where('value', $n)->pluck('id');
-							if(!$value_ref) {
-							
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$n,'value_long'=>NULL]);
-								} else {
-								 
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-								
-							}
-						}
-					}
-			} elseif (!is_array($param_value)) {
-					//dd('a');
-						
-					if ($param_id) {
-					// /dd($param_id);
-						$value_ref = DB::table('param_value')->where('value', $param_value)->pluck('id');
-						$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$authId)->pluck('id');
-						
-						
-						
-						if($existsId) {
-							
-							if(!$value_ref) {						
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
-							} else {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
-							}
-							
-							
-							
-						}else {
-							
-							
-							if(!$value_ref) {						
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$param_value,'value_long'=>NULL]);	
-							} else {
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
-							}
-							
-						}
-
-					}	
+				if(is_int($param)) {
+					foreach($props as $propKey => $propVal) {
+					$paramValue = $propVal['paramValue'];
+					$paramName  = $propVal['paramName'];
+					$iterable = $param;
 					
+					$param_id = DB::table('param')->where('name', $paramName)->where('doc_param_id', $doc_param_id)->pluck('id');
+					
+						if ($param_id) {
+							//checking where the values come from? from param_value? or from short/long?
+							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
+							
+							if($iterable){
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->pluck('id');
+							}else{
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$authId)->pluck('id');
+							}
+							
+							
+							
+							
+							if($existsId) {
+							
+								if(!$value_ref) {
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
+								} else {				
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);			
+								}
+							}else {
+								if(!$value_ref) {						
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
+								} else {
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+								}
+							}
+						}
+					}			
+				}else if(!is_int($param)){
+					
+					$paramValue = $props;
+					$param_id = DB::table('param')->where('name',  $param)->where('doc_param_id', $doc_param_id)->pluck('id');
+					if($param_id == null) {
+						dd('some thing wrong with param: '.$param);
+					}
+
+					$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
+					$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$authId)->pluck('id');
+					if($existsId) {
+						if(!$value_ref) {							
+							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);						
+						} else {
+							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);	
+						}
+					} else {
+						if(!$value_ref) {						
+							DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
+						} else {
+							DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+						}						
+					}
 				}
-						$iterableCount ++;
-			}
+		$iterableCount ++;
+			}	
 		}
 	
 	//DB::table('type_user')->where('id',$authId)->update(['registration'=>date(date("Y-m-d H:i:s"))]);

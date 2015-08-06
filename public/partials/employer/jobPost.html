@@ -1,24 +1,64 @@
+<div>
 
-
-	<form editable-form name="rowform" id="signup-form" role="form"  class="col-md-8" ng-model="post" shown="true">
+	<form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >
+		
+		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" >
+			<span class="param_label"> 
+				{{paramName}}
+			</span>
+			<span  class="param_input">					
+				<input type='text' class="form-control" name="jobPost.postInfo[paramName]" ng-model="jobPost.postInfo[paramName]">
+			</span>	
+		</div>
+		
+		
+		
 		<div ng-repeat="(docParamName,docParamValues) in jobPost" >
-			<div ng-repeat="(docParamName,params) in docParamValues" >
+			<div ng-repeat="(paramName,props) in docParamValues" >
 	
 	
-				{{docParamName}}
+				<span class="param_label"> 
+					{{props.paramName}}
+				</span>
+				<span  class="param_input" ng-if="props.paramName">					
+					<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+				</span>	
 	
+				<div ng-repeat="(k,v) in props track by $index" ng-if="isArray(docParamValues)">
+					<span class="param_label" > 
+						{{v.paramName}}
+					</span>
+					
+					<span  class="param_input" >					
+						<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+					</span>	
+		
+				</div>	
+				<div class="iterationCtrls" ng-show="isArray(docParamValues)">
+						<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+							X Delete
+						</span>
+						<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+							Move Up
+						</span>
+						<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+							Move Down
+						</span>
+				 </div>
+		
+				<div ng-show="$last && docParamName != 'postInfo'" >
+					<button type="button" class="btn btn-default" ng-click="add1(docParamName,$index)">+ Add a Record</button>
+				</div>
 			</div>
 		</div>
 	</form
-
-
-
-
-
-
-
+	<div class="col-xs-6 col-xs-offset-3" >		
+	    <a ng-click="savePost(jobPost)" class="btn btn-block btn-info">
+	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	    </a>
+	</div>
+	
 	
 
-
-
+</div>
 

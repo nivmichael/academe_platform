@@ -10,7 +10,7 @@
  						 <br/>
 						 <div class="thumbnail" >
 							<span class="thumbnail_title">{{q}}</span>
-								<img  ng-src="{{n}}">
+								<img  ng-src="{{n.paramValue}}">
 								<div class="btn-group">
 						       		 <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,n,m)">
 								        <i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
@@ -79,7 +79,7 @@
 	
 	<div class="col-md-12">
 		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo }}" alt="Generic placeholder image" width="140" height="140">	
+		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo.paramValue }}" alt="Generic placeholder image" width="140" height="140">	
 	</div>
 	
 	<div class="btn btn-primary col-md-12">
@@ -90,110 +90,77 @@
 
 
   <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="(key, val) in user" class='active' is-open="status.isOpen[$index]" ng-hide="key == 'files'">
+    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active' is-open="status.isOpen[$index]" ng-hide="key == 'files'">
    		 <accordion-heading is-open="status.isOpen[$index]">
    		  <div ng-class="{'openAccordion': status.isOpen[$index], 'closeAccordion': !status.isOpen[$index]}" >
-	           {{ key }}<i class="pull-right glyphicon"></i>
+	           {{ docParamName }} <i class="pull-right glyphicon"></i>
    		  </div>
 	     </accordion-heading>
     	
     	 
     	  <form editable-form name="editableForm" onaftersave="saveUser(user)">
 			 	     
-				 	     <div ng-repeat="(k,v) in val" class="formParameter col-md-6" ng-if="!isArray(val)"> 
-				 	     	
+				 	     <div ng-repeat="(paramKey,paramValues)  in docParamValues" class="formParameter col-md-6"> 
+				 	     		
+								<div ng-if="docParamName == 'personalInfo'">
+									<span class="param_label col-md-2">
+						 	     	   {{paramKey}}:
+						 	     	</span>
+					 	  
+					 	     		<span  e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{docParamName}}.{{paramKey}}" e-name="{{paramKey}}">
+					 	     	 		{{paramValues}}
+					 	     		</span>
+								</div>	
+						
+								<div ng-repeat="(k,v) in paramValues track by $index">
 						 	     
-					 	   		
-					 	   		
-							 	 
-							 	<div ng-if="v == 'select'">
-							 		select
-							 	</div>
-						 	 	<div ng-if="v == 'text'">
-							 		<div ng-hide="k == 'type'">
-					 	   		 
-								 	     	<span class="param_label col-md-2">
-								 	     	   {{k}}:
+								 	     <div ng-hide="isArray(docParamValues)">
+								 	     	<span class="param_label col-md-2" ng-if="k == 'paramName'">
+								 	     	   {{v}}:
 								 	     	</span>
 							 	  
-							 	     		<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.{{key}}.{{k}}" e-name="{{k}}">
+							 	     		<span ng-if="k == 'paramValue'" e-class="form-control " class="col-md-4 formParameterValue" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]">
 							 	     	 		{{v}}
 							 	     		</span>
-							 		 </div>
-							 	 
-							 	</div>
-			 	    	
-			 	     
-			 	     
-			 	     
+							 	     	</div>	
+							 	     		
+							 	     	<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)">
+									 	     	<span class="param_label col-md-2" ng-if="r == 'paramName'">
+									 	     	   {{s}}:
+									 	     	</span>
+									 	     	
+								 	     		<span ng-if="r == 'paramValue'" e-class="form-control " class="col-md-4 formParameterValue" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
+								 	     	 		{{s}}
+								 	     		</span>
+							 			</div>		
+							 	</div>	
+					 			<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
+									<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+										X Delete
+									</span>
+									<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+										Move Up
+									</span>
+									<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+										Move Down
+									</span>
+								</div>		 	 		 	     
+						 	    <div ng-show="editableForm.$visible">
+				 	     	     	<span ng-show="$last" >
+											<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
+									</span>
+								</div>	
+
 		 	    		 </div>
-		 	     <div ng-show="editableForm.$visible">
-		 	     	     	<span ng-show="$last" >
-									<button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
-							</span>
-				 </div>			
-		     
-	
-	 	     	
-	 	     
-	 	     <!---------------------------------------------------------------------------------------------------------------------->
-	 	     
-	 	     
-	 	    
-					 	  
-					 	     	
-					 	     		
-				<div ng-repeat="(t,j) in val" class="formDiv"  class="detail" e-class="edetail"  ng-if="isArray(val)">
-										 	  
-		 	    	<div ng-repeat="(m,n) in j" class="formDiv" >
-	 	     		 <span class="param_label">
-		 	     		 {{m}}
-					 </span>
-		 	     		
-					 <span e-class="form-control postInput" class="" e-name="user.education[t][m]" editable-text="user.education[t][m]" ng-model="user.education[t][m]">
-				 	     {{n}} 	
-				 	 </span>
-				 	  <br>
-				 	
-			 		</div>
-					<div ng-show="editableForm.$visible">
-     					<div class="iterationCtrls" >
-							<span class="iterationCtrl" ng-click="remove(user[key],$index)">
-								X Delete
-							</span>
-							<span class="iterationCtrl" ng-click="move(user[key],$index,$index-1)">
-								Move Up
-							</span>
-							<span class="iterationCtrl" ng-click="move(user[key],$index,$index+1)">
-								Move Down
-							</span>
-						</div>
-					</div>
-			 	     	<span ng-show="$last && editableForm.$visible">
-						  <button type="button" class="btn btn-default" ng-click="addWhenEdit(key,$index)">+ Add a Record</button>
-					</span>
-			 	     	
-			 	 	<hr>
-	 	     
-				</div>
-						 	   
-	 	   
-					 	     	
-	 	     
-	 	     
-	 	        
-	 	     	 
-	 	     		
-	 	     		
-	 	     		 	
-			 	 <div class="buttons">
-			 	 	
-	      			<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
-		     		<span ng-show="editableForm.$visible">
-			       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-			       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
-		      		</span>
-		    	</div>
+
+					 	 <div class="buttons">
+					 	 	
+			      			<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
+				     		<span ng-show="editableForm.$visible">
+					       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+					       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+				      		</span>
+				    	</div> 
 		    </form>
     	</div>
     </accordion-group>
