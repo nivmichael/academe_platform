@@ -452,7 +452,7 @@ $scope.countries = countries = ['Afghanistan', 'Åland Islands', 'Albania', 'Alg
 
 
 
-.controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN) {
+.controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN','$filter', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN,$filter) {
 console.log("RegisterController");
 	
  'use strict';
@@ -524,7 +524,7 @@ $scope.getColumns = function(){
  
 
 }])
-.controller('formController', function($scope,DocParamData,$state,$http,CSRF_TOKEN) {
+.controller('formController', function($scope,DocParamData,$state,$http,$filter,CSRF_TOKEN) {
 
 
 
@@ -812,9 +812,26 @@ $scope.getColumns = function(){
 	    // or server returns response with an error status.
 	  });
   };  
+   $scope.groups={};
+    $scope.showGroup = function(param) {
+   console.log(param);
+    if(param && $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: param});
+      return selected.length ? selected[0].value : 'Not set';
+    } else {
+      return param || 'Not set';
+    }
+  };
+   $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
   
   
   
+  
+
   
 // $scope.getInputType('profession','experience');
 })

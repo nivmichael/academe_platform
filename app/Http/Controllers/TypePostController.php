@@ -166,13 +166,14 @@ class TypePostController extends Controller {
 		$post = array();	
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.name AS paramName, 
-											   doc_param.name AS docParamName 
+											   param_type.name AS paramType,
+											   doc_param.name AS docParamName
 											   FROM	param 
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
-											   
+											   LEFT JOIN param_type ON param.type_id = param_type.id
 											   WHERE doc_type_id = 2 AND authorized = 1"));
 
 		$postInfo = Schema::getColumnListing('type_post');
@@ -188,7 +189,7 @@ class TypePostController extends Controller {
 			$paramName = $v->paramName;	
 			$docParamName = $v->docParamName;
 			//$value = $v->type_id;	
-			$inputType = $v->type_id;
+			$inputType = $v->paramType;
 			
 			//$post[$v->docParamName][$k][$paramName] = $v->value = '';
 			

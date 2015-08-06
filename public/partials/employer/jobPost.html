@@ -20,18 +20,70 @@
 				<span class="param_label"> 
 					{{props.paramName}}
 				</span>
-				<span  class="param_input" ng-if="props.paramName">					
-					<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
-				</span>	
-	
+				
+				
+				<span ng-switch="props.inputType">
+					
+					<span ng-switch-when="text">
+						<span  class="param_input" ng-if="props.paramName">					
+							<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+						</span>	
+					</span>	
+		
+					<span ng-switch-when="select">
+						<span  class="param_input" ng-if="props.paramName">					
+							<select type='select' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+							  <option value="volvo">Volvo</option>
+							  <option value="saab">Saab</option>
+							  <option value="mercedes">Mercedes</option>
+							  <option value="audi">Audi</option>
+							</select>
+						</span>	
+					</span>	
+				
+					
+				
+				</span>
+				
+				
+				
+				
+				
 				<div ng-repeat="(k,v) in props track by $index" ng-if="isArray(docParamValues)">
 					<span class="param_label" > 
 						{{v.paramName}}
 					</span>
 					
-					<span  class="param_input" >					
-						<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
-					</span>	
+					
+					
+					<span ng-switch="v.inputType">	
+							
+						<span ng-switch-when="text">		
+							<span  class="param_input" >					
+								<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+							</span>	
+						</span>
+
+						<span ng-switch-when="select">
+							<span  class="param_input" >					
+								<select class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+								  <option value="volvo">Volvo</option>
+								  <option value="saab">Saab</option>
+								  <option value="mercedes">Mercedes</option>
+								  <option value="audi">Audi</option>
+								</select>
+							</span>	
+						</span>	
+
+
+
+
+
+					</span>
+			
+		
+		
+		
 		
 				</div>	
 				<div class="iterationCtrls" ng-show="isArray(docParamValues)">

@@ -56,6 +56,7 @@ Route::post('/savePost', 'TypePostController@savePost');
 Route::get('/getAllJobs', 'TypePostController@index');
 Route::get('/job/{id}', 'TypePostController@show');
 Route::get('/inputType', 'TypePostController@getInputType');
+Route::get('/groups', 'SysParamValuesController@getGroups');
 // Route::resource('/job/[id]', 'TypePostController');
 
 
