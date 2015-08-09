@@ -139,7 +139,7 @@ class Registrar implements RegistrarContract {
 					}			
 				}else if(!is_int($param)){
 					
-					$paramValue = $props;
+					$paramValue = $props['paramValue'];
 					$param_id = DB::table('param')->where('name',  $param)->where('doc_param_id', $doc_param_id)->pluck('id');
 					if($param_id == null) {
 						dd('some thing wrong with param: '.$param);

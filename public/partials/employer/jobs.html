@@ -65,16 +65,16 @@
 					 	 
 									<div ng-repeat="(k,v) in paramValues  track by $index" >
 										 
-					 	    			
+					 	    		
 						 	    			<span class="param_label " ng-if="k == 'paramName'">	
 						 	    				{{v}}
 						 	   			 	</span>
 						 	   				
-						 	   				<span ng-switch="v.inputType">
+						 	   				<span ng-switch="paramValues.inputType">
 						 	   					
 							 	   				<span ng-switch-when="text">
 							 	   					
-								 	   			 	<span ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> 
+								 	   			 	<span  ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> 
 											 			{{v}}
 												  	</span>
 							 	   					
@@ -82,8 +82,8 @@
 							 	   				
 							 	   				<span ng-switch-when="select">
 							 	   					
-								 	   			 	<span ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"   e-ng-options="g.id as g.value for g in groups"> 
-											 			   {{  showGroup() }}
+								 	   			 	<span ng-if="k == 'paramValue'"  e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> 
+											 			   {{ showGroup(v) }}
 												  	</span>
 							 	   					
 							 	   				</span>
@@ -102,7 +102,7 @@
 														  	</span>
 														</span> 	
 														<span ng-switch-when="select">
-															<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"  onshow="loadGroups()" e-ng-options="g.id as g.value for g in groups"> 
+															<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> 
 													 			    {{ showGroup(w) }}
 														  	</span>
 														</span>	

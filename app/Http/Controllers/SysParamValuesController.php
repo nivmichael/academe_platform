@@ -127,19 +127,22 @@ class SysParamValuesController extends Controller  {
 
     public function getGroups()
 	{
-		$groups  =  DB::select( DB::raw("SELECT param_value.*,
-											   param_value.name AS paramValueName, 
-											   param_type.name AS paramType,
-											   doc_param.name AS docParamName
-											   FROM	param 
-											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
-											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
-											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
-											   LEFT JOIN param_type ON param.type_id = param_type.id
-											   "));
-		
-		return Response::json($groups);
+		// $groups  =  DB::select( DB::raw("SELECT param_value.*,
+											   // param_value.value AS paramValueName, 
+											   // param_type.name AS paramType,
+											   // doc_param.name AS docParamName
+											   // FROM	param 
+											   // LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
+											   // LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
+											   // LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
+											   // LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
+											   // LEFT JOIN param_type ON param.type_id = param_type.id
+											   // "));
+// 		
+
+		$groups  =  DB::select( DB::raw("SELECT * FROM param_value"));
+
+		return $groups;
 	}
 
 	public function setProfilePic()

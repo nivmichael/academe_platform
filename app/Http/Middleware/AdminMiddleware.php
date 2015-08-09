@@ -14,7 +14,7 @@ class AdminMiddleware {
 	public function handle($request, Closure $next)
 	{
 		
-		if ($request->user()->type != 'tech-admin')
+		if ($request->user()->type['paramValue'] != 'tech-admin')
         {
             return redirect('/auth/login');
         }

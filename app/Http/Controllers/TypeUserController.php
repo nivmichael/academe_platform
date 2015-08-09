@@ -87,12 +87,14 @@ class TypeUserController extends Controller {
 		$user = array();	
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.name AS paramName, 
-											   doc_param.name AS docParamName 
+											   doc_param.name AS docParamName ,
+											   param_type.name AS paramType
 											   FROM	param
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
+											   LEFT JOIN param_type ON param.type_id = param_type.id
 											   WHERE doc_type_id = 1 
 											   AND doc_param.doc_sub_type = 'employer'
 											   AND authorized = 1"));
@@ -109,8 +111,16 @@ class TypeUserController extends Controller {
 		$user['personalInfo'] = $personalInfo;
 		// $user['personalInfo']->password_confirmation = '';
 		foreach($params as $k=>$v) {
-			$paramName = $v->paramName;		
-			$user[$v->docParamName][$paramName] = $v->value = '';
+			$iteration    = $v->iteration;
+			$docParamName = $v->docParamName;
+			$paramName    = $v->paramName;
+			$inputType = $v->paramType;
+	
+			
+			
+			$user[$docParamName][$paramName]['paramName'] = $paramName;		
+			$user[$docParamName][$paramName]['paramValue'] = '';
+			$user[$docParamName][$paramName]['inputType'] = $inputType;
 		}	
 		
 		
@@ -425,11 +435,18 @@ class TypeUserController extends Controller {
 										   AND type_user.id = ".$id));
 		
 		
-		$user['personalInfo'] = $userPersonalInfo;
 		
 		
-		
-		
+		$user['personalInfo'] = $userPersonalInfo['original'];
+		// foreach($userPersonalInfo['original'] as $key => $val) {
+// 			
+// // 				
+			// $user['personalInfo'][$key]['paramName'] = $key;		
+			// $user['personalInfo'][$key]['paramValue'] = $val;
+		// }
+// 		
+// 		
+// 		
 		
 		foreach($params as $k=>$v) {
 			$iteration    = $v->iteration;

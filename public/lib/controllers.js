@@ -204,6 +204,11 @@ angular.module('acadb.controllers', [])
   };
   
   
+  
+  
+  
+  
+  
    $scope.userStatuses = [
   {id: 'active', name: 'active'},
   {id: 'inactive', name: 'inactive'}
@@ -249,7 +254,7 @@ $.getJSON('/getAllJobs', function(data){
  $scope.setStatus = function(status) {
 	 console.log($scope.user.personalInfo.status);
 	 console.log(status);
-	 $scope.user.personalInfo.status = status.name;
+	 $scope.user.personalInfo.status.paramValue = status.name;
 	 $.post('/setStatus',{status:status.name,_token:CSRF_TOKEN,}).success(function(callBack){
 	 	//console.log(callBack);
 	 });
@@ -558,6 +563,7 @@ $scope.getColumns = function(){
 	//	console.log(key);
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 	};
+	
 	$scope.docParam = $state.current.name.split('.');
 	$scope.docParam = $scope.docParam[1];
 	
@@ -716,9 +722,8 @@ $scope.getColumns = function(){
 	  };
 	  
 	  
-	   $scope.add1 = function(docParamName,index) {
-   	console.log(docParamName);
- 
+	  $scope.add1 = function(docParamName,index) {
+   
 
    	$http.get('/columns/jobPost')
 	  	.success(function(data, status, headers, config) {
@@ -740,34 +745,44 @@ $scope.getColumns = function(){
 
 
 	  };
-	
+	  
+	  
+	  $scope.addRecordJobSeeker =function(docParam,$index) {	
+	$http.get('/columns/registerJobSeeker')
+	  	.success(function(data, status, headers, config) {
+	  	$scope.inserted = data[docParam];	   
+	  	if(!(angular.isArray($scope.user[docParam]))){
+	  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+	  	}else{
+			$scope.user[docParam].push($scope.inserted);
+	  	}	
+	  		
+	  	})
+	  	.error(function(){
+	  		alert('ERROR!!');
+	  	});
+  };    
+	 $scope.addRecordEmployer =function(docParam,$index) {	
+	 	console.log(docParam);
+	$http.get('/columns/registerEmployer')
+	  	.success(function(data, status, headers, config) {
+	  	$scope.inserted = data[docParam];	   
+	  	if(!(angular.isArray($scope.user[docParam]))){
+	  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+	  	}else{
+			$scope.user[docParam].push($scope.inserted);
+			console.log($scope.user[docParam]);
+	  	}	
+	  		
+	  	})
+	  	.error(function(){
+	  		alert('ERROR!!');
+	  	});
+  };    
 
 	  
   
-//   
-// $scope.addWhenEdit =function(docParam,$index) {
-// 		
-		// $http.get('/columns/jobPost')
-	  	// .success(function(data, status, headers, config) {
-// 	  		
-	   // $scope.inserted = data[docParam];
-// 	  
-			// if(!(angular.isArray($scope.post[docParam]))){
-	  			// $scope.post[docParam] = Array($scope.post[docParam],$scope.inserted);
-		  	// }else{
-				// $scope.post[docParam].push($scope.inserted);
-		  	// }	
-	   		// console.log($scope.post[docParam]);
-// 	  
-	  	    // $scope.isDocParamArray = true;
-// 	  
-	  	// })
-	  	// .error(function(){
-	  		// alert('ERROR!!');
-	  	// });
-// 
-	// };  
-	
+
 	
 	$scope.addWhenEdit =function(docParam,$index) {	
 //	console.log($scope.post);
@@ -791,7 +806,7 @@ $scope.getColumns = function(){
 	
 	  
 	
-	 $scope.move = function(array, fromIndex, toIndex){
+   $scope.move = function(array, fromIndex, toIndex){
 
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
    	
@@ -816,7 +831,7 @@ $scope.getColumns = function(){
     $scope.showGroup = function(param) {
    console.log(param);
     if(param && $scope.groups.length) {
-      var selected = $filter('filter')($scope.groups, {id: param});
+      var selected = $filter('filter')($scope.groups, {value: param});
       return selected.length ? selected[0].value : 'Not set';
     } else {
       return param || 'Not set';
@@ -827,12 +842,6 @@ $scope.getColumns = function(){
       $scope.groups = data;
     });
   };
-  
-  
-  
-  
 
-  
-// $scope.getInputType('profession','experience');
 })
 ;

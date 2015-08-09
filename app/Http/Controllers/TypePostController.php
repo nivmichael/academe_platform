@@ -104,13 +104,13 @@ class TypePostController extends Controller {
 						if ($param_id) {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
-							
-							if($iterable){
+				
+							// if($iterable){
 								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
-							}else{
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
-							}
-							
+							// }else{
+								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
+							// }
+// 							
 							
 							
 							
@@ -246,6 +246,7 @@ class TypePostController extends Controller {
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName, 
 										   param_type.name AS paramType,
+										   param_value.value AS paramValue,
 										   doc_param.name AS docParamName 
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
@@ -266,8 +267,8 @@ class TypePostController extends Controller {
 			
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
-			$inputType = $v->paramType;
-		
+			$inputType    = $v->paramType;
+			$paramValue = $v->paramValue;
 		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
