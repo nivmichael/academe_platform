@@ -1,3 +1,13 @@
+
+<script type="text/ng-template" id="customTemplate.html">
+  <a style="float:left;">
+      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+  </a>
+</script>
+
+
+
 <div class="errors alert alert-danger" ng-if="errors">
 	<ul>	
 		<li ng-repeat="(t,s) in errors">{{s}}</li>	
@@ -6,22 +16,303 @@
 
 
 
+<div ng-if="docParam == 'personalInfo'">
+		<!-- <input type="text" class="" name="id" ng-value="" ng-model="user.personalInfo.id">
+		<input type="text" class="" name="type" ng-value="1" ng-model="user.personalInfo.type">
+		<input type="text" class="" name="subtype" ng-value="jobSeeker" ng-model="user.personalInfo.subtype">
+		<input type="text" class="" name="status" ng-value="active" ng-model="user.personalInfo.active"> -->
+		
+		
+	<div>
+		
+		<span class="param_label col-md-2">
+			First Name*
+		</span>
+		
+		<span>
+			<input type='text' class="form-control param_input" name="first_name" placeholder="First Name" ng-model="user.personalInfo.first_name" required>
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Last Name*
+		</span>
+		
+		<span>
+			<input type='text' class="form-control param_input" name="last_name" placeholder="Last Name" ng-model="user.personalInfo.last_name" required>
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Phone/Cell*
+		</span>
+		
+		<span>
+			<input type='text' class="form-control param_input" name="mobile" placeholder="Phone/Cell" ng-model="user.personalInfo.mobile" required>
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Email*
+		</span>
+		
+		<span>
+			<input type='email' class="form-control param_input" name="email" placeholder="First Name" ng-model="user.personalInfo.email" required>
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Password*
+		</span>
+		
+		<span>
+			<input type='password' class="form-control param_input" name="password" placeholder="Password" ng-model="user.personalInfo.password" required>
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Gender*
+		</span>
+		<span>
+			<select class="form-control  param_input" name="gender" ng-model="user.personalInfo.gender">
+				<option value="" selected></option> 
+				<option value="male" >Male</option> 
+				<option value="female" >Female</option>			 
+			</select>
+		</span>
+	</div>	
+</br>
+	<!-- <div>
+		
+		<span class="param_label col-md-2">
+			Birthdate*
+		</span>
+		
+		<span>
+			<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
+		</span>
+		
+	</div>	
+</br>	 -->
+	<div>
+		
+		<span class="param_label col-md-2">
+			Marital Status
+		</span>
+		<span>
+			<select class="form-control  param_input" name="martial_status" ng-model="user.personalInfo.martial_status">
+				<option value="" selected></option> 
+				<option value="single" >Single</option> 
+				<option value="married" >Married</option>	
+				<option value="Divorced" >Divorced</option> 
+				<option value="Widowed" >Widowed</option>			 
+			</select>
+		</span>
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Education Status
+		</span>
+		<span>
+			<select class="form-control  param_input" name="education_status" ng-model="user.personalInfo.education_status">
+				<option value="" selected></option> 
+				<option value="Student" >Student</option> 
+				<option value="Graduate" >Graduate</option>	
+				<option value="Intern" >Intern</option> 				 
+			</select>
+		</span>
+	</div>	
+</br>
+	<div>
+		
+		<span class="param_label col-md-2">
+			Street Address 1
+		</span>
+		
+		<span>
+			<input type='text' class="form-control param_input" name="street_1" placeholder="" ng-model="user.personalInfo.street_1" required>
+		</span>
+		
+		
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Street Address 2
+		</span>
+		
+		<span>
+			<input type='text' class="form-control param_input" name="street_2" placeholder="" ng-model="user.personalInfo.street_2" required>
+		</span>
+		
+		
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			country
+		</span>
+		
+		<span>
+     		<input type="text" ng-model="user.personalInfo.country" class="form-control param_input" typeahead="country for country in countries  | filter:$viewValue | limitTo:8" >
+		</span>
+		
+		
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			State*
+		</span>
+		
+		<span>
+		     <input type="text" name="state" ng-model="user.personalInfo.state" placeholder="" class="form-control param_input" typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			city*
+		</span>
+		
+		<span>
+		    <input type="text" name="city" class="form-control param_input" ng-model="asyncSelected" placeholder="" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Zip Code
+		</span>
+		
+		<span>
+		    <input type="text" name="zipcode" class="form-control param_input" ng-model="user.personalInfo.zipcode">
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Facebook
+		</span>
+		
+		<span>
+		    <input type="text" class="form-control param_input" >
+		</span>
+		
+	</div>		
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			Twitter
+		</span>
+		
+		<span>
+		    <input type="text" class="form-control param_input" >
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			LinkedIn
+		</span>
+		
+		<span>
+		    <input type="text" class="form-control param_input" >
+		</span>
+		
+	</div>	
+</br>	
+	<div>
+		
+		<span class="param_label col-md-2">
+			YouTube video
+		</span>
+		
+		<span>
+		    <input type="text" class="form-control param_input" >
+		</span>
+		
+	</div>	
+</br>
+	<div>
+			
+		<span style="float:left;">
+		    <input type="checkbox" class="" ng-model="user.personalInfo.send_newsletters"> 
+		    <span class="param_label">
+				I wish to receive newsletters with updates from time to time
+			</span>
+		</span>
+		
+	</div>		
+</br>
+	
+	
+	<ng-include class="col-md-12" src="'../../../partials/disclaimer.html'"></ng-include>
 
+</br>
 
+	<div>
+			
+		<span style="float:left;">
+		    <input type="checkbox" class="" > 
+		    <span class="param_label">
+				I have read and approved the disclaimer
+			</span>
+		</span>
+		
+	</div>	
+	
+			
+</div>
 
+<div ng-include="personal_info.html">
+	
+</div>
 
 
 
 <div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" ng-hide="docParam == 'files'">
 	
-		<span ng-if="docParam == 'personalInfo'">
+		<!-- <span ng-if="docParam == 'personalInfo'">
 			<span class="param_label col-md-2">		
 				{{paramKey}}
 			</span>
 			<span class="param_input col-md-10">					
 				<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
 			</span>
-		</span>
+		</span> -->
 		
 		<span ng-if="docParam != 'personalInfo'">
 			<span class="param_label col-md-2">		
@@ -82,9 +373,9 @@
 	</div>
 
 
+	</br>
 
-
-<div class="col-md-4 col-md-offset-3" ng-if="nextDoc(docParam)">
+	<div class="col-md-4 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
 	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
 	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>

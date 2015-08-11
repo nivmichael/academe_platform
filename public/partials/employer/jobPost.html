@@ -2,17 +2,57 @@
 
 	<form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >
 		
-		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" >
+		
+		<!-- <div>
 			<span class="param_label"> 
-				{{paramName}}
+				Job Description*
 			</span>
+			
 			<span  class="param_input">					
-				<input type='text' class="form-control" name="jobPost.postInfo[paramName]" ng-model="jobPost.postInfo[paramName]">
-			</span>	
+				<input type='text' class="form-control" name="jobPost.postInfo.description" ng-model="jobPost.postInfo.description">
+			</span>
+		</div>
+		
+		<div>
+			<span class="param_label"> 
+				Main Field*
+			</span>
+			
+			<span  class="param_input">					
+				<input type='text' class="form-control" name="jobPost.postInfo.description" ng-model="jobPost.postInfo.description">
+			</span>
 		</div>
 		
 		
 		
+		
+		
+		
+		
+		 -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" ng-hide="paramName == 'id' || paramName == 'user_id'|| paramName == 'authorized'|| paramName == 'created_at'|| paramName == 'description_short'|| paramName == 'updated_at'">
+			<span class="param_label"> 
+				{{paramName}}
+			</span>
+			<span  class="param_input">					
+				<input type='text' class="form-control param_input" name="jobPost.postInfo[paramName]" ng-model="jobPost.postInfo[paramName]">
+			</span>	
+		
+		</div>
+		
+		
+		
+
+
 		<div ng-repeat="(docParamName,docParamValues) in jobPost" >
 			<div ng-repeat="(paramName,props) in docParamValues" >
 	
@@ -26,13 +66,13 @@
 					
 					<span ng-switch-when="text">
 						<span  class="param_input" ng-if="props.paramName">					
-							<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+							<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
 						</span>	
 					</span>	
 		
 					<span ng-switch-when="select">
 						<span  class="param_input" ng-if="props.paramName">					
-							<select type='select' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+							<select type='select' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
 							  <option value="volvo">Volvo</option>
 							  <option value="saab">Saab</option>
 							  <option value="mercedes">Mercedes</option>
@@ -60,32 +100,37 @@
 							
 						<span ng-switch-when="text">		
 							<span  class="param_input" >					
-								<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+								<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
 							</span>	
+							<br>	
 						</span>
-
+						
 						<span ng-switch-when="select">
-							<span  class="param_input" >					
-								<select class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+							<span  class="param_input">					
+								<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
 								  <option value="volvo">Volvo</option>
 								  <option value="saab">Saab</option>
 								  <option value="mercedes">Mercedes</option>
 								  <option value="audi">Audi</option>
 								</select>
+								<br>	
 							</span>	
+							
 						</span>	
-
+					
 
 
 
 
 					</span>
-			
+				
 		
 		
 		
 		
 				</div>	
+				</br>
+			
 				<div class="iterationCtrls" ng-show="isArray(docParamValues)">
 						<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
 							X Delete

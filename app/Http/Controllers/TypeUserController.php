@@ -198,6 +198,10 @@ class TypeUserController extends Controller {
 		$param->subtype    = $allPersonalInfo['subtype'];
 		$param->email      = $allPersonalInfo['email'];
 		
+		$param->gender = $allPersonalInfo['gender'];
+		$param->martial_status = $allPersonalInfo['martial_status'];
+		$param->education_status = $allPersonalInfo['education_status'];
+		
 		//$param->password_new = Input::get('password_new');
 		$param->first_name = $allPersonalInfo['first_name'];
 		$param->last_name  = $allPersonalInfo['last_name'];
@@ -247,11 +251,14 @@ class TypeUserController extends Controller {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
 							
-							if($iterable){
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$userId)->pluck('id');
-							}else{
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$userId)->pluck('id');
-							}
+							// if($iterable){
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$userId)->pluck('id');
+								if(!$existsId) {
+									$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$userId)->pluck('id');
+								}
+							// }else{
+								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$userId)->pluck('id');
+							// }
 							
 							
 							
@@ -259,15 +266,15 @@ class TypeUserController extends Controller {
 							if($existsId) {
 							
 								if(!$value_ref) {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
 								} else {				
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);			
+									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);			
 								}
 							}else {
 								if(!$value_ref) {						
-									DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);	
 								} else {
-									DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
+									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$userId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);		
 								}
 							}
 						}

@@ -57,6 +57,9 @@ class Registrar implements RegistrarContract {
 				'subtype'     	   => $data['user']['personalInfo']['subtype'],
 				'status'     	   => $data['user']['personalInfo']['status'],
 				'first_name'       => $data['user']['personalInfo']['first_name'],
+				'gender'           => $data['user']['personalInfo']['gender'],
+				'martial_status'   => $data['user']['personalInfo']['martial_status'],
+				'education_status' => $data['user']['personalInfo']['education_status'],
 				'last_name'        => $data['user']['personalInfo']['last_name'],
 				'email'            => $data['user']['personalInfo']['email'],
 				'password'         => bcrypt($data['user']['personalInfo']['password']),
@@ -72,7 +75,8 @@ class Registrar implements RegistrarContract {
 			    'date_of_birth'    => $data['user']['personalInfo']['date_of_birth'],
 				'registration'     => $data['user']['personalInfo']['registration'],
 				'send_newsletters' => $data['user']['personalInfo']['send_newsletters'],
-				'remember_token'   => $data['user']['personalInfo']['remember_token']
+				'remember_token'   => $data['user']['personalInfo']['remember_token'],
+
 			]);
 			
 			$obj['personalInfo'] = $personalInfo['original'];
@@ -111,13 +115,13 @@ class Registrar implements RegistrarContract {
 						if ($param_id) {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
-							
-							if($iterable){
+// 							
+							// if($iterable){
 								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->pluck('id');
-							}else{
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$authId)->pluck('id');
-							}
-							
+							// }else{
+								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$authId)->pluck('id');
+							// }
+// 							
 							
 							
 							

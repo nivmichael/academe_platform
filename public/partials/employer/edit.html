@@ -18,26 +18,218 @@
  
  
  <form editable-form name="editableForm" onaftersave="saveUser(user)"  >
-	 	     <div class="col-md-12">
-		 	    
-		 	         <div ng-repeat="(k,v) in user.personalInfo" class="formParameter col-md-6" class="">
+	 	   
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	
+		 	      <!-- <div ng-repeat="(k,v) in user" class="formParameter col-md-6" class="" ng-if="k != 'personalInfo'">
 		 	     	
-		 	     	
+		 	     	<div ng-repeat="(m,n) in v" >
+			 	     	<span >
 				 	     	<span class="param_label col-md-2" >
-				 	     	   {{k}}:
+				 	     	   {{m}}:
 				 	     	</span>
-			 	     	
-			 	    	 	<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user.personalInfo.{{k}}" ng-model="user[k]">
-			 	     			{{v}}
-			 	     		</span>
+			 	     	</span>
 			 	     	
 			 	     	
+			 	     	<span e-class="form-control " class="col-md-4 formParameterValue" editable-text="user[k][m]['paramValue']" ng-if="m.length+1 >1">
+			 	     	 	{{n.paramValue}}
+			 	     	</span>
 		 	     	</div> 
 		 	     	
 		 	     	
-		 	     </div>	
+		 	     </div>	  -->
+	 	  	
 		 	    
-		 	     <div ng-repeat="(k,v) in user" class="formParameter col-md-6" class="" ng-hide="k == 'personalInfo'">
+									<div>
+										
+										<span class="param_label col-md-2">
+											Company*
+										</span>
+										
+										<span editable-text="user.company.company_name.paramValue" e-class="form-control param_input" e-name="user.company.company_name.paramValue"  ng-model="user.company.company_name.paramValue" required>
+											{{user.company.company_name.paramValue}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										<input type="checkbox"> hide company name	
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Conatact Person*
+										</span>
+										
+										<span editable-text="user.personalInfo.first_name" e-class="form-control param_input" e-name="first_name"  ng-model="user.personalInfo.first_name" required>
+											{{user.personalInfo.first_name}}
+										</span>
+										<span editable-text="user.personalInfo.last_name" e-class="form-control param_input" e-name="last_name"  ng-model="user.personalInfo.last_name" required>
+											{{user.personalInfo.last_name}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Conatact Title*
+										</span>
+										
+										<span editable-text="user.personalInfo.first_name" e-class="form-control param_input" e-name="first_name"  ng-model="user.personalInfo.first_name" required>
+											HR
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Address
+										</span>
+										
+										<span editable-text="user.personalInfo.street_1" ng-model="user.personalInfo.street_1" name="street_1" e-class="form-control param_input">
+											 {{user.personalInfo.street_1}}
+										</span>
+																		
+										<span editable-text="user.personalInfo.city" name="city" e-class="form-control param_input" ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
+											{{user.personalInfo.city}}
+										</span>					
+										
+										<span editable-text="user.personalInfo.state" name="state" ng-model="user.personalInfo.state" placeholder="" e-class="form-control param_input" e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
+											{{user.personalInfo.state}}
+										</span>
+										
+									
+										<span editable-text="user.personalInfo.zipcode" name="zipcode" e-class="form-control param_input" ng-model="user.personalInfo.zipcode">
+										   {{user.personalInfo.zipcode}}
+										</span>
+										
+										<span editable-text="user.personalInfo.country" ng-model="user.personalInfo.country" e-class="form-control param_input" e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
+								     		{{user.personalInfo.country}}
+								     	</span>	
+									</div>	
+								</br>
+									<div>
+										
+										<span class="param_label col-md-2">
+											E-mail*
+										</span>
+										
+										<span editable-email="user.personalInfo.email" e-class="form-control param_input" e-name="email"  ng-model="user.personalInfo.email" required>
+											{{user.personalInfo.email}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Phone/Cell*
+										</span>
+										
+										<span editable-tel="user.personalInfo.mobile" e-class="form-control param_input" e-name="mobile"  ng-model="user.personalInfo.mobile" required>
+											{{user.personalInfo.mobile}}
+										</span>
+										
+									</div>	
+								</br>	
+									
+									<div>
+										
+										<span class="param_label col-md-2">
+											Password*
+										</span>
+										
+										<span editable-text="user.personalInfo.password" e-type="password" e-class="form-control param_input" e-name="password"  ng-model="user.personalInfo.password" required>
+											{{user.personalInfo.password}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Gender*
+										</span>
+										<span e-class="form-control postInput" class="" editable-select="user.personalInfo.gender" e-name="user.personalInfo.gender" ng-model="user.personalInfo.gender"   e-ng-options="g.value as g.text for g in genders"> 
+													 			    {{ user.personalInfo.gender}}
+										</span>
+										
+									</div>	
+								</br>
+									<!-- <div>
+										
+										<span class="param_label col-md-2">
+											Birthdate*
+										</span>
+										
+										<span>
+											<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
+										</span>
+										
+									</div>	
+								</br>	 -->
+									
+								
+								
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Facebook
+										</span>
+										
+										<span editable-text="user.personalInfo.facebook" name="facebook" e-class="form-control param_input" ng-model="user.personalInfo.facebook">
+										  <a href="http://www.{{user.personalInfo.facebook}}">{{user.personalInfo.facebook}}</a>
+										</span>
+										
+									</div>		
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											Twitter
+										</span>
+										
+										<span editable-text="user.personalInfo.twitter" name="twitter" e-class="form-control param_input" ng-model="user.personalInfo.twitter">
+										   {{user.personalInfo.twitter}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											LinkedIn
+										</span>
+										
+										<span editable-text="user.personalInfo.linkedin" name="linkedin" e-class="form-control param_input" ng-model="user.personalInfo.linkedin">
+										   {{user.personalInfo.linkedin}}
+										</span>
+										
+									</div>	
+								</br>	
+									<div>
+										
+										<span class="param_label col-md-2">
+											YouTube video
+										</span>
+										
+										<span editable-text="user.personalInfo.youtube" name="youtube" e-class="form-control param_input" ng-model="user.personalInfo.youtube">
+										   {{user.personalInfo.youtube}}
+										</span>
+										
+									</div>	
+									
+									
+									
+		 	      <div ng-repeat="(k,v) in user" class="formParameter col-md-6" class="" ng-if="k == 'company'">
 		 	     	
 		 	     	<div ng-repeat="(m,n) in v" >
 			 	     	<span >
@@ -54,7 +246,12 @@
 		 	     	
 		 	     	
 		 	     </div>	 
-	 	     </div>		
+	 	  	
+		 	     	
+		 	     	
+		 	    
+		 	    
+		 	   
 	 	     	 
 	 	     		
 	 	     		

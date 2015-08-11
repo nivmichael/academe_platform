@@ -96,8 +96,8 @@ post.education
 }
 
 .param_label{
-	display:inline-block;
-	min-width:130px;
+	display:inline;
+	min-width:250px;
 	 font-weight: bold;
 	  text-align: left;
 	  
@@ -538,7 +538,7 @@ background-color:#D43F3A;
 }
 
 .iterationCtrls{
-margin-top:105px!important;
+margin-top:10px!important;
 margin-bottom:35px!important;
 	font-size: 12px;
 	color: #0E3969;
@@ -549,4 +549,21 @@ margin-bottom:35px!important;
  margin-right:10px;	
 }	
 	
-
+.disclaimerDiv{
+	padding:20px;
+	border:1px solid black;
+	
+	height:100px;
+	overflow:auto;
+}	
+.disclaimerDiv>p{
+	
+	text-align: left;
+}
+.disclaimerDiv>strong{
+	
+	text-align: left;
+}
+.hidden{
+	display:none;
+}

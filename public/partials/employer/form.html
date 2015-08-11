@@ -7,7 +7,7 @@
 <!--ng-hide="a =='job_details' || a == 'personalInfo'"
 -->
            <ul class="nav nav-sidebar col-md-4">
-            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi" >
+            <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center docParamLi" ng-if="a != 'personalInfo'">
                 <li ui-sref-active="active" ui-sref=".{{a}}">{{a}}</li>
                
             </div>

@@ -45,7 +45,7 @@ class RedirectIfAuthenticated {
 	       		{
 	           		$employerOrNot = '/employer#/employer';
 	        	}
-	        	else if($request->user()->subtype == 'jobSeeker')
+	        	else if($request->user()->subtype == 'jobseeker')
 	        	{
 	        		$employerOrNot = '/home#/home';
 	        	}
