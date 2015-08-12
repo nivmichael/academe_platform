@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use DB;
+use stdClass;
 use PDO;
 use Response;
 use Input;
@@ -73,6 +74,22 @@ class DocParamController extends Controller {
 		
 		return Response::json(array('param'=>$param,'id'=>$id));
 	}
+	
+	
+	// public function getCompanyParamInput($paramName) {
+// 		
+		// $param =new stdClass();
+// 		
+		// $paramTypeId = DB::table('param')->where('name',$paramName)->pluck('type_id');
+		// $paramType   = DB::table('param_type')->where('id',$paramTypeId)->pluck('name');
+// 		
+		// $param->paramName = $paramName;
+		// $param->paramValue= '';
+		// $param->inputType = $paramType;
+// 		
+// 		
+		// return Response::json($param);
+	// }
 
 	/**
 	 * Display the specified resource.

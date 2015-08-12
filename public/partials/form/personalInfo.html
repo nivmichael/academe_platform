@@ -154,20 +154,7 @@
 		
 	</div>	
 </br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Street Address 2
-		</span>
-		
-		<span>
-			<input type='text' class="form-control param_input" name="street_2" placeholder="" ng-model="user.personalInfo.street_2" required>
-		</span>
-		
-		
-		
-	</div>	
-</br>	
+	
 	<div>
 		
 		<span class="param_label col-md-2">
@@ -304,7 +291,7 @@
 
 
 <div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" ng-hide="docParam == 'files'">
-	
+
 		<!-- <span ng-if="docParam == 'personalInfo'">
 			<span class="param_label col-md-2">		
 				{{paramKey}}
@@ -313,16 +300,163 @@
 				<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
 			</span>
 		</span> -->
-		
+	<div ng-if="!(user[docParam].length>0)">	
+
 		<span ng-if="docParam != 'personalInfo'">
 			<span class="param_label col-md-2">		
 				{{paramKey}}
 			</span>
 			<span class="param_input col-md-10">					
-				<input type='text' class="form-control" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+				<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
 			</span>
 		</span>
+		
+		<div ng-show="$last">
+			<button type="button" class="btn btn-xs btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
+		</div>
+	</div>	
+		
+		
+		
+		
+	
+		
+		<div ng-if="user[docParam].length>0">
+			
+			<div ng-repeat="(paramName,props) in paramValues" >
+		
+				<span class="param_label"> 
+					{{paramName}}
+				</span>
+				
+				
+				<span ng-switch="props.inputType">
+					
+					<span ng-switch-when="text">
+						<span  class="param_input" ng-if="props.paramName">					
+							<input type='text' class="form-control param_input" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
+						</span>	
+					</span>	
+		
+					<span ng-switch-when="select">
+						<span  class="param_input" ng-if="props.paramName">					
+							<select type='select' class="form-control param_input" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="juser[docParam][paramKey][paramName]['paramValue']">
+							  <option value="volvo">Volvo</option>
+							  <option value="saab">Saab</option>
+							  <option value="mercedes">Mercedes</option>
+							  <option value="audi">Audi</option>
+							</select>
+						</span>	
+					</span>	
+				
+					
+				
+				</span>
+				
+				
+				
+				
+				<!-- 
+				<div ng-repeat="(k,v) in props track by $index" >
+					<span class="param_label" > 
+						{{v.paramName}}
+					</span>
+					
+					
+					
+					<span ng-switch="v.inputType">	
+							
+						<span ng-switch-when="text">		
+							<span  class="param_input" >					
+								<input type='text' class="form-control param_input" placeholder="{{k}}" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
+							</span>	
+							<br>	
+						</span>
+						
+						<span ng-switch-when="select">
+							<span  class="param_input">					
+								<select class="form-control param_input" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
+								  <option value="volvo">Volvo</option>
+								  <option value="saab">Saab</option>
+								  <option value="mercedes">Mercedes</option>
+								  <option value="audi">Audi</option>
+								</select>
+								<br>	
+							</span>	
+							
+						</span>	
+					
+
+
+
+
+					</span>
+				
+		
+		
+		
+		
+				</div> -->	
+				</br>
+			
+				<div class="iterationCtrls" ng-if="user[docParam].length>0" ng-show="$last">
+						<span class="iterationCtrl" ng-click="remove(user[docParam],docParam,$index)">
+							X Delete
+						</span>
+						<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
+							Move Up
+						</span>
+						<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
+							Move Down
+						</span>
+		
+				</div>
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+	</div>
+				<div ng-show="$last" ng-if="user[docParam].length>0" >
+					<button type="button" class="btn btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
+				</div>
+		
+		
+		
+		
+		
+	</div>
+		
+		
+		
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<div ng-repeat="(key,val) in user['files']" class="formDiv" >
 		<span ng-show="docParam == 'files' ">
 					<span class="param_label col-md-2" >		

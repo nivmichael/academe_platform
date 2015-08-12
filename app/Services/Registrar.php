@@ -64,13 +64,13 @@ class Registrar implements RegistrarContract {
 				'email'            => $data['user']['personalInfo']['email'],
 				'password'         => bcrypt($data['user']['personalInfo']['password']),
 				'street_1'         => $data['user']['personalInfo']['street_1'],
-				'street_2'    	   => $data['user']['personalInfo']['street_2'],
+				
 				'city'        	   => $data['user']['personalInfo']['city'],
 				'state'       	   => $data['user']['personalInfo']['state'],
 				'country'          => $data['user']['personalInfo']['country'],
 				'zipcode'     	   => $data['user']['personalInfo']['zipcode'],
 				'phone_1'     	   => $data['user']['personalInfo']['phone_1'],
-				'phone_2'     	   => $data['user']['personalInfo']['phone_2'],
+			
 				'mobile'      	   => $data['user']['personalInfo']['mobile'],
 			    'date_of_birth'    => $data['user']['personalInfo']['date_of_birth'],
 				'registration'     => $data['user']['personalInfo']['registration'],
@@ -106,7 +106,12 @@ class Registrar implements RegistrarContract {
 			
 				if(is_int($param)) {
 					foreach($props as $propKey => $propVal) {
-					$paramValue = $propVal['paramValue'];
+						if($propVal['paramValue']){
+							
+							$paramValue = $propVal['paramValue'];
+						}else{
+							$paramValue='';
+						};
 					$paramName  = $propVal['paramName'];
 					$iterable = $param;
 					
@@ -116,12 +121,10 @@ class Registrar implements RegistrarContract {
 							//checking where the values come from? from param_value? or from short/long?
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
 // 							
-							// if($iterable){
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->pluck('id');
-							// }else{
-								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$authId)->pluck('id');
-							// }
-// 							
+							$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$authId)->pluck('id');
+								if(!$existsId) {
+									$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->pluck('id');
+								}
 							
 							
 							

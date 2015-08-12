@@ -106,7 +106,10 @@ class TypePostController extends Controller {
 							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
 				
 							// if($iterable){
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$post->id)->pluck('id');
+								if(!$existsId) {
+									$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
+								}
 							// }else{
 								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
 							// }

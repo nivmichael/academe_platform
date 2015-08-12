@@ -69,6 +69,7 @@ Route::get('/groups', 'SysParamValuesController@getGroups');
 Route::get('/columns/param'     , 'ParamController@columnIndex');
 Route::get('/columns/user', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/registerEmployer', 'TypeUserController@columnIndexEmployer');
+// Route::get('/columns/{docParamName}', 'DocParamController@getCompanyParamInput');
 Route::get('/columns/registerJobSeeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
 Route::get('/columns/docType'   , 'DocTypeController@columnIndex');

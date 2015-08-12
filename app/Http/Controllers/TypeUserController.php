@@ -67,7 +67,7 @@ class TypeUserController extends Controller {
 			$iteration    = $v->iteration;
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
-			$inputType = $v->paramType;
+			$inputType    = $v->paramType;
 	
 			
 			
@@ -114,7 +114,7 @@ class TypeUserController extends Controller {
 			$iteration    = $v->iteration;
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
-			$inputType = $v->paramType;
+			$inputType    = $v->paramType;
 	
 			
 			
@@ -206,13 +206,13 @@ class TypeUserController extends Controller {
 		$param->first_name = $allPersonalInfo['first_name'];
 		$param->last_name  = $allPersonalInfo['last_name'];
 		$param->street_1   = $allPersonalInfo['street_1'];
-		$param->street_2   = $allPersonalInfo['street_2'];
+		
 		$param->city 	   = $allPersonalInfo['city'];
 		$param->state      = $allPersonalInfo['state'];
 		$param->zipcode    = $allPersonalInfo['zipcode'];
 		$param->country    = $allPersonalInfo['country'];
 		$param->phone_1    = $allPersonalInfo['phone_1'];
-		$param->phone_2    = $allPersonalInfo['phone_2'];
+		
 		$param->mobile     = $allPersonalInfo['mobile'];
 		
 		$param->date_of_birth = new DateTime($allPersonalInfo['date_of_birth']);
@@ -241,7 +241,9 @@ class TypeUserController extends Controller {
 			
 				if(is_int($param)) {
 					foreach($props as $propKey => $propVal) {
-					$paramValue = $propVal['paramValue'];
+						if(isset($propVal['paramValue'])){
+							$paramValue = $propVal['paramValue'];
+						}else{dd($props);}
 					$paramName  = $propVal['paramName'];
 					$iterable = $param;
 					

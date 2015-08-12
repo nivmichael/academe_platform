@@ -421,6 +421,27 @@ $.getJSON('/getAllJobs', function(data){
 	  		alert('ERROR!!');
 	  	});
   };    
+	   $scope.addRecordEmployer =function(docParam,$index) {	
+		
+		$http.get('/columns/registerEmployer')
+		  	.success(function(data, status, headers, config) {
+		  		
+		  	$scope.inserted = data[docParam];	  
+		  	
+		  	if(!(angular.isArray($scope.user[docParam]))){
+		  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+		 		 
+		  	}else{
+				$scope.user[docParam].push($scope.inserted);
+				
+		  	}	
+		  		
+		  	})
+		  	.error(function(){
+		  		alert('ERROR!!');
+		  	});
+	  };    
+	 
 	  
   $scope.move = function(array, fromIndex, toIndex){
 
@@ -801,22 +822,25 @@ $scope.getColumns = function(){
 	  	}else{
 			$scope.user[docParam].push($scope.inserted);
 	  	}	
-	  		
+	  		console.log($scope.user[docParam]);
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
 	  	});
   };    
 	 $scope.addRecordEmployer =function(docParam,$index) {	
-	 	console.log(docParam);
+	console.log('hell');
 	$http.get('/columns/registerEmployer')
 	  	.success(function(data, status, headers, config) {
-	  	$scope.inserted = data[docParam];	   
+	  		
+	  	$scope.inserted = data[docParam];	  
+	  	
 	  	if(!(angular.isArray($scope.user[docParam]))){
 	  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+	 		 
 	  	}else{
 			$scope.user[docParam].push($scope.inserted);
-			console.log($scope.user[docParam]);
+			
 	  	}	
 	  		
 	  	})
@@ -825,7 +849,7 @@ $scope.getColumns = function(){
 	  	});
   };    
 
-	  
+
   
 
 	
@@ -852,8 +876,9 @@ $scope.getColumns = function(){
 	  
 	
    $scope.move = function(array, fromIndex, toIndex){
-
+	
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+   	 console.log(array);
    	
    };
    
