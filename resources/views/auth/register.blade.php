@@ -108,7 +108,7 @@
 	<script src="../lib/angular-resource.js"></script>
 	<script src="../lib/xeditable/js/xeditable.js"></script>
 	<script src="../lib/ngFlow/ng-flow-standalone.min.js"></script>
-	
+	<script src="../lib/checklist-model.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="../lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
 	<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>

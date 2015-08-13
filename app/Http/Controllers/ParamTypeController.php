@@ -54,7 +54,8 @@ class ParamTypeController extends Controller {
 	 */
 	public function store()
 	{
-			
+		$all=Input::all();
+		$all = $all['user'];
 		$id = Input::get('id');
 		$param = ParamType::find($id);
 		if($param){
@@ -62,7 +63,7 @@ class ParamTypeController extends Controller {
 		}else{
 			$param = new ParamType();
 		}
-		$name = Input::get('name');
+		$name = $all['name'];
 		$param->name = $name;
 		$param->save();
 		return Response::json(array('param'=>$param,'id'=>$id));

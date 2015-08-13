@@ -39,8 +39,8 @@
 		
 		
 		
-		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" ng-hide="paramName == 'id' || paramName == 'user_id'|| paramName == 'authorized'|| paramName == 'created_at'|| paramName == 'description_short'|| paramName == 'updated_at'">
-			<span class="param_label"> 
+		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" ng-hide="paramName == 'id' || paramName == 'user_id'|| paramName == 'authorized'|| paramName == 'created_at'|| paramName == 'description_short'|| paramName == 'updated_at'" style="display: inline-flex;">
+			<span class="param_label col-md-2"> 
 				{{paramName}}
 			</span>
 			<span  class="param_input">					
@@ -54,10 +54,10 @@
 
 
 		<div ng-repeat="(docParamName,docParamValues) in jobPost" >
-			<div ng-repeat="(paramName,props) in docParamValues" >
+			<div ng-repeat="(paramName,props) in docParamValues" class="" style="display: inline-block;">
 	
 	
-				<span class="param_label"> 
+				<span class="param_label col-md-2"> 
 					{{props.paramName}}
 				</span>
 				
@@ -80,7 +80,18 @@
 							</select>
 						</span>	
 					</span>	
-				
+					
+					<span ng-switch-when="textarea">
+						<span class="param_input" ng-if="props.paramName">					
+							<textarea class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']"></textarea>	
+						</span>
+					</span>	
+					
+					<span ng-switch-default>
+						<span class="param_input" ng-if="props.paramName">					
+							<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+						</span>	
+					</span>	
 					
 				
 				</span>
@@ -89,8 +100,8 @@
 				
 				
 				
-				<div ng-repeat="(k,v) in props track by $index" ng-if="isArray(docParamValues)">
-					<span class="param_label" > 
+				<div ng-repeat="(k,v) in props track by $index" ng-if="isArray(docParamValues)" style="display: inline-block;">
+					<span class="param_label col-md-2" > 
 						{{v.paramName}}
 					</span>
 					
@@ -100,7 +111,7 @@
 							
 						<span ng-switch-when="text">		
 							<span  class="param_input" >					
-								<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+								<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
 							</span>	
 							<br>	
 						</span>
@@ -114,6 +125,20 @@
 								  <option value="audi">Audi</option>
 								</select>
 								<br>	
+							</span>	
+							
+						</span>	
+						
+						<span ng-switch-when="textarea">
+							<span class="param_input">					
+								<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>	
+							</span>
+						</span>	
+						
+						
+						<span ng-switch-default>
+							<span  class="param_input" >					
+								<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
 							</span>	
 							
 						</span>	

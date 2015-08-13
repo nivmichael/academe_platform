@@ -1,149 +1,93 @@
-<span >
-  The Number of Jobs Posted:  {{allJobs.length}}
-</span>	
+<span > The Number of Jobs Posted:  {{allJobs.length}} </span>
 <hr>
-	<div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >	
-		<span data-toggle="modal" data-target=".job">
-			<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">						
-				<div class="col-md-12 padding">
-					<div ng-if="user.files.company_logo" class="postImage">		
-						<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">		
-					</div>
-					<span class="col-md-8">
-						<h4>{{job.postInfo.title}}</h4>
-						<hr>
-						<span class="text-muted">
-							View Job Info - {{job.postInfo.id}}
-						</span>			
-					</span>
+<div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >
+	<span data-toggle="modal" data-target=".job">
+		<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">
+			<div class="col-md-12 padding">
+				<div ng-if="user.files.company_logo" class="postImage">
+					<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">
 				</div>
+				<span class="col-md-8"> <h4>{{job.postInfo.title}}</h4>
+					<hr>
+					<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> </span>
 			</div>
-		</span>
-	</div>
-	
-<div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-	  <div class="modal-dialog modal-lg">
-		 <div class="modal-content">
-			<div class="panel panel-default">
-				<a class="close" data-toggle="modal" data-target=".job">&times;</a>
-				<div class="panel-heading"><b>Job Offer {{post.postInfo.id}}</b></div>
-					<div class="panel-body">
-					
-						<nav class="col-md-2 sideNav">
-							<div ng-click="!editableForm.$cancel()" class="postLi">
-								Job Details
-							</div>
-							<div ng-click="editableForm.$show()" class="postLi">
-								Edit
-							</div>
-						</nav>
-						
-						
-						
-						
-						
-						
-						<form editable-form name="editableForm" onaftersave="savePost(post)">
-				 	  
-					 	    <div ng-repeat="(paramName,paramValues) in post.postInfo">
-					 	    	  <span class="param_label " >	
-					 	    		{{paramName}}
-					 	    	  </span>
-					 	    	  
-					 	    	  <span e-class="form-control postInput" class="" editable-text="post.postInfo[paramName]" e-name="post.postInfo[paramName]" ng-model="post.postInfo[paramName]"> 
-								 	{{paramValues}}
-								  </span>
-					 	    </div>	
-					 	    
-					 	    
-					 	    
-					 	    
-					 	    
-					 	    <div ng-repeat="(docParamName,docParamValues) in post" >
-					 	    	
-					 	    	<div ng-repeat="(paramKey,paramValues) in docParamValues">
-					 	 
-									<div ng-repeat="(k,v) in paramValues  track by $index" >
-										 
-					 	    		
-						 	    			<span class="param_label " ng-if="k == 'paramName'">	
-						 	    				{{v}}
-						 	   			 	</span>
-						 	   				
-						 	   				<span ng-switch="paramValues.inputType">
-						 	   					
-							 	   				<span ng-switch-when="text">
-							 	   					
-								 	   			 	<span  ng-if="k == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> 
-											 			{{v}}
-												  	</span>
-							 	   					
-							 	   				</span>
-							 	   				
-							 	   				<span ng-switch-when="select">
-							 	   					
-								 	   			 	<span ng-if="k == 'paramValue'"  e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> 
-											 			   {{ showGroup(v) }}
-												  	</span>
-							 	   					
-							 	   				</span>
-									  		</span>
-									  	
-										  	<div ng-repeat="(u,w) in v track by $index" >
-							 	    			
-								 	    			<span class="param_label " ng-if="u == 'paramName'">	
-								 	    				{{w}}
-								 	   			 	</span>
-								 	   			 	
-								 	   			 	<span ng-switch="v.inputType">
-								 	   			 		<span ng-switch-when="text">
-										 	   			 	<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-text="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"> 
-													 			{{w}}
-														  	</span>
-														</span> 	
-														<span ng-switch-when="select">
-															<span ng-if="u == 'paramValue'" e-class="form-control postInput" class="" editable-select="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> 
-													 			    {{ showGroup(w) }}
-														  	</span>
-														</span>	
-													</span> 	
-						 	   			 	</div>	
-						 	   			 	
-											<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues) && $last">
-													<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
-														X Delete
-													</span>
-													<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
-														Move Up
-													</span>
-													<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
-														Move Down
-													</span>
-											 </div>
-					 	   			</div>	 		
-					 	   		</div>	
-					 	   		
-		 	   					<div ng-show="editableForm.$visible && docParamName != 'postInfo'">
-								  <button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
-								</div>
-					 	    
-					 	    </div>	
-					 	    
-					 	    
-					 	    <div class="buttons">
-					     		<span ng-show="editableForm.$visible">
-						       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-						       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
-					      		</span>
-					    	</div>	
-					    					   
-						</form>
-	
-			</div>	
-		 </div>		 
-	  </div>
-	</div> 
+		</div> </span>
 </div>
 
+<div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="panel panel-default">
+				<a class="close" data-toggle="modal" data-target=".job">&times;</a>
+				<div class="panel-heading">
+					<b>Job Offer {{post.postInfo.id}}</b>
+				</div>
+				<div class="panel-body">
 
+					<nav class="col-md-2 sideNav">
+						<div ng-click="!editableForm.$cancel()" class="postLi">
+							Job Details
+						</div>
+						<div ng-click="editableForm.$show()" class="postLi">
+							Edit
+						</div>
+					</nav>
+
+					<form editable-form name="editableForm" onaftersave="savePost(post)" >
+
+						<div ng-repeat="(paramName,paramValues) in post.postInfo" class=""  style="display: inline-block;" ng-hide="paramName == 'id' || paramName == 'user_id'|| paramName == 'authorized'|| paramName == 'created_at'|| paramName == 'description_short'|| paramName == 'updated_at'">
+							<span class="param_label col-md-2" > {{paramName}} </span>
+							<span e-class="form-control param_input" class="param_input" editable-text="post.postInfo[paramName]" e-name="post.postInfo[paramName]" ng-model="post.postInfo[paramName]"> {{paramValues}} </span>
+						</div>
+
+						<div ng-repeat="(docParamName,docParamValues) in post" >
+
+							<div ng-repeat="(paramKey,paramValues) in docParamValues">
+
+								<div ng-repeat="(k,v) in paramValues  track by $index" class="" style="display: inline-block;" >
+
+									<span class="param_label col-md-2" ng-if="k == 'paramName'"> {{v}} </span>
+
+									<span ng-switch="paramValues.inputType"> <span ng-switch-when="text"> <span  ng-if="k == 'paramValue'" e-class="form-control param_input" class="param_input" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> {{v}} </span> </span> <span ng-switch-when="select"> <span ng-if="k == 'paramValue'"  e-class="form-control param_input" class="" editable-select="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> {{ showGroup(v) }} </span> </span> <span ng-switch-when="textarea"> <span  ng-if="k == 'paramValue'" e-class="form-control param_input" class="" editable-textarea="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" ng-model="post[docParamName][paramKey][k]"> {{v}} </span> </span> </span>
+
+									<div ng-repeat="(u,w) in v track by $index" style="display: inline-block;">
+
+										<span class="param_label col-md-2" ng-if="u == 'paramName'"> {{w}} </span>
+
+										<span ng-switch="v.inputType"> <span ng-switch-when="text"> <span ng-if="u == 'paramValue'" e-class="form-control param_input" class="param_input" editable-text="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"> {{w}} </span> </span> <span ng-switch-when="select"> <span ng-if="u == 'paramValue'" e-class="form-control param_input " class="" editable-select="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"  onshow="loadGroups()" e-ng-options="g.value as g.value for g in groups"> {{ showGroup(w) }} </span> </span> <span ng-switch-when="textarea"> <span  ng-if="u == 'paramValue'" e-class="form-control param_input" class="" editable-textarea="post[docParamName][paramKey][k][u]" e-name="post[docParamName][paramKey][k][u]" ng-model="post[docParamName][paramKey][k][u]"> {{w}} </span> </span> </span>
+									</div>
+
+								</div>
+								<div class="iterationCtrls param_input" ng-show="editableForm.$visible && isArray(docParamValues) ">
+									<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)"> X Delete </span>
+									<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)"> Move Up </span>
+									<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)"> Move Down </span>
+								</div>
+							</div>
+
+							<div ng-show="editableForm.$visible && docParamName != 'postInfo'">
+								<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">
+									+ Add a Record
+								</button>
+							</div>
+
+						</div>
+
+						<div class="buttons">
+							<span ng-show="editableForm.$visible">
+								<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+									Save
+								</button>
+								<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+									Cancel
+								</button> </span>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 

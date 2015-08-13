@@ -700,7 +700,7 @@ function capitalizeFirstLetter(string) {
 $scope.getJobPostFields = function(){
 	$http.get('/columns/jobPost').
 	  success(function(data, status, headers, config) {
-	 	 console.log(data);
+	 	 //console.log(data);
 	 	 
 	 	 angular.forEach(data, function(value, key) {
 		 	angular.forEach(value, function(v, k) {
@@ -876,9 +876,10 @@ $scope.getColumns = function(){
 	  
 	
    $scope.move = function(array, fromIndex, toIndex){
+   	 console.log(array);
 	
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-   	 console.log(array);
+   	 
    	
    };
    
@@ -919,8 +920,12 @@ $scope.getColumns = function(){
 
   
   
-  
-  
+ $scope.checklist = [
+    'guest', 
+    'user', 
+    'customer', 
+    'admin'
+  ];
   
   
   

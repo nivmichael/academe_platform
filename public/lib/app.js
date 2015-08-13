@@ -13,6 +13,7 @@ var acadb = angular.module('acadb', [
   'acadb.directives',
   'xeditable',
   'ngResource',
+  'checklist-model',
 ])
 
 

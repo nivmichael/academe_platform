@@ -1,918 +1,716 @@
-
 <script type="text/ng-template" id="customTemplate.html">
-  <a style="float:left;">
-      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-  </a>
+	<a style="float:left;">
+	<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+	<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+	</a>
 </script>
 
-
-
 <div class="errors alert alert-danger" ng-if="errors">
-	<ul>	
-		<li ng-repeat="(t,s) in errors">{{s}}</li>	
+	<ul>
+		<li ng-repeat="(t,s) in errors">
+			{{s}}
+		</li>
 	</ul>
 </div>
 
-
-
 <div ng-if="docParam == 'personalInfo'">
-		<!-- <input type="text" class="" name="id" ng-value="" ng-model="user.personalInfo.id">
-		<input type="text" class="" name="type" ng-value="1" ng-model="user.personalInfo.type">
-		<input type="text" class="" name="subtype" ng-value="jobSeeker" ng-model="user.personalInfo.subtype">
-		<input type="text" class="" name="status" ng-value="active" ng-model="user.personalInfo.active"> -->
-		
-		
-	<div>
-		
-		<span class="param_label col-md-2">
-			First Name*
-		</span>
-		
+	<!-- <input type="text" class="" name="id" ng-value="" ng-model="user.personalInfo.id">
+	<input type="text" class="" name="type" ng-value="1" ng-model="user.personalInfo.type">
+	<input type="text" class="" name="subtype" ng-value="jobSeeker" ng-model="user.personalInfo.subtype">
+	<input type="text" class="" name="status" ng-value="active" ng-model="user.personalInfo.active"> -->
+
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> First Name* </span>
+
 		<span>
 			<input type='text' class="form-control param_input" name="first_name" placeholder="First Name" ng-model="user.personalInfo.first_name" required>
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Last Name*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Last Name* </span>
+
 		<span>
 			<input type='text' class="form-control param_input" name="last_name" placeholder="Last Name" ng-model="user.personalInfo.last_name" required>
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Phone/Cell*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Phone/Cell* </span>
+
 		<span>
 			<input type='text' class="form-control param_input" name="mobile" placeholder="Phone/Cell" ng-model="user.personalInfo.mobile" required>
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Email*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Email* </span>
+
 		<span>
 			<input type='email' class="form-control param_input" name="email" placeholder="First Name" ng-model="user.personalInfo.email" required>
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Password*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Password* </span>
+
 		<span>
 			<input type='password' class="form-control param_input" name="password" placeholder="Password" ng-model="user.personalInfo.password" required>
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Gender*
-		</span>
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Gender* </span>
 		<span>
 			<select class="form-control  param_input" name="gender" ng-model="user.personalInfo.gender">
-				<option value="" selected></option> 
-				<option value="male" >Male</option> 
-				<option value="female" >Female</option>			 
-			</select>
-		</span>
-	</div>	
-</br>
+				<option value="" selected></option>
+				<option value="male" >Male</option>
+				<option value="female" >Female</option>
+			</select> </span>
+	</div>
+	</br>
 	<!-- <div>
-		
-		<span class="param_label col-md-2">
-			Birthdate*
-		</span>
-		
-		<span>
-			<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
-		</span>
-		
-	</div>	
-</br>	 -->
-	<div>
-		
-		<span class="param_label col-md-2">
-			Marital Status
-		</span>
+
+	<span class="param_label col-md-2">
+	Birthdate*
+	</span>
+
+	<span>
+	<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
+	</span>
+
+	</div>
+	</br>	 -->
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Marital Status </span>
 		<span>
 			<select class="form-control  param_input" name="martial_status" ng-model="user.personalInfo.martial_status">
-				<option value="" selected></option> 
-				<option value="single" >Single</option> 
-				<option value="married" >Married</option>	
-				<option value="Divorced" >Divorced</option> 
-				<option value="Widowed" >Widowed</option>			 
-			</select>
-		</span>
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Education Status
-		</span>
+				<option value="" selected></option>
+				<option value="single" >Single</option>
+				<option value="married" >Married</option>
+				<option value="Divorced" >Divorced</option>
+				<option value="Widowed" >Widowed</option>
+			</select> </span>
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Education Status </span>
 		<span>
 			<select class="form-control  param_input" name="education_status" ng-model="user.personalInfo.education_status">
-				<option value="" selected></option> 
-				<option value="Student" >Student</option> 
-				<option value="Graduate" >Graduate</option>	
-				<option value="Intern" >Intern</option> 				 
-			</select>
-		</span>
-	</div>	
-</br>
-	<div>
-		
-		<span class="param_label col-md-2">
-			Street Address 1
-		</span>
-		
+				<option value="" selected></option>
+				<option value="Student" >Student</option>
+				<option value="Graduate" >Graduate</option>
+				<option value="Intern" >Intern</option>
+			</select> </span>
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Street Address 1 </span>
+
 		<span>
 			<input type='text' class="form-control param_input" name="street_1" placeholder="" ng-model="user.personalInfo.street_1" required>
 		</span>
-		
-		
-		
-	</div>	
-</br>	
-	
-	<div>
-		
-		<span class="param_label col-md-2">
-			country
-		</span>
-		
+
+	</div>
+	</br>
+
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> country </span>
+
 		<span>
-     		<input type="text" ng-model="user.personalInfo.country" class="form-control param_input" typeahead="country for country in countries  | filter:$viewValue | limitTo:8" >
+			<input type="text" ng-model="user.personalInfo.country" class="form-control param_input" typeahead="country for country in countries  | filter:$viewValue | limitTo:8" >
 		</span>
-		
-		
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			State*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> State* </span>
+
 		<span>
-		     <input type="text" name="state" ng-model="user.personalInfo.state" placeholder="" class="form-control param_input" typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
+			<input type="text" name="state" ng-model="user.personalInfo.state" placeholder="" class="form-control param_input" typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			city*
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> city* </span>
+
 		<span>
-		    <input type="text" name="city" class="form-control param_input" ng-model="asyncSelected" placeholder="" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
+			<input type="text" name="city" class="form-control param_input" ng-model="asyncSelected" placeholder="" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Zip Code
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Zip Code </span>
+
 		<span>
-		    <input type="text" name="zipcode" class="form-control param_input" ng-model="user.personalInfo.zipcode">
+			<input type="text" name="zipcode" class="form-control param_input" ng-model="user.personalInfo.zipcode">
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Facebook
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Facebook </span>
+
 		<span>
-		    <input type="text" class="form-control param_input" >
+			<input type="text" class="form-control param_input" >
 		</span>
-		
-	</div>		
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			Twitter
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> Twitter </span>
+
 		<span>
-		    <input type="text" class="form-control param_input" >
+			<input type="text" class="form-control param_input" >
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			LinkedIn
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> LinkedIn </span>
+
 		<span>
-		    <input type="text" class="form-control param_input" >
+			<input type="text" class="form-control param_input" >
 		</span>
-		
-	</div>	
-</br>	
-	<div>
-		
-		<span class="param_label col-md-2">
-			YouTube video
-		</span>
-		
+
+	</div>
+	</br>
+	<div class="formDiv">
+
+		<span class="param_label col-md-2"> YouTube video </span>
+
 		<span>
-		    <input type="text" class="form-control param_input" >
+			<input type="text" class="form-control param_input" >
 		</span>
-		
-	</div>	
-</br>
-	<div>
-			
+
+	</div>
+	</br>
+	<div class="formDiv">
+
 		<span style="float:left;">
-		    <input type="checkbox" class="" ng-model="user.personalInfo.send_newsletters"> 
-		    <span class="param_label">
-				I wish to receive newsletters with updates from time to time
-			</span>
-		</span>
-		
-	</div>		
-</br>
-	
-	
-	<ng-include class="col-md-12" src="'../../../partials/disclaimer.html'"></ng-include>
+			<input type="checkbox" class="" ng-model="user.personalInfo.send_newsletters">
+			<span class="param_label"> I wish to receive newsletters with updates from time to time </span> </span>
 
-</br>
-
-	<div>
-			
-		<span style="float:left;">
-		    <input type="checkbox" class="" > 
-		    <span class="param_label">
-				I have read and approved the disclaimer
-			</span>
-		</span>
-		
-	</div>	
-	
-			
-</div>
-
-<div ng-include="personal_info.html">
-	
-</div>
-
-
-
-<div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" ng-hide="docParam == 'files'">
-
-		<!-- <span ng-if="docParam == 'personalInfo'">
-			<span class="param_label col-md-2">		
-				{{paramKey}}
-			</span>
-			<span class="param_input col-md-10">					
-				<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
-			</span>
-		</span> -->
-	<div ng-if="!(user[docParam].length>0)">	
-
-		<span ng-if="docParam != 'personalInfo'">
-			<span class="param_label col-md-2">		
-				{{paramKey}}
-			</span>
-			<span class="param_input col-md-10">					
-				<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
-			</span>
-		</span>
-		
-		<div ng-show="$last">
-			<button type="button" class="btn btn-xs btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
-		</div>
-	</div>	
-		
-		
-		
-		
-	
-		
-		<div ng-if="user[docParam].length>0">
-			
-			<div ng-repeat="(paramName,props) in paramValues" >
-		
-				<span class="param_label"> 
-					{{paramName}}
-				</span>
-				
-				
-				<span ng-switch="props.inputType">
-					
-					<span ng-switch-when="text">
-						<span  class="param_input" ng-if="props.paramName">					
-							<input type='text' class="form-control param_input" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
-						</span>	
-					</span>	
-		
-					<span ng-switch-when="select">
-						<span  class="param_input" ng-if="props.paramName">					
-							<select type='select' class="form-control param_input" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="juser[docParam][paramKey][paramName]['paramValue']">
-							  <option value="volvo">Volvo</option>
-							  <option value="saab">Saab</option>
-							  <option value="mercedes">Mercedes</option>
-							  <option value="audi">Audi</option>
-							</select>
-						</span>	
-					</span>	
-				
-					
-				
-				</span>
-				
-				
-				
-				
-				<!-- 
-				<div ng-repeat="(k,v) in props track by $index" >
-					<span class="param_label" > 
-						{{v.paramName}}
-					</span>
-					
-					
-					
-					<span ng-switch="v.inputType">	
-							
-						<span ng-switch-when="text">		
-							<span  class="param_input" >					
-								<input type='text' class="form-control param_input" placeholder="{{k}}" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
-							</span>	
-							<br>	
-						</span>
-						
-						<span ng-switch-when="select">
-							<span  class="param_input">					
-								<select class="form-control param_input" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
-								  <option value="volvo">Volvo</option>
-								  <option value="saab">Saab</option>
-								  <option value="mercedes">Mercedes</option>
-								  <option value="audi">Audi</option>
-								</select>
-								<br>	
-							</span>	
-							
-						</span>	
-					
-
-
-
-
-					</span>
-				
-		
-		
-		
-		
-				</div> -->	
-				</br>
-			
-				<div class="iterationCtrls" ng-if="user[docParam].length>0" ng-show="$last">
-						<span class="iterationCtrl" ng-click="remove(user[docParam],docParam,$index)">
-							X Delete
-						</span>
-						<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
-							Move Up
-						</span>
-						<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
-							Move Down
-						</span>
-		
-				</div>
-		
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
 	</div>
-				<div ng-show="$last" ng-if="user[docParam].length>0" >
-					<button type="button" class="btn btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
-				</div>
-		
-		
-		
-		
-		
-	</div>
-		
-		
-		
-</div>
+	</br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<div ng-repeat="(key,val) in user['files']" class="formDiv" >
-		<span ng-show="docParam == 'files' ">
-					<span class="param_label col-md-2" >		
-						{{key}}
-					</span>
-						
-					<div style="height:200px;" ng-if="key =='paramValue'">
-						<img ng-src="{{val}}" style="width:200px;">	
-					</div>
-					<div flow-init="flowOp(key)"
-					     flow-files-submitted="$flow.upload()"
-					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-					     class="" >					     
- 					 <br/>
-  					
-					    	
- 					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-					
-					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-					
-					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
-					    	
-					      <span class="thumbnail_title">{{file.name}}</span>
-					      <div class="thumbnail" ng-show="$flow.files.length">
-					        <img flow-img="file" />
-					      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-					        <div class="progress-bar" role="progressbar"
-					             aria-valuenow="{{file.progress() * 100}}"
-					             aria-valuemin="0"
-					             aria-valuemax="100"
-					             ng-style="{width: (file.progress() * 100) + '%'}">
-					          <span class="sr-only">{{file.progress()}}% Complete</span>
-					        </div>
-					      </div>
-					      <div class="btn-group">
-					        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-					         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-					        </a>
-					      </div>
-					      </div>
-			
-					    </div>
-					    
-					    <div class="clear"></div>
-					  </div>
-				</div>
-		</span>
-	</div>
-
+	<ng-include class="formDiv" src="'../../../partials/disclaimer.html'"></ng-include>
 
 	</br>
 
-	<div class="col-md-4 col-md-offset-3" ng-if="nextDoc(docParam)">
+	<div class="formDiv">
+
+		<span style="float:left;">
+			<input type="checkbox" class="" >
+			<span class="param_label"> I have read and approved the disclaimer </span> </span>
+
+	</div>
+
+</div>
+
+<div ng-include="personal_info.html">
+
+</div>
+
+<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="formDiv" ng-hide="docParam == 'files'">
+
+	<!-- <span ng-if="docParam == 'personalInfo'">
+	<span class="param_label col-md-2">
+	{{paramKey}}
+	</span>
+	<span class="param_input col-md-10">
+	<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
+	</span>
+	</span> -->
+	<div ng-if="!(user[docParam].length>0)">
+
+		<span ng-if="docParam != 'personalInfo'"> <span class="param_label col-md-2"> {{paramKey}} </span>
 		
-	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
-	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
-	    
+		<span ng-switch="user[docParam][paramKey]['inputType']"> 
+			 <span ng-switch-when="text">
+				 <span class="param_input col-md-10">
+						<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+				 </span> 
+			 </span>
+			 <span ng-switch-when="select">
+			 	 <span  class="param_input col-md-10" >
+							<select type='select' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+								<option value="volvo">Volvo</option>
+								<option value="saab">Saab</option>
+								<option value="mercedes">Mercedes</option>
+								<option value="audi">Audi</option>
+							</select> 
+				</span>
+			 </span>
+			 <span ng-switch-when="textarea">
+				 <span class="param_input col-md-10">
+						<textarea class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']"></textarea>
+				 </span> 
+			 </span>
+			 
+			 <span ng-switch-when="checklist"> 
+				 <span  class="param_input col-md-10" > 
+				 	<label ng-repeat="check in checklist">
+						<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check">
+						<small>{{check}}</small> 
+					</label> 
+				</span>
+			 </span>
+			 <span ng-switch-default>
+				 <span class="param_input col-md-10">
+						<input type=text class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+				 </span> 
+			 </span>
+		</span>
+
+		<div ng-show="$last  && docParam != 'personalInfo'">
+			<button type="button" class="btn btn-xs btn-default" ng-click="addRecordJobSeeker(docParam,$index)">
+				+ Add a Record
+			</button>
+		</div>
 	</div>
-	
-	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
-	
-	    <a href="/home#/home" class="btn btn-block btn-info">
-	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
 
-	    
+	<div ng-if="user[docParam].length>0">
+
+		<div ng-repeat="(paramName,props) in paramValues " >
+			<div class="forDiv">
+				<span class="param_label col-md-2"> {{paramName}} </span>
+
+				<span ng-switch="props.inputType"> <span ng-switch-when="text"> <span  class="param_input col-md-10" ng-if="props.paramName">
+							<input type='text' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
+						</span> </span> <span ng-switch-when="select"> <span  class="param_input col-md-10" ng-if="props.paramName">
+							<select type='select' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
+								<option value="volvo">Volvo</option>
+								<option value="saab">Saab</option>
+								<option value="mercedes">Mercedes</option>
+								<option value="audi">Audi</option>
+							</select> </span> </span> <span ng-switch-when="checklist"> <span  class="param_input col-md-10" ng-if="props.paramName"> <label ng-repeat="check in checklist">
+								<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check">
+								<small>{{check}}</small> </label> </span> </span> <span ng-switch-default> <span  class="param_input col-md-10" ng-if="props.paramName">
+							<input type='text' class="form-control " placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
+						</span> </span> </span>
+
+				<!--
+				<div ng-repeat="(k,v) in props track by $index" >
+				<span class="param_label" >
+				{{v.paramName}}
+				</span>
+
+				<span ng-switch="v.inputType">
+
+				<span ng-switch-when="text">
+				<span  class="param_input" >
+				<input type='text' class="form-control param_input" placeholder="{{k}}" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
+				</span>
+				<br>
+				</span>
+
+				<span ng-switch-when="select">
+				<span  class="param_input">
+				<select class="form-control param_input" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
+				<option value="volvo">Volvo</option>
+				<option value="saab">Saab</option>
+				<option value="mercedes">Mercedes</option>
+				<option value="audi">Audi</option>
+				</select>
+				<br>
+				</span>
+
+				</span>
+
+				</span>
+
+				</div> -->
+			</div>
+			</br>
+
+		</div>
+		<div class="iterationCtrls formDiv" ng-if="user[docParam].length>0" >
+			<span class="iterationCtrl" ng-click="remove(user[docParam],docParam,$index)"> X Delete </span>
+			<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)"> Move Up </span>
+			<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)"> Move Down </span>
+	
+		</div>
+
 	</div>
+	<div ng-show="$last" ng-if="user[docParam].length>0 && user[docParam] != 'personalInfo'" class="formDiv">
+		<button type="button" class="btn btn-default" ng-click="addRecordJobSeeker(docParam,$index)">
+			+ Add a Record
+		</button>
+	</div>
+</div>
 
+</div>
 
+<div ng-repeat="(key,val) in user['files']" class="formDiv" >
+	<span ng-show="docParam == 'files' "> <span class="param_label col-md-2" > {{key}} </span>
+		<div style="height:200px;" ng-if="key =='paramValue'">
+			<img ng-src="{{val}}" style="width:200px;">
+		</div>
+		<div flow-init="flowOp(key)"
+		flow-files-submitted="$flow.upload()"
+		flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+		class="" >
+			<br/>
 
+			<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
 
+				<p class="dragNdrop">
+					Drag & Drop JPG, GIF or PNG Files Here!
+				</p>
 
+				<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
 
+					<span class="thumbnail_title">{{file.name}}</span>
+					<div class="thumbnail" ng-show="$flow.files.length">
+						<img flow-img="file" />
+						<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+							<div class="progress-bar" role="progressbar"
+							aria-valuenow="{{file.progress() * 100}}"
+							aria-valuemin="0"
+							aria-valuemax="100"
+							ng-style="{width: (file.progress() * 100) + '%'}">
+								<span class="sr-only">{{file.progress()}}% Complete</span>
+							</div>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()"> <i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i> </a>
+						</div>
+					</div>
 
+				</div>
 
+				<div class="clear"></div>
+			</div>
+		</div> </span>
+</div>
 
+</br>
 
+<div class="col-md-5 col-md-offset-3" ng-if="nextDoc(docParam)">
 
+	<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info"> Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span> </a>
 
+</div>
 
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 
+	<a href="/home#/home" class="btn btn-block btn-info"> Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span> </a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 <!-- <div class="errors alert alert-danger" ng-if="errors">
-	<ul>	
-		<li ng-repeat="(t,s) in errors">{{s}}</li>	
-	</ul>
-</div> 
+<ul>
+<li ng-repeat="(t,s) in errors">{{s}}</li>
+</ul>
+</div>
 {{errors}}
 <div class="">
-	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
-		<span ng-hide="docParam == 'education'">
-			<span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
-				{{key}}
-			</span>
-			<span class="param_input col-md-10">					
-				<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
-			</span>
-		</span>
-		
-						<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">				      
-						        <span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
-									{{key}}
-									
-								</span>
-						        <span  class="param_input col-md-10">					
-									<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
-								</span>					     
-								<span ng-show="$last">
-								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>				
-								</span>
-						</span>
-		
-						<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
-						
-							<span ng-repeat="(m,n) in val" class="formDiv">
-										<span class="param_label col-md-2">
-											{{m}}
-										</span>
-										<span class="param_input col-md-10">
-											<input type='text' class="form-control" name=="user[docParam][key][m]" ng-model="user[docParam][key][m]">
-										</span>
-							</span>
-								<div class="iterationCtrls">
-									<span class="iterationCtrl" ng-click="remove(user[docParam],$index)">
-										X Delete
-									</span>
-									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
-										Move Up
-									</span>
-									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
-										Move Down
-									</span>
-								</div>
-								<span ng-show="$last">
-								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
-								</span>
-						</span>	
-		
-		
-	</div>
-	<div ng-repeat="(key,val) in user['files']" class="formDiv">
-		<span ng-show="docParam == 'files' ">
-					<span class="param_label col-md-2" >		
-						{{key}}
-					</span>
-						
-					<div style="height:200px;">
-						<img ng-src="{{val}}" style="width:200px;">	
-					</div>
-					<div flow-init="flowOp(key)"
-					     flow-files-submitted="$flow.upload()"
-					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-					     class="" >					     
- 					 <br/>
-  					
-					    	
- 					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-					
-					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-					
-					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
-					    	
-					      <span class="thumbnail_title">{{file.name}}</span>
-					      <div class="thumbnail" ng-show="$flow.files.length">
-					        <img flow-img="file" />
-					      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-					        <div class="progress-bar" role="progressbar"
-					             aria-valuenow="{{file.progress() * 100}}"
-					             aria-valuemin="0"
-					             aria-valuemax="100"
-					             ng-style="{width: (file.progress() * 100) + '%'}">
-					          <span class="sr-only">{{file.progress()}}% Complete</span>
-					        </div>
-					      </div>
-					      <div class="btn-group">
-					        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-					         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-					        </a>
-					      </div>
-					      </div>
-			
-					    </div>
-					    
-					    <div class="clear"></div>
-					  </div>
-				</div>
-		</span>
-	</div>
+<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
+<span ng-hide="docParam == 'education'">
+<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+{{key}}
+</span>
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
+</span>
+</span>
+
+<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">
+<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+{{key}}
+
+</span>
+<span  class="param_input col-md-10">
+<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
+</span>
+<span ng-show="$last">
+<button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
+</span>
+</span>
+
+<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
+
+<span ng-repeat="(m,n) in val" class="formDiv">
+<span class="param_label col-md-2">
+{{m}}
+</span>
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name=="user[docParam][key][m]" ng-model="user[docParam][key][m]">
+</span>
+</span>
+<div class="iterationCtrls">
+<span class="iterationCtrl" ng-click="remove(user[docParam],$index)">
+X Delete
+</span>
+<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
+Move Up
+</span>
+<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
+Move Down
+</span>
+</div>
+<span ng-show="$last">
+<button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
+</span>
+</span>
+
+</div>
+<div ng-repeat="(key,val) in user['files']" class="formDiv">
+<span ng-show="docParam == 'files' ">
+<span class="param_label col-md-2" >
+{{key}}
+</span>
+
+<div style="height:200px;">
+<img ng-src="{{val}}" style="width:200px;">
+</div>
+<div flow-init="flowOp(key)"
+flow-files-submitted="$flow.upload()"
+flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+class="" >
+<br/>
+
+<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+
+<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+
+<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+
+<span class="thumbnail_title">{{file.name}}</span>
+<div class="thumbnail" ng-show="$flow.files.length">
+<img flow-img="file" />
+<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+<div class="progress-bar" role="progressbar"
+aria-valuenow="{{file.progress() * 100}}"
+aria-valuemin="0"
+aria-valuemax="100"
+ng-style="{width: (file.progress() * 100) + '%'}">
+<span class="sr-only">{{file.progress()}}% Complete</span>
+</div>
+</div>
+<div class="btn-group">
+<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
+<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+</a>
+</div>
 </div>
 
-	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
-		
-	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
-	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
-	    
-	</div>
-	
-	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
-	
-	    <a href="/home#/home" class="btn btn-block btn-info">
-	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
-
-	    
-	</div> 
-	
-	
-	<div class="errors alert alert-danger" ng-if="errors">
-	<ul>	
-		<li ng-repeat="(t,s) in errors">{{s}}</li>	
-	</ul>
 </div>
 
+<div class="clear"></div>
+</div>
+</div>
+</span>
+</div>
+</div>
 
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 
+<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
+Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
 
+</div>
 
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 
+<a href="/home#/home" class="btn btn-block btn-info">
+Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
 
+</div>
 
+<div class="errors alert alert-danger" ng-if="errors">
+<ul>
+<li ng-repeat="(t,s) in errors">{{s}}</li>
+</ul>
+</div>
 
-		<div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" >
-			
-				<span ng-if="docParam == 'personalInfo'">
-					<span class="param_label col-md-2">		
-						{{paramKey}}
-					</span>
-					<span class="param_input col-md-10">					
-						<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
-					</span>
-				</span>
-				
-				<span ng-if="docParam != 'personalInfo'">
-					<span class="param_label col-md-2">		
-						{{paramKey}}
-					</span>
-					
-					
-					<span class="param_input col-md-10">					
-						<input type='text' class="form-control" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
-					</span>
-				</span>
-				
+<div ng-repeat="(paramKey,paramValues) in user[docParam]" class="formDiv" >
 
-				
-		</div>
-		<div ng-hide="docParam == 'personalInfo'">
-			 <button type="button" class="btn btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
-		</div>
+<span ng-if="docParam == 'personalInfo'">
+<span class="param_label col-md-2">
+{{paramKey}}
+</span>
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
+</span>
+</span>
 
+<span ng-if="docParam != 'personalInfo'">
+<span class="param_label col-md-2">
+{{paramKey}}
+</span>
 
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
+</span>
+</span>
 
+</div>
+<div ng-hide="docParam == 'personalInfo'">
+<button type="button" class="btn btn-default" ng-click="addRecordJobSeeker(docParam,$index)">+ Add a Record</button>
+</div>
 
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
 
-		<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
-			
-		    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
-		   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-		    </a>
-		    
-		</div>
-		
-		<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
-		
-		    <a href="/home#/home" class="btn btn-block btn-info">
-		   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-		    </a>
-	
-		    
-		</div>
+<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
+Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
 
+</div>
 
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 
+<a href="/home#/home" class="btn btn-block btn-info">
+Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 <!-- <div class="errors alert alert-danger" ng-if="errors">
-	<ul>	
-		<li ng-repeat="(t,s) in errors">{{s}}</li>	
-	</ul>
-</div> 
+<ul>
+<li ng-repeat="(t,s) in errors">{{s}}</li>
+</ul>
+</div>
 {{errors}}
 <div class="">
-	<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
-		<span ng-hide="docParam == 'education'">
-			<span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
-				{{key}}
-			</span>
-			<span class="param_input col-md-10">					
-				<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
-			</span>
-		</span>
-		
-						<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">				      
-						        <span class="param_label col-md-2" ng-hide="docParam == 'files' ">		
-									{{key}}
-									
-								</span>
-						        <span  class="param_input col-md-10">					
-									<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
-								</span>					     
-								<span ng-show="$last">
-								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>				
-								</span>
-						</span>
-		
-						<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
-						
-							<span ng-repeat="(m,n) in val" class="formDiv">
-										<span class="param_label col-md-2">
-											{{m}}
-										</span>
-										<span class="param_input col-md-10">
-											<input type='text' class="form-control" name=="user[docParam][key][m]" ng-model="user[docParam][key][m]">
-										</span>
-							</span>
-								<div class="iterationCtrls">
-									<span class="iterationCtrl" ng-click="remove(user[docParam],$index)">
-										X Delete
-									</span>
-									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
-										Move Up
-									</span>
-									<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
-										Move Down
-									</span>
-								</div>
-								<span ng-show="$last">
-								  <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
-								</span>
-						</span>	
-		
-		
-	</div>
-	<div ng-repeat="(key,val) in user['files']" class="formDiv">
-		<span ng-show="docParam == 'files' ">
-					<span class="param_label col-md-2" >		
-						{{key}}
-					</span>
-						
-					<div style="height:200px;">
-						<img ng-src="{{val}}" style="width:200px;">	
-					</div>
-					<div flow-init="flowOp(key)"
-					     flow-files-submitted="$flow.upload()"
-					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-					     class="" >					     
- 					 <br/>
-  					
-					    	
- 					 <div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-					
-					    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-					
-					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
-					    	
-					      <span class="thumbnail_title">{{file.name}}</span>
-					      <div class="thumbnail" ng-show="$flow.files.length">
-					        <img flow-img="file" />
-					      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-					        <div class="progress-bar" role="progressbar"
-					             aria-valuenow="{{file.progress() * 100}}"
-					             aria-valuemin="0"
-					             aria-valuemax="100"
-					             ng-style="{width: (file.progress() * 100) + '%'}">
-					          <span class="sr-only">{{file.progress()}}% Complete</span>
-					        </div>
-					      </div>
-					      <div class="btn-group">
-					        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-					         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-					        </a>
-					      </div>
-					      </div>
-			
-					    </div>
-					    
-					    <div class="clear"></div>
-					  </div>
-				</div>
-		</span>
-	</div>
+<div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
+<span ng-hide="docParam == 'education'">
+<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+{{key}}
+</span>
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
+</span>
+</span>
+
+<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">
+<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+{{key}}
+
+</span>
+<span  class="param_input col-md-10">
+<input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
+</span>
+<span ng-show="$last">
+<button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
+</span>
+</span>
+
+<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
+
+<span ng-repeat="(m,n) in val" class="formDiv">
+<span class="param_label col-md-2">
+{{m}}
+</span>
+<span class="param_input col-md-10">
+<input type='text' class="form-control" name=="user[docParam][key][m]" ng-model="user[docParam][key][m]">
+</span>
+</span>
+<div class="iterationCtrls">
+<span class="iterationCtrl" ng-click="remove(user[docParam],$index)">
+X Delete
+</span>
+<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)">
+Move Up
+</span>
+<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)">
+Move Down
+</span>
+</div>
+<span ng-show="$last">
+<button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
+</span>
+</span>
+
+</div>
+<div ng-repeat="(key,val) in user['files']" class="formDiv">
+<span ng-show="docParam == 'files' ">
+<span class="param_label col-md-2" >
+{{key}}
+</span>
+
+<div style="height:200px;">
+<img ng-src="{{val}}" style="width:200px;">
+</div>
+<div flow-init="flowOp(key)"
+flow-files-submitted="$flow.upload()"
+flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+class="" >
+<br/>
+
+<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+
+<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+
+<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+
+<span class="thumbnail_title">{{file.name}}</span>
+<div class="thumbnail" ng-show="$flow.files.length">
+<img flow-img="file" />
+<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+<div class="progress-bar" role="progressbar"
+aria-valuenow="{{file.progress() * 100}}"
+aria-valuemin="0"
+aria-valuemax="100"
+ng-style="{width: (file.progress() * 100) + '%'}">
+<span class="sr-only">{{file.progress()}}% Complete</span>
+</div>
+</div>
+<div class="btn-group">
+<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
+<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+</a>
+</div>
 </div>
 
-	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
-		
-	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
-	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
-	    
-	</div>
-	
-	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
-	
-	    <a href="/home#/home" class="btn btn-block btn-info">
-	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
-	    </a>
+</div>
 
-	    
-	</div> -->
-	
-	
+<div class="clear"></div>
+</div>
+</div>
+</span>
+</div>
+</div>
+
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)">
+
+<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
+Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
+
+</div>
+
+<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
+
+<a href="/home#/home" class="btn btn-block btn-info">
+Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+</a>
+
+</div> -->
+
