@@ -8,9 +8,9 @@
 	<link rel="icon" href="../img/acadeMe.ico">
 	<title>AcadeME</title>
 		<!-- jquery -->
-		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+		<script src="lib/angular.min.js"></script>
 			<script src="../lib/ui-router.js"></script>
 		<script src="lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
@@ -22,8 +22,8 @@
 		<!-- custom style css -->
 		<link href="css/myStyle.css" rel="stylesheet">
 		<!-- Fonts -->
-		<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+		<!-- <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'> -->
 		
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

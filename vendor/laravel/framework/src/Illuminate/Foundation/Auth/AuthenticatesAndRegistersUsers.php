@@ -3,20 +3,20 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-use Auth;
+
 trait AuthenticatesAndRegistersUsers {
 
 	/**
 	 * The Guard implementation.
 	 *
-	 * @var Guard
+	 * @var \Illuminate\Contracts\Auth\Guard
 	 */
 	protected $auth;
 
 	/**
 	 * The registrar implementation.
 	 *
-	 * @var Registrar
+	 * @var \Illuminate\Contracts\Auth\Registrar
 	 */
 	protected $registrar;
 
@@ -38,20 +38,18 @@ trait AuthenticatesAndRegistersUsers {
 	 */
 	public function postRegister(Request $request)
 	{
-		
-		if(!Auth::user()) {
-			$validator = $this->registrar->validator($request->all());
-	
-				
-			if ($validator->fails())
-			{
-				return $validator->errors();
-			}
-		$this->auth->login($this->registrar->create($request->all()));
+		$validator = $this->registrar->validator($request->all());
+
+		if ($validator->fails())
+		{
+			$this->throwValidationException(
+				$request, $validator
+			);
 		}
+
 		$this->auth->login($this->registrar->create($request->all()));
 
-		 redirect($request);
+		return redirect($this->redirectPath());
 	}
 
 	/**
@@ -63,14 +61,7 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		return view('auth.login');
 	}
-	
-	public function getLoginEmployer()
-	{
-		return view('auth.login_employer');
-	}
-	
-	
-	
+
 	/**
 	 * Handle a login request to the application.
 	 *
@@ -116,7 +107,7 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		$this->auth->logout();
 
-		return redirect('/');
+		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
 	}
 
 	/**
@@ -131,7 +122,7 @@ trait AuthenticatesAndRegistersUsers {
 			return $this->redirectPath;
 		}
 
-		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
 	}
 
 	/**

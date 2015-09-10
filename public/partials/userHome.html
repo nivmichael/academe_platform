@@ -6,16 +6,21 @@
 </script>
 
 
-<!-- modals of footer sections / files -->
-<div class="col-md-12 center-modal" ng-repeat="footerNavli in footerNavlis">
-	<div class="modal fade bs-example-modal-lg_{{footerNavli.tag}}" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+
+<!-- <div class="col-md-12 center-modal" ng-repeat="footerNavli in footerNavlis"> -->
+	
+	<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-lg">	
+			  
+			  
 			    <div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >	
 			    	<div flow-init="flowOp(m)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
 					     class="modal-content" >					     
  						 <br/>
+						 
 						 <div class="thumbnail" >
 							<span class="thumbnail_title">{{q}}</span>
 								<img  ng-src="{{n.paramValue}}">
@@ -57,15 +62,55 @@
 						    
 						    <div class="clear"></div>
 					  </div>
+					  
+					  
 					</div>
 				</div>
 			</div>
 	</div>
+<!-- </div> -->
+
+
+
+<div class="modal fade bs-example-modal-lg_Resumes  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg ">	
+			  	<div class="gallery-box">
+			  		<div class="modal-content">
+			  			Resumes
+			  		</div>	
+			  	</div>
+			  </div>
 </div>
 
+<div class="modal fade bs-example-modal-lg_Certifications  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg ">	
+			  	<div class="gallery-box">
+			  		<div class="modal-content">
+			  			Certifications
+			  		</div>	
+			  	</div>
+			  </div>
+</div>
 
+<div class="modal fade bs-example-modal-lg_References  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg ">	
+			  	<div class="gallery-box">
+			  		<div class="modal-content">
+			  			References
+			  		</div>	
+			  	</div>
+			  </div>
+</div>
 
-
+<div class="modal fade bs-example-modal-lg_Cover  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg ">	
+			  	<div class="gallery-box">
+			  		<div class="modal-content">
+			  			Cover Letter
+			  		</div>	
+			  	</div>
+			  </div>
+</div>
 <!-- sideBar with the status, picture, and name -->
 
 <nav class="col-md-2 sideNav">
@@ -91,14 +136,19 @@
 	</div>
 	
 	<div class="btn btn-primary col-md-12">
-		Find A Job
+		
+		find a job
+		
+		<!-- <li ui-sref="home.findAJob">Find A Job</li>
+	 -->
 	</div>
+	
 </nav>
 
 
 
   <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active' is-open="status.isOpen[$index]" ng-hide="key == 'files'">
+    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active accordionPanel col-md-10' is-open="$first" ng-hide="key == 'files'">
    		 <accordion-heading is-open="status.isOpen[$index]">
    		  <div ng-class="{'openAccordion': status.isOpen[$index], 'closeAccordion': !status.isOpen[$index]}" >
 	           {{ docParamName }} <i class="pull-right glyphicon"></i>
@@ -346,7 +396,7 @@
 								<div ng-repeat="(k,v) in paramValues track by $index">
 						 	     
 								 	     <div ng-hide="isArray(docParamValues)">
-								 	     	<span class="param_label col-md-2" ng-if="k == 'paramName'">
+								 	     	<span class="param_label col-md-2" ng-if="k == 'slug'">
 								 	     	   {{v}}:
 								 	     	</span>
 							 	  
@@ -356,7 +406,7 @@
 							 	     	</div>	
 							 	     		
 							 	     	<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)">
-									 	     	<span class="param_label col-md-2" ng-if="r == 'paramName'">
+									 	     	<span class="param_label col-md-2" ng-if="r == 'slug'">
 									 	     	   {{s}}:
 									 	     	</span>
 									 	     	
@@ -399,14 +449,11 @@
     
    </accordion>
 
-<footer class="footerNavUl">
+<footer class="col-md-10">
 	
-	<span ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi" data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</span>
+	<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</div>
    
 </footer>
-
-
-
 
 
 

@@ -208,30 +208,22 @@ post.education
 }
 
 .openAccordion {
-
+	border-radius:0px;
 }
 .closeAccordion {
-
-}
-.userHomeFooterNavUl {
-	display: inline-block;
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
+	border-radius:0px;
 }
 .userHomeFooterNavLi {
-	margin-right: 1px;
-	border-radius: 2px !important;
+	margin-top:5px;
+    width: 20%;
+    display: inline-block;
+		text-align: center;
 	background-color: #6d6f70;
 	color: white;
-	border-radius: 1px;
-	font-size: 20px;
-	padding: 5px 50px;;
-	text-align: center;
-	display: inline;
-	text-align: center;
 	cursor: pointer;
+	border-right:1px solid white;
 }
+
 .modal-content {
 	width: 90%;
 }
@@ -298,9 +290,6 @@ post.education
 
 .thumbnail {
 
-	height: 200;
-	max-height: 200px;
-	min-height: 200px;
 }
 .thumbnail > img {
 
@@ -346,6 +335,10 @@ post.education
 	border: 1px dashed rgb(78, 117, 173);
 	height: auto;
 	width: 100%;
+}
+.gallery-box{
+	width: 1200px;
+	height:100%;
 }
 .modal-content {
 	padding: 20px;
@@ -517,4 +510,18 @@ post.education
 }
 .hidden {
 	display: none;
+}
+.panel,.panel-default {
+	box-shadow:none;
+	
+}
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+    border:0px solid transparent;
+}
+.panel-default > .panel-heading + .panel-collapse > .panel-body,.panel,.panel-heading {
+   
+    border-radius:0px!important;
+    border-top-right-radius: 0px!important;
+    border-top-left-radius: 0px!important;
+    
 }

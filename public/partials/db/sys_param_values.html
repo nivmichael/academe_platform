@@ -15,7 +15,12 @@
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
-
+		<td>Action</td>
+		<td ng-repeat="param in columns track by $index">
+			
+				<b>{{param}}</b>
+			
+		</td>
 		<tr ng-repeat="param in sysParamValues">
 	    	
 	    	<td style="white-space: nowrap">

@@ -1,0 +1,21 @@
+	  
+    <ul class="nav navbar-nav">
+		<li><a ui-sref="param_manager.type_user">type_user</a></li>
+		<li><a ui-sref="param_manager.doc_type">doc_type</a></li>
+		<li><a ui-sref="param_manager.doc_param">doc_param</a></li>
+		<li><a ui-sref="param_manager.param">param</a></li>
+		<li><a ui-sref="param_manager.param_type">param_type</a></li>
+		<li><a ui-sref="param_manager.param_value">param_value</a></li>
+		<li><a ui-sref="param_manager.sys_param_values">sys_param_values</a></li>
+	</ul>
+	  
+  
+  <div class="container">
+	  <div ui-view="param_manager.type_user" ></div>
+	  <div ui-view="param_manager.doc_type" ></div>
+	  <div ui-view="param_manager.doc_param" ></div>
+	  <div ui-view="param_manager.param" ></div>
+	  <div ui-view="param_manager.param_type" ></div>
+	  <div ui-view="param_manager.param_value"></div>
+	  <div ui-view="param_manager.sys_param_values" ></div>
+  </div>

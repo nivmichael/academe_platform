@@ -40,7 +40,14 @@
 	</nav>
 <div class="container-fluid" >
 	
-
+ <pre>
+      <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
+      $state = {{$state.current.name}}
+      $stateParams = {{$stateParams}}
+      $state full url = {{ $state.$current.url.source }}
+      <!-- $state.$current is not a public api, we are using it to
+           display the full url for learning purposes-->
+    </pre>
 <div ui-view="home">
  	 		{{user.personalInfo.first_name}} please wait...						
 </div>

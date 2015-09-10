@@ -176,77 +176,99 @@
    }]
   },
   {
-  "name": "type_user",
+  "name": "findAJob",
+   "url": "/home/findAJob",
+   "abstract": false,
+   "views": [{
+     "name": "home.findAJob",
+      "controller": "UserHomeController",
+     "templateUrl": "../../partials/findAJob.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "param_manager",
+   "url": "/param_manager",
+   "abstract": false,
+   "views": [{
+     "name": "param_manager",
+     "controller": "TController",
+     "templateUrl": "../../partials/db/param_manager.html",
+     "cache": false
+   }]
+  },
+  {
+  "name": "param_manager.type_user",
    "url": "/type_user",
    "abstract": false,
    "views": [{
-     "name": "type_user",
+     "name": "param_manager.type_user",
      "controller": "TController",
      "templateUrl": "../../partials/db/type_user.html",
      "cache": false
    }]
   },
   {
-  "name": "doc_type",
+  "name": "param_manager.doc_type",
    "url": "/doc_type",
    "abstract": false,
    "views": [{
-     "name": "doc_type",
+     "name": "param_manager.doc_type",
      "controller": "TController",
      "templateUrl": "../../partials/db/doc_type.html",
      "cache": false
    }]
   },
   {
-  "name": "doc_param",
+  "name": "param_manager.doc_param",
    "url": "/doc_param",
    "abstract": false,
    "views": [{
-     "name": "doc_param",
+     "name": "param_manager.doc_param",
      "controller": "TController",
      "templateUrl": "../../partials/db/doc_param.html",
      "cache": false
    }]
   },
   {
-  "name": "param",
+  "name": "param_manager.param",
    "url": "/param",
    "abstract": false,
    "views": [{
-     "name": "param",
+     "name": "param_manager.param",
      "controller": "TController",
      "templateUrl": "../../partials/db/param.html",
      "cache": false
    }]
   },
   {
-  "name": "param_type",
+  "name": "param_manager.param_type",
    "url": "/param_type",
    "abstract": false,
    "views": [{
-     "name": "param_type",
+     "name": "param_manager.param_type",
      "controller": "TController",
      "templateUrl": "../../partials/db/param_type.html",
      "cache": false
    }]
   },
   {
-  "name": "param_value",
+  "name": "param_manager.param_value",
    "url": "/param_value",
    "abstract": false,
    "views": [{
-     "name": "param_value",
+     "name": "param_manager.param_value",
      "controller": "TController",
      "templateUrl": "../../partials/db/param_value.html",
      "cache": false
    }]
   },
   {
-  "name": "sys_param_values",
+  "name": "param_manager.sys_param_values",
    "url": "/sys_param_values",
    "abstract": false,
    "views": [{
-     "name": "sys_param_values",
+     "name": "param_manager.sys_param_values",
      "controller": "TController",
      "templateUrl": "../../partials/db/sys_param_values.html",
      "cache": false

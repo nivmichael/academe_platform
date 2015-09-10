@@ -35,8 +35,7 @@ angular.module('acadb.controllers', [])
    $scope.paramValues = ParamValueData.query();
    $scope.sysParamValues = SysParamValuesData.query();
 	
-  // console.log($scope.sysParamValues)	;
-   
+    
 
    
    $scope.select_type = {
@@ -52,8 +51,10 @@ angular.module('acadb.controllers', [])
    };
    
 //changing variables according path.   
-    if($location.path() == '/type_user') 
+    if($location.path() == '/param_manager/type_user') 
     {
+    	 console.log($location.path())	;
+
    		$scope.varName  = 'User';	
    		$scope.pathTo   = '/users';	
    		$scope.objName  = $scope.users;
@@ -61,7 +62,7 @@ angular.module('acadb.controllers', [])
    		$scope.typeAhead = ['state', 'country'];
    		$scope.userTypes = ['tech-admin','user','content-admin'];
     	
-    }else if($location.path() == '/param')
+    }else if($location.path() == '/param_manager/param')
     {
    		$scope.varName = 'Param';
    		$scope.pathTo  = '/params';
@@ -69,7 +70,7 @@ angular.module('acadb.controllers', [])
    		$scope.columns = 'param';
    		$scope.selects = ['type_id', 'doc_param_id'];
     }
-    else if($location.path() == '/doc_param')
+    else if($location.path() == '/param_manager/doc_param')
     {
    		$scope.varName = 'DocParam';
    		$scope.pathTo  = '/docParam';
@@ -77,21 +78,21 @@ angular.module('acadb.controllers', [])
    		$scope.columns = 'docParam'; 
    		$scope.selects = ['doc_type_id'];   	
     }
-    else if($location.path() == '/doc_type')
+    else if($location.path() == '/param_manager/doc_type')
     {
    		$scope.varName = 'DocType';
    		$scope.pathTo  = '/docType';
    		$scope.objName = $scope.docTypes;
    		$scope.columns = 'docType';
     	
-    }else if($location.path() == '/param_type')
+    }else if($location.path() == '/param_manager/param_type')
     {
    		$scope.varName = 'ParamType';
    		$scope.pathTo  = '/paramType';
    		$scope.objName = $scope.paramTypes;
    		$scope.columns = 'paramType';
     	
-    }else if($location.path() == '/param_value')
+    }else if($location.path() == '/param_manager/param_value')
     {
    		$scope.varName = 'ParamValue';
    		$scope.pathTo  = '/paramValue';
@@ -100,7 +101,7 @@ angular.module('acadb.controllers', [])
    		
    		$scope.paramSelect = $scope.params;
     	
-    }else if($location.path() == '/sys_param_values')
+    }else if($location.path() == '/param_manager/sys_param_values')
     {
    		$scope.varName = 'SysParamValues';
    		$scope.pathTo  = '/sysParamValues';
@@ -237,10 +238,12 @@ $.getJSON('/getAllJobs', function(data){
        $scope.allJobs = data;
     });
 });
+ 
  var state = $location.path(); 
  state = state.split('/');
  state = state[1];
  $state.go(state);
+ 
  $scope.flowOp = function(key){
 		//console.log(key);
 		//console.log('key');
@@ -512,8 +515,8 @@ $scope.educationStatuses = [
 
 }])
 
-.controller("employerHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
- $state.go('employer.edit');
+.controller("JobSearchController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
+// $state.go('home.findAJob');
  
 }])
 

@@ -2,7 +2,15 @@
  <div>
 
 	<table class="table table-bordered table-hover table-condensed">
-
+		
+			<td>Action</td>
+		<td ng-repeat="param in columns track by $index">
+			
+				<b>{{param}}</b>
+			
+		</td>
+		
+		
 		<tr ng-repeat="user in users">
 	    	
 	    	<td style="white-space: nowrap">

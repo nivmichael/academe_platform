@@ -30,6 +30,15 @@ class TypeUserController extends Controller {
 		->get();		
 		return Response::json($users);
 	}
+	public function columnIndex()
+	{
+		
+		$columns = Schema::getColumnListing('type_user');
+		$columns = (object) $columns;
+// 		
+		// return Response::json(array($columns,$params));
+		return Response::json($columns);
+	}
 	
 	public function columnIndexJobSeeker()
 	{	
@@ -432,6 +441,7 @@ class TypeUserController extends Controller {
 		$userPersonalInfo = User::find($id);
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 										   param.name AS paramName, 
+										   param.slug AS slug,
 										   param_type.name AS inputType,
 										   doc_param.name AS docParamName 
 										   FROM	param
@@ -462,7 +472,7 @@ class TypeUserController extends Controller {
 			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
 			$inputType = $v->inputType;
-		
+			$slug = $v->slug;
 			if($v->value_ref == null) {
 				$value = $v->value_short;
 			}else{
@@ -478,6 +488,7 @@ class TypeUserController extends Controller {
 					
 			
 				$user[$docParamName][$iteration][$paramName]['paramName'] = $paramName;		
+				$user[$docParamName][$iteration][$paramName]['slug'] = $slug;
 				$user[$docParamName][$iteration][$paramName]['paramValue'] = $value;
 				$user[$docParamName][$iteration][$paramName]['inputType'] = $inputType;
 							
@@ -492,6 +503,7 @@ class TypeUserController extends Controller {
 								
 							
 				$user[$docParamName][$paramName]['paramName'] = $paramName;		
+				$user[$docParamName][$paramName]['slug'] = $slug;
 				$user[$docParamName][$paramName]['paramValue'] = $value;
 				$user[$docParamName][$paramName]['inputType'] = $inputType;
 							
