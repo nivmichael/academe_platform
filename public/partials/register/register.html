@@ -6,12 +6,12 @@
 </script>
 
 	
+	<div class="col-lg-2">
+		<div ng-repeat="(step,b) in user track by $index" id="status-buttons" class="docParamLi" ng-hide="absUrl == 'register_employer' && step == 'personalInfo'">
+			<li ui-sref-active="active" ui-sref=".{{step}}">
+				<span class="▶">▶</span>{{step}} 
+			</li>
 	
-	<div ng-repeat="(step,b) in user track by $index" id="status-buttons" class="text-center docParamLi" ng-hide="absUrl == 'register_employer' && step == 'personalInfo'">
-		<li ui-sref-active="active" ui-sref=".{{step}}">
-			{{step}} 
-		</li>
-
+		</div>
 	</div>
-	
-	<div ui-view=""></div>
+	<div ui-view="" class="col-lg-8"></div>

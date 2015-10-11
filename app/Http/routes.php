@@ -34,7 +34,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
-
+Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
 // Retrieve Authed User id
 Route::get('/getAuthId', function(){
 	return Auth::id();

@@ -22,7 +22,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
     	        <style>
-            html, body {
+            /*html, body {
                 height: 100%;
             }
 
@@ -36,7 +36,7 @@
     
                 vertical-align: middle;
                  
-            }
+            }*/
 
             .content {
             	
@@ -44,27 +44,28 @@
                 display: inline-block;
             }
 
-            .title {
+            /*.title {
             	font-family: 'Lato';
                 font-size: 96px;
-            }
+            }*/
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Admininstrator</div>
+                <!-- <div class="title">Admininstrator</div>
                 	
 
 <pre>
 {{$state.current.name}}
-</pre>
+</pre> -->
                 <div ui-view=""></div>
             </div>
         </div>
     </body>
     <script src="lib/admin_app.js"></script>	
 	<script src="lib/controllers.js"></script>
+	<script src="lib/filters.js"></script>
 	<script src="lib/services.js"></script>
 	<script src="lib/directives.js"></script>
 	<script src="lib/angular-route.js"></script>

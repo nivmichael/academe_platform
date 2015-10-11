@@ -1,4 +1,4 @@
-<nav class="col-lg-2">
+<nav class="col-lg-2 sideNav grey_background">
 	<div class="">
 		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>	
 	</div>
@@ -75,8 +75,9 @@
      		<span data-toggle="modal" data-target=".job">
 				<div ui-sref="jobseeker.findajob.general" ng-click="getPost(job.postInfo.id)">
 					<div class="postDivChild">
-						<div ng-if="job.files.company_logo" class="postImage">
-							<img ng-src="{{job.files.company_logo.paramValue}}" class="col-md-3">
+						<div class="postImage">
+							
+							<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
 						</div>
 						<span class=""> 
 							<h4>{{job.postInfo.title}}</h4>

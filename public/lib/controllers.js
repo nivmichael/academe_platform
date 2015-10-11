@@ -410,7 +410,7 @@ $.getJSON('/getAllJobs', function(data){
 	  
   $scope.addWhenEdit =function(docParam,$index) {	
   	console.log($scope.user[docParam]);
-	$http.get('/columns/registerJobSeeker')
+	$http.get('/columns/register_jobseeker')
 	  	.success(function(data, status, headers, config) {
 	  	$scope.inserted = data[docParam];	   
 	  	if(!(angular.isArray($scope.user[docParam]))){
@@ -426,7 +426,7 @@ $.getJSON('/getAllJobs', function(data){
   };    
 	   $scope.addRecordEmployer =function(docParam,$index) {	
 		
-		$http.get('/columns/registerEmployer')
+		$http.get('/columns/register_employer')
 		  	.success(function(data, status, headers, config) {
 		  		
 		  	$scope.inserted = data[docParam];	  
@@ -1099,7 +1099,7 @@ $scope.getColumns = function(){
 
 })
 .controller("NewController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
-	
+	console.log('NEW');
 	$scope.getColumns = function(){
   
 	  $http.get('/columns/' + 'registerJobSeeker').

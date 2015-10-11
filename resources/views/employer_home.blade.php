@@ -62,6 +62,7 @@
     <script src="lib/employer_app.js"></script>	
 	<script src="lib/controllers.js"></script>
 	<script src="lib/services.js"></script>
+	<script src="lib/filters.js"></script>
 	<script src="lib/directives.js"></script>
 	<script src="lib/angular-route.js"></script>
 	<script src="lib/angular-resource.js"></script>

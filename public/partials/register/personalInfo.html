@@ -16,7 +16,7 @@
 
 
 
-<div>
+<div class="col-lg-8">
 <div ng-if="docParam == 'personalInfo'">
 	
 	<!-- <input type="text" class="" name="id" ng-value="" ng-model="user.personalInfo.id">
@@ -26,198 +26,198 @@
 
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> First Name* </span>
+		<div class="param_label col-md-2"> First Name* </div>
 
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="first_name" placeholder="First Name" ng-model="user.personalInfo.first_name" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Last Name* </span>
+		<div class="param_label col-md-2"> Last Name* </div>
 
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="last_name" placeholder="Last Name" ng-model="user.personalInfo.last_name" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Phone/Cell* </span>
+		<div class="param_label col-md-2"> Phone/Cell* </div>
 
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="mobile" placeholder="Phone/Cell" ng-model="user.personalInfo.mobile" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Email* </span>
+		<div class="param_label col-md-2"> Email* </div>
 
-		<span>
+		<div>
 			<input type='email' class="form-control param_input" name="email" placeholder="email" ng-model="user.personalInfo.email" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Password* </span>
+		<div class="param_label col-md-2"> Password* </div>
 
-		<span>
+		<div>
 			<input type='password' class="form-control param_input" name="password" placeholder="Password" ng-model="user.personalInfo.password" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Gender* </span>
-		<span>
+		<div class="param_label col-md-2"> Gender* </div>
+		<div>
 			<select class="form-control  param_input" name="gender" ng-model="user.personalInfo.gender">
 				<option value="" selected></option>
 				<option value="male" >Male</option>
 				<option value="female" >Female</option>
-			</select> </span>
+			</select> </div>
 	</div>
 	</br>
 	<!-- <div>
 
-	<span class="param_label col-md-2">
+	<div class="param_label col-md-2">
 	Birthdate*
-	</span>
+	</div>
 
-	<span>
+	<div>
 	<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
-	</span>
+	</div>
 
 	</div>
 	</br>	 -->
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Marital Status </span>
-		<span>
+		<div class="param_label col-md-2"> Marital Status </div>
+		<div>
 			<select class="form-control  param_input" name="martial_status" ng-model="user.personalInfo.martial_status">
 				<option value="" selected></option>
 				<option value="single" >Single</option>
 				<option value="married" >Married</option>
 				<option value="Divorced" >Divorced</option>
 				<option value="Widowed" >Widowed</option>
-			</select> </span>
+			</select> </div>
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Education Status </span>
-		<span>
+		<div class="param_label col-md-2"> Education Status </div>
+		<div>
 			<select class="form-control  param_input" name="education_status" ng-model="user.personalInfo.education_status">
 				<option value="" selected></option>
 				<option value="Student" >Student</option>
 				<option value="Graduate" >Graduate</option>
 				<option value="Intern" >Intern</option>
-			</select> </span>
+			</select> </div>
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Street Address 1 </span>
+		<div class="param_label col-md-2"> Street Address 1 </div>
 
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="street_1" placeholder="" ng-model="user.personalInfo.street_1" required>
-		</span>
+		</div>
 
 	</div>
 	</br>
 
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> country </span>
+		<div class="param_label col-md-2"> country </div>
 
-		<span>
+		<div>
 			<input type="text" ng-model="user.personalInfo.country" class="form-control param_input" typeahead="country for country in countries  | filter:$viewValue | limitTo:8" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> State* </span>
+		<div class="param_label col-md-2"> State* </div>
 
-		<span>
+		<div>
 			<input type="text" name="state" ng-model="user.personalInfo.state" placeholder="" class="form-control param_input" typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> city* </span>
+		<div class="param_label col-md-2"> city* </div>
 
-		<span>
+		<div>
 			<input type="text" name="city" class="form-control param_input" ng-model="asyncSelected" placeholder="" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Zip Code </span>
+		<div class="param_label col-md-2"> Zip Code </div>
 
-		<span>
+		<div>
 			<input type="text" name="zipcode" class="form-control param_input" ng-model="user.personalInfo.zipcode">
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Facebook </span>
+		<div class="param_label col-md-2"> Facebook </div>
 
-		<span>
+		<div>
 			<input type="text" class="form-control param_input" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> Twitter </span>
+		<div class="param_label col-md-2"> Twitter </div>
 
-		<span>
+		<div>
 			<input type="text" class="form-control param_input" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> LinkedIn </span>
+		<div class="param_label col-md-2"> LinkedIn </div>
 
-		<span>
+		<div>
 			<input type="text" class="form-control param_input" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span class="param_label col-md-2"> YouTube video </span>
+		<div class="param_label col-md-2"> YouTube video </div>
 
-		<span>
+		<div>
 			<input type="text" class="form-control param_input" >
-		</span>
+		</div>
 
 	</div>
 	</br>
 	<div class="formDiv">
 
-		<span style="float:left;">
+		<div style="float:left;">
 			<input type="checkbox" class="" ng-model="user.personalInfo.send_newsletters">
-			<span class="param_label"> I wish to receive newsletters with updates from time to time </span> </span>
+			<div class="param_label"> I wish to receive newsletters with updates from time to time </div> </div>
 
 	</div>
 	</br>
@@ -228,9 +228,9 @@
 
 	<div class="formDiv">
 
-		<span style="float:left;">
+		<div style="float:left;">
 			<input type="checkbox" class="" >
-			<span class="param_label"> I have read and approved the disclaimer </span> </span>
+			<div class="param_label"> I have read and approved the disclaimer </div> </div>
 
 	</div>
 
@@ -242,54 +242,54 @@
 
 <div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="formDiv" ng-hide="docParam == 'files'">
 
-	<!-- <span ng-if="docParam == 'personalInfo'">
-	<span class="param_label col-md-2">
+	<!-- <div ng-if="docParam == 'personalInfo'">
+	<div class="param_label col-md-2">
 	{{paramKey}}
-	</span>
-	<span class="param_input col-md-10">
+	</div>
+	<div class="param_input col-md-10">
 	<input type='text' class="form-control" name="" ng-model="user[docParam][paramKey]">
-	</span>
-	</span> -->
+	</div>
+	</div> -->
 	<div ng-if="!(user[docParam].length>0)">
 
-		<span ng-if="docParam != 'personalInfo'"> <span class="param_label col-md-2"> {{paramKey}} </span>
+		<div ng-if="docParam != 'personalInfo'"> <div class="param_label col-md-2"> {{paramKey}} </div>
 		
-		<span ng-switch="user[docParam][paramKey]['inputType']"> 
-			 <span ng-switch-when="text">
-				 <span class="param_input col-md-10">
+		<div ng-switch="user[docParam][paramKey]['inputType']"> 
+			 <div ng-switch-when="text">
+				 <div class="param_input col-md-10">
 						<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
-				 </span> 
-			 </span>
-			 <span ng-switch-when="select">
-			 	 <span  class="param_input col-md-10" >
+				 </div> 
+			 </div>
+			 <div ng-switch-when="select">
+			 	 <div  class="param_input col-md-10" >
 							<select type='select' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
 								<option value="volvo">Volvo</option>
 								<option value="saab">Saab</option>
 								<option value="mercedes">Mercedes</option>
 								<option value="audi">Audi</option>
 							</select> 
-				</span>
-			 </span>
-			 <span ng-switch-when="textarea">
-				 <span class="param_input col-md-10">
+				</div>
+			 </div>
+			 <div ng-switch-when="textarea">
+				 <div class="param_input col-md-10">
 						<textarea class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']"></textarea>
-				 </span> 
-			 </span>
+				 </div> 
+			 </div>
 			 
-			 <span ng-switch-when="checklist"> 
-				 <span  class="param_input col-md-10" > 
+			 <div ng-switch-when="checklist"> 
+				 <div  class="param_input col-md-10" > 
 				 	<label ng-repeat="check in checklist">
 						<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check">
 						<small>{{check}}</small> 
 					</label> 
-				</span>
-			 </span>
-			 <span ng-switch-default>
-				 <span class="param_input col-md-10">
+				</div>
+			 </div>
+			 <div ng-switch-default>
+				 <div class="param_input col-md-10">
 						<input type=text class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
-				 </span> 
-			 </span>
-		</span>
+				 </div> 
+			 </div>
+		</div>
 
 		<div ng-show="$last  && docParam != 'personalInfo'">
 			<button type="button" class="btn btn-xs btn-default" ng-click="addRecordJobSeeker(docParam,$index)">
@@ -302,39 +302,39 @@
 
 		<div ng-repeat="(paramName,props) in paramValues " >
 			<div class="forDiv">
-				<span class="param_label col-md-2"> {{paramName}} </span>
+				<div class="param_label col-md-2"> {{paramName}} </div>
 
-				<span ng-switch="props.inputType"> <span ng-switch-when="text"> <span  class="param_input col-md-10" ng-if="props.paramName">
+				<div ng-switch="props.inputType"> <div ng-switch-when="text"> <div  class="param_input col-md-10" ng-if="props.paramName">
 							<input type='text' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
-						</span> </span> <span ng-switch-when="select"> <span  class="param_input col-md-10" ng-if="props.paramName">
+						</div> </div> <div ng-switch-when="select"> <div  class="param_input col-md-10" ng-if="props.paramName">
 							<select type='select' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
 								<option value="volvo">Volvo</option>
 								<option value="saab">Saab</option>
 								<option value="mercedes">Mercedes</option>
 								<option value="audi">Audi</option>
-							</select> </span> </span> <span ng-switch-when="checklist"> <span  class="param_input col-md-10" ng-if="props.paramName"> <label ng-repeat="check in checklist">
+							</select> </div> </div> <div ng-switch-when="checklist"> <div  class="param_input col-md-10" ng-if="props.paramName"> <label ng-repeat="check in checklist">
 								<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check">
-								<small>{{check}}</small> </label> </span> </span> <span ng-switch-default> <span  class="param_input col-md-10" ng-if="props.paramName">
+								<small>{{check}}</small> </label> </div> </div> <div ng-switch-default> <div  class="param_input col-md-10" ng-if="props.paramName">
 							<input type='text' class="form-control " placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
-						</span> </span> </span>
+						</div> </div> </div>
 
 				<!--
 				<div ng-repeat="(k,v) in props track by $index" >
-				<span class="param_label" >
+				<div class="param_label" >
 				{{v.paramName}}
-				</span>
+				</div>
 
-				<span ng-switch="v.inputType">
+				<div ng-switch="v.inputType">
 
-				<span ng-switch-when="text">
-				<span  class="param_input" >
+				<div ng-switch-when="text">
+				<div  class="param_input" >
 				<input type='text' class="form-control param_input" placeholder="{{k}}" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
-				</span>
+				</div>
 				<br>
-				</span>
+				</div>
 
-				<span ng-switch-when="select">
-				<span  class="param_input">
+				<div ng-switch-when="select">
+				<div  class="param_input">
 				<select class="form-control param_input" name="user[docParam][paramName][k]['paramValue']" ng-model="user[docParam][paramName][k]['paramValue']">
 				<option value="volvo">Volvo</option>
 				<option value="saab">Saab</option>
@@ -342,11 +342,11 @@
 				<option value="audi">Audi</option>
 				</select>
 				<br>
-				</span>
+				</div>
 
-				</span>
+				</div>
 
-				</span>
+				</div>
 
 				</div> -->
 			</div>
@@ -354,9 +354,9 @@
 
 		</div>
 		<div class="iterationCtrls formDiv" ng-if="user[docParam].length>0" >
-			<span class="iterationCtrl" ng-click="remove(user[docParam],docParam,$index)"> X Delete </span>
-			<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)"> Move Up </span>
-			<span class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)"> Move Down </span>
+			<div class="iterationCtrl" ng-click="remove(user[docParam],docParam,$index)"> X Delete </div>
+			<div class="iterationCtrl" ng-click="move(user[docParam],$index,$index-1)"> Move Up </div>
+			<div class="iterationCtrl" ng-click="move(user[docParam],$index,$index+1)"> Move Down </div>
 	
 		</div>
 
@@ -371,7 +371,7 @@
 </div>
 
 <div ng-repeat="(key,val) in user['files']" class="formDiv" >
-	<span ng-show="docParam == 'files' "> <span class="param_label col-md-2" > {{key}} </span>
+	<div ng-show="docParam == 'files' "> <div class="param_label col-md-2" > {{key}} </div>
 		<div style="height:200px;" ng-if="key =='paramValue'">
 			<img ng-src="{{val}}" style="width:200px;">
 		</div>
@@ -389,7 +389,7 @@
 
 				<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
 
-					<span class="thumbnail_title">{{file.name}}</span>
+					<div class="thumbnail_title">{{file.name}}</div>
 					<div class="thumbnail" ng-show="$flow.files.length">
 						<img flow-img="file" />
 						<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
@@ -398,7 +398,7 @@
 							aria-valuemin="0"
 							aria-valuemax="100"
 							ng-style="{width: (file.progress() * 100) + '%'}">
-								<span class="sr-only">{{file.progress()}}% Complete</span>
+								<div class="sr-only">{{file.progress()}}% Complete</div>
 							</div>
 						</div>
 						<div class="btn-group">
@@ -410,20 +410,20 @@
 
 				<div class="clear"></div>
 			</div>
-		</div> </span>
+		</div> </div>
 </div>
 
 </br>
 
 <div class="col-md-5 col-md-offset-3" ng-if="nextDoc(docParam)">
 
-	<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info"> Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span> </a>
+	<a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info"> Proceed To {{nextDoc(docParam)}} &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
 
 </div>
 
 <div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 
-	<a href="../jobseeker#/" class="btn btn-block btn-info"> Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span> </a>
+	<a href="../jobseeker#/" class="btn btn-block btn-info"> Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
 
 </div>
 
@@ -435,29 +435,29 @@
 {{errors}}
 <div class="">
 <div ng-repeat="(key,val) in user[docParam]" class="formDiv" >
-<span ng-hide="docParam == 'education'">
-<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+<div ng-hide="docParam == 'education'">
+<div class="param_label col-md-2" ng-hide="docParam == 'files' ">
 {{key}}
-</span>
-<span class="param_input col-md-10">
+</div>
+<div class="param_input col-md-10">
 <input type='text' class="form-control" name="{{docParam + '__' + key}}" ng-model="user[docParam][key]">
-</span>
-</span>
+</div>
+</div>
 
-<span ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">
-<span class="param_label col-md-2" ng-hide="docParam == 'files' ">
+<div ng-if="docParam == 'education' " ng-hide="user[docParam].length+1 > 1">
+<div class="param_label col-md-2" ng-hide="docParam == 'files' ">
 {{key}}
 
-</span>
-<span  class="param_input col-md-10">
+</div>
+<div  class="param_input col-md-10">
 <input type='text' class="form-control" name="user[docParam][key]" ng-model="user[docParam][key]">
-</span>
-<span ng-show="$last">
+</div>
+<div ng-show="$last">
 <button class="btn btn-default" ng-click="add1(docParam,key,$index)">+ Add a Record</button>
-</span>
-</span>
+</div>
+</div>
 
-<span ng-if="docParam == 'education' && user[docParam].length+1 > 1">
+<div ng-if="docParam == 'education' && user[docParam].length+1 > 1">
 
 <span ng-repeat="(m,n) in val" class="formDiv">
 <span class="param_label col-md-2">

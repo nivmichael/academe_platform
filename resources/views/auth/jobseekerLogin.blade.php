@@ -21,7 +21,7 @@
         <button type="submit">Login</button>
     </div>
      <div>
-         <a class="btn" href="/auth/register_jobseeker">Register</a>
+         <a class="btn" href="/auth/register_jobseeker/">Register</a>
     </div>
 </form>
 

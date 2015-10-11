@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="customTemplate.html">
   <a style="float:left;">
       <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      <div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>
   </a>
 </script>
 
@@ -14,150 +14,150 @@
 </div> -->
 
 
-<div ng-if="docParam == 'company'">
+<div ng-if="docParam == 'company'" >
 		
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Company*
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="company_name" placeholder="Company Name" ng-model="user.company.company_name.paramValue" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
-		<span style="float:left;">
+	<div class="col-lg-8 fieldDiv">
+		<div style="float:left;">
 			<input type='checkbox'>Hide company name 
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Contact Person
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="contact_person" placeholder="Contact Person" ng-model="user.company.contact_person.paramValue" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Contact Title
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="contact_title" placeholder="Contact Title" ng-model="user.company.contact_title.paramValue" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Street Address*
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="street_1" placeholder="street" ng-model="user.personalInfo.street_1" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			City*
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="city" placeholder="city" ng-model="user.personalInfo.city" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Zip Code
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="zipcode" placeholder="zipcode" ng-model="user.personalInfo.zipcode" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
 	
 <!---------------------------iterables---------------------------------iterables------------------------------------iterables------------------------------------------------------------------------------------------>		
 			
-	<div>
+	<div >
 		
 		<div ng-hide="user.company.length > 0 ">
-		
-			<span class="param_label col-md-2">
-				Main Field*
-			</span>
-			
-			<span>
-				<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field" ng-model="user.company.main_field.paramValue" required>
-			</span>
-			
-			<div>
-				<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',$index)">+ Add a Record</button>
+			<div class="col-lg-8 fieldDiv">
+				<div class="param_label col-lg-8">
+					Main Field*
+				</div>
+				
+				<div>
+					<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field" ng-model="user.company.main_field.paramValue" required>
+				</div>
+				
+				<div>
+					<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',$index)">+ Add a Record</button>
+				</div>
 			</div>
-			
 			
 		</div>	
 		<div ng-if="user.company.length > 0 ">
 			<div ng-repeat="(a,b) in user.company">
-		
-				<span class="param_label col-md-2">
-					Main Field*
-				</span>
-				
-				<span>
-					<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field {{a+1}}" ng-model="user.company[a]['main_field'][paramValue]" required>
-				</span>
-				
-				<div ng-show="$last">
-					<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',a)">+ Add a Record</button>
+				<div class="col-lg-8 fieldDiv">
+					<div class="param_label col-lg-8">
+						Main Field*
+					</div>
+					
+					<div>
+						<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field {{a+1}}" ng-model="user.company[a]['main_field'][paramValue]" required>
+					</div>
+					
+					<div ng-show="$last">
+						<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',a)">+ Add a Record</button>
+					</div>
+					
+					
+					<div class="iterationCtrls" >
+						<div class="iterationCtrl" ng-click="remove(user['company'],$index)">
+							X Delete
+						</div>
+						<div class="iterationCtrl" ng-click="move(user['company'],$index,$index-1)">
+							Move Up
+						</div>
+						<div class="iterationCtrl" ng-click="move(user['company'],$index,$index+1)">
+							Move Down
+						</div>
+					</div>
+					
+					
 				</div>
-				
-				
-				<div class="iterationCtrls" >
-					<span class="iterationCtrl" ng-click="remove(user['company'],$index)">
-						X Delete
-					</span>
-					<span class="iterationCtrl" ng-click="move(user['company'],$index,$index-1)">
-						Move Up
-					</span>
-					<span class="iterationCtrl" ng-click="move(user['company'],$index,$index+1)">
-						Move Down
-					</span>
-				</div>
-				
-				
-			</div>
-				
+			</div>	
 		</div>	
 	</br>	
-		<div >
+		<div class="col-lg-8 fieldDiv">
 		
-			<span class="param_label col-md-2">
+			<div class="param_label col-lg-8">
 				Secondary Field
-			</span>
+			</div>
 			
-			<span>
+			<div>
 				<input type='text' class="form-control param_input" name="secondary_field" placeholder="Secondary Field" ng-model="user.company.secondary_field.paramValue" required>
-			</span>
+			</div>
 			
 			<div>
 				<button type="button" class="btn btn-xs btn-default" ng-click="addIterableCompanyParam('secondary_field',$index)">+ Add a Record</button>
@@ -189,36 +189,36 @@
 			
 			
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>		
-	<div>
-		<span class="param_label col-md-2">
+	<div class="col-lg-8 fieldDiv">
+		<div class="param_label col-lg-8">
 			Company YouTube Video*
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="youtube" placeholder="YouTube" ng-model="user.company.youtube.paramValue" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Short Company Description*
-		</span>
+		</div>
 		<textarea class="form-control param_input" name="short_company_description" ng-model="user.company.short_company_description.paramValue" rows="10" required>
 			
 		</textarea>
 	</div>	
 </br>
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-lg-8">
 			Site Link
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='text' class="form-control param_input" name="site_link" placeholder="site_link" ng-model="user.company.site_link.paramValue" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
@@ -226,113 +226,113 @@
 
 
 
-<h3>User Information</h3>
+<h3 class="col-lg-8">User Information</h3>
 	</br>
-<div>
+<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			First Name*
-		</span>
-		
-		<span>
+		</div>
+
+		<div class="col-md-6">
 			<input type='text' class="form-control param_input" name="first_name" placeholder="First Name" ng-model="user.personalInfo.first_name" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			Last Name*
-		</span>
+		</div>
 		
-		<span>
+		<div class="col-md-6">
 			<input type='text' class="form-control param_input" name="last_name" placeholder="Last Name" ng-model="user.personalInfo.last_name" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			Phone/Cell*
-		</span>
+		</div>
 		
-		<span>
+		<div class="col-md-6">
 			<input type='text' class="form-control param_input" name="mobile" placeholder="Phone/Cell" ng-model="user.personalInfo.mobile" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			E-mail*
-		</span>
+		</div>
 		
-		<span>
+		<div class="col-md-6">
 			<input type='email' class="form-control param_input" name="email" placeholder="E-mail" ng-model="user.personalInfo.email" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
-	<div>
+	<div class="col-lg-8 fieldDiv">
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			Password*
-		</span>
+		</div>
 		
-		<span>
+		<div class="col-md-6">
 			<input type='password' class="form-control param_input" name="password" placeholder="Password" ng-model="user.personalInfo.password" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	
 	<!-- <div>
 		
-		<span class="param_label col-md-2">
+		<div class="param_label col-md-2">
 			Birthdate*
-		</span>
+		</div>
 		
-		<span>
+		<div>
 			<input type='date' class="form-control param_input" name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
-		</span>
+		</div>
 		
 	</div>	
 </br>	 -->
 </br>
-	<div>
+	<div class="col-lg-8 fieldDiv">
 			
-		<span style="float:left;">
+		<div style="float:left;">
 		    <input type="checkbox" class="" ng-model="user.personalInfo.send_newsletters"> 
 		    <small >
 				I wish to receive newsletters with updates from time to time
 			</small>
-		</span>
+		</div>
 		
 	</div>		
 </br>
 	
 	
-	<ng-include class="col-md-12" src="'../../../partials/disclaimer.html'"></ng-include>
+	<ng-include class="col-lg-10" src="'../../../partials/disclaimer.html'"></ng-include>
 
 </br>
 
-	<div>
+	<div class="col-lg-8 fieldDiv">
 			
-		<span style="float:left;">
+		<div style="float:left;">
 		    <input type="checkbox" class="" > 
 		    <small >
 				I have read and approved the disclaimer
 			</small>
-		</span>
+		</div>
 		
 	</div>	
 	
 			
 </div>
 
-<div ng-include="personal_info.html">
+<div ng-include="personal_info.html" class="col-lg-8 fieldDiv">
 	
 </div>
 
@@ -341,10 +341,10 @@
 
 	<div ng-repeat="(key,val) in user['files']" class="formDiv" >
 	
-		<span ng-show="docParam == 'files' ">
-					<span class="param_label col-md-2" >		
+		<div ng-show="docParam == 'files' ">
+					<div class="param_label col-md-2" >		
 						{{key}}
-					</span>
+					</div>
 						
 					<div style="height:200px;">
 						<img ng-src="{{val.paramValue}}" style="width:200px;">	
@@ -362,7 +362,7 @@
 					
 					    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
 					    	
-					      <span class="thumbnail_title">{{file.name}}</span>
+					      <div class="thumbnail_title">{{file.name}}</div>
 					      <div class="thumbnail" ng-show="$flow.files.length">
 					        <img flow-img="file" />
 					      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
@@ -371,7 +371,7 @@
 					             aria-valuemin="0"
 					             aria-valuemax="100"
 					             ng-style="{width: (file.progress() * 100) + '%'}">
-					          <span class="sr-only">{{file.progress()}}% Complete</span>
+					          <div class="sr-only">{{file.progress()}}% Complete</div>
 					        </div>
 					      </div>
 					      <div class="btn-group">
@@ -386,7 +386,7 @@
 					    <div class="clear"></div>
 					  </div>
 				</div>
-		</span>
+		</div>
 	</div>
 
 
@@ -395,7 +395,7 @@
 	<div class="col-md-4 col-md-offset-3" ng-if="nextDoc(docParam)">
 		
 	    <a ng-click="saveUser(user,docParam)" class="btn btn-block btn-info">
-	   	 Proceed To {{nextDoc(docParam)}} &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	   	 Proceed To {{nextDoc(docParam)}} &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div>
 	    </a>
 	    
 	</div>
@@ -403,7 +403,7 @@
 	<div class="col-md-3 col-md-offset-3" ng-if="nextDoc(docParam)==false">
 	
 	    <a href="/employer#/employer" class="btn btn-block btn-info">
-	   		 Save &nbsp <span class="glyphicon glyphicon-circle-arrow-right"></span>
+	   		 Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div>
 	    </a>
 
 	    

@@ -1,0 +1,12 @@
+.fieldDiv {
+	margin-bottom:10px;
+	float:left;
+}
+.param_label{
+	padding:0;
+	margin:0;
+}
+
+.param_input{
+	float:left;
+}

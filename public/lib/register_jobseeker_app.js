@@ -40,7 +40,7 @@ var acadb = angular.module('acadb', [
     
         .state('register', {
          url: "/",
-         templateUrl: '../partials/register/register.html',
+         templateUrl: '../../partials/register/register.html',
          controller: 'RegisterController',   
         })
   

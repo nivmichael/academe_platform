@@ -85,8 +85,9 @@ class TypePostController extends Controller {
 				$postInfo = Post::find($postParams->id);	
 				$post['postInfo'] = $postInfo;
 				$logo_param_id = DB::table('param')->where('name','company_logo')->pluck('id');
-				$company_logo  = DB::table('sys_param_values')->where('param_id',$logo_param_id)->where('ref_id',$postParams->user_id)->get();
-				// var_dump($logo_param_id);die;
+				$company_logo  = DB::table('sys_param_values')->where('param_id',$logo_param_id)->where('ref_id',$postParams->user_id)->pluck('value_short');
+				$post['postInfo']['company_logo'] = $company_logo;
+				//var_dump($company_logo);
 			}
 			
 				$postsArr[] = $post;

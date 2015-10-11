@@ -56,22 +56,22 @@ var acadb = angular.module('acadb', [
           controller:'FindajobController',
        })
        .state('jobseeker.findajob.general', {
-          url: "^/general",
+          url: "/general",
           templateUrl: '../partials/general.html'   ,
           controller:'FindajobController'   
        })
        .state('jobseeker.findajob.the_company', {
-          url: "^/company",
+          url: "/company",
           templateUrl: '../partials/company.html'   ,
           controller:'FindajobController'   
        })
        .state('jobseeker.findajob.company_video', {
-          url: "^/company_video",
+          url: "/company_video",
           templateUrl: '../partials/company_video.html'   ,
           controller:'FindajobController'   
        })
        .state('jobseeker.findajob.company_site', {
-          url: "^/company_site",
+          url: "/company_site",
           templateUrl: '../partials/company_site.html'   ,
           controller:'FindajobController'   
        });

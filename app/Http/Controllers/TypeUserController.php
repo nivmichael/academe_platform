@@ -46,6 +46,7 @@ class TypeUserController extends Controller {
 		$personalInfo = new stdClass();
 		$user = array();	
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
+											   param.slug AS slug,
 											   param.name AS paramName, 
 											   doc_param.name AS docParamName,
 											   param_type.name AS paramType
@@ -78,12 +79,14 @@ class TypeUserController extends Controller {
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
 			$inputType    = $v->paramType;
+			$slug         = $v->slug;
 	
 			
 			
 			$user[$docParamName][$paramName]['paramName'] = $paramName;		
 			$user[$docParamName][$paramName]['paramValue'] = '';
 			$user[$docParamName][$paramName]['inputType'] = $inputType;
+			$user[$docParamName][$paramName]['slug'] = $slug;		
 		}	
 		
 		
