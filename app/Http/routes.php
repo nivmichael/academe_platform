@@ -15,96 +15,80 @@ Blade::setContentTags('[[[', ']]]');
 |
 */
 
-
-Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
-{
-  Route::get('/admin', 'AdminController@index');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::group(['middleware' => 'App\Http\Middleware\EmployerMiddleware'], function()
-{
-  Route::get('/employer', 'EmployerController@index');
-});
 
-Route::group(['middleware' => 'App\Http\Middleware\HomeMiddleware'], function()
-{
-  Route::get('/home', 'HomeController@index');
-});
-
- // Route::get('/home', 'HomeController@index');
-
-
-Route::get('/', 'WelcomeController@index');
-// Route::get('home', 'HomeController@index');
-        
-// Route::get('/employers', 'HomeController@index');
-// Route::get('/students' , 'HomeController@index');
-// Route::get('/graduates', 'HomeController@index');
-// Route::get('/interns'  , 'HomeController@index');
-
-// Route::post('/adminStore', 'TypeUserController@adminStore');
-Route::resource('/params', 'ParamController');
-Route::resource('/users', 'TypeUserController');
-
-Route::resource('/docParam', 'DocParamController');
-Route::resource('/docType', 'DocTypeController');
-Route::resource('/paramType', 'ParamTypeController');
-Route::resource('/paramValue', 'ParamValueController');
-Route::resource('/sysParamValues', 'sysParamValuesController');
-Route::post('/sysParamValues/params', 'sysParamValuesController@saveParam');
-Route::post('/savePost', 'TypePostController@savePost');
-Route::get('/getAllJobs', 'TypePostController@index');
-Route::get('/job/{id}', 'TypePostController@show');
-Route::get('/inputType', 'TypePostController@getInputType');
-Route::get('/groups', 'SysParamValuesController@getGroups');
-// Route::resource('/job/[id]', 'TypePostController');
-
-
-// Route::resource('auth/params', 'ParamController');
-// Route::resource('auth/users', 'TypeUserController');
-// Route::resource('auth/docParam', 'DocParamController');
-// Route::resource('auth/docType', 'DocTypeController');
-// Route::resource('auth/paramType', 'ParamTypeController');
-
-Route::get('/columns/param'     , 'ParamController@columnIndex');
-Route::get('/columns/user', 'TypeUserController@columnIndex');
-Route::get('/columns/registerEmployer', 'TypeUserController@columnIndexEmployer');
-// Route::get('/columns/{docParamName}', 'DocParamController@getCompanyParamInput');
-Route::get('/columns/registerJobSeeker', 'TypeUserController@columnIndexJobSeeker');
-Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
-Route::get('/columns/docType'   , 'DocTypeController@columnIndex');
-Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
-Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
-Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
-Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
-
-// Route::get('/columns/{doc_param}' ,'DocParamController@getParams');
-
-Route::any('/upload'        ,'SysParamValuesController@upload');
-Route::any('/deleteImage'   ,'SysParamValuesController@deleteimagefromdb');
-Route::post('/setStatus' ,'TypeUserController@setStatus');
-Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
-Route::get('/getStatus' ,'TypeUserController@getStatus');
-
-
-Route::get('auth/login_employer', 'Auth\AuthController@getLoginEmployer');
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
+// Authentication routes...
+//Route::get('/auth/login', 'Auth\AuthController@getLogin');
+Route::get('auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
+Route::get('auth/login/employer', 'Auth\AuthController@getEmployerLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::post('/auth/login', 'Auth\AuthController@postLogin');
 
 // Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::get('auth/register_employer', 'Auth\AuthController@getEmployerRegister');
+Route::get('auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
+Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
+
+// Retrieve Authed User id
 Route::get('/getAuthId', function(){
 	return Auth::id();
 });
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
 
+Route::resource('/users', 'TypeUserController');
+Route::any('/upload'        ,'SysParamValuesController@upload');
+Route::post('/setStatus' ,'TypeUserController@setStatus');
 
+// routes
+Route::group(['middleware' => 'auth'], function () {
+		
 
-?>
+	Route::get('/groups', 'SysParamValuesController@getGroups');
+	Route::get('/getAllJobs', 'TypePostController@index');
+	Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+	Route::get('/job/{id}', 'TypePostController@show');		
+	Route::get('/getAllPosts', 'TypePostController@getAllPosts');	
+	
+	Route::group(['middleware' => 'jobseeker'], function () {
+		  Route::get('jobseeker', function () { return view('jobseeker_home'); });
+		
+	});	
 
+	Route::group(['middleware' => 'employer'], function () {
+		 Route::get('employer', function () {
+	         return view('employer_home');
+		 });
+		 Route::post('/savePost', 'TypePostController@savePost');
+	});		
+		
+
+	Route::group(['middleware' => 'admin'], function () {
+	 
+	
+	    Route::get('admin', function () {
+	         return view('admin');
+	    });
+		// Route::resource('/users', 'TypeUserController');
+		Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
+		Route::get('/columns/docType'   , 'DocTypeController@columnIndex');
+		Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
+		Route::get('/columns/paramValue' ,'ParamValueController@columnIndex');
+		Route::get('/columns/sysParamValues' ,'SysParamValuesController@columnIndex');
+		Route::get('/columns/user', 'TypeUserController@columnIndex');
+		Route::get('/columns/param'     , 'ParamController@columnIndex');
+		Route::resource('/params', 'ParamController');
+		
+		Route::resource('/docParam', 'DocParamController');
+		Route::resource('/docType', 'DocTypeController');
+		Route::resource('/paramType', 'ParamTypeController');
+		Route::resource('/paramValue', 'ParamValueController');
+		Route::resource('/sysParamValues', 'sysParamValuesController');
+	});
+	
+});

@@ -1,0 +1,17 @@
+<script type="text/ng-template" id="customTemplate.html">
+	<a style="float:left;">
+	<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+	<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+	</a>
+</script>
+
+	
+	
+	<div ng-repeat="(step,b) in user track by $index" id="status-buttons" class="text-center docParamLi" ng-hide="absUrl == 'register_employer' && step == 'personalInfo'">
+		<li ui-sref-active="active" ui-sref=".{{step}}">
+			{{step}} 
+		</li>
+
+	</div>
+	
+	<div ui-view=""></div>

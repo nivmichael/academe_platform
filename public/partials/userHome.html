@@ -135,17 +135,17 @@
 		<img class="img-thumbnail col-md-12" src="{{ user.files.user_photo.paramValue }}" alt="Generic placeholder image" width="140" height="140">	
 	</div>
 	
-	<div class="btn btn-primary col-md-12">
+	<div class="btn btn-primary col-md-12" ui-sref="jobseeker.findajob">
 		
 		find a job
 		
-		<!-- <li ui-sref="home.findAJob">Find A Job</li>
-	 -->
+		 
+
 	</div>
 	
 </nav>
 
-
+<div ui-view="">
 
   <accordion close-others="oneAtATime">
     <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active accordionPanel col-md-10' is-open="$first" ng-hide="key == 'files'">
@@ -156,7 +156,7 @@
 	     </accordion-heading>
     	
     	 
-    	  <form editable-form name="editableForm" onaftersave="saveUser(user)">
+    	  <form editable-form name="editableForm" onaftersave="saveUser(user)" >
 			 	     
 				 	   
 				 	     		
@@ -456,7 +456,7 @@
 </footer>
 
 
-
+</div>
 
 
 

@@ -1,7 +1,5 @@
  // filters need to make new file for filters...
 
-angular.module('acadb.filters', []);
-  
   
 
 
@@ -15,7 +13,7 @@ angular.module('acadb.controllers', [])
     $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     $scope.countries = countries = ['Afghanistan', 'Åland Islands', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', '$_[', 'Croatia', 'Curaçao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Réunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'USA', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
  
-
+	
   
  
         
@@ -51,10 +49,10 @@ angular.module('acadb.controllers', [])
    };
    
 //changing variables according path.   
-    if($location.path() == '/param_manager/type_user') 
+    if($location.path() == '/tables/type_user') 
     {
     	 console.log($location.path())	;
-
+		$scope.table = 'type_user';
    		$scope.varName  = 'User';	
    		$scope.pathTo   = '/users';	
    		$scope.objName  = $scope.users;
@@ -62,7 +60,7 @@ angular.module('acadb.controllers', [])
    		$scope.typeAhead = ['state', 'country'];
    		$scope.userTypes = ['tech-admin','user','content-admin'];
     	
-    }else if($location.path() == '/param_manager/param')
+    }else if($location.path() == '/tables/param')
     {
    		$scope.varName = 'Param';
    		$scope.pathTo  = '/params';
@@ -70,7 +68,7 @@ angular.module('acadb.controllers', [])
    		$scope.columns = 'param';
    		$scope.selects = ['type_id', 'doc_param_id'];
     }
-    else if($location.path() == '/param_manager/doc_param')
+    else if($location.path() == '/tables/doc_param')
     {
    		$scope.varName = 'DocParam';
    		$scope.pathTo  = '/docParam';
@@ -78,21 +76,21 @@ angular.module('acadb.controllers', [])
    		$scope.columns = 'docParam'; 
    		$scope.selects = ['doc_type_id'];   	
     }
-    else if($location.path() == '/param_manager/doc_type')
+    else if($location.path() == '/tables/doc_type')
     {
    		$scope.varName = 'DocType';
    		$scope.pathTo  = '/docType';
    		$scope.objName = $scope.docTypes;
    		$scope.columns = 'docType';
     	
-    }else if($location.path() == '/param_manager/param_type')
+    }else if($location.path() == '/tables/param_type')
     {
    		$scope.varName = 'ParamType';
    		$scope.pathTo  = '/paramType';
    		$scope.objName = $scope.paramTypes;
    		$scope.columns = 'paramType';
     	
-    }else if($location.path() == '/param_manager/param_value')
+    }else if($location.path() == '/tables/param_value')
     {
    		$scope.varName = 'ParamValue';
    		$scope.pathTo  = '/paramValue';
@@ -101,8 +99,8 @@ angular.module('acadb.controllers', [])
    		
    		$scope.paramSelect = $scope.params;
     	
-    }else if($location.path() == '/param_manager/sys_param_values')
-    {
+    }else if($location.path() == '/tables/sys_param_values')
+    {	$scope.table = 'sys_param_values';
    		$scope.varName = 'SysParamValues';
    		$scope.pathTo  = '/sysParamValues';
    		$scope.objName = $scope.sysParamValues;
@@ -118,7 +116,7 @@ angular.module('acadb.controllers', [])
 		  $http.get('/columns/' + $scope.columns).
 		  success(function(data, status, headers, config) {
 		 	 $scope.columns = data;
-   
+   		     $scope.t_headers = data;
 		  }).
 		  error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
@@ -227,11 +225,42 @@ angular.module('acadb.controllers', [])
   
   }])
 
-.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
+.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams) {
 
+ $scope.getAuthId = function(){
+   		$http.get('/getAuthId').
+		success(function(data, status, headers, config) {
+			$scope.getUser(data);
+			$scope.userId = data;
+			
+		});
+ };
+ $scope.getUser = function(id){ 
+   	$http.get('/users/'+id).
+	success(function(data, status, headers, config) {		
+	      $scope.user = data;	
+	      $stateParams.user = $scope.user;
+	       $scope.next_keys = [];
+	 	 var prev_key = false;
+			
+		 for(var key in $scope.user) {
+		 	if(!prev_key) {
+		 		prev_key = key;
+		 	} else {
+				$scope.next_keys[prev_key] = key;
+				prev_key = key;
+				$scope.next = key;	
+			}
+		} 
+	}).
+	error(function(data, status, headers, config) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+	});	
+ };
 
 $scope.isArray = angular.isArray;
-
+ $scope.oneAtATime = true;
 $scope.allJobs = {};
 $.getJSON('/getAllJobs', function(data){
   $scope.$apply(function(){
@@ -239,11 +268,12 @@ $.getJSON('/getAllJobs', function(data){
     });
 });
  
- var state = $location.path(); 
- state = state.split('/');
- state = state[1];
- $state.go(state);
- 
+ // var state = $location.path(); 
+ // state = state.split('/');
+ // state = state[1];
+ // $state.go(state);
+//  
+
  $scope.flowOp = function(key){
 		//console.log(key);
 		//console.log('key');
@@ -269,37 +299,7 @@ $.getJSON('/getAllJobs', function(data){
  	{id: '4', tag:'Gallery '},  
  	{id: '5', tag:'Cover '},  
  ];
- $scope.oneAtATime = true;
- $scope.getAuthId = function(){
-   		$http.get('/getAuthId').
-		success(function(data, status, headers, config) {
-			$scope.getUser(data);
-			$scope.userId = data;
-			
-		});
- };
- $scope.getUser = function(id){ 
-   	$http.get('/users/'+id).
-	success(function(data, status, headers, config) {		
-	      $scope.user = data;	
-	       $scope.next_keys = [];
-	 	 var prev_key = false;
-			
-		 for(var key in $scope.user) {
-		 	if(!prev_key) {
-		 		prev_key = key;
-		 	} else {
-				$scope.next_keys[prev_key] = key;
-				prev_key = key;
-				$scope.next = key;	
-			}
-		} 
-	}).
-	error(function(data, status, headers, config) {
-		    // called asynchronously if an error occurs
-		    // or server returns response with an error status.
-	});	
- };
+ // $scope.oneAtATime = true;
  $scope.nextDoc = function(doc){
 	
 	if($scope.next_keys[doc]){
@@ -515,22 +515,29 @@ $scope.educationStatuses = [
 
 }])
 
-.controller("JobSearchController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
-// $state.go('home.findAJob');
- 
-}])
 
 
 
 
 .controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN','$filter', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN,$filter) {
-console.log("RegisterController");
-	
- 'use strict';
+// console.log("RegisterController");
+// 	
+
+ 
+  'use strict';
  var state = $location.path();
+ var absUrl = $location.absUrl();
+ absUrl = absUrl.split('/');
+ console.log(absUrl);
+ absUrl = absUrl[4];
+ absUrl = absUrl.replace('#','');
+ $scope.absUrl = absUrl;
+ console.log($scope.absUrl);
+ 
  state = state.split('/');
  state = state[1];
- $state.go(state);
+ console.log(state);
+ // $state.go(state);
 
 $scope.getAuthId = function(){
    		$http.get('/getAuthId').
@@ -541,11 +548,11 @@ $scope.getAuthId = function(){
    };
 $scope.getAuthId();
 $scope.getColumns = function(){
-  
-	  $http.get('/columns/' + state).
+  	
+	  $http.get('/columns/' + absUrl).
 	  success(function(data, status, headers, config) {
 	 	 $scope.user = data;
-	 	 console.log($scope.user);
+	 	console.log('getcolumns from RegCtrl');
 	 	 $scope.userCaretName = $scope.user.personalInfo.first_name;
 	 	 //registration steps	 	 
 	 	 $scope.next_keys = [];
@@ -582,6 +589,104 @@ $scope.getColumns = function(){
  
 
 }])
+.controller("FindajobController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
+	
+	$scope.getAllPosts = function(){
+  
+	  $http.get('/getAllPosts').
+	  success(function(data, status, headers, config) {
+	 	
+			$scope.allPosts = data;
+	  }).
+	  error(function(data, status, headers, config) {
+	    // called asynchronously if an error occurs
+	    // or server returns response with an error status.
+	  });
+  };
+  $scope.getAllPosts();
+  $scope.getPost = function(id){ 
+   	$http.get('/job/'+id ).
+	success(function(data, status, headers, config) {		
+
+		
+	      $scope.post = data;	
+		
+	}).
+	error(function(data, status, headers, config) {
+		    
+	});	
+ };
+
+ 	
+
+  
+  $scope.reverse = false; 
+  
+  $scope.orderByFilter = 'id'; 
+  
+  //set the timestamp on the $scope.filter after choosing a date
+  $scope.setTimestamp = function(data,index){
+  	
+  	 var timestamp = new Date(data).getTime();
+  	 $scope.items[index].lastBuy = timestamp;
+  	 
+  };
+  
+  
+  $scope.orderOptions = function(value){
+  	 $scope.orderByFilter = value;
+  	// $scope.reverse = !$scope.reverse;
+  };
+  
+  
+  $scope.filter = {};
+  
+  $scope.filter.minPrice = "";
+  $scope.filter.maxPrice = "";
+	
+  $scope.checkPriceFilter = function(price){
+  		
+  	var min =  $scope.filter.minPrice;
+  	var max =  $scope.filter.maxPrice;
+  	
+  	if(!min && !max){
+  		return true;
+  	}
+  	
+  	var check = false;
+  	
+  	if (min && !max){
+  		if(min<=price){
+  			check = true;
+  		}
+  	}
+  	
+  	if (!min && max){
+  		if(max >=price){
+  			check = true;
+  		}
+  	}
+  	
+  	
+  	if (min && max){
+
+  		if( min <= price && max > price){
+  			check = true;
+  		} else if (min < price && max >=price){
+  			check = true;
+  		}
+  	}
+  	
+  	
+  	return check;
+  };
+  
+  $scope.limit = 50;
+  
+
+}])
+
+
 .controller('formController', function($scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN) {
 
 
@@ -589,15 +694,27 @@ $scope.getColumns = function(){
 	console.log('formCtrl');
 	
 	
-	var state = $location.path();
+ var state = $location.path();
  state = state.split('/');
+
  state = state[1];
- var locationSubtype = state;
- locationSubtype = locationSubtype.split('register');
-	locationSubtype = locationSubtype[1];
-	
-	locationSubtype= angular.lowercase(locationSubtype);
-	console.log(locationSubtype);
+ var locationSubtype = $state.current.name;
+ var prefix = locationSubtype;
+ prefix = prefix.split('.');
+ prefix = prefix[0];
+
+ if(locationSubtype == 'register.personalInfo') {
+ 	locationSubtype = 'jobseeker';
+ }else if(locationSubtype == 'register.company') {
+	 locationSubtype = 'employer';
+ }
+ 
+ 
+ // locationSubtype = locationSubtype.split('register');
+	// locationSubtype = locationSubtype[1];
+// 	
+	// locationSubtype= angular.lowercase(locationSubtype);
+	// console.log(locationSubtype);
  
 	
 	
@@ -632,45 +749,62 @@ $scope.getColumns = function(){
 	
 	$scope.docParam = $state.current.name.split('.');
 	$scope.docParam = $scope.docParam[1];
-	
+	console.log($scope.docParam);
+	//$scope.docParam = 'personalInfo';
 	
     // we will store all of our form data in this object
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+	function capitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
     $scope.saveUser = function(user,docParam) {
+    $scope.absUrl	= 'jobseeker';
+    console.log($scope.absUrl);
 	//var subType = user['personalInfo']['subtype'];
 	user.personalInfo.subtype = locationSubtype;
-	user.personalInfo.type = 'user';
+	user.personalInfo.type = 'tech-admin';
 	user.personalInfo.status = 'active';
    $http.post('/auth/register', {
      user: user,
    	_token: CSRF_TOKEN,
    	from:'register'
-   	}).success(function(errors){
-  	 	console.log($scope.errors);
-  	 		$scope.errors = errors;
-  	 	var errorLength = Object.keys($scope.errors).length;
-  	 	if(errorLength > 1 ) {
-	   		
-  	 	console.log($scope.errors);
-  	 		
-  	 	}else{
-  	 		
-  	 		if($scope.nextDoc($scope.docParam) != false)
-  	 		{
-   				$state.go(state+'.'+$scope.nextDoc($scope.docParam));
-  	 		}
-  	 		console.log('go');
-  	 	}
-  	 	
+   	}).success(function(data){
    		
+   		// if($scope.nextDoc($scope.docParam) != false)
+	  	// {
+	  	 	console.log($scope.docParam);
+	   		$state.go(prefix+'.'+$scope.nextDoc($scope.docParam));
+	  	// }
+   		
+   		
+  		// console.log('errors');
+  	 	// $scope.errors = errors;
+  	 	// var errorLength = Object.keys($scope.errors).length;
+  	 	// if(errorLength > 1 ) {
+// 	   		
+  	 	// if($scope.nextDoc($scope.docParam) != false)
+  	 		// {
+  	 			// console.log($scope.docParam);
+   				// $state.go(prefix+'.'+$scope.nextDoc($scope.docParam));
+  	 		// }
+//   	 		
+  	 	// }else{
+//   	 		
+  	 		// if($scope.nextDoc($scope.docParam) != false)
+  	 		// {
+  	 			// console.log($scope.docParam);
+   				// $state.go(state+'.'+$scope.nextDoc($scope.docParam));
+  	 		// }
+  	 		// console.log('go');
+  	 		// console.log('go');
+  	 	// }
+//   	 	
+//    		
    	  	 
      }).error(function(err) {
   		
 	 console.log('error');
 	
-	 console.log(err);
+	// console.log(err);
     });
   };
   
@@ -728,11 +862,11 @@ $scope.getJobPostFields = function(){
        $scope.getJobPostFields();
    
 $scope.getColumns = function(){
-  
+  	
 	  $http.get('/columns/user').
 	  success(function(data, status, headers, config) {
 	 	 $scope.user = data;
-		
+		console.log('getcolumns from formCtrl');
 //registration steps
 	 	 $scope.next_keys = [];
 	 	 var prev_key = false;
@@ -817,7 +951,7 @@ $scope.getColumns = function(){
 	  
 	  
 	  $scope.addRecordJobSeeker =function(docParam,$index) {	
-	$http.get('/columns/registerJobSeeker')
+	$http.get('/columns/register_jobseeker')
 	  	.success(function(data, status, headers, config) {
 	  	$scope.inserted = data[docParam];	   
 	  	if(!(angular.isArray($scope.user[docParam]))){
@@ -940,7 +1074,7 @@ $scope.getColumns = function(){
   
   
     $scope.selected = undefined;
-  
+
   // Any function returning a promise object can be used to load values asynchronously
   $scope.getLocation = function(val) {
     return $http.get('//maps.googleapis.com/maps/api/geocode/json?language=en', {
@@ -964,4 +1098,33 @@ $scope.getColumns = function(){
   
 
 })
+.controller("NewController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
+	
+	$scope.getColumns = function(){
+  
+	  $http.get('/columns/' + 'registerJobSeeker').
+	  success(function(data, status, headers, config) {
+	 	 $scope.user = data;
+	 	
+	 	 //registration steps	 	 
+	 	 $scope.next_keys = [];
+	 	 var prev_key = false;
+			
+		 for(var key in $scope.user) {
+		 	if(!prev_key) {
+		 		prev_key = key;
+		 	} else {
+				$scope.next_keys[prev_key] = key;
+				prev_key = key;
+				$scope.next = key;	
+			}
+		}
+	  }).
+	  error(function(data, status, headers, config) {
+	    // called asynchronously if an error occurs
+	    // or server returns response with an error status.
+	  });
+     };
+ $scope.getColumns();
+}])
 ;

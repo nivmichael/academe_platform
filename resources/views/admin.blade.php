@@ -1,71 +1,79 @@
-@extends('app')
+<?php
 
-@section('content')
-<!-- navbar -->
-<div >	
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle Navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/">My Profile</a>
-			</div>
+//var_dump(Auth::user());
 
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<!-- <ul class="nav navbar-nav">
-					<li><a ui-sref="type_user">type_user</a></li>
-					<li><a ui-sref="doc_type">doc_type</a></li>
-					<li><a ui-sref="doc_param">doc_param</a></li>
-					<li><a ui-sref="param">param</a></li>
-					<li><a ui-sref="param_type">param_type</a></li>
-					<li><a ui-sref="param_value">param_value</a></li>
-					<li><a ui-sref="sys_param_values">sys_param_values</a></li>
-				</ul> -->
+?>
+<html ng-app="acadb">
+    <head>
+        <title>Laravel</title>
+				<script src="lib/jquery-1.11.3.min.js"></script>
+		<!-- angular -->
+		<script src="lib/angular.min.js"></script>
+		<script src="../lib/ui-router.js"></script>
+		<script src="lib/ng-underscore.min.js"></script>
+		<!-- bootstrap css -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!-- laravel app css -->
+		<link href="[[ asset('/css/app.css') ]]" rel="stylesheet">
+		<!-- x-editable css -->
+		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
+		<!-- custom style css -->
+		<link href="css/myStyle.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
-				<ul class="nav navbar-nav navbar-right">
-					@if (Auth::guest())
-						<li><a href="[[ url('/auth/login') ]]">Login</a></li>
-						<li><a href="[[url('/auth/register') ]]">Register</a></li>
-					@else
-						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">[[ Auth::user()->first_name ]] <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="[[ url('/') ]]">Edit Profile</a></li>
-								<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
-							</ul>
-						</li>
-					@endif
-				</ul>
-			</div>
-		</div>
-	</nav>
-	
-	
-	<div>
-		<a ui-sref="param_manager">Manage Parameters</a>	
-	</div>	
-		
-		<!-- <ul class="nav navbar-nav">
-			<li><a ui-sref="type_user">Users</a></li>
-			<li><a ui-sref="param">Parameters</a></li>
-			<li><a ui-sref="sys_param_values">sys_param_values</a></li>
-			<li><a ui-sref="doc_type">doc_type</a></li>
-			<li><a ui-sref="doc_param">doc_param</a></li>
-			<li><a ui-sref="param_type">param_type</a></li>
-			<li><a ui-sref="param_value">param_value</a></li>
-		</ul>	 -->
-	 <div ui-view="param_manager" ></div>
-	
-	
-	 
-	  
-</div>	
+    	        <style>
+            html, body {
+                height: 100%;
+            }
 
-@endsection
-	
-			              
-			
+        	h1,th,.btn{
+        		font-family: 'Lato';
+        		font-size:14px;
+        	}
+
+            .container {
+                text-align: center;
+    
+                vertical-align: middle;
+                 
+            }
+
+            .content {
+            	
+                text-align: center;
+                display: inline-block;
+            }
+
+            .title {
+            	font-family: 'Lato';
+                font-size: 96px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="title">Admininstrator</div>
+                	
+
+<pre>
+{{$state.current.name}}
+</pre>
+                <div ui-view=""></div>
+            </div>
+        </div>
+    </body>
+    <script src="lib/admin_app.js"></script>	
+	<script src="lib/controllers.js"></script>
+	<script src="lib/services.js"></script>
+	<script src="lib/directives.js"></script>
+	<script src="lib/angular-route.js"></script>
+	<script src="lib/angular-resource.js"></script>
+	<script src="lib/xeditable/js/xeditable.js"></script>
+	<script src="lib/bootstrap.min.js"></script>
+	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
+	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
+	<script src="lib/checklist-model.js"></script>
+
+	<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>
+</html>

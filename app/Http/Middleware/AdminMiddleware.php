@@ -1,24 +1,24 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminMiddleware {
-
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		
-		if ($request->user()->type != 'tech-admin')
+class AdminMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+    	if ($request->user()->type != 'tech-admin')
         {
-            return redirect('/auth/login');
+             return response('123456.', 401);
         }
-     	return $next($request);
-	}
-
+        return $next($request);
+    }
 }

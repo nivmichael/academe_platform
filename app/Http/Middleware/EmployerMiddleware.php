@@ -1,23 +1,24 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class EmployerMiddleware {
-
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		if ($request->user()->subtype != 'employer')
+class EmployerMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+    	if ($request->user()->subtype != 'employer')
         {
-            return redirect('/');
+            return response('Unauthorized.', 401);
         }
-		return $next($request);
-	}	
-
+        return $next($request);
+    }
 }

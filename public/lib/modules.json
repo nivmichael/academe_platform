@@ -111,7 +111,7 @@
   },
   {
   "name": "employer.files",
-   "url": "/employer/files",
+   "url": "files",
    "abstract": false,
    "views": [{
      "name": "employer.files",
@@ -120,17 +120,7 @@
      "cache": false
    }]
   },
-  {
-  "name": "employer.jobs",
-   "url": "/employer/jobs",
-   "abstract": false,
-   "views": [{
-     "name": "employer.jobs",
-      "controller": "formController",
-     "templateUrl": "../../partials/employer/jobs.html",
-     "cache": false
-   }]
-  },
+  
   {
   "name": "dor",
    "url": "/dor",
@@ -144,7 +134,7 @@
   },
   {
   "name": "employer.jobPost",
-   "url": "/employer/jobPost",
+   "url": "newjob",
    "abstract": false,
    "views": [{
      "name": "employer.jobPost",

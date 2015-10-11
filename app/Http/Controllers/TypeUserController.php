@@ -28,6 +28,7 @@ class TypeUserController extends Controller {
 	{
 		$users = DB::table('type_user')
 		->get();		
+		
 		return Response::json($users);
 	}
 	public function columnIndex()

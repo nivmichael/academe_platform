@@ -3,7 +3,7 @@
 <div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >
 	<span data-toggle="modal" data-target=".job">
 		<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">
-			<div class="col-md-12 padding">
+			<div class="col-md-6 padding">
 				<div ng-if="user.files.company_logo" class="postImage">
 					<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">
 				</div>
@@ -72,15 +72,16 @@
 							</div>
 
 						</div>
-
-						<div class="buttons">
-							<span ng-show="editableForm.$visible">
-								<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-									Save
+	<button type="submit"  ng-disabled="editableForm.$waiting">
+									<img src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/save_job.png">
 								</button>
+						<div class="buttons">
+							<div ng-show="editableForm.$visible">
+							
 								<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
 									Cancel
-								</button> </span>
+								</button>
+							 </div>
 						</div>
 
 					</form>

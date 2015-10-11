@@ -60,7 +60,43 @@ class TypePostController extends Controller {
 
 		return Response::json($postsArr);
 	}
-	
+
+	public function getAllPosts()
+	{
+				
+		$post = array();
+		$postsArr=array();
+		$posts = DB::table('type_post')
+		->get();		
+		
+		foreach($posts as $key=>$postParams){
+			
+				
+			$sys_param_values = DB::table('sys_param_values')->where('ref_id','=',$postParams->id)->get();			
+			foreach ($sys_param_values as $value) {			
+				$paramId      = $value->param_id;
+	 			$value 	      = $value->value_short;
+				$paramName    = DB::table('param')->where('id','=',$paramId)->pluck('name');
+				$docParamId   = DB::table('param')->where('name','=',$paramName)->pluck('doc_param_id');
+				///print_r($docParamId);die;
+				$docParamName   = DB::table('doc_param')->where('id','=',$docParamId)->pluck('name');
+				$post[$docParamName][$paramName] = $value;
+				
+				$postInfo = Post::find($postParams->id);	
+				$post['postInfo'] = $postInfo;
+				$logo_param_id = DB::table('param')->where('name','company_logo')->pluck('id');
+				$company_logo  = DB::table('sys_param_values')->where('param_id',$logo_param_id)->where('ref_id',$postParams->user_id)->get();
+				// var_dump($logo_param_id);die;
+			}
+			
+				$postsArr[] = $post;
+		}
+		
+
+
+
+		return Response::json($postsArr);
+	}
 	public function savePost()
 	{
 		
@@ -114,9 +150,6 @@ class TypePostController extends Controller {
 								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
 							// }
 // 							
-							
-							
-							
 							if($existsId) {
 							
 								if(!$value_ref) {
@@ -185,9 +218,7 @@ class TypePostController extends Controller {
 		foreach ($postInfoKeys as $key => $value) {
 			$postInfoKeys[$key] = '';
 		}
-				
 		
-
 		foreach($params as $k=>$v) {
 			$paramName = $v->paramName;	
 			$docParamName = $v->docParamName;
@@ -248,6 +279,7 @@ class TypePostController extends Controller {
 		$postInfo = Post::find($id);
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName, 
+										   param.slug AS slug,
 										   param_type.name AS paramType,
 										   param_value.value AS paramValue,
 										   doc_param.name AS docParamName 
@@ -257,21 +289,18 @@ class TypePostController extends Controller {
 										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id  
 										   LEFT JOIN param_type ON param.type_id = param_type.id
-										   WHERE doc_type_id = 2 
-										   AND type_post.id = ".$id));
+										   WHERE  type_post.id = ".$id));
 		
 		$isMultiple = false;
 		$post['postInfo'] = $postInfo;
 		foreach($params as $k=>$v) {
-			
-			
-		
+
 			$iteration    = $v->iteration;
-			
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
 			$inputType    = $v->paramType;
 			$paramValue = $v->paramValue;
+			$slug = $v->slug;
 		
 			if($v->value_ref == null) {
 				$value = $v->value_short;
@@ -281,6 +310,7 @@ class TypePostController extends Controller {
 		
 			if($iteration !== NULL) {
 				$post[$docParamName][$iteration][$paramName]['paramName'] = $paramName;		
+				$post[$docParamName][$iteration][$paramName]['slug'] = $slug;
 				$post[$docParamName][$iteration][$paramName]['paramValue'] = $value;
 				$post[$docParamName][$iteration][$paramName]['inputType'] = $inputType;
 		
@@ -290,6 +320,7 @@ class TypePostController extends Controller {
 			}elseif($iteration == NULL) {
 												
 				$post[$docParamName][$paramName]['paramName'] = $paramName;		
+				$post[$docParamName][$paramName]['slug'] = $slug;
 				$post[$docParamName][$paramName]['paramValue'] = $value;
 				$post[$docParamName][$paramName]['inputType'] = $inputType;
 								

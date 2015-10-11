@@ -1,4 +1,29 @@
-post.education
+.green{
+	background-color:green;
+	
+}
+.red{
+	background-color:red;
+	
+}
+
+
+.body{
+	  font-weight: 100;
+      font-family: 'Lato';
+}
+table {
+    width: 100%;
+}
+td {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+hr{
+	width:50%;
+}
 .footer {
 	position: fixed;
 	bottom: 0;
@@ -294,6 +319,11 @@ post.education
 .thumbnail > img {
 
 	margin-bottom: 2px;
+	
+}
+.img-thumbnail{
+	height:140px;
+	width:140px;
 }
 .thumbnail_title {
 	display: inline-block;
@@ -418,7 +448,12 @@ post.education
 	position: relative;
 }
 .postDiv {
-
+	padding:10px;
+	
+}
+.postDivChild{
+	
+	border: 1px solid #EDEDED;
 }
 .marginBottom {
 	margin-bottom: 2px;
@@ -524,4 +559,11 @@ post.education
     border-top-right-radius: 0px!important;
     border-top-left-radius: 0px!important;
     
+}
+.saveJob{
+    background-image: url("https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/save_job.png");
+	background-repeat: no-repeat;
+
+
+	    cursor: pointer;
 }

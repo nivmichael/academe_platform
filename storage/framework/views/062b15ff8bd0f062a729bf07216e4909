@@ -1,40 +1,63 @@
-
+<!DOCTYPE html>
 <html>
-	<head>
-		<link rel="shortcut icon" href="img/acadeMe.ico">
-		<title>Academe - welcome</title>
-		
-		
-		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-		
-		<link href="css/myStyle.css" rel="stylesheet">
-		
-	</head>
-	<body>
-		<div class="container-fluid">
+    <head>
+        <title>Laravel</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                display: table;
+                font-weight: 100;
+                font-family: 'Lato';
+            }
+
+            .container {
+                text-align: center;
+                
+                vertical-align: middle;
+            }
+
+            .content {
+                text-align: center;
+                display: inline-block;
+            }
+
+            .title {
+                font-size: 96px;
+            }
+        </style>
+    </head>
+    <body>
+      
+
 	<div class="container">
-		<div class="col-md-3 col-sm-3 col-xs-3"></div>
-			<img class="col-md-6 col-sm-6 col-xs-6" src="../img/usandiego.png">
-		<div class="col-md-3 col-sm-3 col-xs-3"></div>
+	
+			<img  src="../img/bgu-backround_760x760.png">
+		
 		<div class="clearfix"></div>
-		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
-		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>
-		<a href="/auth/login"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/graduate_login_hover.png"></a>
-		<a href="/auth/login_employer"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/employer_login_hover.png"></a>
+		<a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
+		<a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>
+		<a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/graduate_login_hover.png"></a>
+		<a href="employer"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/employer_login_hover.png"></a>
 
 	</div>
 	
-		<footer class="footer">
-			<div class="container-fluid">
-				<div class="col-md-2 col-sm-2 col-xs-2">
-					<a href="/auth/login"><img class="col-md-8 col-sm-8 col-xs-8" src="../img/Menu-Logo.png"></a>
-					
-				</div>
+	<footer class="footer">
+		<div class="container-fluid">
+			<div class="col-md-2 col-sm-2 col-xs-2">
+				<a href="admin"><img class="col-md-8 col-sm-8 col-xs-8" src="../img/Menu-Logo.png"></a>	
 			</div>
-		</footer>
-</div>
-	</body>
+		</div>
+	</footer>
+
+
+    </body>
 </html>

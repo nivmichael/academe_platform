@@ -1,3 +1,151 @@
-<div>
-	allaaaaaaaaaaaaaaa
+<nav class="col-lg-2">
+	<div class="">
+		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>	
+	</div>
+	
+	<div class="col-md-12" dropdown is-open="status.isopen">
+	  <span>status: graduate  </span>
+      <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+        {{user.personalInfo.status }} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+        	{{status.name}}
+        </li>
+      </ul>
+   	 </div>
+	
+	<div class="">
+		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
+		<img class="img-thumbnail" src="{{ user.files.user_photo.paramValue }}" alt="Generic placeholder image">	
+	</div>
+	
+	<div class="docParamLi" ui-sref="jobseeker.findajob.interesting">Interesting</div>
+	<div class="docParamLi" ui-sref="jobseeker.findajob.my_applications">My Applications</div>
+	<div class="docParamLi" ui-sref="jobseeker.findajob.rejected">Rejected</div>
+</nav>
+
+
+
+
+  	<div class="col-lg-10" >
+	
+	    <div >
+	   <!-- Filter and search section! 
+	     <pre>Sorting predicate = {{orderByFilter}}; reverse = {{reverse}}</pre>
+	     -->
+	     <div style="margin:5px;text-align:center;">     	
+		      <label>Order by:</label>
+		      <select ng-model="orderByFilter">
+		      		<option value="postInfo.created_at">Created At</option>
+		      		<option value="postInfo.title">Title</option>
+		      		<option>price</option>
+		      		<option value="inStock">availability</option>
+		      		<option value="lastBuy">Last bought</option>
+		      </select> 
+		      
+		      <select ng-model="reverse">
+		      		<option value="false">desc</option>
+		      		<option value="true">asc</option>
+		      </select> 
+		      
+		      <label>Search Job:</label>
+		      
+		      <input type="text" ng-model="searchText" />
+		      
+		      <label>Max items:</label>
+		      
+		      <select ng-model="limit" ng-init="numbers=[1,2,3,4,5,6,7,8,9,10]">
+			      <option ng-repeat="number in numbers">{{number}}</option>
+		      </select>
+		      
+		      <label>Price range:</label>
+		      From
+		      	<input type="number" ng-model="filter.minPrice"/>
+		      To
+		      	<input type="number" ng-model="filter.maxPrice"/>
+	     </div>
+	  	<!-- table section!   -->
+	  	
+	  	
+	     
+	      	
+	      <div ng-class="" class="postDiv text-center col-lg-6" ng-repeat="(key,job) in allPosts  | filter:searchText | orderBy:orderByFilter:reverse | limitTo:limit"> 
+		      <!-- editable element -->
+     		<span data-toggle="modal" data-target=".job">
+				<div ui-sref="jobseeker.findajob.general" ng-click="getPost(job.postInfo.id)">
+					<div class="postDivChild">
+						<div ng-if="job.files.company_logo" class="postImage">
+							<img ng-src="{{job.files.company_logo.paramValue}}" class="col-md-3">
+						</div>
+						<span class=""> 
+							<h4>{{job.postInfo.title}}</h4>
+							<hr>
+							<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> 
+						</span>
+					</div>
+				</div> 
+			</span>
+	   	  </div>
+	       	
+	      <div id="debug" style="margin-top: 30px">{{ items | json }}</div> 
+    </div>
+  </div>
+  
+
+
+<!-- 
+<div class="container">
+	<div ng-repeat="(key,job) in allPosts" class="postDiv text-center col-md-6" >
+		
+		<span data-toggle="modal" data-target=".job">
+			<div ui-sref="jobseeker.findajob.general" ng-click="getPost(job.postInfo.id)">
+				<div class="postDivChild">
+					<div ng-if="job.files.company_logo" class="postImage">
+						<img ng-src="{{job.files.company_logo.paramValue}}" class="col-md-3">
+					</div>
+					<span class=""> <h4>{{job.postInfo.title}}</h4>
+						<hr>
+					<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> </span>
+				</div>
+			</div> 
+		</span>
+	</div>
+</div> -->
+
+
+<div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="panel panel-default">
+				<a class="close" data-toggle="modal" data-target=".job">&times;</a>
+				<div class="panel-heading">
+					<b>Job Offer {{post.postInfo.id}}</b>
+				</div>
+				<div class="panel-body">
+					<nav class="col-md-2 sideNav">
+						<div ui-sref="jobseeker.findajob.general" class="postLi">
+							General
+						</div>
+						<div ui-sref="jobseeker.findajob.the_company" class="postLi">
+							The Company
+						</div>
+						<div ui-sref="jobseeker.findajob.company_video" class="postLi">
+							Company Video
+						</div>
+						<div ui-sref="jobseeker.findajob.company_site" class="postLi">
+							Company Site
+						</div>
+					</nav>
+					
+					
+					<div ui-view="">
+						
+					</div>
+					
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
