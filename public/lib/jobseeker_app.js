@@ -5,7 +5,7 @@ var $urlRouterProviderRef = null;
 var acadb = angular.module('acadb', [
   'ngRoute', 
   'ui.router',
-
+'ngAnimate',
   'ui.bootstrap',
   'flow',
   'acadb.controllers',
@@ -15,6 +15,7 @@ var acadb = angular.module('acadb', [
   'xeditable',
   'ngResource',
   'checklist-model',
+    'ui.bootstrap.modal'
 ])
 
 
@@ -48,7 +49,7 @@ var acadb = angular.module('acadb', [
        })
        .state('jobseeker.profile', {
           url: "",
-          templateUrl: '../partials/profile.html'   ,
+          templateUrl: '../partials/profileuib.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.findajob', {

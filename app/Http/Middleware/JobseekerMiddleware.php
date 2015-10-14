@@ -19,7 +19,8 @@ class JobseekerMiddleware
 		
     	if ($request->user()->subtype != 'jobseeker')
         {
-            return response('Unauthorized.', 401);
+            return redirect('employer#/');
+          //  return response('Unauthorized.', 401);
         }
         return $next($request);
 

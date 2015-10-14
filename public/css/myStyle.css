@@ -194,7 +194,7 @@ footer{
 .nav-sidebar > li > a {
 
 	font-size: 14px;
-	text-align: middle;
+	/*text-align: middle;*/
 }
 .nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
 	color: #fff;
@@ -326,9 +326,11 @@ footer{
 	left: -50%;
 	right: 0;
 }
+.upthumbnail{
 
+}
 .thumbnail {
-
+	width:200px;
 }
 .thumbnail > img {
 
@@ -620,3 +622,18 @@ ul{
 .grey_background{
 	background-color:#EDEDED;
 }
+.blue{
+	background-color:blue;
+	color:blue;
+}
+.grey{
+	background-color:#F5F5F5;
+}
+
+/*.ng-hide:not(.ng-hide-animate) {*/
+	/*/!* this is just another form of hiding an element *!/*/
+	/*display: block!important;*/
+	/*position: absolute;*/
+	/*top: -9999px;*/
+	/*left: -9999px;*/
+/*}*/

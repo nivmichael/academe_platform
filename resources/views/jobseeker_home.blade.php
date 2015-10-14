@@ -2,9 +2,10 @@
 <html ng-app="acadb">
     <head>
         <title>AcadeME</title>
-				<script src="lib/jquery-1.11.3.min.js"></script>
+		<script src="lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
 		<script src="lib/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 		<script src="../lib/ui-router.js"></script>
 		<script src="lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
@@ -15,6 +16,7 @@
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
 		<link href="css/myStyle.css" rel="stylesheet">
+
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
         <style>
@@ -103,7 +105,9 @@
 	<script src="lib/angular-resource.js"></script>
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
-	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
+	<script src="lib/angular-animate.min.js"></script>
+	{{--<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>--}}
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="lib/checklist-model.js"></script>
 	<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>

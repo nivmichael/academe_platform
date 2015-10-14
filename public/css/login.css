@@ -1,0 +1,92 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: white;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="checkbox"] {
+    margin:0px;
+    padding:0px;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    outline: none!important;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    outline: none!important;
+}
+
+.loginButton{
+
+    cursor: pointer;
+    border: 0;
+    width: 207px;
+    height: 60px;
+    margin-top: 15px;
+    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/button_login.png') no-repeat;
+    outline: 0!important;
+}
+
+.registerButton{
+    display: block;
+    margin-top: 23px;
+    width: 207px;
+    height: 60px;
+    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/button_register.png') no-repeat;
+
+}
+
+.loginFacebook{
+    cursor: pointer;
+    margin-top: 25px;
+    display: block;
+    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/facebook_new.png') no-repeat;
+    height: 55px;
+}
+
+.loginLinkedIn{
+    display: block;
+    margin-top: 23px;
+    width: 213px;
+    height: 60px;
+    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/linkedin_new.png') no-repeat;
+}
+.login-form{
+    width:210px!important;
+    border: 0!important;
+    box-shadow: none;
+    margin:0 auto;
+
+}form {
+     text-align: center;
+ }

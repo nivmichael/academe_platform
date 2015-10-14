@@ -17,7 +17,7 @@ class AdminMiddleware
     {
     	if ($request->user()->type != 'tech-admin')
         {
-             return response('123456.', 401);
+             return response('401', 401);
         }
         return $next($request);
     }

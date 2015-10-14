@@ -17,7 +17,8 @@ class EmployerMiddleware
     {
     	if ($request->user()->subtype != 'employer')
         {
-            return response('Unauthorized.', 401);
+            return redirect('jobseeker#/');
+        //    return response('Unauthorized.', 401);
         }
         return $next($request);
     }
