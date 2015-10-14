@@ -5,6 +5,7 @@ var $urlRouterProviderRef = null;
 var acadb = angular.module('acadb', [
   'ngRoute', 
   'ui.router',
+
   'ui.bootstrap',
   'flow',
   'acadb.controllers',

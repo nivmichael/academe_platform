@@ -37,7 +37,7 @@
 		
 		
 		
-		
+		<!-- 
 		
 		<div ng-repeat="(paramName,paramValue) in jobPost.postInfo" ng-hide="paramName == 'id' || paramName == 'user_id'|| paramName == 'authorized'|| paramName == 'created_at'|| paramName == 'description_short'|| paramName == 'updated_at'" style="display: inline-flex;">
 			<span class="param_label col-md-2"> 
@@ -48,17 +48,17 @@
 			</span>	
 		
 		</div>
-		
+		 -->
 		
 		
 
 
-		<div ng-repeat="(docParamName,docParamValues) in jobPost" >
-			<div ng-repeat="(paramName,props) in docParamValues" class="" style="display: inline-block;">
-	
+		<div ng-repeat="(docParamName,docParamValues) in jobPost" ng-hide="docParamName == 'postInfo'">
+			<div ng-repeat="(paramName,props) in docParamValues" class="" style="display: inline-block;"  >
+	{{docParamName}}
 	
 				<span class="param_label col-md-2"> 
-					{{props.paramName}}
+					{{props.slug}}
 				</span>
 				
 				
@@ -172,6 +172,7 @@
 					<button type="button" class="btn btn-default" ng-click="add1(docParamName,$index)">+ Add a Record</button>
 				</div>
 			</div>
+				<hr>
 		</div>
 	</form
 	<div class="col-xs-6 col-xs-offset-3" >		

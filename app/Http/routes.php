@@ -21,20 +21,43 @@ Route::get('/', function () {
 
 
 // Authentication routes...
+
+
+
+
+
+
+
+Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Route::get('/auth/login', 'Auth\AuthController@getLogin');
-Route::get('auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
-Route::get('auth/login/employer', 'Auth\AuthController@getEmployerLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('/auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
+Route::get('/auth/login/employer', 'Auth\AuthController@getEmployerLogin');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 Route::post('/auth/login', 'Auth\AuthController@postLogin');
 
 // Registration routes...
-Route::get('auth/register_employer', 'Auth\AuthController@getEmployerRegister');
-Route::get('auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
+Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');
+Route::get('/auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
 Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
+Route::post('/deleteImage' ,'SysParamValuesController@deleteimagefromdb');
 // Retrieve Authed User id
 Route::get('/getAuthId', function(){
 	return Auth::id();

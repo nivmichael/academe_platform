@@ -33,7 +33,7 @@ var acadb = angular.module('acadb', [
       $httpProvider.defaults.xsrfCookieName = 'X-CSRF-TOKEN';
 
       //$httpProvider.interceptors.push('httpInterceptor');
-      $urlRouterProvider.otherwise("/");
+      $urlRouterProvider.otherwise("/company");
        
       $stateProvider
 	

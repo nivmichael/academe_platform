@@ -1,18 +1,43 @@
 <span > The Number of Jobs Posted:  {{allJobs.length}} </span>
 <hr>
-<div ng-repeat="(key,job) in allJobs" class="col-md-6 postDiv text-center" >
+
+
+ <div ng-class="" class="postDiv text-center col-lg-6" ng-repeat="(key,job) in allJobs"> 
+		      <!-- editable element -->
+     		<span data-toggle="modal" data-target=".job">
+				<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">
+					<div class="postDivChild">
+						<div class="postImage">
+							
+							<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
+						</div>
+						<span class=""> 
+							<h4>{{ job.postInfo.title }}</h4>
+							<hr>
+							<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> 
+						</span>
+					</div>
+				</div> 
+			</span>
+	   	  </div>
+	       	
+
+
+<!-- <div ng-repeat="(key,job) in allJobs" class="col-lg-6 postDiv text-center" >
 	<span data-toggle="modal" data-target=".job">
 		<div ui-sref="employer.jobs" ng-click="getPost(job.postInfo.id)">
-			<div class="col-md-6 padding">
-				<div ng-if="user.files.company_logo" class="postImage">
-					<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">
-				</div>
-				<span class="col-md-8"> <h4>{{job.postInfo.title}}</h4>
+			<div class="postDivChild">
+				<div class="col-md-6 padding">
+					<div ng-if="user.files.company_logo" class="postImage">
+						<img ng-src="{{user.files.company_logo.paramValue}}" class="col-md-3">
+					</div>
+					<span class="col-md-8"> <h4>{{job.postInfo.title}}</h4>
 					<hr>
 					<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> </span>
+				</div>
 			</div>
 		</div> </span>
-</div>
+</div> -->
 
 <div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	<div class="modal-dialog modal-lg">

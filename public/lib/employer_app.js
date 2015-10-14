@@ -45,8 +45,6 @@ var acadb = angular.module('acadb', [
           templateUrl: '../partials/employerHome.html',
           controller: 'UserHomeController', 
         })
-        
-      
         .state('employer.edit', {
           url: "^/edit",
           templateUrl: '../partials/employer/profile.html',

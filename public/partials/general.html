@@ -1,4 +1,4 @@
-<h1>General</h1>
+<h6>General</h6>
 
 <!-- <post docparam="postInfo" param="description" parameter="abc"></post> -->
 
@@ -12,15 +12,23 @@
 
 <hr>
 
-<h3>Education</h3>
-
-<div ng-repeat="(key,values) in post.education">
-	<div ng-repeat="(paramName,paramValues) in values">
-		{{paramValues.paramValue}}
+<h6>Education</h6>
+<div ng-repeat="(docParamName,docParamValues) in post">	
+	<div ng-repeat="(iterableKey,parameters) in docParamValues" ng-if="!isArray(docParamValues)">
+		
+			{{iterableKey}} : {{parameters.paramValue}}
+		
+		<div ng-repeat="(param,values) in parmeters track by $index" ng-if="isArray(docParamValues)">
+		
+			{{param}} : {{values.paramValue}}
+		
+		</div>
 	</div>
 </div>
 
-<hr>
+
+
+
 
 <div>{{post.postInfo.title}}</div>
 

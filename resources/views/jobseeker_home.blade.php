@@ -73,7 +73,7 @@
 							<li class="dropdown">
 								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personalInfo.first_name}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="[[ url('/') ]]">Edit Profile</a></li>
+									<li><a href="[[ url('/jobseeker#/profile') ]]">Edit Profile</a></li>
 									<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
 								</ul>
 							</li>
@@ -92,6 +92,7 @@
            
         
     </body>
+
     <script src="lib/jobseeker_app.js"></script>	
 	<script src="lib/controllers.js"></script>
 	<script src="lib/filters.js"></script>
@@ -105,6 +106,5 @@
 	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="lib/checklist-model.js"></script>
-
 	<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>
 </html>

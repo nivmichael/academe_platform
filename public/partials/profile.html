@@ -18,19 +18,17 @@
 			    	<div flow-init="flowOp(m)"
 					     flow-files-submitted="$flow.upload()"
 					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-					     class="modal-content" >					     
+					     class="modal-content" style="height:100%;overflow:auto;">					     
  						 <br/>
-						 
+					
 						 <div class="thumbnail" >
 							<div class="thumbnail_title">{{q}}</div>
-								<img  ng-src="{{n.paramValue}}">
+							
+								<img  ng-src="{{n.paramValue }}" width="200px">
 								<div class="btn-group">
 						       		 <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,n,m)">
 								        <i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
 								     </a>
-								     <button>
-								        <i class=" btn btn-default btn-xs glyphicon glyphicon-user"></i>
-								     </button>	
 							    </div>
 								
 						</div>
@@ -42,6 +40,7 @@
 						      <div class="thumbnail_title">{{file.name}}</div>
 						      <div class="thumbnail" ng-show="$flow.files.length">
 						        <img flow-img="file" />
+						 
 						      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
 						        <div class="progress-bar" role="progressbar"
 						             aria-valuenow="{{file.progress() * 100}}"
@@ -59,7 +58,7 @@
 						      </div>
 				
 						    </div>
-						    
+						   
 						    <div class="clear"></div>
 					  </div>
 					  
@@ -114,6 +113,7 @@
 <!-- sideBar with the status, picture, and name -->
 
 <nav class="col-lg-2 sideNav">
+
 	<div class="">
 		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>	
 	</div>
@@ -134,7 +134,7 @@
 	
 	<div class="">
 		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail" src="{{ user.files.user_photo.paramValue }}" alt="Generic placeholder image">	
+		<img class="img-thumbnail" ng-src="{{ user.files.profile_pic.paramValue }}" src="../../img/No-Photo.gif" alt="Generic placeholder image" >	
 	</div>
 	
 	<div class="btn findajobBtn" ui-sref="jobseeker.findajob">
@@ -156,7 +156,7 @@
   </div>
 
  <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active accordionPanel' is-open="$first" ng-hide="docParamName == 'files'" >
+    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active accordionPanel' ng-init="status = $first" is-open="status" ng-hide="docParamName == 'files'" >
    		 <accordion-heading is-open="status.isOpen[$index]">
    		  <div ng-class="{'openAccordion': status.isOpen[$index], 'closeAccordion': !status.isOpen[$index]}" >
 	           {{ docParamName }} <i class="pull-right glyphicon"></i>
@@ -420,7 +420,7 @@
 								 	     		</div>
 							 			</div>			
 							 	</div>	
-							 	<hr ng-if="docParamName != 'personalInfo'" style="border-bottom: 1px dashed;"> 
+							 	
 					 			<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
 									<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">
 										X Delete
@@ -439,7 +439,6 @@
 											<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
 									</div>
 								</div>	
-								
 		 	    		 </div>
 
 					 	 <div class="buttons">
@@ -451,6 +450,7 @@
 				      		</div>
 				    	</div> 
 		    </form>
+								<hr ng-if="docParamName != 'personalInfo'" style="border-bottom: 1px dashed;"> 
     	</div>
     </accordion-group>
     

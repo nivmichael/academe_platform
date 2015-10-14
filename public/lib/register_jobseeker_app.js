@@ -33,7 +33,7 @@ var acadb = angular.module('acadb', [
       $httpProvider.defaults.xsrfCookieName = 'X-CSRF-TOKEN';
 
       //$httpProvider.interceptors.push('httpInterceptor');
-      $urlRouterProvider.otherwise("/");
+      $urlRouterProvider.otherwise("/personal_information");
        
       $stateProvider
 	
@@ -43,31 +43,30 @@ var acadb = angular.module('acadb', [
          templateUrl: '../../partials/register/register.html',
          controller: 'RegisterController',   
         })
-  
         .state('register.personalInfo', {
           url: "^/personal_information",
        	  controller: 'formController',   
-          templateUrl: '../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/personalInfo.html'  
         })
         .state('register.education', {
           url: "^/education",
           controller: 'formController',   
-          templateUrl: '../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/personalInfo.html'  
         })
         .state('register.experience', {
           url: "^/experience",
          controller: 'formController',   
-          templateUrl: '../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/personalInfo.html'  
         })
         .state('register.language_skills', {
           url: "^/language_skills",
          controller: 'formController',   
-          templateUrl: '../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/personalInfo.html'  
         })
         .state('register.files', {
           url: "^/files",
        controller: 'formController',   
-          templateUrl: '../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/personalInfo.html'  
         });
      
  
@@ -86,7 +85,7 @@ var acadb = angular.module('acadb', [
     var $state = $rootScope.$state;
     
     $http
-      .get("../lib/modules.json")
+      .get("../../lib/modules.json")
       .success(function(data) {
         angular.forEach(data, function(value, key) {
           

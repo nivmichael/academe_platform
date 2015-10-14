@@ -1,4 +1,4 @@
-	<button class="btn btn-primary" ui-sref="employer.edit">Edit</button>
+	<!-- <button class="btn btn-primary" ui-sref="employer.edit">Edit</button> -->
 
 <nav class="col-md-2 sideNav text-center">
 	<div class="col-md-12" dropdown is-open="status.isopen">
@@ -15,7 +15,7 @@
     <span>Last Updated - </span>{{user.personalInfo.updated_at}}
 	<div class="col-md-12 employerDetails">
 		<h3 class="text-center">{{user.company.company_name.paramValue}}</h3>
-		<img class="img-thumbnail col-md-12" src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image">
+		<img class="img-thumbnail" src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image">
 	
 	</div>
 	<div class="">
@@ -44,8 +44,8 @@
 		<div ui-view="employer.{{a}}"></div>
   </div>
   <div ui-view="employer.jobPost" class="col-md-8"></div>
-  <div ui-view=""></div>
-  <div ui-view="employer.edit" class="col-md-8"></div>
+  <div ui-view="" class="col-lg-10"></div>
+  <!-- <div ui-view="employer.edit" class="col-md-8"></div> -->
 <!--
   <div ui-view="employer.jobs" class="col-md-10"></div>
 	

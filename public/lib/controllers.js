@@ -260,10 +260,11 @@ angular.module('acadb.controllers', [])
  };
 
 $scope.isArray = angular.isArray;
- $scope.oneAtATime = true;
+$scope.oneAtATime = true;
 $scope.allJobs = {};
 $.getJSON('/getAllJobs', function(data){
-  $scope.$apply(function(){
+  
+	$scope.$apply(function(){
        $scope.allJobs = data;
     });
 });
@@ -308,6 +309,7 @@ $.getJSON('/getAllJobs', function(data){
 	}else{
 		return false ;
 	}
+	console.log('here ');
  };
  $scope.getAuthId();
  $scope.addItem = function() {
@@ -348,10 +350,11 @@ $.getJSON('/getAllJobs', function(data){
 	           		 },
 	            success: function(data)
 	            {	
-	            	delete $scope.user.files[item];		          	
-	            	$scope.$apply();	            	    
+	            	$scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif';
+	            	// delete $scope.user.files[item];		          	
+	            	// $scope.$apply();	            	    
 	            }
-			}).done();
+			}).done($scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif');
 	}; 
    };    
 // DatePicker 
@@ -408,22 +411,24 @@ $.getJSON('/getAllJobs', function(data){
 	  	});
   };
 	  
-  $scope.addWhenEdit =function(docParam,$index) {	
+  $scope.addWhenEdit = function(docParam,$index) {	
   	console.log($scope.user[docParam]);
 	$http.get('/columns/register_jobseeker')
 	  	.success(function(data, status, headers, config) {
-	  	$scope.inserted = data[docParam];	   
-	  	if(!(angular.isArray($scope.user[docParam]))){
-	  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
-	  	}else{
-			$scope.user[docParam].push($scope.inserted);
-	  	}	
-	  		
+		  	$scope.inserted = data[docParam];	   
+		  	if(!(angular.isArray($scope.user[docParam]))){
+		  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
+		  	}else{
+				$scope.user[docParam].push($scope.inserted);
+		  	}	
+		  		console.log(docParam);
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
 	  	});
   };    
+  
+  
 	   $scope.addRecordEmployer =function(docParam,$index) {	
 		
 		$http.get('/columns/register_employer')
@@ -532,11 +537,11 @@ $scope.educationStatuses = [
  absUrl = absUrl[4];
  absUrl = absUrl.replace('#','');
  $scope.absUrl = absUrl;
- console.log($scope.absUrl);
+
  
  state = state.split('/');
  state = state[1];
- console.log(state);
+ console.log($state.current.name);
  // $state.go(state);
 
 $scope.getAuthId = function(){
@@ -548,7 +553,7 @@ $scope.getAuthId = function(){
    };
 $scope.getAuthId();
 $scope.getColumns = function(){
-  	
+  	  console.log(absUrl);
 	  $http.get('/columns/' + absUrl).
 	  success(function(data, status, headers, config) {
 	 	 $scope.user = data;
@@ -581,6 +586,7 @@ $scope.getColumns = function(){
 	}else{
 		return false ;
 	}
+	console.log(doc);
 };
   
 	$scope.getColumns();
@@ -744,6 +750,7 @@ $scope.getColumns = function(){
 
 	$scope.flowOp = function(key){
 	//	console.log(key);
+	// $scope.user.files.profile_pic.paramValue = 
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
 	};
 	
@@ -896,6 +903,7 @@ $scope.getColumns = function(){
 	}else{
 		return false ;
 	}
+	console.log(doc);
 };
   
    $scope.add = function(doc_param_key,index) {

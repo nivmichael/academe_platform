@@ -111,18 +111,28 @@ class SysParamValuesController extends Controller  {
 			$photo->doc_type = 1;	
 			$photo->value_long= $fileName;
 			$photo->value_ref = null;
-			$photo->save();
+			
+			
+			//$hasfileid = DB::table('SysParamValues')->where('param_id', $photo->param_id)->where('ref_id',$userId)->pluck('id');
+			$hasfileid =DB::table('sys_param_values')->where('param_id', $photo->param_id)->where('ref_id',$userId)->update(['value_short'=>$photo->value_short]);
+			if(!$hasfileid) {
+				
+				$photo->save();
+			}else{
+			
+				dd('updated');
+			}
 			
 		
 		
 		
 		
 		
+		// return Response::json($test);
 		
 		
 		
-		
-        return $response;
+        return $photo->value_short;
 	}
 
     public function getGroups()
@@ -278,11 +288,10 @@ class SysParamValuesController extends Controller  {
 	{
 		$id = $_POST['id'];	
 		if($_POST['path']) {
-			$path = $_POST['path'];	
+			$path = $_POST['path']['paramValue'];	
 		};
-
-		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_id', '=', $id)->delete();
-		return Response::json($path);
+	
+		$success = DB::table('sys_param_values')->where('value_short', '=', $path)->where('ref_id', '=', $id)->update(['value_short' => 'img/No-Photo.gif']);
 	}
 	
 	public function deleteIterable()
@@ -305,7 +314,7 @@ class SysParamValuesController extends Controller  {
 			$docType = '2';
 			$request = Request::create('/savePost','POST', array($all));
 		
-		}
+	 		}
 		
 			
 			

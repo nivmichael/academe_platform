@@ -7,8 +7,9 @@
 
 	
 	<div class="col-lg-2">
+		
 		<div ng-repeat="(step,b) in user track by $index" id="status-buttons" class="docParamLi" ng-hide="absUrl == 'register_employer' && step == 'personalInfo'">
-			<li ui-sref-active="active" ui-sref=".{{step}}">
+			<li ui-sref-active="" ui-sref=".{{step}}">
 				<span class="▶">▶</span>{{step}} 
 			</li>
 	

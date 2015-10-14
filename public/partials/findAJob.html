@@ -17,7 +17,7 @@
 	
 	<div class="">
 		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail" src="{{ user.files.user_photo.paramValue }}" alt="Generic placeholder image">	
+		<img class="img-thumbnail" src="{{ user.files.profile_pic.paramValue }}" alt="Generic placeholder image">	
 	</div>
 	
 	<div class="docParamLi" ui-sref="jobseeker.findajob.interesting">Interesting</div>
@@ -80,7 +80,7 @@
 							<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
 						</div>
 						<span class=""> 
-							<h4>{{job.postInfo.title}}</h4>
+							<h4>{{ job.postInfo.title }}</h4>
 							<hr>
 							<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> 
 						</span>
@@ -117,7 +117,7 @@
 
 <div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
+		<div class="modal-content" style=" height: 100%; overflow: auto;">
 			<div class="panel panel-default">
 				<a class="close" data-toggle="modal" data-target=".job">&times;</a>
 				<div class="panel-heading">

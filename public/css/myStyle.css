@@ -34,8 +34,11 @@ hr{
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	padding: 10px;
+	
 	background-color: #EDEDED;
+}
+footer{
+	padding:0px !important;
 }
 
 .form-control {
@@ -333,8 +336,8 @@ hr{
 	
 }
 .img-thumbnail{
-	height:140px;
-	width:140px;
+	/*height:140px;
+	width:140px;*/
 }
 .thumbnail_title {
 	display: inline-block;
@@ -342,7 +345,7 @@ hr{
 }
 .delBtnBtn:hover {
 	background-color: #D43F3A;
-	position: absolute !important;
+	/*position: absolute !important;*/
 	bottom: 0px;
 }
 .delBtnIcon:hover {
@@ -353,7 +356,7 @@ hr{
 	background-color: #D43F3A;
 }
 .delBtnIcon {
-
+	
 	bottom: 0px;
 	margin: 1px;
 	color: white;
@@ -367,8 +370,9 @@ hr{
 	border: 0px;
 }
 .btn-group, .btn-group-vertical {
-	position: absolute !important;
-	bottom: 24px;
+	/*position: absolute !important;
+	*/
+	/*bottom: 24px;*/
 	/* display: inline-block; */
 	/* vertical-align: middle; */
 }
@@ -475,9 +479,11 @@ ul{
 	
 }
 .postImage > img {
-	/*position: relative;*/
-	height:90px;
-	/*width:90px;*/
+	position: relative;
+	top:15px;
+	/*height:90px;*/
+	width:90px;
+	
 }
 .postDiv {
 	padding:20px;
@@ -515,6 +521,8 @@ ul{
 	border-radius: 25px;
 	height: 85px;
 	weight: 150px;
+	    position: relative;
+    top: 300px;
 }
 
 .edetail {
@@ -583,7 +591,8 @@ ul{
 }
 .panel,.panel-default {
 	box-shadow:none;
-	
+	height: 100%;
+	overflow: auto;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
     border:0px solid transparent;

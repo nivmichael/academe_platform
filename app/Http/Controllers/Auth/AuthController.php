@@ -7,11 +7,13 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
 use DB;
 use Auth;
 use Hash;
 use Response;
 use Input;
+use Socialite;
 class AuthController extends Controller
 {
     /*
@@ -227,4 +229,44 @@ class AuthController extends Controller
 return $personalInfo;
 		
 	}
+
+ /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('github')->user();
+		// OAuth Two Providers
+		$token = $user->token;
+		
+		// OAuth One Providers
+		$token = $user->token;
+		$tokenSecret = $user->tokenSecret;
+		
+		// All Providers
+		$user->getId();
+		$user->getNickname();
+		$user->getName();
+		$user->getEmail();
+		$user->getAvatar();
+        // $user->token;
+    }
+
+
+
+
+
+
 }
