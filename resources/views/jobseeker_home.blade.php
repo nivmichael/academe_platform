@@ -86,10 +86,7 @@
 		</nav>
      
            
-            	<!-- <pre>
-{{$state.current.name}}
-</pre>
-                <div class="title">JOB SEEKER</div> -->
+
                 <div ui-view="" ></div>
            
         
@@ -106,7 +103,7 @@
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
 	<script src="lib/angular-animate.min.js"></script>
-	{{--<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>--}}
+	<!--	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
 	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="lib/checklist-model.js"></script>

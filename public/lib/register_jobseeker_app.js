@@ -47,27 +47,27 @@ var acadb = angular.module('acadb', [
           url: "^/personal_information",
        	  controller: 'formController',   
           templateUrl: '../../partials/register/personalInfo.html'  
-        })
-        .state('register.education', {
-          url: "^/education",
-          controller: 'formController',   
-          templateUrl: '../../partials/register/personalInfo.html'  
-        })
-        .state('register.experience', {
-          url: "^/experience",
-         controller: 'formController',   
-          templateUrl: '../../partials/register/personalInfo.html'  
-        })
-        .state('register.language_skills', {
-          url: "^/language_skills",
-         controller: 'formController',   
-          templateUrl: '../../partials/register/personalInfo.html'  
-        })
-        .state('register.files', {
-          url: "^/files",
-       controller: 'formController',   
-          templateUrl: '../../partials/register/personalInfo.html'  
         });
+       // .state('register.education', {
+       //   url: "^/education",
+       //   controller: 'formController',
+       //   templateUrl: '../../partials/register/personalInfo.html'
+       // })
+       // .state('register.experience', {
+       //   url: "^/experience",
+       //  controller: 'formController',
+       //   templateUrl: '../../partials/register/personalInfo.html'
+       // })
+       // .state('register.language_skills', {
+       //   url: "^/language_skills",
+       //  controller: 'formController',
+       //   templateUrl: '../../partials/register/personalInfo.html'
+       // })
+       // .state('register.files', {
+       //   url: "^/files",
+       //controller: 'formController',
+       //   templateUrl: '../../partials/register/personalInfo.html'
+       // });
      
  
     
@@ -81,43 +81,65 @@ var acadb = angular.module('acadb', [
 }])
 
 .run(['$q', '$rootScope', '$http', '$urlRouter', function($q, $rootScope, $http, $urlRouter) {
-  
+    var stateList = [];
+
     var $state = $rootScope.$state;
     
     $http
-      .get("../../lib/modules.json")
+      .get("/jobseekerSteps")
       .success(function(data) {
-        angular.forEach(data, function(value, key) {
-          
+
+          angular.forEach(data, function(value, key) {
+            console.log(value);
+            var step = {
+              "name":"register."+value.name,
+              "url": '^/'+value.name,
+              "templateUrl":'../../partials/register/personalInfo.html'  ,
+              "controller":'formController',
+              "value":value.name
+
+            }
+            stateList.push(step);
+          });
+
+
+
+
+            angular.forEach(stateList, function(value, key) {
+
+
+
+
           var getExistingState = $state.get(value.name);
 
           if(getExistingState !== null){
-            return; 
+
+            return;
           }
-          
+
           var state = {
-            "url": value.url,
-            "parent": value.parent,
-            "abstract": value.abstract,
-            "views": {}
+            "name":"register."+value.name,
+            "url": '^/'+value.value,
+            "templateUrl":'../../partials/register/personalInfo.html'  ,
+            "controller":'formController',
+
           };
 
-          angular.forEach(value.views, function(view) {
-            state.views[view.name] = {
-              templateUrl: view.templateUrl,
-            	controller: view.controller,
-            };
-          });
+          //angular.forEach(value.views, function(view) {
+          //  state.views[view.name] = {
+          //    templateUrl: view.templateUrl,
+          //  	controller: view.controller,
+          //  };
+          //});
 
           $stateProviderRef.state(value.name, state);
-       
         });
-        // Configures $urlRouter's listener *after* your custom listener
- 
+
+          // Configures $urlRouter's listener *after* your custom listener
+      console.log($stateProviderRef);
       });
   }
 ]);
-
 
 
 

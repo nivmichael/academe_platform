@@ -547,9 +547,9 @@ $scope.educationStatuses = [
 
 .controller("RegisterController",['$scope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN','$filter', function($scope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN,$filter) {
 // console.log("RegisterController");
-// 	
+//
 
- 
+
   'use strict';
  var state = $location.path();
  var absUrl = $location.absUrl();
@@ -559,11 +559,40 @@ $scope.educationStatuses = [
  absUrl = absUrl.replace('#','');
  $scope.absUrl = absUrl;
 
- 
+
  state = state.split('/');
  state = state[1];
  console.log($state.current.name);
  // $state.go(state);
+
+var locationSubtype = $state.current.name;
+var prefix = locationSubtype;
+prefix = prefix.split('.');
+prefix = prefix[0];
+		console.log(locationSubtype);
+if(locationSubtype == 'register.personalInfo') {
+	locationSubtype = 'jobseeker';
+	console.log(locationSubtype);
+}else if(locationSubtype == 'register.company') {
+	locationSubtype = 'employer';
+	console.log(locationSubtype);
+}
+
+
+
+		$http.get('/' + locationSubtype + 'Steps' ).
+			success(function(data, status, headers, config) {
+
+
+				$scope.steps = data;
+
+			}).
+			error(function(data, status, headers, config) {
+
+			});
+
+
+
 
 $scope.getAuthId = function(){
    		$http.get('/getAuthId').
@@ -580,17 +609,17 @@ $scope.getColumns = function(){
 	 	 $scope.user = data;
 	 	console.log('getcolumns from RegCtrl');
 	 	 $scope.userCaretName = $scope.user.personalInfo.first_name;
-	 	 //registration steps	 	 
+	 	 //registration steps
 	 	 $scope.next_keys = [];
 	 	 var prev_key = false;
-			
+
 		 for(var key in $scope.user) {
 		 	if(!prev_key) {
 		 		prev_key = key;
 		 	} else {
 				$scope.next_keys[prev_key] = key;
 				prev_key = key;
-				$scope.next = key;	
+				$scope.next = key;
 			}
 		}
 	  }).
@@ -600,7 +629,7 @@ $scope.getColumns = function(){
 	  });
   };
   $scope.nextDoc = function(doc){
-	
+
 	if($scope.next_keys[doc]){
 		$scope.doc = $scope.next_keys[doc];
 		return $scope.doc ;
@@ -609,20 +638,20 @@ $scope.getColumns = function(){
 	}
 	console.log(doc);
 };
-  
+
 	$scope.getColumns();
 
-  
- 
+
+
 
 }])
 .controller("FindajobController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
-	
+
 	$scope.getAllPosts = function(){
-  
+
 	  $http.get('/getAllPosts').
 	  success(function(data, status, headers, config) {
-	 	
+
 			$scope.allPosts = data;
 	  }).
 	  error(function(data, status, headers, config) {
@@ -631,17 +660,17 @@ $scope.getColumns = function(){
 	  });
   };
   $scope.getAllPosts();
-  $scope.getPost = function(id){ 
+  $scope.getPost = function(id){
    	$http.get('/job/'+id ).
-	success(function(data, status, headers, config) {		
+	success(function(data, status, headers, config) {
 
-		
-	      $scope.post = data;	
-		
+
+	      $scope.post = data;
+
 	}).
 	error(function(data, status, headers, config) {
-		    
-	});	
+
+	});
  };
 
  	
@@ -736,7 +765,6 @@ $scope.getColumns = function(){
 	 locationSubtype = 'employer';
  }
  
- 
  // locationSubtype = locationSubtype.split('register');
 	// locationSubtype = locationSubtype[1];
 // 	
@@ -755,8 +783,10 @@ $scope.getColumns = function(){
 };
 
 
-		
-	$scope.getPost = function(id){ 
+
+
+
+ 	$scope.getPost = function(id){
    	$http.get('/job/'+id ).
 	success(function(data, status, headers, config) {		
 
@@ -1042,11 +1072,7 @@ $scope.getColumns = function(){
 	  
 	
    $scope.move = function(array, fromIndex, toIndex){
-   	 console.log(array);
-	
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-   	 
-   	
    };
    
   $scope.remove = function(docParam,docParamName,param) { 
@@ -1056,12 +1082,12 @@ $scope.getColumns = function(){
 	  docParam:docParam,
 	  post:$scope.post,
 	  docParamName:docParamName,
-	  param:param,_token:CSRF_TOKEN}).
+	  param:param,
+	  _token:CSRF_TOKEN}).
 	  then(function(response) {
 	    
 	  }, function(response) {
-	    // called asynchronously if an error occurs
-	    // or server returns response with an error status.
+
 	  });
   };  
    $scope.groups={};
@@ -1075,10 +1101,12 @@ $scope.getColumns = function(){
     }
   };
    $scope.loadGroups = function() {
+	console.log('flag');
     return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
       $scope.groups = data;
     });
   };
+		$scope.loadGroups();
   
   
   
@@ -1138,7 +1166,6 @@ $scope.getColumns = function(){
 	 	 //registration steps	 	 
 	 	 $scope.next_keys = [];
 	 	 var prev_key = false;
-			
 		 for(var key in $scope.user) {
 		 	if(!prev_key) {
 		 		prev_key = key;

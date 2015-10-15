@@ -262,12 +262,8 @@
 			 </div>
 			 <div ng-switch-when="select">
 			 	 <div  class="param_input col-md-10" >
-							<select type='select' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']">
-								<option value="volvo">Volvo</option>
-								<option value="saab">Saab</option>
-								<option value="mercedes">Mercedes</option>
-								<option value="audi">Audi</option>
-							</select> 
+					 <select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="s.value as s.value for s in groups" ng-change="loadNewCities(state1);">
+					 </select>
 				</div>
 			 </div>
 			 <div ng-switch-when="textarea">
@@ -307,12 +303,28 @@
 				<div ng-switch="props.inputType"> <div ng-switch-when="text"> <div  class="param_input col-md-10" ng-if="props.paramName">
 							<input type='text' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
 						</div> </div> <div ng-switch-when="select"> <div  class="param_input col-md-10" ng-if="props.paramName">
-							<select type='select' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">
-								<option value="volvo">Volvo</option>
-								<option value="saab">Saab</option>
-								<option value="mercedes">Mercedes</option>
-								<option value="audi">Audi</option>
-							</select> </div> </div> <div ng-switch-when="checklist"> <div  class="param_input col-md-10" ng-if="props.paramName"> <label ng-repeat="check in checklist">
+
+
+
+
+
+									<!--<select type='select' class="form-control" placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">-->
+										<!--<option value="volvo">Volvo</option>-->
+										<!--<option value="saab">Saab</option>-->
+										<!--<option value="mercedes">Mercedes</option>-->
+										<!--<option value="audi">Audi</option>-->
+									<!--</select>-->
+
+
+
+
+
+
+
+
+
+				</div> </div> <div ng-switch-when="checklist">
+					<div  class="param_input col-md-10" ng-if="props.paramName"> <label ng-repeat="check in checklist">
 								<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check">
 								<small>{{check}}</small> </label> </div> </div> <div ng-switch-default> <div  class="param_input col-md-10" ng-if="props.paramName">
 							<input type='text' class="form-control " placeholder="{{paramName}}{{paramKey + 1}}" name="user[docParam][paramKey][paramName]['paramValue']" ng-model="user[docParam][paramKey][paramName]['paramValue']">

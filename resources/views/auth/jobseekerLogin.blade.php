@@ -17,12 +17,12 @@
     <link href="../../css/login.css" rel="stylesheet">
 
 
-    <div class="container">
+    <div class="container" style="text-align: center;">
 
+        <img src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/bgu-backround_760x760.png">
         <form class="form-signin" method="POST" action="/auth/login">
             {!! csrf_field() !!}
-                    <!--<h2 class="form-signin-heading">Please sign in</h2>-->
-            <img src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/bgu-backround_760x760.png">
+            <!--<h2 class="form-signin-heading">Please sign in</h2>-->
             <h6>Email</h6>
             <input type="email" class="form-control login-form" name="email" value="[[ old('email') ]]" required>
             <h6>Password</h6>

@@ -1,464 +1,473 @@
-<script type="text/ng-template" id="customTemplate.html">
-  <a style="float:left;">
-      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>
-  </a>
-</script>
 
 
 
 
+	<script type="text/ng-template" id="customTemplate.html">
+		<a style="float:left;">
+			<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+			<div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>
+		</a>
+	</script>
+
+	<script type="text/ng-template" id="group-template.html">
+		<div class="panel {{panelClass || 'panel-default'}}" >
+			<div class="panel-heading">
+				<h4 class="panel-title" style="color:#fa39c3">
+					<a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+							ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+				</h4>
+			</div>
+			<div class="panel-collapse collapse" uib-collapse="!isOpen">
+				<div class="panel-body" style="text-align: right" ng-transclude></div>
+			</div>
+		</div>
+	</script>
 
 
-<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
+	<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
 
 
-			    <div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >
-			    	<div flow-init="flowOp(m)"
-					     flow-files-submitted="$flow.upload()"
-					     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-					     class="modal-content" style="height:100%;overflow:auto;">
- 						 <br/>
+		<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >
+			<div flow-init="flowOp(m)"
+				 flow-files-submitted="$flow.upload()"
+				 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+				 class="modal-content" style="height:100%;overflow:auto;">
+				<br/>
 
-						 <div class="thumbnail" >
-							<div class="thumbnail_title">{{q}}</div>
+				<div class="thumbnail" >
+					<div class="thumbnail_title">{{q}}</div>
 
-								<img  ng-src="{{n.paramValue }}" width="200px">
-								<div class="btn-group">
-						       		 <a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,n,m)">
-								        <i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-								     </a>
-							    </div>
+					<img  ng-src="{{n.paramValue }}" width="200px">
+					<div class="btn-group">
+						<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personalInfo.id,n,m)">
+							<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+						</a>
+					</div>
 
+				</div>
+
+				<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+					<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+					<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+
+						<div class="thumbnail_title">{{file.name}}</div>
+						<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >
+							<img flow-img="file" />
+
+							<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+								<div class="progress-bar" role="progressbar"
+									 aria-valuenow="{{file.progress() * 100}}"
+									 aria-valuemin="0"
+									 aria-valuemax="100"
+									 ng-style="{width: (file.progress() * 100) + '%'}">
+									<div class="sr-only">{{file.progress()}}% Complete</div>
+								</div>
+							</div>
+							<div class="btn-group">
+								<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
+									<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+								</a>
+							</div>
 						</div>
 
- 						<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-						    <p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-						    <div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+					</div>
 
-						      <div class="thumbnail_title">{{file.name}}</div>
-						      <div class="thumbnail upthumbnail" ng-show="$flow.files.length" >
-						        <img flow-img="file" />
+					<div class="clear"></div>
+				</div>
 
-						      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-						        <div class="progress-bar" role="progressbar"
-						             aria-valuenow="{{file.progress() * 100}}"
-						             aria-valuemin="0"
-						             aria-valuemax="100"
-						             ng-style="{width: (file.progress() * 100) + '%'}">
-						          <div class="sr-only">{{file.progress()}}% Complete</div>
-						        </div>
-						      </div>
-						      <div class="btn-group">
-						        <a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-						         	<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-						        </a>
-						      </div>
-						      </div>
 
-						    </div>
+			</div>
+		</div>
+	</div>
+	</div>
 
-						    <div class="clear"></div>
-					  </div>
+
+
+
+	<div class="modal fade bs-example-modal-lg_Resumes  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg ">
+		<div class="gallery-box">
+			<div class="modal-content">
+				Resumes
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-lg_Certifications  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg ">
+		<div class="gallery-box">
+			<div class="modal-content">
+				Certifications
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-lg_References  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg ">
+		<div class="gallery-box">
+			<div class="modal-content">
+				References
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-lg_Cover  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg ">
+		<div class="gallery-box">
+			<div class="modal-content">
+				Cover Letter
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<nav class="col-lg-2 sideNav">
+
+		<div class="">
+			<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
+		</div>
+
+		<div class="col-md-12" dropdown is-open="status.isopen">
+			<div>Status:  <b>{{ user.personalInfo.education_status}}</b>  </div>
+
+			<div>Last Updated -  {{ user.personalInfo.last_login}}  </div>
+			<button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+				{{user.personalInfo.status }} <div class="caret"></div>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+					{{status.name}}
+				</li>
+			</ul>
+		</div>
+
+		<div class="">
+			<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
+			<img class="img-thumbnail" ng-src="{{ user.files.profile_pic.paramValue }}" src="../../img/No-Photo.gif" alt="Generic placeholder image" >
+		</div>
+
+		<div class="btn findajobBtn" ui-sref="jobseeker.findajob">
+
+			<img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/search_job.png">
+
+		</div>
+
+	</nav>
+
+
+
+
+
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" ng-model="oneAtATime">
+			Open only one at a time
+		</label>
+	</div>
+
+	<uib-accordion close-others="oneAtATime">
+		<uib-accordion-group ng-repeat="(docParamName, docParamValues) in user track by $index" ng-init="status = $first" is-open="status" ng-if="docParamName != 'files'">
+			<uib-accordion-heading  >
+				<div ng-class="{'grey': !status,  'cyan':  status}">
+					<i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>	{{docParamName}}
+				</div>
+			</uib-accordion-heading>
+			<form editable-form name="editableForm" onaftersave="saveUser(user)" shown="0">
+
+
+
+				<div ng-if="docParamName == 'personalInfo'" class="">
+
+
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							First Name*
+						</div>
+
+						<div editable-text="user.personalInfo.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personalInfo.first_name" required>
+							{{user.personalInfo.first_name}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Last Name*
+						</div>
+
+						<div editable-text="user.personalInfo.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personalInfo.last_name" required>
+							{{user.personalInfo.last_name}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							E-mail*
+						</div>
+
+						<div editable-email="user.personalInfo.email" e-class="form-control " e-name="email"  ng-model="user.personalInfo.email" required>
+							{{user.personalInfo.email}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Phone/Cell*
+						</div>
+
+						<div editable-tel="user.personalInfo.mobile" e-class="form-control " e-name="mobile"  ng-model="user.personalInfo.mobile" required>
+							{{user.personalInfo.mobile}}
+						</div>
+
+					</div>
+
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Password*
+						</div>
+
+						<div class="" >
+
+						</div>
+						<!-- <div editable-text="user.personalInfo.password" e-type="password" e-class="form-control " e-name="password"  ng-model="user.personalInfo.password" required>
+                        </div> -->
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Gender*
+						</div>
+						<div e-class="form-control postInput" class="" editable-select="user.personalInfo.gender" e-name="user.personalInfo.gender" ng-model="user.personalInfo.gender"   e-ng-options="g.value as g.text for g in genders">
+							{{ user.personalInfo.gender}}
+						</div>
+
+					</div>
+
+					<!-- <div>
+
+                        <div class="param_label col-md-2">
+                            Birthdate*
+                        </div>
+
+                        <div>
+                            <input type='date' class="form-control " name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
+                        </div>
+
+                    </div>
+                     -->
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Marital Status
+						</div>
+
+
+						<div e-class="form-control postInput" class="" editable-select="user.personalInfo.martial_status" e-name="user.personalInfo.martial_status" ng-model="user.personalInfo.martial_status" e-ng-options="g.value as g.text for g in martialStatuses">
+							{{ user.personalInfo.martial_status}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Education Status
+						</div>
+						<div e-class="form-control postInput" class="" editable-select="user.personalInfo.education_status" e-name="user.personalInfo.education_status" ng-model="user.personalInfo.education_status" e-ng-options="g.value as g.text for g in educationStatuses">
+							{{ user.personalInfo.education_status}}
+						</div>
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Street Address 1
+						</div>
+
+						<div editable-text="user.personalInfo.street_1" ng-model="user.personalInfo.street_1" name="street_1" e-class="form-control ">
+							{{user.personalInfo.street_1}}
+						</div>
+
 
 
 					</div>
+
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							country
+						</div>
+
+						<div editable-text="user.personalInfo.country" ng-model="user.personalInfo.country" e-class="form-control " e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
+							{{user.personalInfo.country}}
+						</div>
+
+
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							State*
+						</div>
+
+
+						<div editable-text="user.personalInfo.state" name="state" ng-model="user.personalInfo.state" placeholder="" e-class="form-control " e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
+							{{user.personalInfo.state}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							city*
+						</div>
+
+						<div editable-text="user.personalInfo.city" name="city" e-class="form-control " ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
+							{{user.personalInfo.city}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Zip Code
+						</div>
+
+						<div editable-text="user.personalInfo.zipcode" name="zipcode" e-class="form-control " ng-model="user.personalInfo.zipcode">
+							{{user.personalInfo.zipcode}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Facebook
+						</div>
+
+						<div editable-text="user.personalInfo.facebook" name="facebook" e-class="form-control " ng-model="user.personalInfo.facebook">
+							<a href="http://www.{{user.personalInfo.facebook}}">{{user.personalInfo.facebook}}</a>
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							Twitter
+						</div>
+
+						<div editable-text="user.personalInfo.twitter" name="twitter" e-class="form-control " ng-model="user.personalInfo.twitter">
+							{{user.personalInfo.twitter}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							LinkedIn
+						</div>
+
+						<div editable-text="user.personalInfo.linkedin" name="linkedin" e-class="form-control " ng-model="user.personalInfo.linkedin">
+							{{user.personalInfo.linkedin}}
+						</div>
+
+					</div>
+
+					<div class="paramDiv">
+
+						<div class="param_label col-md-2">
+							YouTube video
+						</div>
+
+						<div editable-text="user.personalInfo.youtube" name="youtube" e-class="form-control " ng-model="user.personalInfo.youtube">
+							{{user.personalInfo.youtube}}
+						</div>
+
+					</div>
+
 				</div>
-			</div>
-</div>
-
-
-
-
-<div class="modal fade bs-example-modal-lg_Resumes  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg ">
-			  	<div class="gallery-box">
-			  		<div class="modal-content">
-			  			Resumes
-			  		</div>
-			  	</div>
-			  </div>
-</div>
-
-<div class="modal fade bs-example-modal-lg_Certifications  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg ">
-			  	<div class="gallery-box">
-			  		<div class="modal-content">
-			  			Certifications
-			  		</div>
-			  	</div>
-			  </div>
-</div>
-
-<div class="modal fade bs-example-modal-lg_References  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg ">
-			  	<div class="gallery-box">
-			  		<div class="modal-content">
-			  			References
-			  		</div>
-			  	</div>
-			  </div>
-</div>
-
-<div class="modal fade bs-example-modal-lg_Cover  center-modal " id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg ">
-			  	<div class="gallery-box">
-			  		<div class="modal-content">
-			  			Cover Letter
-			  		</div>
-			  	</div>
-			  </div>
-</div>
-<!-- sideBar with the status, picture, and name -->
-
-<nav class="col-lg-2 sideNav">
-
-	<div class="">
-		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
-	</div>
-
-	<div class="col-md-12" dropdown is-open="status.isopen">
-	  <div>Status:  <b>{{ user.personalInfo.education_status}}</b>  </div>
-
-	  <div>Last Updated -  {{ user.personalInfo.last_login}}  </div>
-      <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
-        {{user.personalInfo.status }} <div class="caret"></div>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
-        	{{status.name}}
-        </li>
-      </ul>
-   	 </div>
-
-	<div class="">
-		<h3 class="text-center">{{user.personalInfo.first_name +'  '+user.personalInfo.last_name}}</h3>
-		<img class="img-thumbnail" ng-src="{{ user.files.profile_pic.paramValue }}" src="../../img/No-Photo.gif" alt="Generic placeholder image" >
-	</div>
-
-	<div class="btn findajobBtn" ui-sref="jobseeker.findajob">
-
-		<img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/search_job.png">
-
-	</div>
-
-</nav>
-
-
-
-
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" ng-model="oneAtATime">
-      Open only one at a time
-    </label>
-  </div>
-
- <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="(docParamName, docParamValues) in user" class='active accordionPanel' ng-init="status = $first" is-open="status" ng-hide="docParamName == 'files'" >
-   		 <accordion-heading is-open="status.isOpen[$index]">
-   		  <div ng-class="{'openAccordion': status.isOpen[$index], 'closeAccordion':  !status.isOpen[$index]}" >
-	           {{ docParamName }} <i class="pull-right glyphicon"></i>
-   		  </div>
-	     </accordion-heading>
-
-
-    	  <form editable-form name="editableForm" onaftersave="saveUser(user)" shown="0">
-
-
-
-								<div ng-if="docParamName == 'personalInfo'" class="">
-
-
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											First Name*
-										</div>
-
-										<div editable-text="user.personalInfo.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personalInfo.first_name" required>
-											{{user.personalInfo.first_name}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Last Name*
-										</div>
-
-										<div editable-text="user.personalInfo.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personalInfo.last_name" required>
-											{{user.personalInfo.last_name}}
-										</div>
-
-									</div>
-
-								<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											E-mail*
-										</div>
-
-										<div editable-email="user.personalInfo.email" e-class="form-control " e-name="email"  ng-model="user.personalInfo.email" required>
-											{{user.personalInfo.email}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Phone/Cell*
-										</div>
-
-										<div editable-tel="user.personalInfo.mobile" e-class="form-control " e-name="mobile"  ng-model="user.personalInfo.mobile" required>
-											{{user.personalInfo.mobile}}
-										</div>
-
-									</div>
-
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Password*
-										</div>
-
-										<div class="" >
-
-										</div>
-										<!-- <div editable-text="user.personalInfo.password" e-type="password" e-class="form-control " e-name="password"  ng-model="user.personalInfo.password" required>
-										</div> -->
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Gender*
-										</div>
-										<div e-class="form-control postInput" class="" editable-select="user.personalInfo.gender" e-name="user.personalInfo.gender" ng-model="user.personalInfo.gender"   e-ng-options="g.value as g.text for g in genders">
-											{{ user.personalInfo.gender}}
-										</div>
-
-									</div>
-
-									<!-- <div>
-
-										<div class="param_label col-md-2">
-											Birthdate*
-										</div>
-
-										<div>
-											<input type='date' class="form-control " name="date_of_birth" placeholder="Birthdate" ng-model="user.personalInfo.date_of_birth" required>
-										</div>
-
-									</div>
-									 -->
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Marital Status
-										</div>
-
-
-										<div e-class="form-control postInput" class="" editable-select="user.personalInfo.martial_status" e-name="user.personalInfo.martial_status" ng-model="user.personalInfo.martial_status" e-ng-options="g.value as g.text for g in martialStatuses">
-													 			    {{ user.personalInfo.martial_status}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Education Status
-										</div>
-										<div e-class="form-control postInput" class="" editable-select="user.personalInfo.education_status" e-name="user.personalInfo.education_status" ng-model="user.personalInfo.education_status" e-ng-options="g.value as g.text for g in educationStatuses">
-													 			    {{ user.personalInfo.education_status}}
-										</div>
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Street Address 1
-										</div>
-
-										<div editable-text="user.personalInfo.street_1" ng-model="user.personalInfo.street_1" name="street_1" e-class="form-control ">
-											 {{user.personalInfo.street_1}}
-										</div>
-
-
-
-									</div>
-
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											country
-										</div>
-
-										<div editable-text="user.personalInfo.country" ng-model="user.personalInfo.country" e-class="form-control " e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
-								     		{{user.personalInfo.country}}
-								     	</div>
-
-
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											State*
-										</div>
-
-
-										<div editable-text="user.personalInfo.state" name="state" ng-model="user.personalInfo.state" placeholder="" e-class="form-control " e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personalInfo.state">
-											{{user.personalInfo.state}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											city*
-										</div>
-
-										<div editable-text="user.personalInfo.city" name="city" e-class="form-control " ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personalInfo.city" >
-											{{user.personalInfo.city}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Zip Code
-										</div>
-
-										<div editable-text="user.personalInfo.zipcode" name="zipcode" e-class="form-control " ng-model="user.personalInfo.zipcode">
-										   {{user.personalInfo.zipcode}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Facebook
-										</div>
-
-										<div editable-text="user.personalInfo.facebook" name="facebook" e-class="form-control " ng-model="user.personalInfo.facebook">
-										  <a href="http://www.{{user.personalInfo.facebook}}">{{user.personalInfo.facebook}}</a>
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											Twitter
-										</div>
-
-										<div editable-text="user.personalInfo.twitter" name="twitter" e-class="form-control " ng-model="user.personalInfo.twitter">
-										   {{user.personalInfo.twitter}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											LinkedIn
-										</div>
-
-										<div editable-text="user.personalInfo.linkedin" name="linkedin" e-class="form-control " ng-model="user.personalInfo.linkedin">
-										   {{user.personalInfo.linkedin}}
-										</div>
-
-									</div>
-
-									<div class="paramDiv">
-
-										<div class="param_label col-md-2">
-											YouTube video
-										</div>
-
-										<div editable-text="user.personalInfo.youtube" name="youtube" e-class="form-control " ng-model="user.personalInfo.youtube">
-										   {{user.personalInfo.youtube}}
-										</div>
-
-									</div>
-
-								</div>
-						  <div ng-repeat="(paramKey,paramValues)  in docParamValues" class="" style="">
-
-								<div ng-repeat="(k,v) in paramValues track by $index" class="">
-
-								 	     <div ng-hide="isArray(docParamValues)" class="">
-								 	     	<div class="" ng-if="k == 'slug'">
-								 	     	   {{v}}:
-								 	     	</div>
-
-							 	     		<div ng-if="k == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]">
-							 	     	 		{{v}}
-							 	     		</div>
-							 	     	</div>
-
-							 	     	<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="">
-									 	     	<div class="" ng-if="r == 'slug'">
-									 	     	   {{s}}:
-									 	     	</div>
-
-								 	     		<div ng-if="r == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
-								 	     	 		{{s}}
-								 	     		</div>
-							 			</div>
-							 	</div>
-
-					 			<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
-									<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">
-										X Delete
-									</div>
-									<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
-										Move Up
-									</div>
-									<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
-										Move Down
-									</div>
-
-								</div>
-						 	    <div ng-show="editableForm.$visible && docParamName != 'personalInfo'" >
-
-				 	     	     	<div ng-show="$last" >
-											<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
-									</div>
-								</div>
-		 	    		 </div>
-
-					 	 <div class="buttons">
-
-			      			<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
-				     		<div ng-show="editableForm.$visible">
-					       		<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
-					       		<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
-				      		</div>
-				    	</div>
-		    </form>
-								<hr ng-if="docParamName != 'personalInfo'" style="border-bottom: 1px dashed;">
-    	</div>
-    </accordion-group>
-
-
-   </accordion>
-
-<footer class="col-md-10">
-
-	<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</div>
-
-</footer>
+				<div ng-repeat="(paramKey,paramValues)  in docParamValues" class="" style="">
+
+					<div ng-repeat="(k,v) in paramValues track by $index" class="">
+
+						<div ng-hide="isArray(docParamValues)" class="">
+							<div class="" ng-if="k == 'slug'">
+								{{v}}:
+							</div>
+
+							<div ng-if="k == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]">
+								{{v}}
+							</div>
+						</div>
+
+						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="">
+							<div class="" ng-if="r == 'slug'">
+								{{s}}:
+							</div>
+
+							<div ng-if="r == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
+								{{s}}
+							</div>
+						</div>
+					</div>
+
+					<div class="iterationCtrls" ng-show="editableForm.$visible && isArray(docParamValues)">
+						<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">
+							X Delete
+						</div>
+						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+							Move Up
+						</div>
+						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+							Move Down
+						</div>
+
+					</div>
+					<div ng-show="editableForm.$visible && docParamName != 'personalInfo'" >
+
+						<div ng-show="$last" >
+							<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="buttons">
+
+					<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button>
+					<div ng-show="editableForm.$visible">
+						<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">Save</button>
+						<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</uib-accordion-group>
+	</uib-accordion>
+
+
+	<footer class="col-md-10">
+
+		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</div>
+
+	</footer>

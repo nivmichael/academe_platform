@@ -43,18 +43,18 @@ var acadb = angular.module('acadb', [
          templateUrl: '../../partials/register/register.html',
          controller: 'RegisterController',   
         })
-  
+
         .state('register.company', {
           url: "^/company",
-       	  controller: 'formController',   
-          templateUrl: '../../partials/employer/personalInfo.html'  
-        })
-        .state('register.files', {
-          url: "^/files",
-          controller: 'formController',   
-          templateUrl: '../../partials/employer/personalInfo.html'  
+       	  controller: 'formController',
+          templateUrl: '../../partials/employer/personalInfo.html'
         });
- 
+        //.state('register.files', {
+        //  url: "^/files",
+        //  controller: 'formController',
+        //  templateUrl: '../../partials/employer/personalInfo.html'
+        //});
+        //
     
 
       $locationProvider.html5Mode({
@@ -65,43 +65,66 @@ var acadb = angular.module('acadb', [
       
 }])
 
-.run(['$q', '$rootScope', '$http', '$urlRouter', function($q, $rootScope, $http, $urlRouter) {
-  
-    var $state = $rootScope.$state;
-    
-    $http
-      .get("../../lib/modules.json")
-      .success(function(data) {
-        angular.forEach(data, function(value, key) {
-          
-          var getExistingState = $state.get(value.name);
+    .run(['$q', '$rootScope', '$http', '$urlRouter', function($q, $rootScope, $http, $urlRouter) {
+      var stateList = [];
 
-          if(getExistingState !== null){
-            return; 
-          }
-          
-          var state = {
-            "url": value.url,
-            "parent": value.parent,
-            "abstract": value.abstract,
-            "views": {}
-          };
+      var $state = $rootScope.$state;
 
-          angular.forEach(value.views, function(view) {
-            state.views[view.name] = {
-              templateUrl: view.templateUrl,
-            	controller: view.controller,
-            };
+      $http
+          .get("/employerSteps")
+          .success(function(data) {
+
+            angular.forEach(data, function(value, key) {
+              console.log(value);
+              var step = {
+                "name":"register."+value.name,
+                "url": '^/'+value.name,
+                "templateUrl":'../../partials/employer/personalInfo.html'  ,
+                "controller":'formController',
+                "value":value.name
+
+              }
+              stateList.push(step);
+            });
+
+
+
+
+            angular.forEach(stateList, function(value, key) {
+
+
+
+
+              var getExistingState = $state.get(value.name);
+
+              if(getExistingState !== null){
+
+                return;
+              }
+
+              var state = {
+                "name":"register."+value.name,
+                "url": '^/'+value.value,
+                "templateUrl":'../../partials/employer/personalInfo.html'  ,
+                "controller":'formController',
+
+              };
+
+              //angular.forEach(value.views, function(view) {
+              //  state.views[view.name] = {
+              //    templateUrl: view.templateUrl,
+              //  	controller: view.controller,
+              //  };
+              //});
+
+              $stateProviderRef.state(value.name, state);
+            });
+
+            // Configures $urlRouter's listener *after* your custom listener
+            console.log($stateProviderRef);
           });
-
-          $stateProviderRef.state(value.name, state);
-       
-        });
-        // Configures $urlRouter's listener *after* your custom listener
- 
-      });
-  }
-]);
+    }
+    ]);
 
 
 

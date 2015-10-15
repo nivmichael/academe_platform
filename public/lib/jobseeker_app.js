@@ -49,7 +49,7 @@ var acadb = angular.module('acadb', [
        })
        .state('jobseeker.profile', {
           url: "",
-          templateUrl: '../partials/profileuib.html'   ,
+          templateUrl: '../partials/profile.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.findajob', {
@@ -92,7 +92,7 @@ var acadb = angular.module('acadb', [
 }])
 
 .run(['$q', '$rootScope', '$http', '$urlRouter', function($q, $rootScope, $http, $urlRouter) {
-  
+
     var $state = $rootScope.$state;
     
     $http
@@ -121,10 +121,10 @@ var acadb = angular.module('acadb', [
           });
 
           $stateProviderRef.state(value.name, state);
-       	
+
         });
         // Configures $urlRouter's listener *after* your custom listener
- 
+
       });
           
   }

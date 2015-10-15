@@ -2,6 +2,7 @@
   {
   "name": "registerEmployer.personalInfo",
    "url": "/employer/personalInfo",
+    "controller": "formController",
    "abstract": false,
    "views": [{    
      "name": "personalInfo",

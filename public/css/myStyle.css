@@ -607,6 +607,9 @@ ul{
     border-top-left-radius: 0px!important;
     
 }
+.panel-heading {
+	padding: 0;
+}
 .saveJob{
     background-image: url("https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/save_job.png");
 	background-repeat: no-repeat;
@@ -622,12 +625,13 @@ ul{
 .grey_background{
 	background-color:#EDEDED;
 }
-.blue{
-	background-color:blue;
-	color:blue;
+.cyan{
+	background-color:#C1DBF7;
+	padding: 10px 15px
 }
 .grey{
-	background-color:#F5F5F5;
+	background-color:#F3F3F5;
+	padding: 10px 15px
 }
 
 /*.ng-hide:not(.ng-hide-animate) {*/
