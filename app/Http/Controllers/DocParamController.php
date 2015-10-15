@@ -27,7 +27,34 @@ class DocParamController extends Controller {
 
 		return Response::json($params);
 	}
-	
+
+	public function jobseekerSteps(){
+		$query = DB::table('doc_param')->where('doc_sub_type','jobSeeker')->get();
+		$docParam = [];
+		$docParams=[];
+		foreach($query as $result) {
+			$docParam['name'] = $result->name;
+			$docParam['slug'] = $result->slug;
+			$docParams[] = $docParam;
+		}
+
+
+		return Response::json($docParams);
+	}
+	public function employerSteps(){
+		$query = DB::table('doc_param')->where('doc_sub_type','employer')->get();
+		$docParam = [];
+		$docParams=[];
+		foreach($query as $result) {
+			$docParam['name'] = $result->name;
+			$docParam['slug'] = $result->slug;
+			$docParams[] = $docParam;
+		}
+
+
+		return Response::json($docParams);
+	}
+
 	public function columnIndex()
 	{
 		
@@ -66,10 +93,11 @@ class DocParamController extends Controller {
 		$name = $all['name'];
 		$slug = $all['slug'];
 		$doc_type_id = $all['doc_type_id'];
-		
+		$doc_sub_type = $all['doc_sub_type'];
 		$param->name = $name;
 		$param->slug = $slug;
 		$param->doc_type_id = $doc_type_id;
+		$param->doc_sub_type = $doc_sub_type;
 		$param->save();
 		
 		return Response::json(array('param'=>$param,'id'=>$id));

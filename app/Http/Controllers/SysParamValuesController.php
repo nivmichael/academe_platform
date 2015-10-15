@@ -148,7 +148,9 @@ class SysParamValuesController extends Controller  {
 											   // LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
 											   // LEFT JOIN param_type ON param.type_id = param_type.id
 											   // "));
-// 		
+// 		$param_id = DB::table()->where()->pluck('id');
+//		$param    = DB::table()->where()->get();
+
 
 		$groups  =  DB::select( DB::raw("SELECT * FROM param_value"));
 

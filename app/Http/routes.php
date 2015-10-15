@@ -53,7 +53,8 @@ Route::post('/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');
 Route::get('/auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
-
+Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
+Route::get('/employerSteps', 'DocParamController@employerSteps');
 Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
 Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
