@@ -224,27 +224,20 @@ angular.module('acadb.controllers', [])
 };
   
   }])
+	.controller('ModalInstanceCtrl', function ($scope, $modalInstance, user) {
 
-.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams) {
-
-
-
+		$scope.user = user;
 
 
+		$scope.ok = function () {
+			$modalInstance.close();
+		};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	})
+.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$aside', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$aside) {
 
 
 
@@ -279,6 +272,93 @@ angular.module('acadb.controllers', [])
 		    // or server returns response with an error status.
 	});	
  };
+
+
+
+		$scope.items = ['item1', 'item2', 'item3'];
+
+		$scope.animationsEnabled = true;
+
+		$scope.open = function (size) {
+
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: size,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+
+///Aside
+
+		$scope.asideState = {
+			open: true
+		};
+
+		$scope.openAside = function(position, backdrop) {
+
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
+
+
+
+
 
 $scope.isArray = angular.isArray;
 $scope.oneAtATime = true;
@@ -398,12 +478,12 @@ $.getJSON('/getAllJobs', function(data){
   };
  // $scope.toggleMin();
 	
-  $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.opened = !$scope.opened;
-  };
+  //$scope.open = function($event) {
+  //  $event.preventDefault();
+  //  $event.stopPropagation();
+  //
+  //  $scope.opened = !$scope.opened;
+  //};
 
   $scope.dateOptions = {
     formatYear: 'yy',

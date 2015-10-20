@@ -31,9 +31,10 @@ hr{
 	margin-bottom:10px;
 }
 .footer {
+	width: 100%;
 	position: fixed;
 	bottom: 0;
-	width: 100%;
+
 	
 	background-color: #EDEDED;
 }
@@ -161,7 +162,22 @@ footer{
 .sidebar {
 	display: none;
 }
-@media (min-width: 768px) {
+.slidingSideNav>img{
+	max-height:150px
+}
+.modal-dialog{
+	overflow:hidden;
+}
+.openMenu{
+	display:none;
+}
+@media (max-width: 768px) {
+	.openMenu{
+		display:block;
+	}
+	.sidenav{
+		display:none;
+	}
 	.sidebar {
 		position: relative;
 		bottom: 0;
@@ -169,7 +185,7 @@ footer{
 		z-index: 1000;
 		display: block;
 		padding: 20px;
-		overflow-x: hidden;
+		overflow: hidden;
 		overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 		background-color: #f5f5f5;
 		border-right: 1px solid #eee;
@@ -183,8 +199,8 @@ footer{
 	left: 0;
 	z-index: 1000;
 	display: block;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden;
+
 	background-color: white;
 	border-right: 1px solid #FFF;
 }
@@ -237,8 +253,8 @@ footer{
 	border: none;
 }
 .findajobBtn{
-	    position: relative;
-    top: 300px;
+	position: relative;
+    /*top: 300px;*/
 }
 .panel-body {
 
@@ -263,9 +279,9 @@ footer{
 	border-right:1px solid white;
 }
 
-.modal-content {
-	width: 90%;
-}
+/*.modal-content {*/
+	/*width: 90%;*/
+/*}*/
 
 .sideNav {
 	height: 1200px;
@@ -294,38 +310,38 @@ footer{
 	background-color: #4E75AD !important;
 	color: white;
 }
-.modal-dialog {
-	position: absolute;
-	top: 50% !important;
-	transform: translate(0, -50%) !important;
-	-ms-transform: translate(0, -50%) !important;
-	-webkit-transform: translate(0, -50%) !important;
-	margin: auto 5%;
-	width: 90%;
-	height: 80%;
-}
-.modal-content {
-	min-height: 100%;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: -50%;
-	right: 0;
-}
-.modal-body {
-	position: absolute;
-	top: 45px;// height of header
-	bottom: 45px;// height of footer
-	left: -50%;
-	right: 0;
-	overflow-y: auto;
-}
-.modal-footer {
-	position: absolute;
-	bottom: 0;
-	left: -50%;
-	right: 0;
-}
+/*.modal-dialog {*/
+	/*position: absolute;*/
+	/*top: 50% !important;*/
+	/*transform: translate(0, -50%) !important;*/
+	/*-ms-transform: translate(0, -50%) !important;*/
+	/*-webkit-transform: translate(0, -50%) !important;*/
+	/*margin: auto 5%;*/
+	/*width: 90%;*/
+	/*height: 80%;*/
+/*}*/
+/*.modal-content {*/
+	/*min-height: 100%;*/
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*bottom: 0;*/
+	/*left: -50%;*/
+	/*right: 0;*/
+/*}*/
+/*.modal-body {*/
+	/*position: absolute;*/
+	/*top: 45px;// height of header*/
+	/*bottom: 45px;// height of footer*/
+	/*left: -50%;*/
+	/*right: 0;*/
+	/*overflow-y: auto;*/
+/*}*/
+/*.modal-footer {*/
+	/*position: absolute;*/
+	/*bottom: 0;*/
+	/*left: -50%;*/
+	/*right: 0;*/
+/*}*/
 .upthumbnail{
 
 }
@@ -387,9 +403,9 @@ footer{
 	width: 1200px;
 	height:100%;
 }
-.modal-content {
-	padding: 20px;
-}
+/*.modal-content {*/
+	/*padding: 20px;*/
+/*}*/
 
 .dropClass {
 
@@ -641,3 +657,48 @@ ul{
 	/*top: -9999px;*/
 	/*left: -9999px;*/
 /*}*/
+
+body {
+	padding: 30px 15px 0;
+}
+.modal-content{
+	margin-top: 52px;
+}
+.modal-open #content  {
+	-webkit-transition:all .2s, -webkit-transform .2s;
+	transition:all .2s ease-out, -webkit-transform .2s
+}
+.modal-open #content {
+	transform: translate(310px, 0);
+
+}
+
+#downloadbtn {
+	margin-bottom: 10px;
+}
+
+.about-links {
+	color: #95a5a6;
+}
+.about-links a {
+	border-bottom: 1px dotted;
+	text-decoration: none;
+	margin-right: 15px;
+}
+
+.about-links li {line-height: 30px;}
+.about-links li:hover, .about-links li:hover a { color: #666; }
+.about-links .love:hover i { color: #e74c3c; }
+.about-links .prospectus:hover i { color: #f39c12; }
+.about-links .cypher:hover i { color: #16a085; }
+.about-links .lab:hover i { color: #8e44ad; }
+
+.ng-aside .modal-content {
+	min-width: 320px;
+}
+.ng-aside .modal-dialog .modal-content {
+
+	overflow: hidden;
+	border: none;
+	border-radius: 0;
+}

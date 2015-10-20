@@ -2,12 +2,14 @@
 
 
 
-	<script type="text/ng-template" id="customTemplate.html">
-		<a style="float:left;">
-			<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-			<div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>
-		</a>
-	</script>
+
+
+
+
+
+
+
+
 
 	<script type="text/ng-template" id="group-template.html">
 		<div class="panel {{panelClass || 'panel-default'}}" >
@@ -22,6 +24,35 @@
 			</div>
 		</div>
 	</script>
+	<script type="text/ng-template" id="group-template.html">
+		<div class="panel {{panelClass || 'panel-default'}}" >
+			<div class="panel-heading">
+				<h4 class="panel-title" style="color:#fa39c3">
+					<a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+							ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+				</h4>
+			</div>
+			<div class="panel-collapse collapse" uib-collapse="!isOpen">
+				<div class="panel-body" style="text-align: right" ng-transclude></div>
+			</div>
+		</div>
+	</script>
+
+
+	<script type="text/ng-template" id="myModalContent.html">
+		<div class="modal-header">
+			<h3 class="modal-title">Upload Image</h3>
+		</div>
+		<div class="modal-body">
+			{{user}}
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+		</div>
+	</script>
+
+
 
 
 	<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -125,7 +156,7 @@
 	</div>
 	</div>
 
-	<nav class="col-lg-2 sideNav">
+	<nav class="col-lg-2 col-sm-4 col-md-4 col-xs-2 sideNav">
 
 		<div class="">
 			<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
@@ -150,26 +181,27 @@
 			<img class="img-thumbnail" ng-src="{{ user.files.profile_pic.paramValue }}" src="../../img/No-Photo.gif" alt="Generic placeholder image" >
 		</div>
 
-		<div class="btn findajobBtn" ui-sref="jobseeker.findajob">
+		<div class="btn findajobBtn col-sm-2" ui-sref="jobseeker.findajob" >
 
 			<img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/search_job.png">
 
 		</div>
 
 	</nav>
+<body  ng-class="asideState.position" resize>
+		<div id="content" class="col-xs-12 col-sm-8 col-md-8 col-lg-10">
 
+		<!--<button type="button" class="btn btn-default btn-lg openMenu" ng-click="openAside('left')"><i class="glyphicon glyphicon-align-justify"></i></button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="open('lg')"></button>-->
 
-
-
-
-	<div class="checkbox">
+		<div class="checkbox">
 		<label>
 			<input type="checkbox" ng-model="oneAtATime">
 			Open only one at a time
 		</label>
-	</div>
+		</div>
 
-	<uib-accordion close-others="oneAtATime">
+	<uib-accordion close-others="oneAtATime" class="">
 		<uib-accordion-group ng-repeat="(docParamName, docParamValues) in user track by $index" ng-init="status = $first" is-open="status" ng-if="docParamName != 'files'">
 			<uib-accordion-heading  >
 				<div ng-class="{'grey': !status,  'cyan':  status}">
@@ -466,8 +498,11 @@
 	</uib-accordion>
 
 
-	<footer class="col-md-10">
+	<footer class="col-md-12">
 
 		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</div>
 
 	</footer>
+
+</div>
+		</body>
