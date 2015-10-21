@@ -2,9 +2,10 @@
 <html ng-app="acadb">
     <head>
         <title>Laravel</title>
-				<script src="lib/jquery-1.11.3.min.js"></script>
+		<script src="lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
-		<script src="lib/angular.min.js"></script>
+		<script src="lib/angular.1.4.7.min.js"></script>
+
 		<script src="../lib/ui-router.js"></script>
 		<script src="lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
@@ -14,8 +15,8 @@
 		<!-- x-editable css -->
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
-		<link href="css/myStyle.css" rel="stylesheet">
-        
+		<link href="css/angular-aside.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/myStyle.css"/>
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
         <!-- <style>
@@ -52,11 +53,8 @@
     	<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle Navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+					<button type="button" class="navbar-toggle collapsed "   ng-click="openEmployerAside('left')" ng-show="true">
+						<span class="sr-only"></span>
 					</button>
 					<a class="navbar-brand col-md-2" href="jobseeker#/">My Profile </a>
 				</div>
@@ -91,16 +89,20 @@
                 <div ui-view=""></div>
      
     </body>
-    <script src="lib/employer_app.js"></script>	
+	<script src="lib/employer_app.js"></script>
 	<script src="lib/controllers.js"></script>
-	<script src="lib/services.js"></script>
 	<script src="lib/filters.js"></script>
+	<script src="lib/moment.min.js"></script>
+	<script src="lib/services.js"></script>
 	<script src="lib/directives.js"></script>
 	<script src="lib/angular-route.js"></script>
 	<script src="lib/angular-resource.js"></script>
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
-	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
+	<script src="lib/angular-animate.min.js"></script>
+
+	<script src="lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
+	<script src="lib/angular-aside.min.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="lib/checklist-model.js"></script>
 

@@ -3,9 +3,11 @@ var $stateProviderRef = null;
 var $urlRouterProviderRef = null;
 
 var acadb = angular.module('acadb', [
-  'ngRoute', 
+  'ngRoute',
   'ui.router',
+  'ngAnimate',
   'ui.bootstrap',
+  'ngAside',
   'flow',
   'acadb.controllers',
   'acadb.services',
@@ -14,6 +16,8 @@ var acadb = angular.module('acadb', [
   'xeditable',
   'ngResource',
   'checklist-model',
+  'ui.bootstrap.modal'
+
 ])
 
 

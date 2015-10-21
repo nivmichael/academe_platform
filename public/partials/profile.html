@@ -156,7 +156,7 @@
 	</div>
 	</div>
 
-	<nav class="col-lg-2 col-sm-4 col-md-4 col-xs-2 sideNav">
+	<nav class="col-lg-2 col-sm-2 col-md-2  sideNav">
 
 		<div class="">
 			<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
@@ -189,7 +189,7 @@
 
 	</nav>
 <body  ng-class="asideState.position" resize>
-		<div id="content" class="col-xs-12 col-sm-8 col-md-8 col-lg-10">
+		<div id="content" class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 
 		<!--<button type="button" class="btn btn-default btn-lg openMenu" ng-click="openAside('left')"><i class="glyphicon glyphicon-align-justify"></i></button>-->
 		<!--<button type="button" class="btn btn-default" ng-click="open('lg')"></button>-->
@@ -218,7 +218,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							First Name*
 						</div>
 
@@ -230,7 +230,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Last Name*
 						</div>
 
@@ -242,7 +242,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							E-mail*
 						</div>
 
@@ -254,7 +254,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Phone/Cell*
 						</div>
 
@@ -267,7 +267,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Password*
 						</div>
 
@@ -281,7 +281,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Gender*
 						</div>
 						<div e-class="form-control postInput" class="" editable-select="user.personalInfo.gender" e-name="user.personalInfo.gender" ng-model="user.personalInfo.gender"   e-ng-options="g.value as g.text for g in genders">
@@ -292,7 +292,7 @@
 
 					<!-- <div>
 
-                        <div class="param_label col-md-2">
+                        <div class="param_label col-md-4">
                             Birthdate*
                         </div>
 
@@ -304,7 +304,7 @@
                      -->
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Marital Status
 						</div>
 
@@ -317,7 +317,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Education Status
 						</div>
 						<div e-class="form-control postInput" class="" editable-select="user.personalInfo.education_status" e-name="user.personalInfo.education_status" ng-model="user.personalInfo.education_status" e-ng-options="g.value as g.text for g in educationStatuses">
@@ -327,7 +327,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Street Address 1
 						</div>
 
@@ -342,7 +342,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							country
 						</div>
 
@@ -356,7 +356,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							State*
 						</div>
 
@@ -369,7 +369,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							city*
 						</div>
 
@@ -381,7 +381,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Zip Code
 						</div>
 
@@ -393,7 +393,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Facebook
 						</div>
 
@@ -405,7 +405,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							Twitter
 						</div>
 
@@ -417,7 +417,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							LinkedIn
 						</div>
 
@@ -429,7 +429,7 @@
 
 					<div class="paramDiv">
 
-						<div class="param_label col-md-2">
+						<div class="param_label col-md-4">
 							YouTube video
 						</div>
 
@@ -445,7 +445,7 @@
 					<div ng-repeat="(k,v) in paramValues track by $index" class="">
 
 						<div ng-hide="isArray(docParamValues)" class="">
-							<div class="" ng-if="k == 'slug'">
+							<div class=""param_label col-md-4" ng-if="k == 'slug'">
 								{{v}}:
 							</div>
 
@@ -454,8 +454,8 @@
 							</div>
 						</div>
 
-						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="">
-							<div class="" ng-if="r == 'slug'">
+						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="paramDiv" style="">
+							<div class=""param_label col-md-4" ng-if="r == 'slug'">
 								{{s}}:
 							</div>
 

@@ -1,3 +1,7 @@
+body{
+	margin:0!important;
+	padding:0!important;
+}
 .green{
 	background-color:green;
 	
@@ -122,10 +126,11 @@ footer{
 }
 
 .param_label {
-	display: inline;
-	min-width: 250px;
-	font-weight: bold;
-	text-align: left;
+	float:left;
+	/*display: inline;*/
+	/*min-width: 250px;*/
+	/*font-weight: bold;*/
+	/*text-align: left;*/
 }
 .param_value {
 	display: inline;
@@ -172,6 +177,12 @@ footer{
 	display:none;
 }
 @media (max-width: 768px) {
+
+	.paramDiv{
+
+		width:100%;
+		margin-bottom:10px;
+	}
 	.openMenu{
 		display:block;
 	}
@@ -538,9 +549,9 @@ ul{
 .postAJob {
 	border-radius: 25px;
 	height: 85px;
-	weight: 150px;
+
 	    position: relative;
-    top: 300px;
+    /*top: 300px;*/
 }
 
 .edetail {

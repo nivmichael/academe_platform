@@ -8,7 +8,8 @@
         <title>Laravel</title>
 		<script src="../../lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
-		<script src="../../lib/angular.min.js"></script>
+		<script src="../../lib/angular.1.4.7.min.js"></script>
+
 		<script src="../../lib/ui-router.js"></script>
 		<script src="../../lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
@@ -18,13 +19,14 @@
 		<!-- x-editable css -->
 		<link href="../../lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
-		<link href="../../css/myStyle.css" rel="stylesheet">
-		<link href="../../css/register_employer.css" rel="stylesheet">
+		<link href="../../css/angular-aside.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../css/myStyle.css"/>
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+
 		<script type="text/ng-template" id="customTemplate.html">
 			<a style="float:left;">
-			<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+				<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+				<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
 			</a>
 		</script>
 		 

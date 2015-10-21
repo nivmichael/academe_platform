@@ -32,8 +32,8 @@
                 <input type="checkbox" name="remember"> Remember Me
             </div>
 
-            <a type="button"  href="/auth/register_jobseeker/" class="btn btn-lg  btn-block registerButton login-form"></a>
             <button type="submit" class="btn btn-lg  btn-block loginButton login-form"></button>
+            <a type="button"  href="/auth/register_jobseeker/" class="btn btn-lg  btn-block registerButton login-form"></a>
             <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form"></a>
             <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form"></a>
         </form>

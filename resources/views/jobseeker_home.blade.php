@@ -4,8 +4,8 @@
         <title>AcadeME</title>
 		<script src="lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
-		<!--<script src="lib/angular.min.js"></script>-->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="lib/angular.1.4.7.min.js"></script>
+
 		<script src="../lib/ui-router.js"></script>
 		<script src="lib/ng-underscore.min.js"></script>
 		<!-- bootstrap css -->
@@ -15,8 +15,8 @@
 		<!-- x-editable css -->
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
-		<link href="css/myStyle.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://rawgit.com/dbtek/angular-aside/master/dist/css/angular-aside.css"/>
+		<link href="css/angular-aside.min.css" rel="stylesheet">
+		<link href="css/myStyle.css"           rel="stylesheet">
 
 
 
@@ -96,7 +96,7 @@
         
     </body>
 
-    <script src="lib/jobseeker_app.js"></script>	
+	<script src="lib/jobseeker_app.js"></script>
 	<script src="lib/controllers.js"></script>
 	<script src="lib/filters.js"></script>
 	<script src="lib/moment.min.js"></script>
@@ -107,10 +107,14 @@
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
 	<script src="lib/angular-animate.min.js"></script>
-	<!--	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
-	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
-	<script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>
+
+	<script src="lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
+	<script src="lib/angular-aside.min.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="lib/checklist-model.js"></script>
+	<!--	<script src="lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.0.js"></script>
+<script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>
+ -->
 	<script>angular.module("acadb").constant("CSRF_TOKEN", '[[ csrf_token() ]]');</script>
 </html>

@@ -320,7 +320,7 @@ angular.module('acadb.controllers', [])
 			}
 
 			$aside.open({
-				templateUrl: '../partials/aside.html',
+				templateUrl: '../partials/jobseeker_aside.html',
 				placement: position,
 				size: 'sm',
 				backdrop: backdrop,
@@ -356,7 +356,55 @@ angular.module('acadb.controllers', [])
 			}).result.then(postClose, postClose);
 		}
 
+		$scope.openEmployerAside = function(position, backdrop) {
 
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/employer_aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+					console.log(user);
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
 
 
 

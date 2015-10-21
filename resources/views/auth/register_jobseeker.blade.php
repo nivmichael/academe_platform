@@ -69,7 +69,7 @@
  </body>
  
 
-    <script src="../../../lib/register_jobseeker_app.js"></script>	
+    <script src="../../../lib/register_jobseeker_app.js"></script>
 	<script src="../../lib/controllers.js"></script>
 	<script src="../../lib/filters.js"></script>
 	<script src="../../lib/services.js"></script>
