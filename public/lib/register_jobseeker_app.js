@@ -46,10 +46,10 @@ var acadb = angular.module('acadb', [
          templateUrl: '../../partials/register/register.html',
          controller: 'RegisterController',   
         })
-        .state('register.personalInfo', {
+        .state('register.personal_information', {
           url: "^/personal_information",
        	  controller: 'formController',   
-          templateUrl: '../../partials/register/personalInfo.html'  
+          templateUrl: '../../partials/register/jobseeker/personalInfo.html'
         });
        // .state('register.education', {
        //   url: "^/education",
@@ -123,7 +123,7 @@ var acadb = angular.module('acadb', [
           var state = {
             "name":"register."+value.name,
             "url": '^/'+value.value,
-            "templateUrl":'../../partials/register/personalInfo.html'  ,
+            "templateUrl":'../../partials/register/jobseeker/personalInfo.html'  ,
             "controller":'formController',
 
           };

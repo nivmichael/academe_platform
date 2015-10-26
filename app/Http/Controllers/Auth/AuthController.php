@@ -83,9 +83,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            // 'first_name' => 'required|max:255',
-            // 'email' => 'required|email|max:255|unique:type_user',
-            // 'password' => 'required|confirmed|min:6',
+//             'first_name' => 'required|max:255',
+//             'email' => 'required|email|max:255|unique:type_user',
+//             'password' => 'required|min:6',
         ]);
     }
 
@@ -97,46 +97,49 @@ class AuthController extends Controller
      */
     public function create(array $data)
 	{
-		// dd($data['user']['personalInfo']['subtype']);	
+
+
+		// dd($data['user']['personal_information']['subtype']);	
 		
 		$authId;
 		$obj = false;
 		$all = Input::all();
+
 	if(!Auth::user()){
 	
 		
-			 $personalInfo = User::create([		
+			 $personal_information = User::create([		
 				// 'type'             => $data['type'],
-				'subtype'     	   => $data['user']['personalInfo']['subtype'],
-				'status'     	   => $data['user']['personalInfo']['status'],
-				'first_name'       => $data['user']['personalInfo']['first_name'],
-				'gender'           => $data['user']['personalInfo']['gender'],
-				'martial_status'   => $data['user']['personalInfo']['martial_status'],
-				'education_status' => $data['user']['personalInfo']['education_status'],
-				'last_name'        => $data['user']['personalInfo']['last_name'],
-				'email'            => $data['user']['personalInfo']['email'],
-				'password'         => bcrypt($data['user']['personalInfo']['password']),
-				'street_1'         => $data['user']['personalInfo']['street_1'],
-				'city'        	   => $data['user']['personalInfo']['city'],
-				'state'       	   => $data['user']['personalInfo']['state'],
-				'country'          => $data['user']['personalInfo']['country'],
-				'zipcode'     	   => $data['user']['personalInfo']['zipcode'],
-				'phone_1'     	   => $data['user']['personalInfo']['phone_1'],
-				'mobile'      	   => $data['user']['personalInfo']['mobile'],
-			    'date_of_birth'    => $data['user']['personalInfo']['date_of_birth'],
-				'registration'     => $data['user']['personalInfo']['registration'],
-				'send_newsletters' => $data['user']['personalInfo']['send_newsletters'],
-				'remember_token'   => $data['user']['personalInfo']['remember_token'],
+				'subtype'     	   => $data['user']['personal_information']['subtype'],
+				'status'     	   => $data['user']['personal_information']['status'],
+				'first_name'       => $data['user']['personal_information']['first_name'],
+				'gender'           => $data['user']['personal_information']['gender'],
+				'martial_status'   => $data['user']['personal_information']['martial_status'],
+				'education_status' => $data['user']['personal_information']['education_status'],
+				'last_name'        => $data['user']['personal_information']['last_name'],
+				'email'            => $data['user']['personal_information']['email'],
+				'password'         => bcrypt($data['user']['personal_information']['password']),
+				'street_1'         => $data['user']['personal_information']['street_1'],
+				'city'        	   => $data['user']['personal_information']['city'],
+				'state'       	   => $data['user']['personal_information']['state'],
+				'country'          => $data['user']['personal_information']['country'],
+				'zipcode'     	   => $data['user']['personal_information']['zipcode'],
+				'phone_1'     	   => $data['user']['personal_information']['phone_1'],
+				'mobile'      	   => $data['user']['personal_information']['mobile'],
+			    'date_of_birth'    => $data['user']['personal_information']['date_of_birth'],
+				'registration'     => $data['user']['personal_information']['registration'],
+				'send_newsletters' => $data['user']['personal_information']['send_newsletters'],
+				'remember_token'   => $data['user']['personal_information']['remember_token'],
 
 			]);
 			
-			$obj['personalInfo'] = $personalInfo['original'];
-			$authId = $personalInfo->id;
+			$obj['personal_information'] = $personal_information['original'];
+			$authId = $personal_information->id;
 		}else{
 			//print_r(Auth::user()->id);die;
 		$authId = Auth::user()->id;
 		$userId =$authId;
-		$personalInfo = Auth::user();
+		$personal_information = Auth::user();
 		
 		}		
 			
@@ -146,11 +149,12 @@ class AuthController extends Controller
 			}
 		}
 		
-		if($obj['personalInfo']) {
-			unset($obj['personalInfo']);
+		if($obj['personal_information']) {
+			unset($obj['personal_information']);
 		}
 		unset($obj['files']);
 			foreach($obj as $docParamName => $docParamVals) {
+
 			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->pluck('id');
 			$iterableCount = 0;
 			foreach($docParamVals as $param => $props) {
@@ -224,9 +228,9 @@ class AuthController extends Controller
 		}
 	
 	//DB::table('type_user')->where('id',$authId)->update(['registration'=>date(date("Y-m-d H:i:s"))]);
-	
-	
-return $personalInfo;
+
+		//var_dump($obj);die;
+return $personal_information;
 		
 	}
 

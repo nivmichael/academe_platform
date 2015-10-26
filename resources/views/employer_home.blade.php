@@ -53,9 +53,11 @@
     	<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed "   ng-click="openEmployerAside('left')" ng-show="true">
-						<span class="sr-only"></span>
-					</button>
+					<div>
+						<button type="button" class="navbar-toggle collapsed "   ng-click="openEmployerAside('left')"  style="z-index:9999999999999;">
+							<i class="glyphicon glyphicon-align-justify" style="color:white";></i>
+						</button>
+					</div>
 					<a class="navbar-brand col-md-2" href="jobseeker#/">My Profile </a>
 				</div>
 	
@@ -82,13 +84,9 @@
 			</div>
 		</nav>
         
-            	<!-- <pre>
-{{$state.current.name}}
-</pre>
-                <div class="title">EMPLOYER</div> -->
+
                 <div ui-view=""></div>
-     
-    </body>
+	</body>
 	<script src="lib/employer_app.js"></script>
 	<script src="lib/controllers.js"></script>
 	<script src="lib/filters.js"></script>

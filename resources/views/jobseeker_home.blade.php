@@ -15,7 +15,7 @@
 		<!-- x-editable css -->
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
-		<link href="css/angular-aside.min.css" rel="stylesheet">
+		<link href="../css/angular-aside.min.css" rel="stylesheet">
 		<link href="css/myStyle.css"           rel="stylesheet">
 
 
@@ -34,8 +34,9 @@
                 width: 100%;
                 display: table;
                 font-weight: 100;
-                font-family: 'Lato';
-            }
+                /*font-family: 'Lato';*/
+            /**/
+			}
 
             .container {
                 text-align: center;

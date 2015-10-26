@@ -4,7 +4,7 @@
 	<div class="col-md-12" dropdown is-open="status.isopen">
 		
       <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
-        {{user.personalInfo.status }} <span class="caret"></span>
+        {{user.personal_information.status }} <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
@@ -12,7 +12,7 @@
         </li>
       </ul>
    	 </div>
-    <span>Last Updated - </span>{{user.personalInfo.updated_at}}
+    <span>Last Updated - </span>{{user.personal_information.updated_at}}
 	<div class="col-md-12 employerDetails">
 		<h3 class="text-center">{{user.company.company_name.paramValue}}</h3>
 		<img class="img-thumbnail" src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image">
@@ -23,7 +23,7 @@
 	 <ul class="nav nav-sidebar col-md-12">
            	<li ui-sref-active="active" ui-sref="employer.jobs" class="docParamLi"><span class="circle">▶</span>Job Offers</li>
             <div ng-repeat="(a,b) in user" id="status-buttons" class="docParamLi" ng-show="a == 'files'">
-                <li ui-sref-active="active" ui-sref=".{{a}}"><span class="circle">▶</span>{{a}}</li>
+                <li ui-sref-active="active" ui-sref=".{{a}}"><span class="circle">▶</span>{{a | underscoreless | capitalize:true}}</li>
                
             </div>
     </ul>

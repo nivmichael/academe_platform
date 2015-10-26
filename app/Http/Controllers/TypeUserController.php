@@ -43,7 +43,7 @@ class TypeUserController extends Controller {
 	
 	public function columnIndexJobSeeker()
 	{	
-		$personalInfo = new stdClass();
+		$personal_information = new stdClass();
 		$user = array();	
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.slug AS slug,
@@ -60,17 +60,17 @@ class TypeUserController extends Controller {
 											   AND doc_param.doc_sub_type = 'jobSeeker'
 											   AND authorized = 1"));
 		if(!Auth::user()){
-			$userPersonalInfo = Schema::getColumnListing('type_user');
-			$userPersonalInfo = (object)$userPersonalInfo;			
-			foreach($userPersonalInfo as $key=>$value) {
-				$personalInfo->$value = '';
+			$userpersonal_information = Schema::getColumnListing('type_user');
+			$userpersonal_information = (object)$userpersonal_information;			
+			foreach($userpersonal_information as $key=>$value) {
+				$personal_information->$value = '';
 			}
 		}else {		
 			$id = Auth::user()->id;		
-			$personalInfo = User::find($id);		
+			$personal_information = User::find($id);		
 		}
-		$user['personalInfo'] = $personalInfo;
-		// $user['personalInfo']->password_confirmation = '';
+		$user['personal_information'] = $personal_information;
+		// $user['personal_information']->password_confirmation = '';
 		foreach($params as $k=>$v) {
 		
 			//$user[$v->docParamName][$paramName] = $v->value = '';
@@ -96,7 +96,7 @@ class TypeUserController extends Controller {
 	
 	public function columnIndexEmployer()
 	{	
-		$personalInfo = new stdClass();
+		$personal_information = new stdClass();
 		$user = array();	
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.name AS paramName, 
@@ -112,17 +112,17 @@ class TypeUserController extends Controller {
 											   AND doc_param.doc_sub_type = 'employer'
 											   AND authorized = 1"));
 		if(!Auth::user()){
-			$userPersonalInfo = Schema::getColumnListing('type_user');
-			$userPersonalInfo = (object)$userPersonalInfo;			
-			foreach($userPersonalInfo as $key=>$value) {
-				$personalInfo->$value = '';
+			$userpersonal_information = Schema::getColumnListing('type_user');
+			$userpersonal_information = (object)$userpersonal_information;			
+			foreach($userpersonal_information as $key=>$value) {
+				$personal_information->$value = '';
 			}
 		}else {		
 			$id = Auth::user()->id;		
-			$personalInfo = User::find($id);		
+			$personal_information = User::find($id);		
 		}
-		$user['personalInfo'] = $personalInfo;
-		// $user['personalInfo']->password_confirmation = '';
+		$user['personal_information'] = $personal_information;
+		// $user['personal_information']->password_confirmation = '';
 		foreach($params as $k=>$v) {
 			$iteration    = $v->iteration;
 			$docParamName = $v->docParamName;
@@ -194,48 +194,48 @@ class TypeUserController extends Controller {
 		$all = Input::all();
 		if(isset($all['from']) && $all['from'] == 'tables'){
 			$funcFromAdmin = true;
-			$allPersonalInfo = $all['user'];
+			$allpersonal_information = $all['user'];
 		}else{
 			$funcFromAdmin = false;
-			$allPersonalInfo = $all['user']['personalInfo'];
+			$allpersonal_information = $all['user']['personal_information'];
 		}
-		$id = $allPersonalInfo['id'];
-		unset($all['personalInfo']);	
+		$id = $allpersonal_information['id'];
+		unset($all['personal_information']);	
 		$param = User::find($id);
 		if($param){		
 				$param->id = $id;	
 		}else{
 			$param = new User();
 		}
-		$param->type       = $allPersonalInfo['type'];
-		$param->subtype    = $allPersonalInfo['subtype'];
-		$param->email      = $allPersonalInfo['email'];
+		$param->type       = $allpersonal_information['type'];
+		$param->subtype    = $allpersonal_information['subtype'];
+		$param->email      = $allpersonal_information['email'];
 		
-		$param->gender = $allPersonalInfo['gender'];
-		$param->martial_status = $allPersonalInfo['martial_status'];
-		$param->education_status = $allPersonalInfo['education_status'];
+		$param->gender = $allpersonal_information['gender'];
+		$param->martial_status = $allpersonal_information['martial_status'];
+		$param->education_status = $allpersonal_information['education_status'];
 		
 		//$param->password_new = Input::get('password_new');
-		$param->first_name = $allPersonalInfo['first_name'];
-		$param->last_name  = $allPersonalInfo['last_name'];
-		$param->street_1   = $allPersonalInfo['street_1'];
+		$param->first_name = $allpersonal_information['first_name'];
+		$param->last_name  = $allpersonal_information['last_name'];
+		$param->street_1   = $allpersonal_information['street_1'];
 		
-		$param->city 	   = $allPersonalInfo['city'];
-		$param->state      = $allPersonalInfo['state'];
-		$param->zipcode    = $allPersonalInfo['zipcode'];
-		$param->country    = $allPersonalInfo['country'];
-		$param->phone_1    = $allPersonalInfo['phone_1'];
+		$param->city 	   = $allpersonal_information['city'];
+		$param->state      = $allpersonal_information['state'];
+		$param->zipcode    = $allpersonal_information['zipcode'];
+		$param->country    = $allpersonal_information['country'];
+		$param->phone_1    = $allpersonal_information['phone_1'];
 		
-		$param->mobile     = $allPersonalInfo['mobile'];
+		$param->mobile     = $allpersonal_information['mobile'];
 		
-		$param->date_of_birth = new DateTime($allPersonalInfo['date_of_birth']);
+		$param->date_of_birth = new DateTime($allpersonal_information['date_of_birth']);
 		$param->date_of_birth->format('Y-m-d');
 		$param->last_login = new DateTime('now');
 		
-		$param->registration   = $allPersonalInfo['registration'];
-		$param->send_newsletters  = $allPersonalInfo['send_newsletters'];
+		$param->registration   = $allpersonal_information['registration'];
+		$param->send_newsletters  = $allpersonal_information['send_newsletters'];
 		$param->save();
-		unset($all['user']['personalInfo']);
+		unset($all['user']['personal_information']);
 		if($funcFromAdmin){
 			return Response::json('function from admin');die;
 		}
@@ -328,44 +328,44 @@ class TypeUserController extends Controller {
 		// $all = Input::all();
 		// if(isset($all['from']) && $all['from'] == 'tables'){
 			// $funcFromAdmin = true;
-			// $allPersonalInfo = $all['user'];
+			// $allpersonal_information = $all['user'];
 		// }else{
 			// $funcFromAdmin = false;
-			// $allPersonalInfo = $all['user']['personalInfo'];
+			// $allpersonal_information = $all['user']['personal_information'];
 		// }
-		// $id = $allPersonalInfo['id'];
-		// unset($all['personalInfo']);	
+		// $id = $allpersonal_information['id'];
+		// unset($all['personal_information']);	
 		// $param = User::find($id);
 		// if($param){		
 				// $param->id = $id;	
 		// }else{
 			// $param = new User();
 		// }
-		// $param->type       = $allPersonalInfo['type'];
-		// $param->subtype    = $allPersonalInfo['subtype'];
-		// $param->email      = $allPersonalInfo['email'];
+		// $param->type       = $allpersonal_information['type'];
+		// $param->subtype    = $allpersonal_information['subtype'];
+		// $param->email      = $allpersonal_information['email'];
 // 		
 		// //$param->password_new = Input::get('password_new');
-		// $param->first_name = $allPersonalInfo['first_name'];
-		// $param->last_name  = $allPersonalInfo['last_name'];
-		// $param->street_1   = $allPersonalInfo['street_1'];
-		// $param->street_2   = $allPersonalInfo['street_2'];
-		// $param->city 	   = $allPersonalInfo['city'];
-		// $param->state      = $allPersonalInfo['state'];
-		// $param->zipcode    = $allPersonalInfo['zipcode'];
-		// $param->country    = $allPersonalInfo['country'];
-		// $param->phone_1    = $allPersonalInfo['phone_1'];
-		// $param->phone_2    = $allPersonalInfo['phone_2'];
-		// $param->mobile     = $allPersonalInfo['mobile'];
+		// $param->first_name = $allpersonal_information['first_name'];
+		// $param->last_name  = $allpersonal_information['last_name'];
+		// $param->street_1   = $allpersonal_information['street_1'];
+		// $param->street_2   = $allpersonal_information['street_2'];
+		// $param->city 	   = $allpersonal_information['city'];
+		// $param->state      = $allpersonal_information['state'];
+		// $param->zipcode    = $allpersonal_information['zipcode'];
+		// $param->country    = $allpersonal_information['country'];
+		// $param->phone_1    = $allpersonal_information['phone_1'];
+		// $param->phone_2    = $allpersonal_information['phone_2'];
+		// $param->mobile     = $allpersonal_information['mobile'];
 // 		
-		// $param->date_of_birth = new DateTime($allPersonalInfo['date_of_birth']);
+		// $param->date_of_birth = new DateTime($allpersonal_information['date_of_birth']);
 		// $param->date_of_birth->format('Y-m-d');
 		// $param->last_login = new DateTime('now');
 // 		
-		// $param->registration   = $allPersonalInfo['registration'];
-		// $param->send_newsletters  = $allPersonalInfo['send_newsletters'];
+		// $param->registration   = $allpersonal_information['registration'];
+		// $param->send_newsletters  = $allpersonal_information['send_newsletters'];
 		// $param->save();
-		// unset($all['user']['personalInfo']);
+		// unset($all['user']['personal_information']);
 		// if($funcFromAdmin){
 			// return Response::json('function from admin');die;
 		// }
@@ -442,7 +442,7 @@ class TypeUserController extends Controller {
 		
 		
 		$user = array();
-		$userPersonalInfo = User::find($id);
+		$userpersonal_information = User::find($id);
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 										   param.name AS paramName, 
 										   param.slug AS slug,
@@ -460,12 +460,12 @@ class TypeUserController extends Controller {
 		
 		
 		
-		$user['personalInfo'] = $userPersonalInfo['original'];
-		// foreach($userPersonalInfo['original'] as $key => $val) {
+		$user['personal_information'] = $userpersonal_information['original'];
+		// foreach($userpersonal_information['original'] as $key => $val) {
 // 			
 // // 				
-			// $user['personalInfo'][$key]['paramName'] = $key;		
-			// $user['personalInfo'][$key]['paramValue'] = $val;
+			// $user['personal_information'][$key]['paramName'] = $key;		
+			// $user['personal_information'][$key]['paramValue'] = $val;
 		// }
 // 		
 // 		

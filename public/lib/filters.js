@@ -34,6 +34,18 @@ angular.module('acadb.filters', [])
         return input ? '\u2713' : '\u2718';
     };
 }])
+	. filter('capitalize', function() {
+		return function(input, all) {
+			var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
+			return (!!input) ? input.replace(reg, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+		}
+	})
+
+	.filter('underscoreless', function () {
+		return function (input) {
+			return input.replace(/_/g, ' ');
+		};
+	})
 .filter('orderObjectBy', function() {
   return function(items, field, reverse) {
     var filtered = [];

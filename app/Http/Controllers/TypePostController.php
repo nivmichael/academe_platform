@@ -484,7 +484,7 @@ class TypePostController extends Controller {
 		
 			
 		$user = array();
-		$userPersonalInfo = User::find($postUserId);
+		$userpersonal_information = User::find($postUserId);
 		$userParams =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 										   param.name AS paramName, 
 										   param.slug AS slug,
@@ -502,7 +502,7 @@ class TypePostController extends Controller {
 		
 		
 		
-		$post['personalInfo'] = $userPersonalInfo['original'];
+		$post['personal_information'] = $userpersonal_information['original'];
 
 		
 		foreach($userParams as $k=>$v) {

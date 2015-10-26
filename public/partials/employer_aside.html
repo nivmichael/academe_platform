@@ -17,7 +17,7 @@
         <span>Last Updated - </span>{{user.personalInfo.updated_at}}
         <div class="col-md-12 employerDetails">
             <h3 class="text-center">{{user.company.company_name.paramValue}}</h3>
-            <img class="img-thumbnail" src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image">
+            <img class="img-thumbnail" ng-src="{{ user.files.company_logo.paramValue }}" alt="Generic placeholder image">
 
         </div>
         <div class="">

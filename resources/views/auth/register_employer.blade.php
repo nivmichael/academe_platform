@@ -41,7 +41,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand col-md-2" href="jobseeker#/">My Profile </a>
+					<a class="navbar-brand col-md-2" href="/">My Profile </a>
 				</div>
 	
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,8 +51,8 @@
 	
 					<ul class="nav navbar-nav navbar-right">
 						@if (Auth::guest())
-							<li><a href="[[ url('/auth/login/employer') ]]">Login</a></li>
-							<li><a href="[[url('/auth/register') ]]">Register</a></li>
+
+							<li><a href="[[url('/auth/register_jobseeker') ]]">Register As Job Seeker</a></li>
 						@else
 							<li class="dropdown">
 								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personalInfo.first_name}}<span class="caret"></span></a>
@@ -73,15 +73,17 @@
  </body>
  
 
-    <script src="../../lib/register_employer_app.js"></script>	
+    <script src="../../lib/register_employer_app.js"></script>
 	<script src="../../lib/controllers.js"></script>
-	<script src="../../lib/services.js"></script>
 	<script src="../../lib/filters.js"></script>
+	<script src="../../lib/services.js"></script>
 	<script src="../../lib/directives.js"></script>
 	<script src="../../lib/angular-route.js"></script>
 	<script src="../../lib/angular-resource.js"></script>
+	<script src="../../lib/angular-animate.min.js"></script>
 	<script src="../../lib/xeditable/js/xeditable.js"></script>
 	<script src="../../lib/bootstrap.min.js"></script>
+	<script src="../../lib/angular-aside.min.js"></script>
 	<script src="../../lib/ui-bootstrap-tpls-0.12.1.min.js"></script>
 	<script src="../../lib/ngFlow/ng-flow-standalone.min.js"></script>
 	<script src="../../lib/checklist-model.js"></script>

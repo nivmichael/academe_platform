@@ -246,31 +246,31 @@ angular.module('acadb.controllers', [])
 		success(function(data, status, headers, config) {
 			$scope.getUser(data);
 			$scope.userId = data;
-			
+
 		});
  };
- $scope.getUser = function(id){ 
+ $scope.getUser = function(id){
    	$http.get('/users/'+id).
-	success(function(data, status, headers, config) {		
-	      $scope.user = data;	
+	success(function(data, status, headers, config) {
+	      $scope.user = data;
 	      $stateParams.user = $scope.user;
 	       $scope.next_keys = [];
 	 	 var prev_key = false;
-			
+
 		 for(var key in $scope.user) {
 		 	if(!prev_key) {
 		 		prev_key = key;
 		 	} else {
 				$scope.next_keys[prev_key] = key;
 				prev_key = key;
-				$scope.next = key;	
+				$scope.next = key;
 			}
-		} 
+		}
 	}).
 	error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
-	});	
+	});
  };
 
 
@@ -408,52 +408,106 @@ angular.module('acadb.controllers', [])
 
 
 
+		$scope.openJobseekerRegisterAside = function(position, backdrop) {
+
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+					console.log(user);
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
+
+
+
 $scope.isArray = angular.isArray;
 $scope.oneAtATime = true;
 $scope.allJobs = {};
 $.getJSON('/getAllJobs', function(data){
-  
+
 	$scope.$apply(function(){
        $scope.allJobs = data;
     });
 });
- 
- // var state = $location.path(); 
+
+ // var state = $location.path();
  // state = state.split('/');
  // state = state[1];
  // $state.go(state);
-//  
+//
 
  $scope.flowOp = function(key){
 		//console.log(key);
 		//console.log('key');
 		return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
-		
+
  };
  $scope.userStatuses = [
   {id: 'active', name: 'active'},
   {id: 'inactive', name: 'inactive'}
  ];
  $scope.setStatus = function(status) {
-	 console.log($scope.user.personalInfo.status);
+	 console.log($scope.user.personal_information.status);
 	 console.log(status);
-	 $scope.user.personalInfo.status = status.name;
+	 $scope.user.personal_information.status = status.name;
 	 $.post('/setStatus',{status:status.name,_token:CSRF_TOKEN,}).success(function(callBack){
 	 	//console.log(callBack);
 	 });
  };
  $scope.footerNavlis = [
- 	{id: '1', tag:'Resumes'},  
- 	{id: '2', tag:'Certifications'},  
- 	{id: '3', tag:'References '},  
- 	{id: '4', tag:'Gallery '},  
- 	{id: '5', tag:'Cover '},  
+ 	{id: '1', tag:'Resumes'},
+ 	{id: '2', tag:'Certifications'},
+ 	{id: '3', tag:'References '},
+ 	{id: '4', tag:'Gallery '},
+ 	{id: '5', tag:'Cover '},
  ];
  // $scope.oneAtATime = true;
  $scope.nextDoc = function(doc){
-	
+
 	if($scope.next_keys[doc]){
+		$scope.cancelOnResize();
 		$scope.doc = $scope.next_keys[doc];
+
 		return $scope.doc ;
 	}else{
 		return false ;
@@ -466,26 +520,26 @@ $.getJSON('/getAllJobs', function(data){
    $scope.items.push('Item ' + newItemNo);
  };
  $scope.saveUser = function(user) {
-	  
-   return $http.post('/users',{  
+
+   return $http.post('/users',{
    	   user:user,
    	   _token:CSRF_TOKEN,
-   	   from:'userHome'
+   	   from:'Steps'
    }).success(function(v){
-   	   	
-       	   
+
+
    }).error(function(err) {
 	  if(err.field && err.msg) {
-	        // err like {field: "name", msg: "Server-side error for this username!"} 
+	        // err like {field: "name", msg: "Server-side error for this username!"}
 	        $scope.editableForm.$setError(err.field, err.msg);
-      } else { 
+      } else {
         // unknown error
         $scope.editableForm.$setError('name', 'Unknown error!');
       }
     });
   };
- 
-  
+
+
    $scope.deleteImage = function(id,path,item){
 	{
 		$.ajax(
@@ -495,18 +549,18 @@ $.getJSON('/getAllJobs', function(data){
 				data:{
 						path: path,
 						id:id,
-						_token: CSRF_TOKEN					
+						_token: CSRF_TOKEN
 	           		 },
 	            success: function(data)
-	            {	
+	            {
 	            	$scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif';
-	            	// delete $scope.user.files[item];		          	
-	            	// $scope.$apply();	            	    
+	            	// delete $scope.user.files[item];
+	            	// $scope.$apply();
 	            }
 			}).done($scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif');
-	}; 
-   };    
-// DatePicker 
+	};
+   };
+// DatePicker
    $scope.today = function() {
      $scope.dt = new Date();
    };
@@ -525,7 +579,7 @@ $.getJSON('/getAllJobs', function(data){
     $scope.minDate = $scope.minDate ? null : new Date();
   };
  // $scope.toggleMin();
-	
+
   //$scope.open = function($event) {
   //  $event.preventDefault();
   //  $event.stopPropagation();
@@ -540,11 +594,11 @@ $.getJSON('/getAllJobs', function(data){
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
 /* progress bar*/
-  $scope.max = 100; 
+  $scope.max = 100;
   $scope.dynamic = 75;
   $scope.type = 'info';
 
-  $scope.add = function(doc_param_key,param_key,index) {  	
+  $scope.add = function(doc_param_key,param_key,index) {
    	$http.get('/users/'+ $scope.userId)
 	  	.success(function(data, status, headers, config) {
 	  		$scope.inserted = data[doc_param_key];
@@ -556,98 +610,98 @@ $.getJSON('/getAllJobs', function(data){
 	  	}
 	  	})
 	  	.error(function(){
-	  		
+
 	  	});
   };
-	  
-  $scope.addWhenEdit = function(docParam,$index) {	
+
+  $scope.addWhenEdit = function(docParam,$index) {
   	console.log($scope.user[docParam]);
 	$http.get('/columns/register_jobseeker')
 	  	.success(function(data, status, headers, config) {
-		  	$scope.inserted = data[docParam];	   
+		  	$scope.inserted = data[docParam];
 		  	if(!(angular.isArray($scope.user[docParam]))){
 		  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
 		  	}else{
 				$scope.user[docParam].push($scope.inserted);
-		  	}	
+		  	}
 		  		console.log(docParam);
 	  	})
 	  	.error(function(){
 	  		alert('ERROR!!');
 	  	});
-  };    
-  
-  
-	   $scope.addRecordEmployer =function(docParam,$index) {	
-		
+  };
+
+
+	   $scope.addRecordEmployer =function(docParam,$index) {
+
 		$http.get('/columns/register_employer')
 		  	.success(function(data, status, headers, config) {
-		  		
-		  	$scope.inserted = data[docParam];	  
-		  	
+
+		  	$scope.inserted = data[docParam];
+
 		  	if(!(angular.isArray($scope.user[docParam]))){
 		  		$scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
-		 		 
+
 		  	}else{
 				$scope.user[docParam].push($scope.inserted);
-				
-		  	}	
-		  		
+
+		  	}
+
 		  	})
 		  	.error(function(){
 		  		alert('ERROR!!');
 		  	});
-	  };    
-	 
-	  
+	  };
+
+
   $scope.move = function(array, fromIndex, toIndex){
 
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
 
    };
-   
-  $scope.remove = function(array,item) {  
-  	 array.splice(item,1);      
+
+  $scope.remove = function(array,item) {
+  	 array.splice(item,1);
   	$http.post('/deleteIterable', {docParam:array,user:$scope.user,_token:CSRF_TOKEN}).
 	  then(function(response) {
-	    
+
 	  }, function(response) {
 	    // called asynchronously if an error occurs
 	    // or server returns response with an error status.
 	  });
-  	
-  	
-  	
-   
-  };  
-	  
+
+
+
+
+  };
+
 $scope.genders = [
     {value: 'male', text: 'Male'},
     {value: 'female', text: 'Female'},
-  
+
   ];
 
-	  
+
 $scope.martialStatuses = [
     {value: 'married', text: 'Marrired'},
     {value: 'single', text: 'Single'},
     {value: 'divorced', text: 'Divorced'},
     {value: 'widdowed', text: 'Widdowed'},
-  
+
   ];
 
 $scope.educationStatuses = [
     {value: 'student', text: 'Student'},
     {value: 'graduate', text: 'Graduate'},
     {value: 'intern', text: 'Intern'},
- 
-  
+
+
   ];
 
 
 
    $scope.selected = undefined;
-  
+
   // Any function returning a promise object can be used to load values asynchronously
   $scope.getLocation = function(val) {
     return $http.get('//maps.googleapis.com/maps/api/geocode/json?language=en', {
@@ -698,7 +752,7 @@ var prefix = locationSubtype;
 prefix = prefix.split('.');
 prefix = prefix[0];
 		console.log(locationSubtype);
-if(locationSubtype == 'register.personalInfo') {
+if(locationSubtype == 'register.personal_information' || locationSubtype == 'register.work_experience') {
 	locationSubtype = 'jobseeker';
 	console.log(locationSubtype);
 }else if(locationSubtype == 'register.company') {
@@ -736,9 +790,9 @@ $scope.getColumns = function(){
 	  success(function(data, status, headers, config) {
 	 	 $scope.user = data;
 	 	console.log('getcolumns from RegCtrl');
-	 	 $scope.userCaretName = $scope.user.personalInfo.first_name;
+	 	 $scope.userCaretName = $scope.user.personal_information.first_name;
 	 	 //registration steps
-	 	 $scope.next_keys = [];
+	 	 $scope.next_keys =Array();
 	 	 var prev_key = false;
 
 		 for(var key in $scope.user) {
@@ -750,22 +804,24 @@ $scope.getColumns = function(){
 				$scope.next = key;
 			}
 		}
+			  console.log($scope.next_keys);
+			  $scope.nextDoc = function(doc){
+
+				  if($scope.next_keys[doc]){
+					  $scope.doc = $scope.next_keys[doc];
+					  return $scope.doc ;
+				  }else{
+					  return false ;
+				  }
+				  console.log(doc);
+			  };
 	  }).
 	  error(function(data, status, headers, config) {
 	    // called asynchronously if an error occurs
 	    // or server returns response with an error status.
 	  });
   };
-  $scope.nextDoc = function(doc){
 
-	if($scope.next_keys[doc]){
-		$scope.doc = $scope.next_keys[doc];
-		return $scope.doc ;
-	}else{
-		return false ;
-	}
-	console.log(doc);
-};
 
 	$scope.getColumns();
 
@@ -887,7 +943,7 @@ $scope.getColumns = function(){
  prefix = prefix.split('.');
  prefix = prefix[0];
 
- if(locationSubtype == 'register.personalInfo') {
+ if(locationSubtype == 'register.personal_information') {
  	locationSubtype = 'jobseeker';
  }else if(locationSubtype == 'register.company') {
 	 locationSubtype = 'employer';
@@ -936,7 +992,7 @@ $scope.getColumns = function(){
 	$scope.docParam = $state.current.name.split('.');
 	$scope.docParam = $scope.docParam[1];
 	console.log($scope.docParam);
-	//$scope.docParam = 'personalInfo';
+	//$scope.docParam = 'personal_information';
 	
     // we will store all of our form data in this object
 	function capitalizeFirstLetter(string) {
@@ -945,16 +1001,17 @@ $scope.getColumns = function(){
     $scope.saveUser = function(user,docParam) {
     $scope.absUrl	= 'jobseeker';
     console.log($scope.absUrl);
-	//var subType = user['personalInfo']['subtype'];
-	user.personalInfo.subtype = locationSubtype;
-	user.personalInfo.type = 'tech-admin';
-	user.personalInfo.status = 'active';
+	//var subType = user['personal_information']['subtype'];
+	user.personal_information.subtype = locationSubtype;
+	user.personal_information.type = 'tech-admin';
+	user.personal_information.status = 'active';
+
    $http.post('/auth/register', {
      user: user,
    	_token: CSRF_TOKEN,
    	from:'register'
    	}).success(function(data){
-   		
+
    		// if($scope.nextDoc($scope.docParam) != false)
 	  	// {
 	  	 	console.log($scope.docParam);
@@ -987,10 +1044,7 @@ $scope.getColumns = function(){
 //    		
    	  	 
      }).error(function(err) {
-  		
-	 console.log('error');
-	
-	// console.log(err);
+	// $scope.errors = err;
     });
   };
   
@@ -1001,13 +1055,12 @@ $scope.getColumns = function(){
      post:post,
    	_token:CSRF_TOKEN,
    	from:'jobPost'
-   	}).success(function(v){
-  
+   	}).success(function(errors){
+
    		return post;
    	  	 
   }).error(function(err) {
-  		$scope.errors = err;
-	 //console.log($scope.errors);
+
 	 	
 	
     });
@@ -1054,7 +1107,7 @@ $scope.getColumns = function(){
 	 	 $scope.user = data;
 		console.log('getcolumns from formCtrl');
 //registration steps
-	 	 $scope.next_keys = [];
+	 	 $scope.next_keys = Array();
 	 	 var prev_key = false;
 			
 		 for(var key in $scope.user) {
@@ -1065,6 +1118,18 @@ $scope.getColumns = function(){
 				prev_key = key;
 			}
 		}
+
+
+			  $scope.nextDoc = function(doc){
+
+				  if($scope.next_keys[doc]){
+					  $scope.doc = $scope.next_keys[doc];
+					  return $scope.doc ;
+				  }else{
+					  return false ;
+				  }
+				  console.log(doc);
+			  };
 	  }).
 	  error(function(data, status, headers, config) {
 	    // called asynchronously if an error occurs
@@ -1073,17 +1138,7 @@ $scope.getColumns = function(){
 	
   };
  
- 
- $scope.nextDoc = function(doc){
-	
-	if($scope.next_keys[doc]){
-		$scope.doc = $scope.next_keys[doc];
-		return $scope.doc ;
-	}else{
-		return false ;
-	}
-	console.log(doc);
-};
+
   
    $scope.add = function(doc_param_key,index) {
    	

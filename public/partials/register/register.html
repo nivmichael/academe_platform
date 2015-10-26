@@ -6,8 +6,8 @@
 </script>
 
 	
-	<div class="col-lg-2">
-		<li ui-sref-active="" ui-sref=".personalInfo" class="docParamLi" ng-hide="absUrl == 'register_employer'">
+	<nav class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sideNav">
+		<li ui-sref-active="" ui-sref=".personal_information" class="docParamLi" ng-hide="absUrl == 'register_employer'">
 			<span class="▶">▶</span>Personal Information
 		</li>
 		<div ng-repeat="(key,step) in steps track by $index" id="status-buttons" class="docParamLi" >
@@ -17,5 +17,5 @@
 			</li>
 	
 		</div>
-	</div>
-	<div ui-view="" class="col-lg-8"></div>
+	</nav>
+	<div ui-view="" class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>

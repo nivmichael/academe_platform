@@ -306,7 +306,7 @@ class SysParamValuesController extends Controller  {
 		if(isset($all['user'])){
 		
 			$all = $all['user'];
-			$info=$all['personalInfo'];
+			$info=$all['personal_information'];
 			$docType = '1';
 			$request = Request::create('/users','POST', array($all));
 		}else if(isset($all['post'])) {
@@ -320,7 +320,7 @@ class SysParamValuesController extends Controller  {
 		
 			
 			
-			$delete       = DB::table('sys_param_values')->where('doc_type',$docType)->where('ref_id',$info['id'])->whereNotNull('iteration')->delete();
+			$delete = DB::table('sys_param_values')->where('doc_type',$docType)->where('ref_id',$info['id'])->whereNotNull('iteration')->delete();
 		
 			return Route::dispatch($request)->getContent();
 
