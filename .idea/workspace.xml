@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1853cf2e-936b-4954-b25f-f31cbafb4ace" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/partials/employer/system_matches.html" />
-      <change type="MOVED" beforePath="C:\wamp\www\academe_platform\public\partials\company.html" afterPath="$PROJECT_DIR$/public/partials/post/company.html" />
-      <change type="MOVED" beforePath="C:\wamp\www\academe_platform\public\partials\company_site.html" afterPath="$PROJECT_DIR$/public/partials/post/company_site.html" />
-      <change type="MOVED" beforePath="C:\wamp\www\academe_platform\public\partials\company_video.html" afterPath="$PROJECT_DIR$/public/partials/post/company_video.html" />
-      <change type="MOVED" beforePath="C:\wamp\www\academe_platform\public\partials\general.html" afterPath="$PROJECT_DIR$/public/partials/post/general.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TypePostController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypePostController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/controllers.js" afterPath="$PROJECT_DIR$/public/lib/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/partials/employer/employerHome.html" afterPath="$PROJECT_DIR$/public/partials/employer/employerHome.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/employer_app.js" afterPath="$PROJECT_DIR$/public/lib/employer_app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/partials/findAJob.html" afterPath="$PROJECT_DIR$/public/partials/findAJob.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/partials/employer/jobPost.html" afterPath="$PROJECT_DIR$/public/partials/employer/jobPost.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/partials/employer/jobs.html" afterPath="$PROJECT_DIR$/public/partials/employer/jobs.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/jobseeker_app.js" afterPath="$PROJECT_DIR$/public/lib/jobseeker_app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/jobseeker_home.blade.php" afterPath="$PROJECT_DIR$/resources/views/jobseeker_home.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/myStyle.css" afterPath="$PROJECT_DIR$/public/css/myStyle.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/partials/profile.html" afterPath="$PROJECT_DIR$/public/partials/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="academe_platform.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -128,8 +111,8 @@
       <file leaf-file-name="myStyle.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/css/myStyle.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9185629">
-              <caret line="734" column="12" selection-start-line="734" selection-start-column="12" selection-end-line="734" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.95928144">
+              <caret line="736" column="1" selection-start-line="736" selection-start-column="1" selection-end-line="736" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -561,7 +544,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="0" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -1002,8 +985,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/myStyle.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9185629">
-          <caret line="734" column="12" selection-start-line="734" selection-start-column="12" selection-end-line="734" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.95928144">
+          <caret line="736" column="1" selection-start-line="736" selection-start-column="1" selection-end-line="736" selection-end-column="1" />
           <folding />
         </state>
       </provider>
