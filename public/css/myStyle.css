@@ -515,12 +515,12 @@ ul{
 	
 }
 .postDiv {
-	padding:20px;
+	padding:5px;
 	
 }
 .postDivChild{
-	
-	border: 1px solid #EDEDED;
+	background-color:white;
+	border: 2px solid #D2D2D2;
 }
 .marginBottom {
 	margin-bottom: 2px;
@@ -712,4 +712,25 @@ body {
 	overflow: hidden;
 	border: none;
 	border-radius: 0;
+}
+.searchText{
+
+	width: 500px;
+	margin-top: 7px;
+	margin-left: 10px;
+}
+.envelope{
+	position:absolute;
+	right:50px;
+	margin-top:9px;
+}
+.meetingsLabel{
+	position:absolute;
+	right:140px;
+	margin-top:15px;
+	color:white;
+	/*font-weight:bold;*/
+}
+.modal-dialog{
+	width:95%;
 }

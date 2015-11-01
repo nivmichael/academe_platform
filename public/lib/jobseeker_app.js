@@ -58,26 +58,112 @@ var acadb = angular.module('acadb', [
           templateUrl: '../partials/findAJob.html'   ,
           controller:'FindajobController',
        })
-       .state('jobseeker.findajob.general', {
-          url: "/general",
-          templateUrl: '../partials/general.html'   ,
-          controller:'FindajobController'   
-       })
-       .state('jobseeker.findajob.the_company', {
-          url: "/company",
-          templateUrl: '../partials/company.html'   ,
-          controller:'FindajobController'   
-       })
-       .state('jobseeker.findajob.company_video', {
-          url: "/company_video",
-          templateUrl: '../partials/company_video.html'   ,
-          controller:'FindajobController'   
-       })
-       .state('jobseeker.findajob.company_site', {
-          url: "/company_site",
-          templateUrl: '../partials/company_site.html'   ,
-          controller:'FindajobController'   
-       });
+
+
+          .state('job', {
+              parent: 'jobseeker.findajob',
+              url: '/job/:jobId',
+            //  abstract: true,
+              controller: 'FindajobController',
+              onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+                  console.log('Open modal');
+
+                  var modalInstance = $uibModal.open({
+
+                      templateUrl:'myModalContent.html',
+                      backdrop: false,
+                      windowClass: 'right fade',
+                      keyboard: true,
+                      controller: 'PostModalInstanceCtrl',
+                      resolve: {
+                          job: function () {
+
+                              return $stateParams.jobId;
+                          },
+
+                      },
+
+
+                  }).result.finally(function() {
+
+                       console.log('finally')
+                       $state.go('jobseeker.findajob');
+                      });
+              }],
+
+
+          })
+          //.state('details', {
+          //  url: '/details',
+          //
+          //  parent: 'job',
+          //  views: {
+          //    'job@': {
+          //      templateUrl: 'myModalContent.html',
+          //
+          //    }
+          //  }
+          //})
+          .state('general', {
+              url: '/general',
+
+              parent: 'job',
+              views: {
+                  'job@': {
+                      templateUrl: '../partials/post/general.html',
+
+                  }
+              }
+          })
+          .state('the_company', {
+              url: '/the_company',
+              parent: 'job',
+              views: {
+                  'job@': {
+                      templateUrl: '../partials/post/company.html'
+                  }
+              }
+          })
+          .state('company_video', {
+              url: '/company_video',
+              parent: 'job',
+              views: {
+                  'job@': {
+                      templateUrl: '../partials/post/company_video.html'
+                  }
+              }
+          })
+          .state('company_site', {
+              url: '/company_site',
+              parent: 'job',
+              views: {
+                  'job@': {
+                      templateUrl: '../partials/post/company_site.html'
+                  }
+              }
+          })
+
+
+       //.state('jobseeker.findajob.general', {
+       //   url: "/general",
+       //   templateUrl: '../partials/general.html'   ,
+       //   controller:'FindajobController'
+       //})
+       //.state('jobseeker.findajob.the_company', {
+       //   url: "/company",
+       //   templateUrl: '../partials/company.html'   ,
+       //   controller:'FindajobController'
+       //})
+       //.state('jobseeker.findajob.company_video', {
+       //   url: "/company_video",
+       //   templateUrl: '../partials/company_video.html'   ,
+       //   controller:'FindajobController'
+       //})
+       //.state('jobseeker.findajob.company_site', {
+       //   url: "/company_site",
+       //   templateUrl: '../partials/company_site.html'   ,
+       //   controller:'FindajobController'
+       //});
 
      // $urlRouterProvider.deferIntercept();
 

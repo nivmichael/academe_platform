@@ -39,77 +39,77 @@
 	</script>
 
 
-	<script type="text/ng-template" id="myModalContent.html">
-		<div class="modal-header">
-			<h3 class="modal-title">Upload Image</h3>
-		</div>
-		<div class="modal-body">
-			{{user}}
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-			<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-		</div>
-	</script>
+	<!--<script type="text/ng-template" id="myModalContent.html">-->
+		<!--<div class="modal-header">-->
+			<!--<h3 class="modal-title">Upload Image</h3>-->
+		<!--</div>-->
+		<!--<div class="modal-body">-->
+			<!--{{user}}-->
+		<!--</div>-->
+		<!--<div class="modal-footer">-->
+			<!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+			<!--<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>-->
+		<!--</div>-->
+	<!--</script>-->
 
 
 
 
-	<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<!--<div class="modal fade bs-example-modal-lg_Gallery col-md-12 center-modal" id-"newModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
+	<!--<div class="modal-dialog modal-lg">-->
 
 
-		<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >
-			<div flow-init="flowOp(m)"
-				 flow-files-submitted="$flow.upload()"
-				 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-				 class="modal-content" style="height:100%;overflow:auto;">
-				<br/>
+		<!--<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >-->
+			<!--<div flow-init="flowOp(m)"-->
+				 <!--flow-files-submitted="$flow.upload()"-->
+				 <!--flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"-->
+				 <!--class="modal-content" style="height:100%;overflow:auto;">-->
+				<!--<br/>-->
 
-				<div class="thumbnail" >
-					<div class="thumbnail_title">{{q}}</div>
+				<!--<div class="thumbnail" >-->
+					<!--<div class="thumbnail_title">{{q}}</div>-->
 
-					<img  ng-src="{{n.paramValue }}" width="200px">
-					<div class="btn-group">
-						<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">
-							<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-						</a>
-					</div>
+					<!--<img  ng-src="{{n.paramValue }}" width="200px">-->
+					<!--<div class="btn-group">-->
+						<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">-->
+							<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+						<!--</a>-->
+					<!--</div>-->
 
-				</div>
+				<!--</div>-->
 
-				<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-					<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-					<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+				<!--<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">-->
+					<!--<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>-->
+					<!--<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">-->
 
-						<div class="thumbnail_title">{{file.name}}</div>
-						<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >
-							<img flow-img="file" />
+						<!--<div class="thumbnail_title">{{file.name}}</div>-->
+						<!--<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >-->
+							<!--<img flow-img="file" />-->
 
-							<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-								<div class="progress-bar" role="progressbar"
-									 aria-valuenow="{{file.progress() * 100}}"
-									 aria-valuemin="0"
-									 aria-valuemax="100"
-									 ng-style="{width: (file.progress() * 100) + '%'}">
-									<div class="sr-only">{{file.progress()}}% Complete</div>
-								</div>
-							</div>
-							<div class="btn-group">
-								<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-									<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-								</a>
-							</div>
-						</div>
+							<!--<div class="progress progress-striped" ng-class="{active: file.isUploading()}">-->
+								<!--<div class="progress-bar" role="progressbar"-->
+									 <!--aria-valuenow="{{file.progress() * 100}}"-->
+									 <!--aria-valuemin="0"-->
+									 <!--aria-valuemax="100"-->
+									 <!--ng-style="{width: (file.progress() * 100) + '%'}">-->
+									<!--<div class="sr-only">{{file.progress()}}% Complete</div>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="btn-group">-->
+								<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">-->
+									<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
 
-					</div>
+					<!--</div>-->
 
-					<div class="clear"></div>
-				</div>
+					<!--<div class="clear"></div>-->
+				<!--</div>-->
 
 
-			</div>
-		</div>
+			<!--</div>-->
+		<!--</div>-->
 	</div>
 	</div>
 
@@ -501,7 +501,7 @@
 
 	<footer class="col-md-12">
 
-		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " data-toggle="modal" data-target=".bs-example-modal-lg_{{footerNavli.tag}}">{{footerNavli.tag}}</div>
+		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi ">{{footerNavli.tag}}</div>
 
 	</footer>
 

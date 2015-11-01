@@ -65,20 +65,42 @@
 
 
 					<a class="navbar-brand col-md-2" href="jobseeker#/">My Profile </a>
+
+
+
+
+
+
 				</div>
-	
+				<div class="col-lg-3 searchText">
+					<div class="input-group">
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search" style="padding:3px;"></i></button>
+							  </span>
+						<input type="text" class="form-control" ng-model="searchText"  placeholder="Search Jobs">
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+				<div class="col-lg-1 meetingsLabel">
+					Meetings
+				</div>
+
+				<div class="col-lg-1 envelope">
+					<a href=""><img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"></a>
+				</div>
+
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					
 					</ul>
-	
+
 					<ul class="nav navbar-nav navbar-right">
 						@if (Auth::guest())
 							<li><a href="[[ url('/auth/login') ]]">Login</a></li>
 							<li><a href="[[url('/auth/register') ]]">Register</a></li>
 						@else
 							<li class="dropdown">
-								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personalInfo.first_name}}<span class="caret"></span></a>
+								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personal_information.first_name}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="[[ url('/jobseeker#/profile') ]]">Edit Profile</a></li>
 									<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>

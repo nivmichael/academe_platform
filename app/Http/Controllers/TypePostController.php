@@ -121,7 +121,7 @@ class TypePostController extends Controller {
 		$post->title = $all['post']['general']['title']['paramValue'];
 		$post->user_id = $userId;
 		$post->description_short = $all['post']['general']['job_description']['paramValue'];
-		$post->description = $all['post']['general']['description']['paramValue'];
+		//$post->description = $all['post']['general']['description']['paramValue'];
 		$post->authorized = 1;
 		$post->save(); 
 		

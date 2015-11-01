@@ -44,7 +44,7 @@ var acadb = angular.module('acadb', [
 
      	.state('employer', {
           url: "/",
-          abstract: true,     
+          abstract: true,
           templateUrl: '../partials/employer/employerHome.html',
           controller: 'UserHomeController', 
         })
@@ -54,11 +54,54 @@ var acadb = angular.module('acadb', [
           controller: 'UserHomeController', 
         })
         .state('employer.jobs', {
-          url: "",
+          url: "^/jobs",
           templateUrl: '../partials/employer/jobs.html',
-          controller: 'formController'      
+          controller: 'formController'
         })
-        ;
+        .state('job', {
+            parent: 'employer.jobs',
+            url: '/job/:jobId',
+            //  abstract: true,
+            controller: 'formController',
+            onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+              console.log('Open modal');
+
+              var modalInstance = $uibModal.open({
+
+                templateUrl:'myModalContent.html',
+                backdrop: false,
+                windowClass: 'right fade',
+                keyboard: true,
+                controller: 'PostModalInstanceCtrl',
+                resolve: {
+                  job: function () {
+                    return $stateParams.jobId;
+                  },
+
+                },
+
+
+              }).result.finally(function() {
+                   // $state.go('employer.jobs');
+                    console.log('job modal closed')
+                  });
+            }],
+
+
+
+
+          })
+
+          .state('employer.jobs.system_matches', {
+
+
+            url: "/system_matches",
+
+            controller: 'TController',
+            templateUrl: '../partials/employer/system_matches.html',
+
+          });
+
       
       
   
