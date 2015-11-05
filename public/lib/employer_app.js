@@ -36,7 +36,7 @@ var acadb = angular.module('acadb', [
       $httpProvider.defaults.xsrfCookieName = 'X-CSRF-TOKEN';
 
       //$httpProvider.interceptors.push('httpInterceptor');
-      $urlRouterProvider.otherwise("/");
+      $urlRouterProvider.otherwise("/jobs");
        
       $stateProvider
 	
@@ -91,6 +91,37 @@ var acadb = angular.module('acadb', [
 
 
           })
+          .state('jobPost', {
+            parent: 'employer',
+            url: '^/new_job',
+            //  abstract: true,
+            controller: 'formController',
+            onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+              console.log('Open modal');
+
+              var modalInstance = $uibModal.open({
+
+                templateUrl:'newJob.html',
+                backdrop: false,
+                windowClass: 'right fade',
+                keyboard: true,
+                controller: 'SomeCtrl',
+
+
+
+              }).result.finally(function() {
+                    $state.go('employer.jobs');
+                    console.log('job modal closed')
+                  }, function(){
+                    $state.go('employer.jobs');
+                  });
+            }],
+
+
+
+
+          })
+
 
           .state('employer.jobs.system_matches', {
 
@@ -102,9 +133,19 @@ var acadb = angular.module('acadb', [
 
           });
 
-      
-      
-  
+
+      //,
+      //{
+      //  "name": "employer.jobPost",
+      //    "url": "newjob",
+      //    "abstract": false,
+      //    "views": [{
+      //  "name": "employer.jobPost",
+      //
+      //  "cache": false
+      //}]
+      //}
+      //
         
         // .state('employer.profile', {
           // url: "^/profile",

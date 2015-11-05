@@ -1,0 +1,42 @@
+<h6>General</h6>
+
+<!-- <post docparam="postInfo" param="description" parameter="abc"></post> -->
+
+<div>{{post.postInfo.description}}</div>
+
+<div>{{post.post_details.main_field.paramValue}}</div>
+
+<div>{{post.post_details.profession.paramValue}}</div>
+
+<div>{{post.post_details.employment_type.paramValue}}</div>
+
+<hr>
+
+<h6>Education</h6>
+<div ng-repeat="(docParamName,docParamValues) in post">	
+	<div ng-repeat="(iterableKey,parameters) in docParamValues" ng-if="!isArray(docParamValues)">
+		
+			{{iterableKey}} : {{parameters.paramValue}}
+		
+		<div ng-repeat="(param,values) in parmeters track by $index" ng-if="isArray(docParamValues)">
+		
+			{{param}} : {{values.paramValue}}
+		
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div>{{post.postInfo.title}}</div>
+
+<div>{{post.experience.experience.paramValue || 'experience 3-5'}}</div>
+
+<div>{{post.experience.location.paramValue   || 'Location California' }}</div>
+
+<div>{{post.post_details.general.paramValue  || "General Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."}}</div>
+<hr>
+<div>{{post.post_details.requirements.paramValue || "Requirements Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." }}</div>
+<hr>

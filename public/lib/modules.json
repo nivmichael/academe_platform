@@ -134,17 +134,6 @@
    }]
   },
   {
-  "name": "employer.jobPost",
-   "url": "newjob",
-   "abstract": false,
-   "views": [{
-     "name": "employer.jobPost",
-      "controller": "formController",
-     "templateUrl": "../../partials/employer/jobPost.html",
-     "cache": false
-   }]
-  },
-  {
   "name": "employer.jobs.159",
    "url": "/employer/jobs/159",
    "abstract": false,

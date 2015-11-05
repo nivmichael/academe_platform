@@ -1,0 +1,21 @@
+<nav ng-controller="RegisterController">
+    <li ui-sref-active="" ui-sref=".personal_information" class="docParamLi" ng-hide="absUrl == 'register_employer'">
+        <span class="▶">▶</span>Personal Information
+    </li>
+    <div ng-repeat="(key,step) in steps track by $index" id="status-buttons" class="docParamLi" >
+
+        <li ui-sref-active="" ui-sref="register.{{step.name}}" ng-click="cancelOnResize()">
+            <span class="▶">▶</span>{{step.slug}}
+        </li>
+
+    </div>
+</nav>
+
+
+
+
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok($event)">OK</button>
+    <button class="btn btn-warning" ng-click="cancel($event)">Cancel</button>
+</div>

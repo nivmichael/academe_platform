@@ -80,6 +80,47 @@ class ParamValueController extends Controller {
 	  return Response::json($params);
 	}
 
+
+	public function getOptionValues($paramName, $doc_param_id)
+	{
+		//dd($doc_param_id);
+		$option = [];
+
+
+		//
+
+		$paramId = DB::table('param')->where('name',$paramName)->where('doc_param_id',$doc_param_id)->pluck('id');
+		if(!$paramId)
+		{
+			dd($paramId);
+		}
+		$paramValues = DB::table('param_value')->where('param_id',$paramId)->lists('value');
+	//	$paramValues = DB::select( DB::raw("SELECT value FROM param_value LEFT JOIN param ON param_value.param_id = param.id WHERE param_value.param_id = '".$paramId."' AND param.doc_param_id = '".$doc_param_id."'"));
+		//SELECT `value` FROM `param_value` LEFT JOIN param ON param_value.param_id = param.id WHERE param_value.param_id = 53 AND param.doc_param_id = 1
+		//$paramValues = DB::table('param_value')->where('param_id',$paramId)->lists('value');
+	//	dd($paramValues);
+
+		if(!$paramValues){
+			
+		}else
+		{
+			foreach($paramValues as $key => $value) {
+	//			$paramOptions[$key] = [];
+
+				$option['value'] = $value;
+				$option['text'] = $value;
+				$paramOptions[$key] = $option;
+
+			}
+			return Response::json($paramOptions);
+		}
+//		if(!$paramValues || $paramValues == null) {
+//			$paramOptions = array(1,2,3);
+//		}
+
+
+	}
+
 	/**
 	 * Display the specified resource.
 	 *

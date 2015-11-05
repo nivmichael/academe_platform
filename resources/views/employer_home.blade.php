@@ -1,7 +1,7 @@
 
 <html ng-app="acadb">
     <head>
-        <title>Laravel</title>
+        <title>AcadeME</title>
 		<script src="lib/jquery-1.11.3.min.js"></script>
 		<!-- angular -->
 		<script src="lib/angular.1.4.7.min.js"></script>
@@ -60,7 +60,32 @@
 					</div>
 					<a class="navbar-brand col-md-2" href="jobseeker#/">My Profile </a>
 				</div>
-	
+				<div class="col-lg-3 searchText">
+					<div class="input-group">
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search" style="padding:3px;"></i></button>
+							  </span>
+						<input type="text" class="form-control" ng-model="searchText"  placeholder="Search Jobs">
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+
+
+				<span type="button" class="col-lg-1 meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings</span>
+
+
+
+
+
+				<!---
+				<div class="col-lg-1 meetingsLabel">
+					Meetings
+				</div>
+				-->
+
+				<div class="col-lg-1 envelope">
+					<a href=""><img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"></a>
+				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					
@@ -72,7 +97,7 @@
 							<li><a href="[[url('/auth/register') ]]">Register</a></li>
 						@else
 							<li class="dropdown">
-								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personalInfo.first_name}}<span class="caret"></span></a>
+								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.company.company_name.paramValue}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a ui-sref="employer.edit">Edit Profile</a></li>
 									<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
@@ -83,9 +108,24 @@
 				</div>
 			</div>
 		</nav>
-        
+		<div uib-collapse="isCollapsed">
+			<div class="">
+				<h1>
+					Meetings Console
+				</h1>
+				<div>
 
-                <div ui-view=""></div>
+				</div>
+			</div>
+
+			<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">close</button>
+		</div>
+
+
+
+
+
+		<div ui-view=""></div>
 	</body>
 	<script src="lib/employer_app.js"></script>
 	<script src="lib/controllers.js"></script>

@@ -57,9 +57,23 @@ Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
 Route::get('/employerSteps', 'DocParamController@employerSteps');
 Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
 Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
+
+Route::get('/columns/registerEmployer', 'TypeUserController@columnIndexEmployer');
+
 Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
 Route::post('/deleteImage' ,'SysParamValuesController@deleteimagefromdb');
+
+//Route::resource('/param/{name}', 'ParamValueController@getOptionValues');
+
+Route::get('/param/{paramName}/{docParamId}',
+	array('as'=>'whatever','uses'=>'ParamValueController@getOptionValues'));
+
+
+
 // Retrieve Authed User id
+
+
+
 Route::get('/getAuthId', function(){
 	return Auth::id();
 });

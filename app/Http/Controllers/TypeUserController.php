@@ -49,7 +49,8 @@ class TypeUserController extends Controller {
 											   param.slug AS slug,
 											   param.name AS paramName, 
 											   doc_param.name AS docParamName,
-											   param_type.name AS paramType
+											   param_type.name AS paramType,
+											   doc_param.id AS docParamId
 											   FROM	param
 											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
@@ -76,13 +77,14 @@ class TypeUserController extends Controller {
 			//$user[$v->docParamName][$paramName] = $v->value = '';
 			
 			$iteration    = $v->iteration;
+			$docParamId  = $v->docParamId;
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
 			$inputType    = $v->paramType;
 			$slug         = $v->slug;
 	
 			
-			
+			$user[$docParamName]['docParamId'] = $docParamId;
 			$user[$docParamName][$paramName]['paramName'] = $paramName;		
 			$user[$docParamName][$paramName]['paramValue'] = '';
 			$user[$docParamName][$paramName]['inputType'] = $inputType;

@@ -81,9 +81,19 @@
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 
+
+
+					<span type="button" class="col-lg-1 meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings</span>
+
+
+
+
+
+				<!---
 				<div class="col-lg-1 meetingsLabel">
 					Meetings
 				</div>
+				-->
 
 				<div class="col-lg-1 envelope">
 					<a href=""><img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"></a>
@@ -111,6 +121,19 @@
 				</div>
 			</div>
 		</nav>
+		<div uib-collapse="isCollapsed">
+			<div class="">
+				<h1>
+					Meetings Console
+				</h1>
+				<div>
+
+				</div>
+			</div>
+
+			<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">close</button>
+		</div>
+
      
            
 
