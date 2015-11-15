@@ -16,7 +16,8 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'checklist-model',
-    'ui.bootstrap.modal'
+    'ui.bootstrap.modal',
+    'angularMoment'
 ])
 
 
@@ -24,7 +25,10 @@ var acadb = angular.module('acadb', [
   function($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-   
+
+
+
+
   }
 ])
 
@@ -50,7 +54,7 @@ var acadb = angular.module('acadb', [
        })
        .state('jobseeker.profile', {
           url: "",
-          templateUrl: '../partials/profile.html'   ,
+          templateUrl: '../partials/jobseeker/profile.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.findajob', {
@@ -66,7 +70,7 @@ var acadb = angular.module('acadb', [
             //  abstract: true,
               controller: 'FindajobController',
               onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
-                  console.log('Open modal');
+                  //console.log('Open modal');
 
                   var modalInstance = $uibModal.open({
 
@@ -253,7 +257,7 @@ var acadb = angular.module('acadb', [
 // ])
 // // .config(['$routeProvider' ,'$locationProvider', function($routeProvider ,$locationProvider) {
 // //   
-  // // $routeProvider.when('/', {templateUrl: 'partials/userHome.html',controller: 'UserHomeController' });
+  // // $routeProvider.when('/', {templateUrl: 'partials/~userHome.html',controller: 'UserHomeController' });
   // // $routeProvider.when('/education', {templateUrl: 'partials/register/education.html',controller: 'RegisterController' });
   // // $routeProvider.when('/param', {templateUrl: 'partials/db/param.html',controller: 'TController' });
   // // $routeProvider.when('/type_user', {templateUrl: 'partials/db/type_user.html',controller: 'TController' });

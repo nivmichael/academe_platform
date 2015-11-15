@@ -77,7 +77,7 @@
 							  <span class="input-group-btn">
 								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search" style="padding:3px;"></i></button>
 							  </span>
-						<input type="text" class="form-control" ng-model="searchText"  placeholder="Search Jobs">
+						<input type="text" class="form-control searchTextInput" ng-model="searchText"  placeholder="Search Jobs">
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 
@@ -96,12 +96,13 @@
 				-->
 
 				<div class="col-lg-1 envelope">
+					<div class="notificationsCircle"><span class="notificationsNum">{{1}}</span></div>
 					<a href=""><img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"></a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-					
+
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -121,31 +122,30 @@
 				</div>
 			</div>
 		</nav>
-		<div uib-collapse="isCollapsed">
+		<div uib-collapse="isCollapsed" class="well">
 			<div class="">
 				<h1>
 					Meetings Console
 				</h1>
 				<div>
-
+					meeting meeting
 				</div>
 			</div>
 
 			<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">close</button>
 		</div>
 
-     
-           
 
-                <div ui-view="" ></div>
-           
-        
+
+
+                <div ui-view=""></div>
+
+
     </body>
 
 	<script src="lib/jobseeker_app.js"></script>
 	<script src="lib/controllers.js"></script>
 	<script src="lib/filters.js"></script>
-	<script src="lib/moment.min.js"></script>
 	<script src="lib/services.js"></script>
 	<script src="lib/directives.js"></script>
 	<script src="lib/angular-route.js"></script>
@@ -153,7 +153,8 @@
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
 	<script src="lib/angular-animate.min.js"></script>
-
+	<script src="lib/moment.js"></script>
+	<script src="lib/angular_moment.min.js"></script>
 	<script src="lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
 	<script src="lib/angular-aside.min.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>

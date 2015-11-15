@@ -242,7 +242,7 @@
 
 </div>
 
-<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="form_field" ng-hide="docParam == 'files'">
+<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="form_field" ng-hide="docParam == 'files'"  ng-if="paramKey != 'docParamId'">
 
 	<!-- <div ng-if="docParam == 'personal_information'">
 	<div class="param_label">
@@ -258,7 +258,7 @@
 
 
 			<div class="param_label col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				{{paramKey}}
+				{{paramKey | underscoreless | capitalize}}
 			</div>
 
 			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
@@ -276,7 +276,7 @@
 							 <!--<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="s.value as s.value for s in groups" ng-change="loadNewCities(state1);">-->
 							 <!--</select>-->
 
-							 <select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, user[docParam]['docParamId'])">
+							 <select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, user[docParam]['docParamId'])"  ng-disabled="!groups[paramKey]">
 							 </select>
 						 </div>
 				 </div>
@@ -290,12 +290,34 @@
 				 <div ng-switch-when="checklist">
 					 <div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4"   ng-init="loadGroups(paramKey,user[docParam]['docParamId'])">
 						<label ng-repeat="check in groups[paramKey] track by $index" >
-							<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check.value"  >
+							<input type="checkbox" checklist-model="user[docParam][paramKey]['paramValue']" checklist-value="check.value"  >
 							<small>{{check.text}}</small>
 						</label>
 					</div>
 
 				 </div>
+
+				<div ng-switch-when="date">
+
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<p class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user[docParam][paramKey]['paramValue']" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+							  <span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
+							  </span>
+						</p>
+					</div>
+					<!--<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">-->
+						<!--<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']['month']" ng-options="o.value as o.text for o in months">-->
+						<!--</select>-->
+					<!--</div>-->
+
+					<!--<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">-->
+						<!--<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']['year']" ng-options="o.value  as o.text  for o in years">-->
+
+						<!--</select>-->
+					<!--</div>-->
+				</div>
 
 				 <div ng-switch-default>
 					 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -315,10 +337,10 @@
 </div>
 	<div ng-if="user[docParam].length>0">
 
-		<div ng-repeat="(paramName,props) in paramValues" class="form-field" >
+		<div ng-repeat="(paramName,props) in paramValues track by $index" class="form-field"  ng-if="paramName != 'docParamId'">
 
 				<div class="param_label col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{paramName}}
+					{{ paramName | underscoreless | capitalize }}
 				</div>
 
 				<div ng-switch="props.inputType">
@@ -332,7 +354,7 @@
 					<div ng-switch-when="select">
 
 						<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4"  ng-if="props.paramName">
-							<select class="form-control" ng-model="user[docParam][paramKey][paramName]['paramValue']" ng-options="s.value as s.value for s in groups[props.paramName]" ng-init="loadGroups(props.paramName)">
+							<select class="form-control" ng-model="user[docParam][paramKey][paramName]['paramValue']" ng-options="s.value as s.value for s in groups[props.paramName]" ng-init="loadGroups(paramKey, user[docParam]['docParamId'])"  ng-disabled="!groups[paramName]">
 							</select>
 						</div>
 
@@ -340,14 +362,26 @@
 
 					<div ng-switch-when="checklist">
 
-						<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="props.paramName"  ng-init="loadGroups(props.paramName)">
-							<label ng-repeat="check in groups[props.paramName]" >
+						<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="props.paramName"  ng-init="loadGroups(paramKey, user[docParam]['docParamId'])">
+							<label ng-repeat="check in groups[props.paramName] track by $index" >
 								<input type="checkbox" checklist-model="user[docParam][paramKey][paramName]['paramValue']" checklist-value="check.value"  >
 								<small>{{check.text}}</small>
 							</label>
 						</div>
 					</div>
 
+					<div ng-switch-when="date">
+
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<p class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+							  <span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
+							  </span>
+							</p>
+						</div>
+
+					</div>
 					<!--<div ng-switch-when="checklist">-->
 						<!--<div  class="col-xs-4 col-sm-4 col-md-4 col-lg-4"   ng-init="loadGroups(paramKey)">-->
 							<!--<label ng-repeat="check in groups[paramKey]" >-->
@@ -441,7 +475,7 @@
 
 		<div class="col-md-6" ng-if="nextDoc(docParam)">
 
-			<a ng-click="saveUser(user,docParam)" class="btn btn-success"> Proceed To {{nextDoc(docParam)}} &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
+			<a ng-click="saveUser(user,docParam)" class="btn btn-success"> Proceed To {{nextDoc(docParam) | underscoreless | capitalize}} &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
 
 		</div>
 

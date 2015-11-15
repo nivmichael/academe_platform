@@ -101,7 +101,8 @@ class ParamValueController extends Controller {
 	//	dd($paramValues);
 
 		if(!$paramValues){
-			
+
+			return Response::json(false);
 		}else
 		{
 			foreach($paramValues as $key => $value) {

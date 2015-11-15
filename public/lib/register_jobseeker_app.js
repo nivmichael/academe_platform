@@ -16,7 +16,8 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'checklist-model',
-    'ui.bootstrap.modal'
+    'ui.bootstrap.modal',
+    'angularMoment'
 ])
 
 
@@ -93,7 +94,7 @@ var acadb = angular.module('acadb', [
       .success(function(data) {
 
           angular.forEach(data, function(value, key) {
-            console.log(value);
+    //        console.log(value);
             var step = {
               "name":"register."+value.name,
               "url": '^/'+value.name,
@@ -139,7 +140,7 @@ var acadb = angular.module('acadb', [
         });
 
           // Configures $urlRouter's listener *after* your custom listener
-      console.log($stateProviderRef);
+     // console.log($stateProviderRef);
       });
   }
 ]);
@@ -183,7 +184,7 @@ var acadb = angular.module('acadb', [
 // ])
 // // .config(['$routeProvider' ,'$locationProvider', function($routeProvider ,$locationProvider) {
 // //   
-  // // $routeProvider.when('/', {templateUrl: 'partials/userHome.html',controller: 'UserHomeController' });
+  // // $routeProvider.when('/', {templateUrl: 'partials/~userHome.html',controller: 'UserHomeController' });
   // // $routeProvider.when('/education', {templateUrl: 'partials/register/education.html',controller: 'RegisterController' });
   // // $routeProvider.when('/param', {templateUrl: 'partials/db/param.html',controller: 'TController' });
   // // $routeProvider.when('/type_user', {templateUrl: 'partials/db/type_user.html',controller: 'TController' });

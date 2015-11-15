@@ -95,6 +95,18 @@ angular.module('acadb.directives', []).
       link: linker
   };
 })
+
+    .directive('editableBootstrapDatepicker', ['editableDirectiveFactory',   function(editableDirectiveFactory) {
+        return editableDirectiveFactory({
+            directiveName: 'editableBsdateNew',
+            inputTpl: '<span ng-datepicker ng-options="datepickerOptions"></span>'
+        });
+     }
+    ])
+
+
+
+
 .directive('edit_checkbox_field', function($compile) {
     var linker= function(scope, element){
         

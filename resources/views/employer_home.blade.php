@@ -130,7 +130,7 @@
 	<script src="lib/employer_app.js"></script>
 	<script src="lib/controllers.js"></script>
 	<script src="lib/filters.js"></script>
-	<script src="lib/moment.min.js"></script>
+
 	<script src="lib/services.js"></script>
 	<script src="lib/directives.js"></script>
 	<script src="lib/angular-route.js"></script>
@@ -138,7 +138,8 @@
 	<script src="lib/xeditable/js/xeditable.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
 	<script src="lib/angular-animate.min.js"></script>
-
+	<script src="lib/moment.js"></script>
+	<script src="lib/angular_moment.min.js"></script>
 	<script src="lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
 	<script src="lib/angular-aside.min.js"></script>
 	<script src="lib/ngFlow/ng-flow-standalone.min.js"></script>

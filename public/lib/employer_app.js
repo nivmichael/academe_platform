@@ -16,7 +16,8 @@ var acadb = angular.module('acadb', [
   'xeditable',
   'ngResource',
   'checklist-model',
-  'ui.bootstrap.modal'
+  'ui.bootstrap.modal',
+  'angularMoment'
 ])
 
 
@@ -50,7 +51,7 @@ var acadb = angular.module('acadb', [
         })
         .state('employer.edit', {
           url: "^/edit",
-          templateUrl: '../partials/employer/profile.html',
+          templateUrl: '../partials/employer/~15.11.profile.html',
           controller: 'UserHomeController', 
         })
         .state('employer.jobs', {
@@ -257,7 +258,7 @@ var acadb = angular.module('acadb', [
 // ])
 // // .config(['$routeProvider' ,'$locationProvider', function($routeProvider ,$locationProvider) {
 // //   
-  // // $routeProvider.when('/', {templateUrl: 'partials/userHome.html',controller: 'UserHomeController' });
+  // // $routeProvider.when('/', {templateUrl: 'partials/~userHome.html',controller: 'UserHomeController' });
   // // $routeProvider.when('/education', {templateUrl: 'partials/register/education.html',controller: 'RegisterController' });
   // // $routeProvider.when('/param', {templateUrl: 'partials/db/param.html',controller: 'TController' });
   // // $routeProvider.when('/type_user', {templateUrl: 'partials/db/type_user.html',controller: 'TController' });

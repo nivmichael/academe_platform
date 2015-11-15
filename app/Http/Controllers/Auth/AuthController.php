@@ -141,14 +141,22 @@ class AuthController extends Controller
 		$userId =$authId;
 		$personal_information = Auth::user();
 		
-		}		
-			
+		}
+
 		foreach($all['user'] as $doc_param => $param_object){
+
+
+
+//
+			if($doc_param != 'personal_information'){
+				unset($param_object['docParamId']);
+			}
+
 			foreach ($param_object as $param_key => $param_value) {
 				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
-		
+
 		if($obj['personal_information']) {
 			unset($obj['personal_information']);
 		}
@@ -163,7 +171,13 @@ class AuthController extends Controller
 					foreach($props as $propKey => $propVal) {
 						if($propVal['paramValue']){
 							
+
 							$paramValue = $propVal['paramValue'];
+							if(is_array($paramValue)) {
+								$paramValue = implode('|',$paramValue);
+								print_r($paramValue);
+							}
+
 						}else{
 							$paramValue='';
 						};
@@ -202,6 +216,12 @@ class AuthController extends Controller
 				}else if(!is_int($param)){
 					
 					$paramValue = $props['paramValue'];
+
+					$paramValue = $propVal['paramValue'];
+					if(is_array($paramValue)) {
+						$paramValue = implode('|',$paramValue);
+						print_r($paramValue);
+					}
 					$param_id = DB::table('param')->where('name',  $param)->where('doc_param_id', $doc_param_id)->pluck('id');
 					if($param_id == null) {
 						dd('some thing wrong with param: '.$param);

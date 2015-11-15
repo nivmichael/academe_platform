@@ -34,6 +34,9 @@ hr{
 	width:50%;
 	margin-bottom:10px;
 }
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group{
+	padding:9px;
+}
 .footer {
 	width: 100%;
 	position: fixed;
@@ -159,9 +162,22 @@ footer{
 .editable-wrap .editable-input {
 
 }
-/*
- * Sidebar
- */
+.parameterFix{
+	width:50%;
+	float:left;
+}
+.parameterFix2{
+	width:100%;
+	float:left;
+
+}
+.form-con-width{
+	width:280px;
+	margin-bottom:5px;
+}
+	/*
+     * Sidebar
+     */
 
 /* Hide for mobile, show later */
 .sidebar {
@@ -178,6 +194,9 @@ footer{
 }
 @media (max-width: 768px) {
 
+	.searchText{
+display:none;
+	}
 	.paramDiv{
 
 		width:100%;
@@ -588,8 +607,8 @@ ul{
 
 .iterationCtrls {
 
-	/*margin-top: 10px !important;*/
-	margin-bottom: 35px !important;
+	margin-top:50px !important;
+	/*margin-bottom: 35px !important;
 	/*font-size: 12px;*/
 	/*color: #0E3969;*/
 	/*outline: none;*/
@@ -741,4 +760,30 @@ body {
 
 .form-field>div>div>div>input, .form-field>div>div>div>select{
 	margin-bottom:10px;
+}
+
+.notificationsCircle{
+	position: relative;
+	right: 65px;
+
+	color: white;
+	font-size: 11px;
+	float: right;
+	background-color: red;
+	border-radius: 25px;
+	width: 15px;
+	text-align: center;
+	height: 15px;
+}
+.notificationsNum{
+	position: relative;
+	/* top: 0px; */
+	right: 1px;
+}
+.input-group .form-control {
+	float: right;
+
+}
+.searchTextInput{
+
 }

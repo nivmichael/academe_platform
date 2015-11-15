@@ -170,7 +170,7 @@ var acadb = angular.module('acadb', [
 // ])
 // // .config(['$routeProvider' ,'$locationProvider', function($routeProvider ,$locationProvider) {
 // //   
-  // // $routeProvider.when('/', {templateUrl: 'partials/userHome.html',controller: 'UserHomeController' });
+  // // $routeProvider.when('/', {templateUrl: 'partials/~userHome.html',controller: 'UserHomeController' });
   // // $routeProvider.when('/education', {templateUrl: 'partials/register/education.html',controller: 'RegisterController' });
   // // $routeProvider.when('/param', {templateUrl: 'partials/db/param.html',controller: 'TController' });
   // // $routeProvider.when('/type_user', {templateUrl: 'partials/db/type_user.html',controller: 'TController' });

@@ -77,7 +77,7 @@ class TypeUserController extends Controller {
 			//$user[$v->docParamName][$paramName] = $v->value = '';
 			
 			$iteration    = $v->iteration;
-			$docParamId  = $v->docParamId;
+			$docParamId   = $v->docParamId;
 			$docParamName = $v->docParamName;
 			$paramName    = $v->paramName;
 			$inputType    = $v->paramType;
@@ -123,8 +123,7 @@ class TypeUserController extends Controller {
 			$id = Auth::user()->id;		
 			$personal_information = User::find($id);		
 		}
-		$user['personal_information'] = $personal_information;
-		// $user['personal_information']->password_confirmation = '';
+		$user['personal_information'] = $personal_information;		// $user['personal_information']->password_confirmation = '';
 		foreach($params as $k=>$v) {
 			$iteration    = $v->iteration;
 			$docParamName = $v->docParamName;
@@ -243,22 +242,39 @@ class TypeUserController extends Controller {
 		}
 		$update = null;
 		foreach($all['user'] as $doc_param => $param_object){
+			unset($param_object['docParamId']);
 			foreach ($param_object as $param_key => $param_value) {
 				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
+
 		$userId = $param->id;
 		unset($obj['files']);
 			foreach($obj as $docParamName => $docParamVals) {
 			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->pluck('id');
 			$iterableCount = 0;
 			foreach($docParamVals as $param => $props) {
-			
+
 				if(is_int($param)) {
+					if($param['docParamId']) {
+						unset($param['docParamId']);
+					}
+
 					foreach($props as $propKey => $propVal) {
+
+
 						if(isset($propVal['paramValue'])){
-							$paramValue = $propVal['paramValue'];
-						}else{dd($props);}
+
+								$paramValue = $propVal['paramValue'];
+								if(is_array($paramValue)) {
+									$paramValue = implode('|',$paramValue);
+								}
+
+						}else{
+//							print_r($propKey);
+//							print_r('not deads');
+						}
+
 					$paramName  = $propVal['paramName'];
 					$iterable = $param;
 					
@@ -295,12 +311,23 @@ class TypeUserController extends Controller {
 								}
 							}
 						}
+						if(!$param_id){
+							print_r($paramName);
+
+						}
+
 					}			
 				}else if(!is_int($param)){
-					
 					$paramValue = $props['paramValue'];
+					if(is_array($paramValue)) {
+						$paramValue = implode('|',$paramValue);
+					}
+
 					$param_id = DB::table('param')->where('name',  $param)->where('doc_param_id', $doc_param_id)->pluck('id');
-					
+					if(!$param_id){
+						//print_r($param);
+
+					}
 
 					$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
 					$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$userId)->pluck('id');
@@ -449,7 +476,8 @@ class TypeUserController extends Controller {
 										   param.name AS paramName, 
 										   param.slug AS slug,
 										   param_type.name AS inputType,
-										   doc_param.name AS docParamName 
+										   doc_param.name AS docParamName,
+										   doc_param.id AS docParamId
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
@@ -472,13 +500,15 @@ class TypeUserController extends Controller {
 // 		
 // 		
 // 		
-		
+
 		foreach($params as $k=>$v) {
 			$iteration    = $v->iteration;
+			$docParamId   = $v->docParamId;
 			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
 			$inputType = $v->inputType;
 			$slug = $v->slug;
+
 			if($v->value_ref == null) {
 				$value = $v->value_short;
 			}else{
@@ -486,13 +516,29 @@ class TypeUserController extends Controller {
 			}
 			
 			if($iteration !== NULL) {
-								
-									
-								
-						
-						
-					
-			
+
+
+				$values = array();
+				if($inputType == 'checklist') {
+					$value = explode('|',$value);
+					foreach($value as $key => $value) {
+						//			$paramOptions[$key] = [];
+//
+//						$option['value'] = $value;
+//						$option['text'] = $value;
+//						$values[]  =$option;
+						if($value) {
+							$values[] = $value;
+						}
+					}
+				}
+				if($values){
+					$value = $values;
+				}
+
+
+
+				$user[$docParamName][$iteration]['docParamId'] = $docParamId;
 				$user[$docParamName][$iteration][$paramName]['paramName'] = $paramName;		
 				$user[$docParamName][$iteration][$paramName]['slug'] = $slug;
 				$user[$docParamName][$iteration][$paramName]['paramValue'] = $value;
@@ -503,11 +549,26 @@ class TypeUserController extends Controller {
 			
 			
 			}elseif($iteration == NULL) {
-							
-						
-					
-								
-							
+
+				$values = array();
+				if($inputType == 'checklist') {
+					$value = explode('|',$value);
+					foreach($value as $key => $value) {
+						//			$paramOptions[$key] = [];
+//
+//						$option['value'] = $value;
+//						$option['text'] = $value;
+//						$values[]  =$option;
+						if($value) {
+							$values[] = $value;
+						}
+					}
+				}
+				if($values){
+					$value = $values;
+				}
+			//	dd($values);
+				$user[$docParamName]['docParamId'] = $docParamId;
 				$user[$docParamName][$paramName]['paramName'] = $paramName;		
 				$user[$docParamName][$paramName]['slug'] = $slug;
 				$user[$docParamName][$paramName]['paramValue'] = $value;

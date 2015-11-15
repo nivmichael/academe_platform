@@ -1299,7 +1299,7 @@
 #	new file:   public/lib/filters.js
 #	new file:   public/lib/jobseeker_app.js
 #	modified:   public/lib/modules.json
-#	new file:   public/lib/moment.min.js
+#	new file:   public/lib/angular_moment.min.js
 #	new file:   public/lib/register_app.js
 #	new file:   public/lib/register_employer_app.js
 #	new file:   public/lib/register_jobseeker_app.js

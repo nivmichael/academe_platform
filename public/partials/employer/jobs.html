@@ -278,10 +278,10 @@
 							</div>
 
 						</div>
-						<div class="iterationCtrls " ng-show="editableForm.$visible && isArray(docParamValues) ">
+						<div class="iterationCtrls " ng-show="editableForm.$visible">
 							<span class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)"> X Delete </span>
-							<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)"> Move Up </span>
-							<span class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)"> Move Down </span>
+							<span class="iterationCtrl" ng-click="move(post[docParamName],$index,$index-1)"> Move Up </span>
+							<span class="iterationCtrl" ng-click="move(post[docParamName],$index,$index+1)"> Move Down </span>
 						</div>
 					</div>
 
