@@ -16,7 +16,8 @@ var acadb = angular.module('acadb', [
   'xeditable',
   'ngResource',
   'checklist-model',
-  'ui.bootstrap.modal'
+  'ui.bootstrap.modal',
+  'angularMoment'
 
 ])
 

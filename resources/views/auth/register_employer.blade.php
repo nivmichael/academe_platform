@@ -85,7 +85,8 @@
 	<script src="../../lib/bootstrap.min.js"></script>
 	<script src="../../lib/angular-aside.min.js"></script>
 
-
+	<script src="../../lib/moment.js"></script>
+	<script src="../../lib/angular_moment.min.js"></script>
 
 	<script src="../../lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
 	<script src="../../lib/ngFlow/ng-flow-standalone.min.js"></script>

@@ -217,7 +217,7 @@ class AuthController extends Controller
 					
 					$paramValue = $props['paramValue'];
 
-					$paramValue = $propVal['paramValue'];
+
 					if(is_array($paramValue)) {
 						$paramValue = implode('|',$paramValue);
 						print_r($paramValue);

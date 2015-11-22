@@ -1,12 +1,17 @@
 
 
 
+
+
+
+
+
 body{
 	margin:0!important;
 	padding:0!important;
 }
-.green{
-	background-color:green;
+.purple{
+	background-color:purple;
 	
 }
 .red{
@@ -118,8 +123,7 @@ footer{
 }
 
 .navbar {
-
-	background-color:#207FC2;
+	background-color: purple;
 	margin: 0;
 }
 
@@ -248,7 +252,7 @@ display:none;
 }
 .nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
 	color: #fff;
-	background-color: #428bca;
+	background-color: purple;
 }
 
 .mainView.ng-enter {
@@ -297,7 +301,7 @@ display:none;
 
 .openAccordion {
 	border-radius:0px;
-	background:color:green;
+	/*background-color:purple;*/
 }
 .closeAccordion {
 	border-radius:0px;
@@ -322,26 +326,26 @@ display:none;
 	margin-top: 10px;
 }
 .statusBtn {
-	color: #4E75AD;
+	color: purple;
 	background-color: white;
 }
 .statusBtn:hover {
-	color: #4E75AD;
+	color: purple;
 	background-color: white;
 }
 .statusBtn:active {
-	color: #4E75AD;
+	color: purple;
 	background-color: white !important;
 }
 .statusBtn:focus {
-	color: #4E75AD;
+	color: purple;
 	background-color: white !important;
 }
 .dropdown-menu > ul {
 	text-align: center;
 }
 .dropdown-menu > li:hover {
-	background-color: #4E75AD !important;
+	background-color: purple !important;
 	color: white;
 }
 /*.modal-dialog {*/
@@ -429,7 +433,7 @@ display:none;
 	/* vertical-align: middle; */
 }
 .galleryDiv {
-	border: 1px dashed rgb(78, 117, 173);
+	border: 1px dashed purple;
 	height: auto;
 	width: 100%;
 }
@@ -499,7 +503,7 @@ ul{
 }
 .postLi:hover, .postLi:focus, .postLi:active {
 	padding: 2px;
-	background-color: #C1DBF7;
+	background-color: purple;
 	margin-bottom: 2px;
 	width: 190px;
 	color: white;
@@ -510,7 +514,7 @@ ul{
 }
 .docParamLi:hover, .docParamLi:focus, .docParamLi:active {
 	cursor: pointer;
-	background-color: #4E75AD !important;
+	background-color: purple !important;
 }
 .navbar-default .navbar-nav > .dropdown > a:hover .caret, .navbar-default .navbar-nav > .dropdown > a:focus .caret {
 	border-top-color: white;
@@ -614,14 +618,14 @@ ul{
 	margin-top:50px !important;
 	/*margin-bottom: 35px !important;
 	/*font-size: 12px;*/
-	/*color: #0E3969;*/
+	/*color: purple;*/
 	/*outline: none;*/
 	/*margin: 0 7px;*/
 }
 .iterationCtrl {
 	margin-right: 25px;
 	float:left;
-	color:#0E3969;;
+	color:purple;;
 	font-size:12px;
 }
 .iterableDiv{
@@ -679,7 +683,7 @@ ul{
 	background-color:#EDEDED;
 }
 .cyan{
-	background-color:#C1DBF7;
+	background-color:purple;
 	padding: 10px 15px
 }
 .grey{

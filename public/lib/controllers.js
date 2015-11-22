@@ -277,22 +277,12 @@ angular.module('acadb.controllers', [])
 			$modalInstance.dismiss('cancel');
 		};
 	})
-	.controller('PostModalInstanceCtrl', function ($scope,$http,$state, $modalInstance, job, CSRF_TOKEN) {
+	.controller('PostModalInstanceCtrl', function ($scope,$http,$state, $modalInstance, job, CSRF_TOKEN, $filter) {
+
 		$scope.getPost = function(id){
 			$http.get('/job/'+id ).
 				success(function(data, status, headers, config) {
-
-
 					$scope.post = data;
-					// $scope.openPost();
-					//$state.go(
-					//	'job',
-					//	{
-					//		jobId:id,
-					//	} // this goes into $stateParams for
-                    //
-					//);
-					console.log($state);
 				}).
 				error(function(data, status, headers, config) {
 
@@ -316,18 +306,11 @@ angular.module('acadb.controllers', [])
 			});
 		};
 
-
-
-
-
-
 		$scope.post = $scope.getPost(job);
 
 
-
-
 		$scope.addWhenEdit =function(docParam,$index) {
-//	console.log($scope.post);
+
 			$http.get('/columns/jobPost')
 				.success(function(data, status, headers, config) {
 					$scope.inserted = data[docParam];
@@ -337,24 +320,203 @@ angular.module('acadb.controllers', [])
 						$scope.post[docParam].push($scope.inserted);
 					}
 
-
 				})
 				.error(function(){
 					alert('ERROR!!');
 				});
-			console.log($scope.post);
+
 		};
+
+
+
+
+		$scope.groups = {};
+
+		$scope.loadGroups = function(paramName, docParamId, isPost ) {
+			console.log(docParamId);
+			if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
+			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId + (isPost ? '/true' : '') ).success(function(data) {
+				$scope.groups[paramName] = data;
+			});
+			console.log($scope.groups);
+		};
+
+		$scope.loadIterableGroups = function(paramName, docParamId, index) {
+
+			if (typeof $scope.groups[index] == 'undefined') $scope.groups[index] = [];
+			if (typeof $scope.groups[index][paramName] == 'undefined') $scope.groups[index][paramName] = [];
+			return $scope.groups[index][paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
+				$scope.groups[index][paramName] = data;
+				console.log($scope.groups);
+			});
+		};
+
+		$scope.showGroup = function(paramKey, docParamName) {
+
+			if($scope.post[docParamName][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
+				var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.post[docParamName][paramKey]['paramValue']});
+				return selected.length ? selected[0].text : 'Not set1';
+			} else {
+				//console.log($scope.post[docParamName][paramKey]['paramValue']);
+				return $scope.post[docParamName][paramKey]['paramValue'] || 'Not set1';
+			}
+		};
+
+		$scope.showIterableGroup = function(paramKey, docParamName, index) {
+
+			if($scope.post[docParamName][index][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
+				var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.post[docParamName][index][paramKey]['paramValue']});
+				return selected.length ? selected[0].text : 'Not set';
+			} else {
+				//console.log($scope.post[docParamName][index][paramKey]['paramValue']);
+				return $scope.post[docParamName][index][paramKey]['paramValue'] || '';
+			}
+		};
+
+		$scope.showChecklistGroup = function(paramKey, docParamName) {
+
+
+			if (typeof $scope.post[docParamName][paramKey]['paramValue'] !== 'undefined' && $scope.post[docParamName][paramKey]['paramValue'] !== null) {
+				if($scope.post[docParamName][paramKey]['paramValue'].length > 0) {
+
+					return  $scope.post[docParamName][paramKey]['paramValue'];
+				}
+				return  $scope.post[docParamName][paramKey]['paramValue'];
+			}
+			var	selected = [];
+
+
+			angular.forEach($scope.groups[paramKey], function(option) {
+				if ($scope.post[docParamName][paramKey]['paramValue'].indexOf(option.value) >= 0) {
+					selected.push(option.text);
+				}
+			});
+
+			return selected.length ? selected.join(', ') : 'Not set';
+		};
+
+		$scope.showIterableChecklistGroup = function(paramKey, docParamName, index) {
+
+
+			if (typeof $scope.post[docParamName][index][paramKey]['paramValue'] !== 'undefined' && $scope.post[docParamName][index][paramKey]['paramValue'] !== null) {
+				return  $scope.post[docParamName][index][paramKey]['paramValue'] ?  $scope.post[docParamName][index][paramKey]['paramValue'].join(', ') : ' ';
+			}
+			var	selected = [];
+
+
+			angular.forEach($scope.groups[paramKey], function(option) {
+				if ($scope.post[docParamName][index][paramKey]['paramValue'].indexOf(option.value) >= 0) {
+					selected.push(option.text);
+				}
+			});
+
+			return selected.length ? selected.join(', ') : 'Not set';
+		};
+
+		$scope.remove = function(array,item) {
+			array.splice(item,1);
+			$http.post('/deleteIterable', {docParam:array,post:$scope.post,_token:CSRF_TOKEN}).
+				then(function(response) {
+
+				}, function(response) {
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+				});
+		};
+
+		// DatePicker
+
+		$scope.today = function() {
+			$scope.dt = new Date();
+		};
+		$scope.today();
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+		// Disable weekend selection
+		$scope.disabled = function(date, mode) {
+			return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+		};
+
+		$scope.toggleMin = function() {
+			$scope.minDate = $scope.minDate ? null : new Date();
+		};
+		$scope.toggleMin();
+		$scope.maxDate = new Date(2020, 5, 22);
+
+		$scope.opened = [];
+
+		$scope.open = function($event,paramKey) {
+			console.log(paramKey);
+			$scope.opened[paramKey] = true;
+			console.log(paramKey);
+
+
+		};
+		$scope.openedIterable =[];
+		$scope.openIterable = function($event,paramKey,index) {
+			$scope.openedIterable[index] = []
+			$scope.openedIterable[index][paramKey] = true;
+		};
+
+		$scope.setDate = function(year, month, day) {
+			$scope.dt = new Date(year, month, day);
+		};
+
+		$scope.dateOptions = {
+			//datepicker-popup-template-url:'../xeditable/datePicker/html',
+			formatYear: 'yy',
+			startingDay: 1
+		};
+
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		$scope.format = $scope.formats[0];
+
+		$scope.status = {
+			opened: false
+		};
+
+		var tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		var afterTomorrow = new Date();
+		afterTomorrow.setDate(tomorrow.getDate() + 2);
+		$scope.events =
+			[
+				{
+					date: tomorrow,
+					status: 'full'
+				},
+				{
+					date: afterTomorrow,
+					status: 'partially'
+				}
+			];
+
+		$scope.getDayClass = function(date, mode) {
+			if (mode === 'day') {
+				var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+				for (var i=0;i<$scope.events.length;i++){
+					var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+					if (dayToCheck === currentDay) {
+						return $scope.events[i].status;
+					}
+				}
+			}
+
+			return '';
+		};
+
+
 
 
 
 
 		$scope.move = function(array, fromIndex, toIndex){
 			array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
-
-			console.log(array);
-			console.log(fromIndex);
-
-
 		};
 
 
@@ -371,7 +533,131 @@ angular.module('acadb.controllers', [])
 	})
 	.controller('JobPostModalInstanceCtrl', function ($scope, $modalInstance, jobPost, $http, CSRF_TOKEN) {
 
+consolre.log('fdsfds');
+		$scope.loadIterableGroups = function(paramName, docParamId, index) {
+
+			if (typeof $scope.groups[index] == 'undefined') $scope.groups[index] = [];
+			if (typeof $scope.groups[index][paramName] == 'undefined') $scope.groups[index][paramName] = [];
+			return $scope.groups[index][paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
+				$scope.groups[index][paramName] = data;
+				console.log($scope.groups);
+			});
+		};
+
+		$scope.showGroup = function(paramKey, docParamName) {
+
+			if($scope.user[docParamName][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
+				var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.user[docParamName][paramKey]['paramValue']});
+				return selected.length ? selected[0].text : 'Not set';
+			} else {
+				//console.log($scope.user[docParamName][paramKey]['paramValue']);
+				return $scope.user[docParamName][paramKey]['paramValue'] || 'Not set';
+			}
+		};
+
+		$scope.showIterableGroup = function(paramKey, docParamName, index) {
+
+			if($scope.user[docParamName][index][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
+				var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.user[docParamName][index][paramKey]['paramValue']});
+				return selected.length ? selected[0].text : 'Not set';
+			} else {
+				//console.log($scope.user[docParamName][index][paramKey]['paramValue']);
+				return $scope.user[docParamName][index][paramKey]['paramValue'] || '';
+			}
+		};
+
+		$scope.showChecklistGroup = function(paramKey, docParamName) {
+
+
+			if (typeof $scope.user[docParamName][paramKey]['paramValue'] !== 'undefined' && $scope.user[docParamName][paramKey]['paramValue'] !== null) {
+				if($scope.user[docParamName][paramKey]['paramValue'].length > 0) {
+
+					return  $scope.user[docParamName][paramKey]['paramValue'].join(', ');
+				}
+				return  $scope.user[docParamName][paramKey]['paramValue'];
+			}
+			var	selected = [];
+
+
+			angular.forEach($scope.groups[paramKey], function(option) {
+				if ($scope.user[docParamName][paramKey]['paramValue'].indexOf(option.value) >= 0) {
+					selected.push(option.text);
+				}
+			});
+
+			return selected.length ? selected.join(', ') : 'Not set';
+		};
+
+		$scope.showIterableChecklistGroup = function(paramKey, docParamName, index) {
+
+
+			if (typeof $scope.user[docParamName][index][paramKey]['paramValue'] !== 'undefined' && $scope.user[docParamName][index][paramKey]['paramValue'] !== null) {
+				return  $scope.user[docParamName][index][paramKey]['paramValue'] ?  $scope.user[docParamName][index][paramKey]['paramValue'].join(', ') : ' ';
+			}
+			var	selected = [];
+
+
+			angular.forEach($scope.groups[paramKey], function(option) {
+				if ($scope.user[docParamName][index][paramKey]['paramValue'].indexOf(option.value) >= 0) {
+					selected.push(option.text);
+				}
+			});
+
+			return selected.length ? selected.join(', ') : 'Not set';
+		};
+
+
+
+
+
+
+		$scope.remove = function(array,item) {
+			array.splice(item,1);
+			$http.post('/deleteIterable', {docParam:array,user:$scope.user,_token:CSRF_TOKEN}).
+				then(function(response) {
+
+				}, function(response) {
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+				});
+
+
+
+
+		};
+		$scope.move = function(array, fromIndex, toIndex){
+
+			array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
+
+
+		};
+
+
+
+
+		$scope.loadGroups = function(paramName, docParamId, isPost ) {
+			if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
+			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId + (isPost ? '/true' : '') ).success(function(data) {
+				$scope.groups[paramName] = data;
+			});
+			console.log($scope.groups);
+		};
+
+
+
+
+
+
+
+
+
+
+
+
+
 		$scope.jobPost = jobPost;
+
+
 
 
 		$scope.savePost = function(post) {
@@ -422,24 +708,16 @@ angular.module('acadb.controllers', [])
 
 
 		$scope.getJobPostFields();
-
-
-		$scope.savePost = function(post) {
-			console.log(post);
-			$http.post('/savePost', {
-				post:post,
-				_token:CSRF_TOKEN,
-				from:'jobPost'
-			}).success(function(errors){
-
-				return post;
-
-			}).error(function(err) {
-
-
-
+		$scope.groups = {};
+		$scope.loadGroups = function(paramName, docParamId, isPost ) {
+			if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
+			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId + (isPost ? '/true' : '') ).success(function(data) {
+				$scope.groups[paramName] = data;
 			});
+			console.log($scope.groups);
 		};
+
+
 
 		$scope.add1 = function(docParamName,index) {
 
@@ -466,7 +744,18 @@ angular.module('acadb.controllers', [])
 		};
 
 
+		$scope.savePost = function(post) {
+			console.log(post);
+			$http.post('/savePost', {
+				post:post,
+				_token:CSRF_TOKEN,
+				from:'jobPost'
+			}).success(function(errors){
+				return post;
+			}).error(function(err) {
 
+			});
+		};
 
 
 		$scope.ok = function () {
@@ -481,11 +770,22 @@ angular.module('acadb.controllers', [])
 	})
 .controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$aside','$filter', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$aside,$filter) {
 
+		$scope.getLayout = function(){
+			$http.get('/layout').
+				then(function(response) {
+					console.log(response);
+					$scope.layout = response.data;
+					$scope.main_color = $scope.layout.main_color;
+					$scope.logo = $scope.layout.logo;
+				}, function(response) {
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+				});
+		}
 
+		$scope.getLayout();
 
-
-
-
+console.log($scope.layout);
 
 		$scope.getJobPostFields = function(){
 			$http.get('/columns/jobPost').
@@ -552,7 +852,11 @@ angular.module('acadb.controllers', [])
 
 
 			if (typeof $scope.user[docParamName][paramKey]['paramValue'] !== 'undefined' && $scope.user[docParamName][paramKey]['paramValue'] !== null) {
-				return  $scope.user[docParamName][paramKey]['paramValue'].join(', ');
+				if($scope.user[docParamName][paramKey]['paramValue'].length > 0) {
+
+					return  $scope.user[docParamName][paramKey]['paramValue'].join(', ');
+				}
+				return  $scope.user[docParamName][paramKey]['paramValue'];
 			}
 			var	selected = [];
 
@@ -1024,13 +1328,6 @@ $.getJSON('/getAllJobs', function(data){
 		$scope.openIterable = function($event,paramKey,index) {
 			$scope.openedIterable[index] = []
 			$scope.openedIterable[index][paramKey] = true;
-			console.log(paramKey);
-			console.log(index);
-
-
-			console.log($scope.openedIterable);
-
-
 		};
 
 		$scope.setDate = function(year, month, day) {
@@ -1822,8 +2119,6 @@ $scope.getColumns = function(){
    $scope.move = function(array, fromIndex, toIndex){
    	 array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
 
-	   console.log(array);
-	   console.log(fromIndex);
 
 
    };
@@ -1984,14 +2279,20 @@ $scope.getColumns = function(){
 		};
 		$scope.toggleMin();
 		$scope.maxDate = new Date(2020, 5, 22);
+		$scope.opened =[];
 
-		$scope.opened = [];
-		$scope.open = function($event,paramKey) {
-			console.log(paramKey);
-			$scope.opened[paramKey] = true;
+		$scope.open = function($event,paramName) {
+
+			$scope.opened[paramName] = true;
 
 
 		};
+		$scope.openedIterable =[];
+		$scope.openIterable = function($event,paramKey,index) {
+			$scope.openedIterable[index] = []
+			$scope.openedIterable[index][paramKey] = true;
+		};
+
 
 		$scope.setDate = function(year, month, day) {
 			$scope.dt = new Date(year, month, day);

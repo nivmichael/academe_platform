@@ -1,22 +1,22 @@
 
 <div style="margin:5px;text-align:center;">
  <label>Order by:</label>
- <select ng-model="orderByFilter">
+ <select ng-model="orderByFilter" class="">
   <option value="user.created_at">Created At</option>
   <option value="user.first_name">Title</option>
-  <option>price</option>
+
   <option value="inStock">availability</option>
-  <option value="lastBuy">Last bought</option>
+
  </select>
 
- <select ng-model="reverse">
+ <select ng-model="reverse" class="">
   <option value="false">desc</option>
   <option value="true">asc</option>
  </select>
 
  <label>Search Candidate:</label>
 
- <input type="text" ng-model="searchText" />
+ <input type="text" ng-model="searchText" class=""/>
 
  <!--<label>Max items:</label>-->
 

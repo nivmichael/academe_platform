@@ -30,9 +30,9 @@
 	</div>
 
 <div>
-		<button  class="btn btn-primary postAJob" ui_sref="jobPost" >
+		<div  class="postAJob" ui_sref="jobPost" >
 			<img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/post_job.png">
-		</button>
+		</div>
 </div>
 </nav>
 
@@ -51,12 +51,12 @@
   <!-- <div ui-view="employer.edit" class="col-md-8"></div> -->
 <!--
   <div ui-view="employer.jobs" class="col-md-10"></div>
-	
+
 
 <footer class="footerNavUl">
-	
 
-   
+
+
 </footer>
 -->
 
@@ -64,156 +64,223 @@
 
  <script type="text/ng-template" id="newJob.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modala!</h3>
+            <h3 class="modal-title">Post A New Job</h3>
         </div>
         <div class="modal-body">
 
-            <div>
+            <!--<div>-->
 
-                <form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >
-
-
+                <!--<form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >-->
 
 
 
-                    <div ng-repeat="(docParamName,docParamValues) in jobPost" ng-hide="docParamName == 'postInfo'">
-                        <div ng-repeat="(paramName,props) in docParamValues" class="" style="display: inline-block;"  >
-                            {{docParamName}}
 
-				<div class="param_label">
-					{{props.slug}}
+
+                    <!--<div ng-repeat="(docParamName,docParamValues) in jobPost" ng-hide="docParamName == 'postInfo'">-->
+                        <!--<div ng-repeat="(paramName,props) in docParamValues" class="" style="display: inline-block;"  >-->
+                            <!--{{docParamName}}-->
+
+				<!--<div class="param_label">-->
+					<!--{{props.slug}}-->
+				<!--</div>-->
+
+
+				<!--<div ng-switch="props.inputType">-->
+
+					<!--<div ng-switch-when="text">-->
+						<!--<div  class="" ng-if="props.paramName">-->
+							<!--<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">-->
+						<!--</div>-->
+					<!--</div>-->
+
+					<!--<div ng-switch-when="select">-->
+						<!--<div  class="" ng-if="props.paramName">-->
+							<!--<select type='select' class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">-->
+                                <!--<option value="volvo">Volvo</option>-->
+                                <!--<option value="saab">Saab</option>-->
+                                <!--<option value="mercedes">Mercedes</option>-->
+                                <!--<option value="audi">Audi</option>-->
+                            <!--</select>-->
+						<!--</div>-->
+					<!--</div>-->
+
+					<!--<div ng-switch-when="textarea">-->
+						<!--<div class="" ng-if="props.paramName">-->
+							<!--<textarea class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']"></textarea>-->
+						<!--</div>-->
+					<!--</div>-->
+
+					<!--<div ng-switch-default>-->
+						<!--<div class="" ng-if="props.paramName">-->
+							<!--<input type='text' class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">-->
+						<!--</div>-->
+					<!--</div>-->
+
+
+				<!--</div>-->
+
+
+
+
+
+                            <!--<div ng-repeat="(k,v) in props track by $index" ng-if="docParamValues.length > 1" style="display: inline-block;">-->
+					<!--<div class="param_label" >-->
+						<!--{{v.paramName}}-->
+					<!--</div>-->
+
+
+
+					<!--<div ng-switch="v.inputType">-->
+
+						<!--<div ng-switch-when="text">-->
+							<!--<div  class="" >-->
+								<!--<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+							<!--</div>-->
+							<!--<br>-->
+						<!--</div>-->
+
+						<!--<div ng-switch-when="select">-->
+							<!--<div  class="">-->
+								<!--<select class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+                                    <!--<option value="volvo">Volvo</option>-->
+                                    <!--<option value="saab">Saab</option>-->
+                                    <!--<option value="mercedes">Mercedes</option>-->
+                                    <!--<option value="audi">Audi</option>-->
+                                <!--</select>-->
+								<!--<br>-->
+							<!--</div>-->
+
+						<!--</div>-->
+
+						<!--<div ng-switch-when="textarea">-->
+							<!--<div class="">-->
+								<!--<textarea class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>-->
+							<!--</div>-->
+						<!--</div>-->
+
+
+						<!--<div ng-switch-default>-->
+							<!--<div  class="" >-->
+								<!--<input type='text' e-class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+							<!--</div>-->
+
+						<!--</div>-->
+
+
+
+
+
+					<!--</div>-->
+
+
+
+
+
+                            <!--</div>-->
+                            <!--</br>-->
+
+                            <!--<div class="iterationCtrls" ng-show="docParamValues.length > 1">-->
+						<!--<div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">-->
+							<!--X Delete-->
+						<!--</div>-->
+						<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">-->
+							<!--Move Up-->
+						<!--</div>-->
+						<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">-->
+							<!--Move Down-->
+						<!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div ng-show="$last && docParamName != 'postInfo'" >-->
+                                <!--<button type="button" class="btn btn-info" ng-click="add1(docParamName,$index)" style="float: left;">+ Add a Record</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<hr>-->
+                    <!--</div>-->
+                <!--</form-->
+                <!--<div class="" >-->
+                    <!--<a ng-click="savePost(jobPost)" class="btn btn-success">-->
+                        <!--Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right "></div>-->
+                    <!--</a>-->
+                <!--</div>-->
+
+
+
+            <!--</div>-->
+
+
+
+
+		<form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >
+			<div ng-repeat="(docParamName, docParamValues) in jobPost" >
+				<div ng-repeat="(paramKey,paramValues) in docParamValues" ng-hide="paramKey == 'docParamId'" >
+					<div>
+						<div class="param_label col-xs-5 col-sm-5 col-md-5 col-lg-5">
+							{{paramKey | underscoreless | capitalize}}
+						</div>
+
+						<div ng-switch="paramValues.inputType">
+							<div ng-switch-when="text">
+								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+									<input type='text' class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model="jobPost[docParamName][paramKey]['paramValue']">
+								</div>
+							</div>
+
+							<div ng-switch-when="select">
+								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+									<select class="form-control" ng-model="jobPost[docParamName][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, jobPost[docParamName]['docParamId'], true)"  ng-disabled="!groups[paramKey]">
+									</select>
+								</div>
+							</div>
+
+							<div ng-switch-when="textarea">
+								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+									<textarea class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model=jobPost[docParamName][paramKey]['paramValue']"></textarea>
+								</div>
+							</div>
+
+							<div ng-switch-when="date">
+								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+									<p class="input-group">
+										<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="jobPost[docParamName][paramKey]['paramValue']" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+							  <span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
+							  </span>
+									</p>
+								</div>
+							</div>
+
+							<div ng-switch-when="checklist">
+								<div  class="col-xs-5 col-sm-5 col-md-5 col-lg-5"   ng-init="loadGroups(paramKey, jobPost[docParamName]['docParamId'], true)">
+									<label ng-repeat="check in groups[paramKey] track by $index" >
+										<input type="checkbox" checklist-model="jobPost[docParamName][paramKey]['paramValue']" checklist-value="check.value"  >
+										<small>{{check.text}}</small>
+									</label>
+								</div>
+							</div>
+
+							<div ng-switch-default>
+								<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+									<input type='text' class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model="jobPost[docParamName][paramKey]['paramValue']">
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
-
-
-				<div ng-switch="props.inputType">
-
-					<div ng-switch-when="text">
-						<div  class="" ng-if="props.paramName">
-							<input type='text' class="form-control" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
-						</div>
-					</div>
-
-					<div ng-switch-when="select">
-						<div  class="" ng-if="props.paramName">
-							<select type='select' class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </select>
-						</div>
-					</div>
-
-					<div ng-switch-when="textarea">
-						<div class="" ng-if="props.paramName">
-							<textarea class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']"></textarea>
-						</div>
-					</div>
-
-					<div ng-switch-default>
-						<div class="" ng-if="props.paramName">
-							<input type='text' class="form-control " name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
-						</div>
-					</div>
-
-
-				</div>
-
-
-
-
-
-                            <div ng-repeat="(k,v) in props track by $index" ng-if="docParamValues.length > 1" style="display: inline-block;">
-					<div class="param_label" >
-						{{v.paramName}}
-					</div>
-
-
-
-					<div ng-switch="v.inputType">
-
-						<div ng-switch-when="text">
-							<div  class="" >
-								<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
-							</div>
-							<br>
-						</div>
-
-						<div ng-switch-when="select">
-							<div  class="">
-								<select class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
-                                </select>
-								<br>
-							</div>
-
-						</div>
-
-						<div ng-switch-when="textarea">
-							<div class="">
-								<textarea class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
-							</div>
-						</div>
-
-
-						<div ng-switch-default>
-							<div  class="" >
-								<input type='text' e-class="form-control " name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
-							</div>
-
-						</div>
-
-
-
-
-
-					</div>
-
-
-
-
-
-                            </div>
-                            </br>
-
-                            <div class="iterationCtrls" ng-show="docParamValues.length > 1">
-						<div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
-							X Delete
-						</div>
-						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
-							Move Up
-						</div>
-						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
-							Move Down
-						</div>
-                            </div>
-
-                            <div ng-show="$last && docParamName != 'postInfo'" >
-                                <button type="button" class="btn btn-info" ng-click="add1(docParamName,$index)" style="float: left;">+ Add a Record</button>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                </form
-                <div class="" >
-                    <a ng-click="savePost(jobPost)" class="btn btn-success">
-                        Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right "></div>
-                    </a>
-                </div>
-
-
-
-            </div>
-
-
+			</div>
+		</form>
         </div>
+
+
         <div class="modal-footer">
+			<button type="submit" ng-click="savePost(jobPost)">
+				<img src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/save_job.png">
+			</button>
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
+
     </script>
 
 

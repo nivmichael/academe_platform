@@ -81,24 +81,24 @@ class ParamValueController extends Controller {
 	}
 
 
-	public function getOptionValues($paramName, $doc_param_id)
+	public function getOptionValues($paramName, $doc_param_id, $is_post = false)
 	{
 		//dd($doc_param_id);
 		$option = [];
 
-
-		//
-
 		$paramId = DB::table('param')->where('name',$paramName)->where('doc_param_id',$doc_param_id)->pluck('id');
 		if(!$paramId)
 		{
-			dd($paramId);
+			return Response::json(false);
+		}
+
+		if ($is_post){
+			$docParamName = DB::table('doc_param')->where('id',$doc_param_id)->pluck('name');
+			$user_doc_param_id = DB::table('doc_param')->where('name',$docParamName)->where('doc_type_id',1)->where('doc_sub_type','jobseeker')->pluck('id');
+			$paramId = DB::table('param')->where('name',$paramName)->where('doc_param_id',$user_doc_param_id)->pluck('id');
+
 		}
 		$paramValues = DB::table('param_value')->where('param_id',$paramId)->lists('value');
-	//	$paramValues = DB::select( DB::raw("SELECT value FROM param_value LEFT JOIN param ON param_value.param_id = param.id WHERE param_value.param_id = '".$paramId."' AND param.doc_param_id = '".$doc_param_id."'"));
-		//SELECT `value` FROM `param_value` LEFT JOIN param ON param_value.param_id = param.id WHERE param_value.param_id = 53 AND param.doc_param_id = 1
-		//$paramValues = DB::table('param_value')->where('param_id',$paramId)->lists('value');
-	//	dd($paramValues);
 
 		if(!$paramValues){
 
@@ -106,12 +106,9 @@ class ParamValueController extends Controller {
 		}else
 		{
 			foreach($paramValues as $key => $value) {
-	//			$paramOptions[$key] = [];
-
 				$option['value'] = $value;
 				$option['text'] = $value;
 				$paramOptions[$key] = $option;
-
 			}
 			return Response::json($paramOptions);
 		}

@@ -40,8 +40,8 @@
 
 	<div class="container">
 	
-			<img  src="../img/bgu-backround_760x760.png">
-
+		<h1>ucla</h1>
+		
 		<div class="clearfix"></div>
 		<a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
 		<a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>

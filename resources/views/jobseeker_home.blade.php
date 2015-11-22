@@ -1,5 +1,5 @@
 
-<html ng-app="acadb">
+<html ng-app="acadb" ng-controller="UserHomeController">
     <head>
         <title>AcadeME</title>
 		<script src="lib/jquery-1.11.3.min.js"></script>
@@ -16,7 +16,11 @@
 		<link href="lib/xeditable/css/xeditable.css" rel="stylesheet">
 		<!-- custom style css -->
 		<link href="../css/angular-aside.min.css" rel="stylesheet">
-		<link href="css/myStyle.css"           rel="stylesheet">
+
+		<!--<link href="css/myStyle.css" rel="stylesheet">-->
+
+		<link rel="stylesheet" ng-href="css/{{ main_color }}.myStyle.css">
+
 
 
 
@@ -54,7 +58,7 @@
             }
         </style>
     </head>
-    <body ng-controller="UserHomeController">
+    <body>
     	<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
