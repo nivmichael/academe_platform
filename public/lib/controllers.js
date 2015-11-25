@@ -533,7 +533,6 @@ angular.module('acadb.controllers', [])
 	})
 	.controller('JobPostModalInstanceCtrl', function ($scope, $modalInstance, jobPost, $http, CSRF_TOKEN) {
 
-consolre.log('fdsfds');
 		$scope.loadIterableGroups = function(paramName, docParamId, index) {
 
 			if (typeof $scope.groups[index] == 'undefined') $scope.groups[index] = [];
@@ -785,7 +784,7 @@ consolre.log('fdsfds');
 
 		$scope.getLayout();
 
-console.log($scope.layout);
+
 
 		$scope.getJobPostFields = function(){
 			$http.get('/columns/jobPost').
@@ -1499,7 +1498,7 @@ $scope.educationStatuses = [
  var state = $location.path();
  var absUrl = $location.absUrl();
  absUrl = absUrl.split('/');
-// console.log($scope.user);
+
  absUrl = absUrl[4];
  absUrl = absUrl.replace('#','');
  $scope.absUrl = absUrl;
@@ -1515,15 +1514,15 @@ var prefix = locationSubtype;
 prefix = prefix.split('.');
 prefix = prefix[0];
 //		console.log(locationSubtype);
-if(locationSubtype == 'register.personal_information' || locationSubtype == 'register.work_experience'  ) {
+if($location.absUrl().indexOf("jobseeker") > -1) {
 	locationSubtype = 'jobseeker';
-//	console.log(locationSubtype);
-}else if(locationSubtype == 'register.company') {
+
+}else if($location.absUrl().indexOf("employer") > -1) {
 	locationSubtype = 'employer';
-//	console.log(locationSubtype);
+
 }
 
-
+console.log($location.absUrl());
 
 		$http.get('/' + locationSubtype + 'Steps' ).
 			success(function(data, status, headers, config) {

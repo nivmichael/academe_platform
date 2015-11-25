@@ -798,3 +798,12 @@ body {
 /*.notFirst{*/
 	/*margin-bottom:100px;*/
 /*}*/
+.welcomeIcon
+{
+
+	float:left;
+	width:240px;
+	height:135px;
+	border-radius:25px;
+	background-color:green;
+}

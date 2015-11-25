@@ -49,7 +49,7 @@ var acadb = angular.module('acadb', [
        .state('jobseeker', {
           url: "/",
           abstract:true,
-          templateUrl: '../partials/home.html'   ,
+          templateUrl: '../partials/jobseeker/home.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.profile', {
@@ -59,7 +59,7 @@ var acadb = angular.module('acadb', [
        })
        .state('jobseeker.findajob', {
           url: "^/findajob",
-          templateUrl: '../partials/findAJob.html'   ,
+          templateUrl: '../partials/jobseeker/findAJob.html'   ,
           controller:'FindajobController',
        })
 
@@ -67,13 +67,10 @@ var acadb = angular.module('acadb', [
           .state('job', {
               parent: 'jobseeker.findajob',
               url: '/job/:jobId',
-            //  abstract: true,
               controller: 'FindajobController',
               onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
-                  //console.log('Open modal');
 
                   var modalInstance = $uibModal.open({
-
                       templateUrl:'myModalContent.html',
                       backdrop: false,
                       windowClass: 'right fade',
@@ -81,33 +78,14 @@ var acadb = angular.module('acadb', [
                       controller: 'PostModalInstanceCtrl',
                       resolve: {
                           job: function () {
-
                               return $stateParams.jobId;
                           },
-
                       },
-
-
                   }).result.finally(function() {
-
-                       console.log('finally')
                        $state.go('jobseeker.findajob');
                       });
               }],
-
-
           })
-          //.state('details', {
-          //  url: '/details',
-          //
-          //  parent: 'job',
-          //  views: {
-          //    'job@': {
-          //      templateUrl: 'myModalContent.html',
-          //
-          //    }
-          //  }
-          //})
           .state('general', {
               url: '/general',
 
@@ -115,7 +93,6 @@ var acadb = angular.module('acadb', [
               views: {
                   'job@': {
                       templateUrl: '../partials/post/general.html',
-
                   }
               }
           })

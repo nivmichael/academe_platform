@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../stdin"],"names":[],"mappings":"AAEA;EACE,mCAAqC,EACtC","file":"scss.css","sourcesContent":["$bg-color: green;\r\n\r\n.welcomeIcon{\r\n  background-color: $bg-color!important;\r\n}"],"sourceRoot":"/source/"}

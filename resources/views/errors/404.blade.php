@@ -45,7 +45,7 @@
 
 
                 <div class="title">404</div>
-                <div class="title">There is Nothing Here! Go Back To where You came from</div>
+                <div class="title">Nothing Here! Are You Lost?</div>
             </div>
         </div>
     </body>

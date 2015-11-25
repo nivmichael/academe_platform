@@ -544,6 +544,7 @@ ul{
 .postDivChild{
 	background-color:white;
 	border: 2px solid #D2D2D2;
+	height: 135px;
 }
 .marginBottom {
 	margin-bottom: 2px;
@@ -765,7 +766,9 @@ body {
 .form-field>div>div>div>input, .form-field>div>div>div>select{
 	margin-bottom:10px;
 }
-
+.fieldDiv{
+	margin-top:10px;
+}
 .notificationsCircle{
 	position: relative;
 	right: 65px;
