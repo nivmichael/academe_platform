@@ -4,7 +4,7 @@
     <div class="container" style="text-align: center;">
 
 
-        <img ng-src="{{logo}}" style="width:200px;">
+        <img ng-src="{{logo}}" style="width:200px; margin-top:100px;">
         <form class="form-signin" method="POST" action="/auth/login">
             {!! csrf_field() !!}
             <!--<h2 class="form-signin-heading">Please sign in</h2>-->

@@ -1,6 +1,6 @@
 <html ng-app="acadb" ng-controller="UserHomeController">
 <head>
-	<title>App AcadeME</title>
+	<title>AcadeME</title>
 	<!-- jquery -->
 	{!! Html::script('lib/jquery-1.11.3.min.js') !!}
 	<!-- angular -->
@@ -39,7 +39,7 @@
 </head>
 
 <body>
-
+blade extends app
 <?php
 	$path = Route::getCurrentRoute()->getPath();
 

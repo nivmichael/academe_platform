@@ -484,7 +484,7 @@
 	<div class="modal-header">
 		<h3 class="modal-title">I'm a modal!</h3>
 	</div>
-	<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" >
+	<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">
 		<div flow-init="flowOp(m)"
 			 flow-files-submitted="$flow.upload()"
 			 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"

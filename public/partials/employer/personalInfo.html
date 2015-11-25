@@ -312,10 +312,7 @@
 		
 	</div>		
 </br>
-	
-	
 	<ng-include class="col-lg-10" src="'../../../partials/disclaimer.html'"></ng-include>
-
 </br>
 
 	<div class="col-lg-8 fieldDiv">
@@ -339,7 +336,7 @@
 
 
 
-	<div ng-repeat="(key,val) in user['files']" class="formDiv" >
+	<div ng-repeat="(key,val) in user['files']" class="formDiv" ng-hide="key == 'docParamId'">
 	
 		<div ng-show="docParam == 'files' ">
 					<div class="param_label col-md-2" >		

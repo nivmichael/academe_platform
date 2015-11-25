@@ -33,6 +33,8 @@
 	<div class="container">
 
 	    <div class="welcomeIcons">
+
+
             <img ng-src="{{logo}}" style="width:300px;">
 
 

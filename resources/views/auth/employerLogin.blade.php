@@ -1,7 +1,8 @@
 @extends('app')
+
 @section('content')
 
-    <div class="container" style="text-align: center;">
+    <div class="container" style="text-align: center; margin-top:100px;">
 
 
         <img ng-src="{{logo}}" style="width:200px;">
@@ -18,7 +19,9 @@
             </div>
 
             <button type="submit" class="btn btn-lg  btn-block loginButton login-form"></button>
+
             <a type="button" href="/auth/register_employer/" class="btn btn-lg  btn-block registerButton login-form"></a>
+
             <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form"></a>
             <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form"></a>
         </form>
