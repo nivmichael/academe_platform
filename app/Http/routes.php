@@ -25,13 +25,11 @@ Route::group(['domain' => 'localhost'], function(){
 
 Route::group(['middleware' => 'domain'], function () {
 	Route::get('/', function(){
-
+		return view('welcome');
 	});
 	//login routes..
-	Route::get('/getAuthId', function(){
-		return Auth::id();
-	});
-Route::get('/match', 'TypeUserController@calc_match');
+	Route::get('/getAuthId', function(){return Auth::id();});
+	Route::get('/match', 'TypeUserController@calc_match');
 	Route::get('layout', 'SitesController@getLayout');
 	Route::get('/auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
     Route::get('/auth/login/employer', 'Auth\AuthController@getEmployerLogin');
@@ -52,12 +50,16 @@ Route::get('/match', 'TypeUserController@calc_match');
 	Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
 
 
-
+	Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
+	Route::post('/deleteImage' ,'SysParamValuesController@deleteimagefromdb');
 	Route::resource('/users', 'TypeUserController');
 	Route::any('/upload'        ,'SysParamValuesController@upload');
 	Route::post('/setStatus' ,'TypeUserController@setStatus');
 
+//	Route::resource('/param/{name}', 'ParamValueController@getOptionValues');
 
+	Route::get('/param/{paramName}/{docParamId}/{isPost?}',
+		array('as'=>'whatever','uses'=>'ParamValueController@getOptionValues'));
 
 	Route::group(['middleware' => 'auth'], function () {
 

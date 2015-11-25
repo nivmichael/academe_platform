@@ -42,7 +42,8 @@ class AuthController extends Controller
     {
         $this->middleware('guest', ['except' => 'getLogout']);
     }
-	
+
+	//ToDo :get the through a single function. with variable.
 	public function getEmployerLogin()
     {
         	
