@@ -1,0 +1,51 @@
+/*fade*/
+.fade.ng-leave {
+    position: relative;
+}
+.fade.ng-enter {
+
+}
+.fade.ng-enter, .fade.ng-leave {
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+.fade.ng-enter, .fade.ng-leave.ng-leave-active {
+    -webkit-transform: scaleX(0.0001);
+    -o-transform: scaleX(0.0001);
+    transform: scaleX(0.0001);
+    opacity: 0;
+}
+.fade, .fade.ng-enter.ng-enter-active {
+    -webkit-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    transform: scaleX(1);
+    opacity: 1;
+}
+
+/*slide*/
+.slide.ng-leave {
+    position: relative;
+}
+.slide.ng-enter {
+    position: absolute;
+}
+.slide.ng-enter, .slide.ng-leave {
+    -webkit-transition: -webkit-transform 0.3s ease-in, opacity 0.3s ease-in;
+    -moz-transition: -moz-transform 0.3s ease-in, opacity 0.3s ease-in;
+    -o-transition: -o-transform 0.3s ease-in, opacity 0.3s ease-in;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+.slide.ng-enter, .slide.ng-leave.ng-leave-active {
+    -webkit-transform: scaleX(0.0001);
+    -o-transform: scaleX(0.0001);
+    transform: scaleX(0.0001);
+    opacity: 0;
+}
+.slide, .slide.ng-enter.ng-enter-active {
+    -webkit-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    transform: scaleX(1);
+    opacity: 1;
+}

@@ -10,7 +10,7 @@
         "flowjs/flow-php-server": "~1.0",
         "laravel/socialite": "~2.0",
         "barryvdh/laravel-debugbar": "~2.0",
-        "illuminate/html": "5.*",
+        "illuminate/html": "5.*"
 
 
     },
