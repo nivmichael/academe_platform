@@ -123,7 +123,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      *
      * @var string
      */
-    protected $environmentFile = '123.env';
+    protected $environmentFile = '.env';
 
     /**
      * The application namespace.
@@ -425,7 +425,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      */
     public function environmentFile()
     {
-        return $this->environmentFile ?: '123.env';
+        return $this->environmentFile ?: '.env';
     }
 
     /**

@@ -17,7 +17,8 @@ var acadb = angular.module('acadb', [
     'ngResource',
     'checklist-model',
     'ui.bootstrap.modal',
-    'angularMoment'
+    'angularMoment',
+    'ui.bootstrap.showErrors'
 ])
 
 
@@ -45,7 +46,7 @@ var acadb = angular.module('acadb', [
         .state('register', {
          url: "/",
          templateUrl: '../../partials/register/register.html',
-         controller: 'RegisterController',   
+         controller: 'RegisterController',
         })
         .state('register.personal_information', {
           url: "^/personal_information",

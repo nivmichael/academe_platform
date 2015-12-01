@@ -27,18 +27,15 @@ Route::group(['middleware' => 'domain'], function () {
 	Route::get('/', function(){
 		return view('welcome');
 	});
-	//login routes..
+
 	Route::get('/getAuthId', function(){return Auth::id();});
 	Route::get('/match', 'TypeUserController@calc_match');
 	Route::get('layout', 'SitesController@getLayout');
+	//login routes..
 	Route::get('/auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
     Route::get('/auth/login/employer', 'Auth\AuthController@getEmployerLogin');
 	Route::get('/auth/logout', 'Auth\AuthController@getLogout');
-	Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');
-	Route::get('/auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
-	Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
-	Route::get('/employerSteps', 'DocParamController@employerSteps');
-	Route::post('/auth/login', 'Auth\AuthController@postLogin');
+		Route::post('/auth/login', 'Auth\AuthController@postLogin');
 
 	//Registration routes...
 	Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');
@@ -48,6 +45,13 @@ Route::group(['middleware' => 'domain'], function () {
 	Route::get('/employerSteps', 'DocParamController@employerSteps');
 	Route::get('/columns/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
 	Route::get('/columns/register_employer', 'TypeUserController@columnIndexEmployer');
+	// Password reset link request routes...
+	Route::get('/password/email', 'Auth\PasswordController@getEmail');
+	Route::post('/password/email', 'Auth\PasswordController@postEmail');
+
+	// Password reset routes...
+	Route::get('/password/reset/{token}', 'Auth\PasswordController@getReset');
+	Route::post('/password/reset', 'Auth\PasswordController@postReset');
 
 
 	Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');

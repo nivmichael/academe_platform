@@ -49,7 +49,7 @@ var acadb = angular.module('acadb', [
        .state('jobseeker', {
           url: "/",
           abstract:true,
-          templateUrl: '../partials/jobseeker/home.html'   ,
+          templateUrl: '../../partials/jobseeker/home.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.profile', {

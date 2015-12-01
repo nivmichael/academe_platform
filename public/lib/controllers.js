@@ -1252,7 +1252,7 @@ $.getJSON('/getAllJobs', function(data){
    $scope.items.push('Item ' + newItemNo);
  };
  $scope.saveUser = function(user) {
-
+console.log('???');
    return $http.post('/users',{
    	   user:user,
    	   _token:CSRF_TOKEN,
@@ -1807,6 +1807,11 @@ $scope.getColumns = function(){
 		$scope.getJobPostFields();
 
 
+		$scope.checkName = function(value) {
+			if (data !== 'awesome' && data !== 'error') {
+				return "Username should be `awesome` or `error`";
+			}
+		};
 
 
 		//$scope.openNewJob = function (size) {

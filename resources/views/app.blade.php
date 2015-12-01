@@ -38,8 +38,8 @@
 
 </head>
 
-<body>
-blade extends app
+<body ng-cloak>
+
 <?php
 	$path = Route::getCurrentRoute()->getPath();
 
@@ -163,6 +163,7 @@ blade extends app
 {!! Html::script('lib/angular-aside.min.js')!!}
 {!! Html::script('lib/ngFlow/ng-flow-standalone.min.js')!!}
 {!! Html::script('lib/checklist-model.js')!!}
+{!! Html::script('lib/showErrors.js')!!}
 
 <script>angular.module("acadb").constant("CSRF_TOKEN", '{!! csrf_token() !!}');</script>
 </html>

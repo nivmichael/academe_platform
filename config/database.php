@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' =>  'master',
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ return [
     'connections' => [
 
 
-        'master' => [
+        'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'domains'),
@@ -58,17 +58,6 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-       'mysql' => [
-			'driver'    => 'mysql',
-			'host'      => env('DB_HOST', 'localhost'),
-			'database'  => env('DB_DATABASE', 'acade_devry'),
-			'username'  => env('DB_USERNAME', 'root'),
-			'password'  => env('DB_PASSWORD', ''),
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-			'strict'    => false,
-		],
         'nyu' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
@@ -80,10 +69,10 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-        'ucsd' => [
+        'ucla' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'ucsd'),
+            'database'  => env('DB_DATABASE', 'ucla'),
             'username'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
@@ -91,10 +80,10 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-        'ucla' => [
+        'ucsd' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'ucla'),
+            'database'  => env('DB_DATABASE', 'ucsd'),
             'username'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',

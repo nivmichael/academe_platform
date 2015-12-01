@@ -163,7 +163,7 @@ footer{
     /*display: inline;*/
     /*min-width: 250px;*/
     font-weight: bold;
-    /*text-align: left;*/
+    text-align: left;
 }
 .param_value {
     display: inline;
@@ -515,6 +515,10 @@ ul{
     font-weight: bold;
     width:100%x;
 }
+.docParamLi>button{
+    background-color:transparent;
+    border:none;
+}
 .postLi {
     padding: 2px;
     background-color: #E8E8E8;
@@ -824,3 +828,20 @@ body {
 /*.notFirst{*/
 /*margin-bottom:100px;*/
 /*}*/
+
+/*.has-error>input{*/
+   /*background-color:#F9F2F4;*/
+/*}*/
+.has-error>input{
+    background-color: #F9F2F4;
+}
+.has-success>input{
+   display:block;
+   border-color:#DFF0D8;
+   /*background-color: #DFF0D8;*/
+
+}
+
+.help-block{
+        text-align:left;
+    }

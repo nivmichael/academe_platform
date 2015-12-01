@@ -1,3 +1,8 @@
 <!-- resources/views/emails/password.blade.php -->
+Hello {!! $user->first_name !!},
 
-Click here to reset your password: {!!  url('password/reset/'.$token) !!}
+You requested a password reset.
+
+Click here to reset your password:
+
+<a href="{!!  url('/password/reset/'.$token) !!}">Reset</a>

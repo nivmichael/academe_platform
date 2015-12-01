@@ -1,64 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1853cf2e-936b-4954-b25f-f31cbafb4ace" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\wamp\www\academe_platform\vendor\phpspec\phpspec\phpspec.yml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.project" afterPath="$PROJECT_DIR$/.project" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/.scrutinizer.yml" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/.scrutinizer.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/.travis.yml" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Application.php" afterPath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Application.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/Application.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/Application.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/bootstrap/ApplicationContext.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/bootstrap/ApplicationContext.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/Differ/ArrayEngine.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/Differ/ArrayEngine.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/CHANGES.md" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/CHANGES.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject/Caller.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject/Caller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Runner/Maintainer/CollaboratorsMaintainer.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Runner/Maintainer/CollaboratorsMaintainer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/ConsoleFormatter.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/ConsoleFormatter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/ContainerAssembler.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/ContainerAssembler.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Dotenv.php" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Dotenv.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/bootstrap/FilesystemContext.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/bootstrap/FilesystemContext.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Html/HtmlPresenter.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Html/HtmlPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php" afterPath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Util/MethodAnalyser.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Util/MethodAnalyser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/ObjectBehavior.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/ObjectBehavior.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Locator/PSR0/PSR0Locator.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Locator/PSR0/PSR0Locator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/Locator/PSR0/PSR0LocatorSpec.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/Locator/PSR0/PSR0LocatorSpec.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Process/ReRunner/PhpExecutableReRunner.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Process/ReRunner/PhpExecutableReRunner.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/PresenterInterface.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/PresenterInterface.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/CodeGenerator/Generator/PromptingGenerator.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/CodeGenerator/Generator/PromptingGenerator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Loader/ResourceLoader.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Loader/ResourceLoader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/Command/RunCommand.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Console/Command/RunCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/CodeGenerator/Generator/SpecificationGenerator.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/CodeGenerator/Generator/SpecificationGenerator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/CodeGenerator/Generator/SpecificationGeneratorSpec.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/CodeGenerator/Generator/SpecificationGeneratorSpec.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/StringPresenter.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/StringPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/Formatter/Presenter/StringPresenterSpec.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/spec/PhpSpec/Formatter/Presenter/StringPresenterSpec.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Runner/Maintainer/SubjectMaintainer.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Runner/Maintainer/SubjectMaintainer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject/SubjectWithArrayAccess.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Subject/SubjectWithArrayAccess.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/TaggedPresenter.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Formatter/Presenter/TaggedPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Wrapper.php" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/src/PhpSpec/Wrapper/Wrapper.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/app.php" afterPath="$PROJECT_DIR$/config/app.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_real.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/behat.yml.dist" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/behat.yml.dist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/composer.json" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.php" afterPath="$PROJECT_DIR$/config/database.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/code_generation/developer_generates_method.feature" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/code_generation/developer_generates_method.feature" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/formatter/developer_is_shown_diffs.feature" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/formatter/developer_is_shown_diffs.feature" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/runner/developer_runs_specs.feature" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/runner/developer_runs_specs.feature" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/construction/developer_specifies_object_construction.feature" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/features/construction/developer_specifies_object_construction.feature" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/bin/phpspec" afterPath="$PROJECT_DIR$/vendor/bin/phpspec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/phpspec/phpspec/bin/phpspec" afterPath="$PROJECT_DIR$/vendor/phpspec/phpspec/bin/phpspec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/bin/phpunit" afterPath="$PROJECT_DIR$/vendor/bin/phpunit" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="1853cf2e-936b-4954-b25f-f31cbafb4ace" name="Default" comment="" />
     <ignored path="academe_platform.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -79,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="database.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/database.php">
+      <file leaf-file-name="personalInfo.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/partials/register/jobseeker/personalInfo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48405465">
-              <caret line="66" column="34" selection-start-line="0" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.3803132">
+              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -178,10 +121,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1288" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1296" />
-    <option name="height" value="1040" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -206,8 +149,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -236,12 +177,80 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partials" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partials" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="register" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academe_platform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partials" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="register" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jobseeker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,11 +320,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1288" y="-8" width="1296" height="1040" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28359374" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28333333" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -665,13 +674,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bootstrap/cache/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.181208">
-          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -704,7 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="109" selection-start-line="27" selection-start-column="109" selection-end-line="27" selection-end-column="109" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,20 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="90" column="74" selection-start-line="90" selection-start-column="74" selection-end-line="90" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35108694">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/debugbar.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30425057">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -738,8 +725,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48405465">
-          <caret line="66" column="34" selection-start-line="0" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.22818792">
+          <caret line="78" column="6" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../academe_platform__/public/partials/register/jobseeker/personalInfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="57" selection-start-line="0" selection-start-column="57" selection-end-line="0" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../~~~academe_platform/public/partials/register/jobseeker/personalInfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/register/jobseeker/personalInfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3803132">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
           <folding />
         </state>
       </provider>
