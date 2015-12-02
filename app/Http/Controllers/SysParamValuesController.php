@@ -120,7 +120,7 @@ class SysParamValuesController extends Controller  {
 				$photo->save();
 			}else{
 			
-				dd('updated');
+				//dd('updated');
 			}
 			
 		

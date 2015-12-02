@@ -4,16 +4,18 @@
 	<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
 	</a>
 </script>
-<form name="registerJobSeekerForm" novalidate>
+<form name="registerJobSeekerForm"  novalidate>
 	
-	<nav class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sideNav">
-		<li ui-sref-active="" ui-sref=".personal_information" class="docParamLi" ng-hide="absUrl == 'register_employer'">
-			<span class="▶">▶</span>Personal Information
-		</li>
+	<nav class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sideNav ">
+		<!--<div class="docParamLi">-->
+			<!--<button ui-sref-active="" ui-sref=".personal_information" class="" ng-hide="absUrl == 'register_employer'">-->
+				<!--<span class="▶">▶ </span> Personal Information-->
+			<!--</button>-->
+		<!--</div>-->
 		<div ng-repeat="(key,step) in steps track by $index" id="status-buttons" class="docParamLi" >
 
-			<button ui-sref-active="" ui-sref=".{{step.name}}" ng-disabled="registerJobSeekerForm.$invalid">
-				<span class="▶">▶</span>{{step.slug}}
+			<button ui-sref-active="" ui-sref="{{step.name}}" >
+				<span class="▶">▶ </span> {{ step.value | underscoreless | capitalize}}
 			</button>
 	
 		</div>
@@ -21,3 +23,5 @@
 	<div ui-view="" class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
 
 </form>
+
+

@@ -60,7 +60,7 @@
 			<uib-accordion-heading>
 				<div ng-class="{'grey': !status,  'cyan':  status}">
 					<i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>
-					{{docParamName | underscoreless | capitalize:true}}
+					{{docParamName  | capitalize:true}}
 				</div>
 			</uib-accordion-heading>
 			<form editable-form name="editableForm" onaftersave="saveUser(user)" shown="0">
@@ -479,7 +479,6 @@
 </body>
 
 
-</body>
 <script type="text/ng-template" id="gallery.html">
 	<div class="modal-header">
 		<h3 class="modal-title">I'm a modal!</h3>
@@ -488,7 +487,7 @@
 		<div flow-init="flowOp(m)"
 			 flow-files-submitted="$flow.upload()"
 			 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-			 class="" style="height:100%;overflow:auto;">
+			 class="">
 			<br/>
 
 			<div class="thumbnail" >

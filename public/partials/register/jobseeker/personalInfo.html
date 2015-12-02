@@ -33,11 +33,11 @@
 			<div class="fieldDiv col-xs-12  col-sm-12 col-md-12 col-lg-12">
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3 "> First Name* </div>
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group"  show-errors>
-					<input type='text' class="form-control " name="first_name" placeholder="First Name" ng-model="user.personal_information.first_name"  ng-minlength="3" ng-maxlength="15" ng-pattern="/(\b(?:([A-Za-z- ])(?!\2{2}))+\b)/"  uib-popover="This is a popover with explanations. currently only implemented on first_name paremeter. "  popover-trigger="focus" required>
+					<input type='text' class="form-control " name="first_name" placeholder="First Name" ng-model="user.personal_information.first_name"  ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z- ]*$/"  popover-placement="bottom" uib-popover="This is a popover with explanations. currently only implemented on first_name paremeter. "  popover-trigger="focus" required>
 				</div>
 
 
-				<div ng-show="registerJobSeekerForm.first_name.$dirty || registerJobSeekerForm.first_name.$touched">
+				<div ng-show="registerJobSeekerForm.first_name.$dirty">
 
 					<span class="help-block" ng-show="registerJobSeekerForm.first_name.$error.pattern">Please insert your real name. only english characters.</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.first_name.$error.required">Required</span>
@@ -129,7 +129,7 @@
 
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> Marital Status </div>
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group" show-errors >
-					<select class="form-control  " name="martial_status" ng-model="user.personal_information.martial_status" required>
+					<select class="form-control  " name="martial_status" ng-model="user.personal_information.martial_status" >
 						<option value="" selected></option>
 						<option value="single" >Single</option>
 						<option value="married" >Married</option>
@@ -166,7 +166,8 @@
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3  "> country </div>
 
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group" show-errors>
-					<input type="text" name="country" ng-model="user.personal_information.country" class="form-control"  typeahead="country for country in countries  | filter:$viewValue | limitTo:8" required>
+					<input type="text" name="country" ng-model="user.personal_information.country" class="form-control"  required>
+					<!--typeahead="country for country in countries  | filter:$viewValue | limitTo:8"-->
 				</div>
 
 			</div>
@@ -176,7 +177,8 @@
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> State* </div>
 
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group" show-errors>
-					<input type="text" name="state" ng-model="user.personal_information.state" placeholder="" class="form-control " typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personal_information.state" >
+					<input type="text" name="state" ng-model="user.personal_information.state" placeholder="" class="form-control "  ng-model="user.personal_information.state" >
+					<!--typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html"-->
 				</div>
 
 			</div>
@@ -186,7 +188,8 @@
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> city* </div>
 
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group" show-errors>
-					<input type="text" name="city" class="form-control " ng-model="user.personal_information.city" placeholder="" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" ng-model="user.personal_information.city" required>
+					<input type="text" name="city" class="form-control " ng-model="user.personal_information.city" placeholder=""  ng-model="user.personal_information.city" required>
+					<!--typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults"-->
 				</div>
 
 			</div>
@@ -268,8 +271,8 @@
 
 		</div>
 
-		<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="form_field" ng-hide="docParam == 'files'"  ng-if="paramKey != 'docParamId'">
-
+		<!--<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="form_field" ng-hide="docParam == 'files'"  ng-if="paramKey != 'docParamId'">-->
+			<div ng-repeat="(paramKey,paramValues) in user[docParam] track by $index" class="form_field" ng-hide="docParam == 'files'"  ng-if="paramKey != 'docParamId'">
 			<!-- <div ng-if="docParam == 'personal_information'">
 			<div class="param_label">
 			{{paramKey}}
@@ -293,7 +296,7 @@
 
 						<div ng-switch-when="text">
 							<div class="col-xs-12col-sm-4 col-md-4 col-lg-4">
-								<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']" required>
+								<input type='text' class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']"  value="old[['first_name']]">
 							</div>
 						</div>
 
@@ -302,21 +305,21 @@
 								<!--<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="s.value as s.value for s in groups" ng-change="loadNewCities(state1);">-->
 								<!--</select>-->
 
-								<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, user[docParam]['docParamId'])"  ng-disabled="!groups[paramKey]" required>
+								<select class="form-control" ng-model="user[docParam][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, user[docParam]['docParamId'])"  ng-disabled="!groups[paramKey]" >
 								</select>
 							</div>
 						</div>
 
 						<div ng-switch-when="textarea">
 							<div class="col-xs-12col-sm-4 col-md-4 col-lg-4">
-								<textarea class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']" required></textarea>
+								<textarea class="form-control" placeholder="{{paramKey}}" name="user[docParam][paramKey]['paramValue']" ng-model="user[docParam][paramKey]['paramValue']" ></textarea>
 							</div>
 						</div>
 
 						<div ng-switch-when="checklist">
 							<div  class="col-xs-12col-sm-4 col-md-4 col-lg-4"   ng-init="loadGroups(paramKey,user[docParam]['docParamId'])">
 								<label ng-repeat="check in groups[paramKey] track by $index" >
-									<input type="checkbox" checklist-model="user[docParam][paramKey]['paramValue']" checklist-value="check.value" required >
+									<input type="checkbox" checklist-model="user[docParam][paramKey]['paramValue']" checklist-value="check.value"  >
 									<small>{{check.text}}</small>
 								</label>
 							</div>
@@ -506,9 +509,9 @@
 
 		</div>
 
-		<div class="col-md-6" ng-if="nextDoc(docParam)==false" ng-click="saveUser(user,docParam)">
+		<div class="col-md-6"  ng-if="nextDoc(docParam)==false">
 
-			<a href="/jobseeker#/" class="btn btn-block btn-success"> Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
+			<a href="../../jobseeker#/" class="btn btn-block btn-success"> Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </a>
 
 		</div>
 	</div>

@@ -42,6 +42,7 @@ class Authenticate
             } else {
             	if($request->path() == "jobseeker" ){
             		 return redirect()->guest('auth/login/jobseeker');
+
             	}else if( $request->path() == "employer") {
             		
 	                return redirect()->guest('auth/login/employer');

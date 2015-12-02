@@ -35,7 +35,7 @@ Route::group(['middleware' => 'domain'], function () {
 	Route::get('/auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
     Route::get('/auth/login/employer', 'Auth\AuthController@getEmployerLogin');
 	Route::get('/auth/logout', 'Auth\AuthController@getLogout');
-		Route::post('/auth/login', 'Auth\AuthController@postLogin');
+	Route::post('/auth/login', 'Auth\AuthController@postLogin');
 
 	//Registration routes...
 	Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');

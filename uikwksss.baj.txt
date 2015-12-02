@@ -1293,7 +1293,7 @@
 #	modified:   public/css/myStyle.css
 #	new file:   public/lib/admin_app.js
 #	deleted:    public/lib/app.js
-#	modified:   public/lib/controllers.js
+#	modified:   public/lib/~~controllers.js
 #	modified:   public/lib/directives.js
 #	new file:   public/lib/employer_app.js
 #	new file:   public/lib/filters.js

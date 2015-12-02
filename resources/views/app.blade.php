@@ -1,4 +1,4 @@
-<html ng-app="acadb" ng-controller="UserHomeController">
+<html ng-app="acadb" ng-controller="MainCtrl">
 <head>
 	<title>AcadeME</title>
 	<!-- jquery -->
