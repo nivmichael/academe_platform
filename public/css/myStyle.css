@@ -7,11 +7,11 @@ body{
 }
 .green{
 	background-color:green;
-	
+
 }
 .red{
 	background-color:red;
-	
+
 }
 
 
@@ -45,7 +45,7 @@ hr{
 	position: fixed;
 	bottom: 0;
 
-	
+
 	background-color: #EDEDED;
 }
 footer{
@@ -385,7 +385,7 @@ display:none;
 .thumbnail > img {
 
 	margin-bottom: 2px;
-	
+
 }
 .img-thumbnail{
 	/*height:140px;
@@ -408,7 +408,7 @@ display:none;
 	background-color: #D43F3A;
 }
 .delBtnIcon {
-	
+
 	bottom: 0px;
 	margin: 1px;
 	color: white;
@@ -487,7 +487,7 @@ ul{
 	text-align: left;
 	color: white;
 	font-weight: bold;
-	width:100%x;
+	width:100%;
 }
 .postLi {
 	padding: 2px;
@@ -528,18 +528,18 @@ ul{
 }
 .postImage {
 	position: relative;
-	
+
 }
 .postImage > img {
 
 	top:25px;
 	cursor:pointer;
 
-	
+
 }
 .postDiv {
 	padding:5px;
-	
+
 }
 .postDivChild{
 	background-color:white;
@@ -652,14 +652,14 @@ ul{
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
     border:0px solid transparent;
-      
+
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body,.panel,.panel-heading {
-   
+
     border-radius:0px!important;
     border-top-right-radius: 0px!important;
     border-top-left-radius: 0px!important;
-    
+
 }
 .panel-heading {
 	padding: 0;
@@ -673,7 +673,7 @@ ul{
 }
 .sideNav{
 	text-align:center;
-	
+
 
 }
 .grey_background{

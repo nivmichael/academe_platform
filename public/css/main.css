@@ -1,21 +1,72 @@
-/*welcome*/
+/*html*/
 body{
     padding:0;
     margin:0;
 }
+button{
+    outline:none!important;
+}
+hr{
+    width:50%;
+}
+
+/*top nav-bar*/
+.navbar{
+   border-radius:0px;
+   margin:0px;
+}
+.navbar-nav>li>a{
+    padding-bottom:0px!important;
+}
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a:focus {
+    border-color:transparent;
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav>li>a:hover{
+    font-size:1.2em;
+    color:#FFFFFF;
+}
+.navbar-default .navbar-brand{
+     color: #FFFFFF;
+     border-right: 2px solid #FFFFFF;
+ }
+.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand:active, .navbar-default .navbar-brand:focus{
+    color: #FFFFFF;
+    border-right: 2px solid #FFFFFF;
+}
+.searchText{
+    margin-top: 7px;
+    margin-left: 10px;
+}
+.envelope{
+    position: relative;
+    bottom: 5px;
+}
+.envelope_badge{
+    position:relative;
+    right:10px;
+    bottom:10px;
+    background-color:red;
+}
+.meetingsLabel{
+    cursor:pointer;
+}
+.meetings_badge{
+    position:relative;
+    bottom:6px;
+    right:4px;
+    background-color:red;
+}
+
+/*welcome.blade.php*/
+
 .welcomeIcons
 {
     margin-top:100px;
 }
 .welcomeIcon
 {
-
     margin-top:100px;
-
-    /*float:left;*/
-    /*width:240px;*/
-    /*height:135px;*/
-
 }
 .welcomeIconInner{
     margin:0 auto;
@@ -31,4 +82,132 @@ body{
     font-size:34px;
 }
 
+/*personal_information.html*/
+/*side navbar*/
 
+.docParamLi {
+    list-style-type: none;
+    padding: 5px;
+    background-color: grey;
+    margin-bottom: 2px;
+    text-align: left;
+    color: white;
+    font-weight: bold;
+    width:100%x;
+}
+.docParamLi>button{
+    background-color:transparent;
+    border:none;
+}
+.docParamLi > a {
+    color: white;
+}
+.docParamLi:hover, .docParamLi:focus, .docParamLi:active {
+    cursor: pointer;
+    background-color: #5D2C87 !important;
+}
+/*inputs*/
+.paramDiv{
+    float:left;
+    width:50%;
+    margin-bottom:10px;
+}
+.param_label {
+    float:left;
+    /*display: inline;*/
+    min-width: 250px;
+    font-weight: bold;
+    text-align: left;
+}
+/*disclaimer*/
+.disclaimerDiv {
+    padding: 20px;
+    border: 1px solid black;
+    height: 100px;
+    overflow: auto;
+}
+.disclaimerDiv > p {
+    text-align: left;
+}
+.disclaimerDiv > strong {
+    text-align: left;
+}
+/**/
+.form-field>div>div>div>input, .form-field>div>div>div>select{
+    margin-bottom:10px;
+}
+/*iteration controls - move up down and delete*/
+.iterationCtrls {
+
+    margin-top:50px !important;
+    /*margin-bottom: 35px !important;
+    /*font-size: 12px;*/
+    /*color: #0E3969;*/
+    /*outline: none;*/
+    /*margin: 0 7px;*/
+}
+.iterationCtrl {
+    margin-right: 25px;
+    float:left;
+    color:#0E3969;;
+    font-size:12px;
+}
+/*files*/
+.galleryDiv {
+    border: 1px dashed rgb(78, 117, 173);
+    height: auto;
+    width: 100%;
+}
+.dragNdrop {
+    line-height: 50px;
+    text-align: center
+}
+/*profile*/
+/*accordion*/
+
+.panel-heading, .panel {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+    border: none;
+}
+.cyan{
+    background-color:#C1DBF7;
+    padding: 10px 15px
+}
+.grey{
+    background-color:#F3F3F5;
+    padding: 10px 15px
+}
+.userHomeFooterNavLi {
+
+    margin-top:5px;
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+    background-color: #6d6f70;
+    color: white;
+    cursor: pointer;
+    border-right:1px solid white;
+}
+/*the forms and inputs*/
+.editableForm{
+    text-align:left;
+}
+.parameterFix{
+    width:50%;
+    float:left;
+}
+.parameterFix2{
+    width:100%;
+    float:left;
+
+}
+
+.form-con-width{
+    width:280px;
+    margin-bottom:5px;
+}

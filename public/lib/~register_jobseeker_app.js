@@ -46,14 +46,13 @@ var acadb = angular.module('acadb', [
         .state('register', {
          url: "/",
          templateUrl: '../../partials/register/register.html',
-
          controller: 'RegisterController',
         })
         .state('register.personal_information', {
           url: "^/personal_information",
        	  controller: 'formController',
           templateUrl: '../../partials/register/jobseeker/personalInfo.html',
-
+              reloadOnSearch: false
         });
         $locationProvider.html5Mode({
             enabled: false

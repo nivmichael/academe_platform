@@ -60,10 +60,10 @@
 			<uib-accordion-heading>
 				<div ng-class="{'grey': !status,  'cyan':  status}">
 					<i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>
-					{{docParamName  | capitalize:true}}
+					{{docParamName  | underscoreless | capitalize:true}}
 				</div>
 			</uib-accordion-heading>
-			<form editable-form name="editableForm" onaftersave="saveUser(user)" shown="0">
+			<form editable-form class="editableForm" name="editableForm" onaftersave="saveUser(user)" shown="0">
 
 
 
@@ -370,11 +370,11 @@
 							<!--</div>-->
 						</div>
 
-						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="">
-							<div class="" ng-if="r == 'slug'" style="float:left;font-weight:bold;">
+						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="margin-bottom:20px;">
+							<div class="col-md-3" ng-if="r == 'slug'" style="float:left;font-weight:bold;">
 								{{s}}:
 							</div>
-							<div  ng-if="r == 'paramValue'" ng-switch="v.inputType" class="" style="float:right;padding-right:15px;margin-bottom:10px; ">
+							<div  ng-if="r == 'paramValue'" ng-switch="v.inputType" class=col-md-3" style="padding-right:15px;margin-bottom:10px; ">
 
 								<div ng-switch-when="text">
 									<div e-class="form-control  form-con-width" class="" e-form="rowform" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
@@ -440,10 +440,10 @@
 						<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">
 							X Delete
 						</div>
-						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+						<div class="iterationCtrl" ng-hide="$first" ng-click="move(docParamValues,$index,$index-1)">
 							Move Up
 						</div>
-						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+						<div class="iterationCtrl" ng-hide="$last" ng-click="move(docParamValues,$index,$index+1)">
 							Move Down
 						</div>
 
@@ -470,7 +470,7 @@
 		</uib-accordion-group>
 	</uib-accordion>
 
-	<footer class="col-md-12">
+	<footer class="">
 
 		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " ng-click="openGallery('lg')">{{footerNavli.tag}}</div>
 
@@ -520,8 +520,8 @@
 							</div>
 						</div>
 						<div class="btn-group">
-							<a class="btn btn-xs btn-danger delBtnBtn" ng-click="file.cancel()">
-								<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
+							<a class="btn btn-xs btn-danger" ng-click="file.cancel()">
+								<i class="glyphicon glyphicon-trash"></i>
 							</a>
 						</div>
 					</div>

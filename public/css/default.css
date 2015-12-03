@@ -1,5 +1,7 @@
 
-
+form{
+    text-align:left;
+}
 
 body{
     margin:0!important;
@@ -59,10 +61,10 @@ hr{
     width:50%;
 }
 .paramDiv{
-    float:left;
-    width:50%;
-    margin-bottom:10px;
-}
+     float:left;
+     width:50%;
+     margin-bottom:10px;
+ }
 .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group{
     padding:9px;
 }
@@ -161,7 +163,7 @@ footer{
 .param_label {
     float:left;
     /*display: inline;*/
-    /*min-width: 250px;*/
+    min-width: 250px;
     font-weight: bold;
     text-align: left;
 }
@@ -323,8 +325,7 @@ footer{
 
 .openAccordion {
     border-radius:0px;
-    background:color:green;
-}
+    }
 .closeAccordion {
     border-radius:0px;
 }
@@ -832,15 +833,15 @@ body {
 /*.has-error>input{*/
    /*background-color:#F9F2F4;*/
 /*}*/
-.has-error>input{
-    background-color: #F9F2F4;
-}
-.has-success>input{
-   display:block;
-   border-color:#DFF0D8;
-   /*background-color: #DFF0D8;*/
+/*.has-error>input{*/
+    /*background-color: #F9F2F4;*/
+/*}*/
+/*.has-success>input{*/
+   /*display:block;*/
+   /*border-color:#DFF0D8;*/
+   /*/!*background-color: #DFF0D8;*!/*/
 
-}
+/*}*/
 
 .help-block{
         text-align:left;

@@ -7,7 +7,7 @@ var acadb = angular.module('acadb', [
     'ui.router',
     'ngAnimate',
     'ui.bootstrap',
-    'ngAside',
+    //'ngAside',
     'flow',
     'acadb.controllers',
     'acadb.services',
@@ -16,7 +16,7 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'checklist-model',
-    'ui.bootstrap.modal',
+    //'ui.bootstrap.modal',
     'angularMoment'
 ])
 

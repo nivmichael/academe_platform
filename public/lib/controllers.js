@@ -7,6 +7,7 @@
 
 angular.module('acadb.controllers', [])
 	.controller('MainCtrl', function ($scope, $http) {
+
 		$scope.getLayout = function(){
 			$http.get('/layout').
 				then(function(response) {
@@ -21,6 +22,8 @@ angular.module('acadb.controllers', [])
 		}
 
 		$scope.getLayout();
+
+		$scope.isCollapsed = true;
 
 	})
 
@@ -210,6 +213,7 @@ angular.module('acadb.controllers', [])
 		};
 		/*ngOptions show options*/
 		$scope.showGroup = function(param) {
+
 			if(param.type_id && $scope.groups.length) {
 				var selected = $filter('filter')($scope.groups, {id: param.type_id});
 				return selected.length ? selected[0].text : 'Not set';
@@ -740,7 +744,7 @@ angular.module('acadb.controllers', [])
 
 		};
 	})
-	.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$aside','$filter', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$aside,$filter) {
+	.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$filter', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$filter) {
 
 
 
@@ -864,14 +868,14 @@ angular.module('acadb.controllers', [])
 			array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
 		};
 
-		//$scope.showGroup = function(user) {
-		//	if(user.group && $scope.groups.length) {
-		//		var selected = $filter('filter')($scope.groups, {id: user.group});
-		//		return selected.length ? selected[0].text : 'Not set';
-		//	} else {
-		//		return user.groupName || 'Not set';
-		//	}
-		//};
+		$scope.showGroup = function(user) {
+			if(user.group && $scope.groups.length) {
+				var selected = $filter('filter')($scope.groups, {id: user.group});
+				return selected.length ? selected[0].text : 'Not set';
+			} else {
+				return user.groupName || 'Not set';
+			}
+		};
 
 
 		$scope.isCollapsed = true;
@@ -964,161 +968,161 @@ angular.module('acadb.controllers', [])
 		//};
 ///Aside
 
-		$scope.asideState = {
-			open: true
-		};
-
-		$scope.openAside = function(position, backdrop) {
-
-
-
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
-
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/jobseeker_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
-
-		$scope.openEmployerAside = function(position, backdrop) {
-
-
-
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
-
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/employer_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-					console.log(user);
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
-
-
-
-		$scope.openJobseekerRegisterAside = function(position, backdrop) {
-
-
-
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
-
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-					console.log(user);
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
+		//$scope.asideState = {
+		//	open: true
+		//};
+        //
+		//$scope.openAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
+        //
+		//	$aside.open({
+		//		templateUrl: '../partials/jobseeker_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+        //
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
+        //
+		//$scope.openEmployerAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
+        //
+		//	$aside.open({
+		//		templateUrl: '../partials/employer_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+		//			console.log(user);
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
+        //
+        //
+        //
+		//$scope.openJobseekerRegisterAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
+        //
+		//	$aside.open({
+		//		templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+		//			console.log(user);
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
 
 
 		$scope.openGallery = function (size) {
@@ -1448,11 +1452,70 @@ angular.module('acadb.controllers', [])
 		var state = $location.path();
 		var absUrl = $location.absUrl();
 		absUrl = absUrl.split('/');
-
 		absUrl = absUrl[4];
 		absUrl = absUrl.replace('#','');
 		$scope.absUrl = absUrl;
 
+		state = state.split('/');
+		state = state[1];
+
+		var locationSubtype = $state.current.name;
+		var prefix = locationSubtype;
+		prefix = prefix.split('.');
+		prefix = prefix[0];
+
+		if($location.absUrl().indexOf("jobseeker") > -1) {
+			locationSubtype = 'jobseeker';
+
+		}else if($location.absUrl().indexOf("employer") > -1) {
+			locationSubtype = 'employer';
+
+		}
+		$scope.steps = $rootScope.steps;
+		$scope.nextDoc = function(doc){
+
+			if($scope.next_keys[doc]){
+				$scope.doc = $scope.next_keys[doc];
+				return $scope.doc ;
+			}else{
+				return false ;
+			}
+
+		};
+		$scope.next_keys =Array();
+		var prev_key = false;
+		for(var key in $scope.steps) {
+			if(!prev_key) {
+				prev_key = $scope.steps[key].value;
+
+			} else {
+				$scope.next_keys[prev_key] =$scope.steps[key].value;
+				prev_key = $scope.steps[key].value;
+				$scope.next =$scope.steps[key].value;
+
+				$scope.nextDoc();
+			}
+		}
+		$scope.getForms = function() {
+			$http.get('/columns/' + $scope.absUrl).
+				success(function(data, status, headers, config) {
+					$scope.user = data;
+				});
+;
+		}
+		$scope.getForms();
+	}])
+
+
+	.controller('formController', function($rootScope,$window,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment) {
+		'use strict';
+
+		var state = $location.path();
+		var absUrl = $location.absUrl();
+		absUrl = absUrl.split('/');
+		absUrl = absUrl[4];
+		absUrl = absUrl.replace('#','');
+		$scope.absUrl = absUrl;
 
 		state = state.split('/');
 		state = state[1];
@@ -1470,149 +1533,7 @@ angular.module('acadb.controllers', [])
 
 		}
 
-		$scope.steps = $rootScope.steps;
-		$scope.nextDoc = function(doc){
 
-			if($scope.next_keys[doc]){
-				$scope.doc = $scope.next_keys[doc];
-				return $scope.doc ;
-			}else{
-				return false ;
-			}
-
-		};
-
-
-		$scope.next_keys =Array();
-		var prev_key = false;
-
-		for(var key in $scope.steps) {
-			if(!prev_key) {
-				prev_key = $scope.steps[key].value;
-
-			} else {
-				$scope.next_keys[prev_key] =$scope.steps[key].value;
-				prev_key = $scope.steps[key].value;
-				$scope.next =$scope.steps[key].value;
-
-				$scope.nextDoc();
-			}
-		}
-
-		$scope.getForms = function() {
-			$http.get('/columns/' + $scope.absUrl).
-				success(function(data, status, headers, config) {
-					$scope.user = data;
-				});
-;
-		}
-		$scope.getForms();
-
-		//$scope.getAuthId = function(){
-		//	$http.get('/getAuthId').
-		//		success(function(data, status, headers, config) {
-		//			$scope.userId = data;
-		//			// console.log($scope.userId);
-		//		});
-		//};
-
-
-		/*
-		* can be removed. handeled in registerJobseekerapp.js
-		*/
-		//$http.get('/' + locationSubtype + 'Steps' ).
-		//	success(function(data, status, headers, config) {
-        //
-        //
-		//		$scope.steps = data;
-        //
-		//	}).
-		//	error(function(data, status, headers, config) {
-        //
-		//	});
-
-		//$scope.getAuthId();
-
-        //
-		//$scope.next_keys =Array();
-		//var prev_key = false;
-        //
-		//for(var key in $scope.steps) {
-		//	if(!prev_key) {
-		//		prev_key = $scope.steps[key].value;
-        //
-		//	} else {
-		//		$scope.next_keys[prev_key] =$scope.steps[key].value;
-		//		prev_key = $scope.steps[key].value;
-		//		$scope.next =$scope.steps[key].value;
-		//		console.log(prev_key);
-		//		$scope.nextDoc();
-		//	}
-		//}
-		//console.log($scope.next_keys);
-		//$scope.nextDoc = function(doc){
-        //
-		//	if($scope.next_keys[doc]){
-		//		$scope.doc = $scope.next_keys[doc];
-		//		return $scope.doc ;
-		//	}else{
-		//		return false ;
-		//	}
-        //
-		//};
-
-
-        //
-		//$scope.getColumns = function(){
-		//	//	  console.log(absUrl);
-		//	$http.get('/columns/' + $scope.absUrl).
-		//		success(function(data, status, headers, config) {
-		//			$scope.user = data;
-        //
-		//			//	console.log('getcolumns from RegCtrl');
-		//			$scope.userCaretName = $scope.user.personal_information.first_name;
-		//			//registration steps
-		//			$scope.next_keys =Array();
-		//			var prev_key = false;
-        //
-		//			for(var key in $scope.user) {
-		//				if(!prev_key) {
-		//					prev_key = key;
-		//				} else {
-		//					$scope.next_keys[prev_key] = key;
-		//					prev_key = key;
-		//					$scope.next = key;
-		//				}
-		//			}
-		//			/// console.log($scope.next_keys);
-		//			$scope.nextDoc = function(doc){
-        //
-		//				if($scope.next_keys[doc]){
-		//					$scope.doc = $scope.next_keys[doc];
-		//					return $scope.doc ;
-		//				}else{
-		//					return false ;
-		//				}
-		//				console.log(doc);
-		//			};
-		//		}).
-		//		error(function(data, status, headers, config) {
-		//			// called asynchronously if an error occurs
-		//			// or server returns response with an error status.
-		//		});
-		//};
-        //
-        //
-		//$scope.getColumns();
-        //
-
-
-
-	}])
-
-
-	.controller('formController', function($rootScope,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment) {
-		console.log('1');
 		$scope.steps = $rootScope.steps;
 		$scope.docParam = $state.current.name.split('.');
 		$scope.docParam = $scope.docParam[1];
@@ -1621,9 +1542,6 @@ angular.module('acadb.controllers', [])
 
 
 		$scope.saveUser = function(user,docParam) {
-			alert('saveUser func from Register page using formController has been triggered')
-			$scope.absUrl	= 'jobseeker';
-
 			user.personal_information.subtype = locationSubtype;
 			user.personal_information.status = 'active';
 
@@ -1774,18 +1692,6 @@ angular.module('acadb.controllers', [])
 
 		$scope.groups={};
 
-		$scope.showGroup = function(param) {
-			console.log(param);
-			if(param && $scope.groups.length) {
-				var selected = $filter('filter')($scope.groups, {value: param});
-				return selected.length ? selected[0].value : 'Not set';
-			} else {
-				return param || 'Not set';
-			}
-		};
-
-
-
 		$scope.loadGroups = function(paramName, docParamId) {
 			$scope.groups[paramName] = {};
 			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
@@ -1890,265 +1796,6 @@ angular.module('acadb.controllers', [])
 				});
 			});
 		};
-
-
-
-		//$scope.next_keys =Array();
-		//var prev_key = false;
-		//
-		//for(var key in $scope.steps) {
-		//	if(!prev_key) {
-		//		prev_key = $scope.steps[key].value;
-		//
-		//	} else {
-		//		$scope.next_keys[prev_key] = $scope.steps[key].value;
-		//		prev_key = $scope.steps[key].value;
-		//		$scope.next = $scope.steps[key].value;
-		//		$scope.nextDoc();
-		//	}
-		//}
-		//
-		//$scope.nextDoc = function(doc){
-		//
-		//	if($scope.next_keys[doc]){
-		//		$scope.doc = $scope.next_keys[doc];
-		//		return $scope.doc ;
-		//	}else{
-		//		return false ;
-		//	}
-		//
-		//};
-//
-//		var state = $location.path();
-//		state = state.split('/');
-//
-//		state = state[1];
-//		var locationSubtype = $state.current.name;
-//		var prefix = locationSubtype;
-//		prefix = prefix.split('.');
-//		prefix = prefix[0];
-//
-//		if(locationSubtype == 'register.personal_information') {
-//			locationSubtype = 'jobseeker';
-//		}else if(locationSubtype == 'register.company') {
-//			locationSubtype = 'employer';
-//		}
-//
-//		 locationSubtype = locationSubtype.split('register');
-//		 locationSubtype = locationSubtype[1];
-////
-//		 locationSubtype= angular.lowercase(locationSubtype);
-//		 console.log(locationSubtype);
-
-		// function to process the form
-		//$scope.getJobPostFields = function(){
-		//	$http.get('/columns/jobPost').
-		//		success(function(data, status, headers, config) {
-		//			//console.log(data);
-        //
-		//			angular.forEach(data, function(value, key) {
-		//				angular.forEach(value, function(v, k) {
-        //
-		//					//$scope.getInputType(k,key);
-		//					//	console.log(key);
-        //
-        //
-		//				});
-		//				//console.log(value);
-		//				//	console.log(key);
-        //
-		//			});
-        //
-        //
-		//			$scope.jobPost = data;
-		//		}).error(function(data, status, headers, config){
-        //
-		//		});
-		//};
-        //
-        //
-        //
-		//$scope.getJobPostFields();
-
-
-		//$scope.checkName = function(value) {
-		//	if (data !== 'awesome' && data !== 'error') {
-		//		return "Username should be `awesome` or `error`";
-		//	}
-		//};
-
-
-		//$scope.openNewJob = function (size) {
-		//
-		//	var modalInstance = $uibModal.open({
-		//		animation: $scope.animationsEnabled,
-		//		templateUrl: 'newJob.html',
-		//		size: size,
-		//
-		//		resolve: {
-		//			jobPost: function () {
-		//				return $scope.jobPost;
-		//			},
-		//
-		//		},
-		//		controller: 'JobPostModalInstanceCtrl',
-		//	});
-		//
-		//	modalInstance.result.then(function (selectedItem) {
-		//		$scope.selected = selectedItem;
-		//	}, function () {
-		//		$log.info('Modal dismissed at: ' + new Date());
-		//	});
-		//};
-
-
-
-		//Object.size = function(obj) {
-		//	var size = 0, key;
-		//	for (key in obj) {
-		//		if (obj.hasOwnProperty(key)) size++;
-		//	}
-		//	return size;
-		//};
-
-
-
-
-
-		//$scope.getPost = function(id){
-		//	$http.get('/job/'+id ).
-		//		success(function(data, status, headers, config) {
-        //
-        //
-		//			$scope.post = data;
-        //
-		//			$scope.post = data;
-		//			// $scope.openPost();
-		//			$state.go(
-		//				'job',
-		//				{
-        //
-		//					jobId:id,
-		//				} // this goes into $stateParams for
-		//				// state 'some'
-		//			);
-		//			console.log($state);
-        //
-		//		}).
-		//		error(function(data, status, headers, config) {
-        //
-		//		});
-		//};
-
-        //
-		//function capitalizeFirstLetter(string) {
-		//	return string.charAt(0).toUpperCase() + string.slice(1);
-		//}
-        //
-        //
-        //
-        //
-		//$scope.savePost = function(post) {
-		//	console.log(post);
-		//	$http.post('/savePost', {
-		//		post:post,
-		//		_token:CSRF_TOKEN,
-		//		from:'jobPost'
-		//	}).success(function(errors){
-        //
-		//		return post;
-        //
-		//	}).error(function(err) {
-        //
-        //
-        //
-		//	});
-		//};
-        //
-
-		//$scope.getColumns = function(){
-        //
-		//	$http.get('/columns/user').
-		//		success(function(data, status, headers, config) {
-		//			$scope.user = data;
-		//			console.log('getcolumns from formCtrl');
-		//			//registration steps
-		//			$scope.next_keys = Array();
-		//			var prev_key = false;
-        //
-		//			for(var key in $scope.user) {
-		//				if(!prev_key) {
-		//					prev_key = key;
-		//				} else {
-		//					$scope.next_keys[prev_key] = key;
-		//					prev_key = key;
-        //
-		//				}
-		//			}
-        //
-        //
-		//			$scope.nextDoc = function(doc){
-        //
-		//				if($scope.next_keys[doc]){
-		//					$scope.doc = $scope.next_keys[doc];
-		//					return $scope.doc ;
-		//				}else{
-		//					return false ;
-		//				}
-		//				console.log($scope.next_keys);
-		//			};
-		//		}).
-		//		error(function(data, status, headers, config) {
-		//			// called asynchronously if an error occurs
-		//			// or server returns response with an error status.
-		//		});
-        //
-		//};
-		//$scope.getColumns();
-		//$scope.getColumns();
-
-
-		//$scope.checklist = [
-		//	'guest',
-		//	'user',
-		//	'customer',
-		//	'admin'
-		//];
-        //
-        //
-		////$months = ['1','2','3','4','5','6','7','8','9','10','11','12']
-		//$scope.months = [
-		//	{value: '', text: 'Month'},
-		//	{value: 1, text: 'Jan'},
-		//	{value: 2, text: 'Feb'},
-		//	{value: 3, text: 'Mar'},
-		//	{value: 4, text: 'Apr'},
-		//	{value: 5, text: 'May'},
-		//	{value: 6, text: 'Jun'},
-		//	{value: 7, text: 'Jul'},
-		//	{value: 8, text: 'Aug'},
-		//	{value: 9, text: 'Sep'},
-		//	{value: 10, text: 'Oct'},
-		//	{value: 11, text: 'Nov'},
-		//	{value: 12, text: 'Dec'},
-        //
-		//];
-        //
-		//$scope.currentYear = moment().format('YYYY');
-        //
-		//$scope.generateYears = function() {
-		//	$scope.years = Array({value:'',text:'Year'});
-		//	for (var i = $scope.currentYear ; i > 1945; i-- ) {
-		//		$scope.years.push({value: i, text: i});
-		//	}
-		//}
-        //
-        //
-        //
-        //
-		//$scope.generateYears();
-        //
-
 
 		$scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
 		$scope.countries  = ['Afghanistan', 'Åland Islands', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', '$_[', 'Croatia', 'Curaçao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Réunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'USA', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
