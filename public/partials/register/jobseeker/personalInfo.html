@@ -1,26 +1,32 @@
-<script type="text/ng-template" id="customTemplate.html">
-	<a style="float:left;">
-		<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-		<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-	</a>
-	<div>
+<!--<script type="text/ng-template" id="customTemplate.html">-->
+	<!--<a style="float:left;">-->
+		<!--<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">-->
+		<!--<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>-->
+	<!--</a>-->
+	<!--<div>-->
 
-	</div>
-</script>
-
-
+	<!--</div>-->
+<!--</script>-->
 
 
 
 
 <main>
+
+
+
+
+
 	<div class="errors alert alert-danger" ng-if="errors">
 		<ul>
 			<li ng-repeat="(key,error) in errors track by $index">
-				{{error}}
+				{{error[0] }}
 			</li>
 		</ul>
 	</div>
+
+
+
 
 	<!--<div class="btn-group" uib-dropdown dropdown-append-to-body>-->
 	<!--<button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>-->
@@ -74,6 +80,7 @@
 
 
 
+
 			<div class="fieldDiv col-xs-12  col-sm-12 col-md-12 col-lg-12">
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3 "> First Name* </div>
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group"  show-errors>
@@ -86,14 +93,15 @@
 						   ng-minlength="3"
 						   ng-maxlength="30"
 						   ng-pattern="/^[a-zA-Z- ]*$/"
-						   popover-placement="right"
+						   popover-placement="bottom"
 						   uib-popover="This is a popover with explanations. currently only implemented on first_name paremeter. "
-						   popover-trigger="focus"
+						   popover-trigger="hover"
+
 						   required>
 				</div>
 
 
-				<ul ng-show="registerJobSeekerForm.first_name.$dirty">
+				<ul ng-show="registerJobSeekerForm.first_name.$dirty || registerJobSeekerForm.last_name.$touched || serverValidation">
 
 					<li class="help-block" ng-show="registerJobSeekerForm.first_name.$error.pattern">Please insert your real name. only english characters.</li>
 					<li class="help-block" ng-show="registerJobSeekerForm.first_name.$error.required">Required</li>
@@ -111,7 +119,7 @@
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group" show-errors>
 					<input type='text' class="form-control " name="last_name" placeholder="Last Name" ng-model="user.personal_information.last_name" ng-minlength="3" ng-maxlength="15" required>
 				</div>
-				<div ng-show="registerJobSeekerForm.last_name.$dirty || registerJobSeekerForm.last_name.$touched">
+				<div ng-show="registerJobSeekerForm.last_name.$dirty || registerJobSeekerForm.last_name.$touched || serverValidation">
 					<span class="help-block" ng-show="registerJobSeekerForm.last_name.$error.pattern">Please insert your real last name and use only english letters</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.last_name.$error.required">Required</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.last_name.$error.minlength">Please insert at least 3 letters</span>
@@ -132,15 +140,14 @@
 			</br>
 			<div class="fieldDiv col-xs-12  col-sm-12 col-md-12 col-lg-12">
 
-				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> Email* </div>
+				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> *E-mail </div>
 
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group"  show-errors>
 					<input type='email' class="form-control " name="email" placeholder="email" ng-change="validateOnServer()"  ng-model="user.personal_information.email" required>
 				</div>
-				<span class="help-block" ng-if="emailUnique" ng-repeat="error in emailUnique">
-					{{error}}
-				</span>
-				<div ng-show="registerJobSeekerForm.email.$dirty || registerJobSeekerForm.email.$touched">
+				<span class="help-block" ng-if="emailUnique" ng-repeat="error in emailUnique">{{error}}</span>
+
+				<div ng-show="registerJobSeekerForm.email.$dirty || registerJobSeekerForm.email.$touched || serverValidation">
 					<span class="help-block" ng-show="registerJobSeekerForm.email.$error.required">Required</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.email.$touched && registerJobSeekerForm.email.$invalid">please insert a valid email address</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.email.$touched && registerJobSeekerForm.email.$valid">thanks. </span>
@@ -154,7 +161,7 @@
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group" show-errors>
 					<input type='password' class="form-control " name="password" placeholder="Password" ng-model="user.personal_information.password" ng-minlength="6" ng-maxlength="10" required>
 				</div>
-				<div ng-show="registerJobSeekerForm.password.$dirty || registerJobSeekerForm.password.$touched">
+				<div ng-show="registerJobSeekerForm.password.$dirty || registerJobSeekerForm.password.$touched || serverValidation">
 					<span class="help-block" ng-show="registerJobSeekerForm.password.$error.required">Required</span>
 					<span class="help-block" ng-show="registerJobSeekerForm.password.$invalid">password must be 6-10 characters </span>
 					<span class="help-block" ng-show="registerJobSeekerForm.password.$touched && registerJobSeekerForm.password.$valid">Dont worry, your secret is safe with us.</span>

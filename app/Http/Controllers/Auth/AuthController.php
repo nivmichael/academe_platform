@@ -90,6 +90,7 @@ class AuthController extends Controller
 		if(!Auth::check()) {
 			$rules = [
 				'first_name' => 'required|min:3',
+				'last_name'  => 'required|min:3',
 				'email' => 'email|max:255|unique:type_user',
 				'password' => 'required|min:6',
 			];
@@ -100,7 +101,7 @@ class AuthController extends Controller
 
 
 
-		return  Validator::make($data['user']['personal_information'], $rules);
+		 return Validator::make($data['user']['personal_information'], $rules);
 
 	}
 //

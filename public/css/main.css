@@ -143,11 +143,11 @@ button:focus,button:active{
 
 .welcomeIcons
 {
-    margin-top:100px;
+    margin-top:20px;
 }
 .welcomeIcon
 {
-    margin-top:20px;
+    margin-top:150px;
 }
 .welcomeIconInner{
     margin:0 auto;
@@ -191,6 +191,12 @@ button:focus,button:active{
 }
 footer{
     padding:0!important;
+    position:fixed;
+    bottom:0;
+
+}
+footer > a > img{
+    width:80px!important;
 }
 .tableField{
     font-size: 10px;

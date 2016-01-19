@@ -227,4 +227,3 @@ angular.module('acadb.directives', []).
             }
         };
     }]);
-;

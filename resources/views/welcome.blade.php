@@ -32,10 +32,10 @@
     </style>
 	<div class="container">
 
-	    <div class="welcomeIcons">
+        <img ng-src="{{logo}}" style="width:300px;margin-top:100px;">
+        <div class="welcomeIcons">
 
 
-            <img ng-src="{{logo}}" style="width:300px;">
 
 
             <div class="clearfix"></div>
@@ -47,45 +47,48 @@
             -->
             <div class="welcomeIcon col-md-3" >
                <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker/student"><img  src="../img/index/icons-01.png"></a>
-                    <p>
-                        Student
-                    </p>
+                    <a href="jobseeker/student" class="waves-effect waves-light"><img  src="../img/index/icons-01.png">
+                        <p>
+                            Student
+                        </p>
+                    </a>
                </div>
             </div>
             <div class="welcomeIcon col-md-3">
                 <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker/graduate"><img src="../img/index/icons-02.png"></a>
-                    <p>
-                        Graduate
-                    </p>
+                    <a href="jobseeker/graduate" class="waves-effect waves-light"><img src="../img/index/icons-02.png">
+                        <p>
+                            Graduate
+                        </p>
+                    </a>
                 </div>
             </div>
             <div class="welcomeIcon col-md-3">
                 <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker/intern"><img src="../img/index/icons-03.png"></a>
-                    <p>
-                        Intern
-                    </p>
+                    <a href="jobseeker/intern" class="waves-effect waves-light"><img src="../img/index/icons-03.png">
+                        <p>
+                            Intern
+                        </p>
+                    </a>
                 </div>
             </div>
             <div class="welcomeIcon col-md-3">
                 <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="employer" ><img src="../img/index/icons-04.png"></a>
-                    <p>
-                        Employer
-                    </p>
+                    <a href="employer" class="waves-effect waves-light"><img src="../img/index/icons-04.png">
+                        <p>
+                            Employer
+                        </p>
+                    </a>
                 </div>
             </div>
         </div>
 	</div>
-	
+
 	<footer class="footer">
-		<div class="container-fluid">
-			<div class="col-md-2 col-sm-2 col-xs-2">
-				<a href="admin"><img class="col-md-8 col-sm-8 col-xs-8" src="../img/Menu-Logo.png"></a>	
-			</div>
-		</div>
+
+
+			<a href="admin"><img class="" src="../img/academe_logo.jpg"></a><label><a href="http://www.acade-me.com">&copy; 2015 AcadeME</a></label>
+
 	</footer>
 
 @endsection

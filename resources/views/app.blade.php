@@ -146,6 +146,7 @@ $path = Route::getCurrentRoute()->getPath();
 						@if (Auth::guest())
 							<li><a href=""><i class="glyphicon glyphicon-user"></i></a></li>
 							<li><a href=""><i class="glyphicon glyphicon-education"></i></a></li>
+							<li><a type="button" class="" ng-click="dev()"><i class="glyphicon glyphicon-tower"></i></a></li>
 						@else
 							<li>
 								<a type="button" class="meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings <span class="new badge">4</span></a>
