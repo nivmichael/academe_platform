@@ -32,14 +32,15 @@ Route::group(['middleware' => 'domain'], function () {
 	Route::get('/match', 'TypeUserController@calc_match');
 	Route::get('layout', 'SitesController@getLayout');
 	//login routes..
-	Route::get('/auth/login/jobseeker', 'Auth\AuthController@getJobseekerLogin');
+	Route::get('/auth/login/jobseeker/{status}', 'Auth\AuthController@getJobseekerLogin');
+	//Route::get('/auth/login/', 'Auth\AuthController@getEmployerLogin');
     Route::get('/auth/login/employer', 'Auth\AuthController@getEmployerLogin');
 	Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 	Route::post('/auth/login', 'Auth\AuthController@postLogin');
 
 	//Registration routes...
 	Route::get('/auth/register_employer', 'Auth\AuthController@getEmployerRegister');
-	Route::get('/auth/register_jobseeker', 'Auth\AuthController@getjobseekerRegister');
+	Route::get('/auth/register_jobseeker/{status}', 'Auth\AuthController@getjobseekerRegister');
 	Route::post('auth/register', 'Auth\AuthController@postRegister');
 	Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
 	Route::get('/employerSteps', 'DocParamController@employerSteps');
@@ -53,7 +54,7 @@ Route::group(['middleware' => 'domain'], function () {
 	Route::get('/password/reset/{token}', 'Auth\PasswordController@getReset');
 	Route::post('/password/reset', 'Auth\PasswordController@postReset');
 
-
+	Route::post('/uploadCv' ,'SysParamValuesController@uploadCv');
 	Route::post('/deleteIterable' ,'SysParamValuesController@deleteIterable');
 	Route::post('/deleteImage' ,'SysParamValuesController@deleteimagefromdb');
 	Route::resource('/users', 'TypeUserController');
@@ -75,14 +76,12 @@ Route::group(['middleware' => 'domain'], function () {
 		Route::get('/getAllPosts', 'TypePostController@getAllPosts');
 
 		Route::group(['middleware' => 'jobseeker'], function () {
-			  Route::get('jobseeker', function () { return view('jobseeker_home'); });
+			  Route::get('jobseeker/{status}', function ($status) { return view('jobseeker_home'); });
 
 		});
 
 		Route::group(['middleware' => 'employer'], function () {
-			 Route::get('employer', function () {
-				 return view('employer_home');
-			 });
+			 Route::get('employer', function () {return view('employer_home');			 });
 			 Route::post('/savePost', 'TypePostController@savePost');
 		});
 
@@ -93,7 +92,9 @@ Route::group(['middleware' => 'domain'], function () {
 			Route::get('admin', function () {
 				 return view('admin');
 			});
+			Route::get('admin/{status}', function ($status) { return view('jobseeker_home'); });
 			// Route::resource('/users', 'TypeUserController');
+			Route::get('/getSingleDimensionColumnsByType/{subtype}'  , 'TypeUserController@getSingleDimensionColumnsByType');
 			Route::get('/columns/docParam'  , 'DocParamController@columnIndex');
 			Route::get('/columns/docType'   , 'DocTypeController@columnIndex');
 			Route::get('/columns/paramType' , 'ParamTypeController@columnIndex');
@@ -102,13 +103,20 @@ Route::group(['middleware' => 'domain'], function () {
 			Route::get('/columns/user', 'TypeUserController@columnIndex');
 			Route::get('/columns/param'     , 'ParamController@columnIndex');
 			Route::resource('/params', 'ParamController');
-
+			Route::resource('/user', 'TypeUserController');
 			Route::resource('/docParam', 'DocParamController');
 			Route::resource('/docType', 'DocTypeController');
 			Route::resource('/paramType', 'ParamTypeController');
 			Route::resource('/paramValue', 'ParamValueController');
 			Route::resource('/sysParamValues', 'sysParamValuesController');
 		});
+//
+//		Route::group(['middleware' => 'admin'], function () {
+//
+//
+//			Route::resource('/system-admin',  'SystemAdminController');
+//
+//		});
 
 
 

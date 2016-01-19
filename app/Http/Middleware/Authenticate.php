@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 use Illuminate\Contracts\Auth\Guard;
 
 class Authenticate
@@ -34,19 +35,29 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-   
+
+        //dd($request->route('status'));
+        $status = $request->route('status');
+        Session::put('status',$status );
+
+//dd();
 
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-            	if($request->path() == "jobseeker" ){
-            		 return redirect()->guest('auth/login/jobseeker');
+            	if($request->path() == "jobseeker/".$status){
+
+            		 return redirect()->guest('auth/login/jobseeker/'.$status);
 
             	}else if( $request->path() == "employer") {
             		
 	                return redirect()->guest('auth/login/employer');
-            	}
+            	}else if( $request->path() == "admin") {
+
+                    return redirect()->guest('auth/login/employer');
+                }
+
             }
         }
 

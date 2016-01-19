@@ -17,7 +17,10 @@ var acadb = angular.module('acadb', [
   'ngResource',
   'checklist-model',
   'ui.bootstrap.modal',
-  'angularMoment'
+  'angularMoment',
+
+  'angularFileUpload',
+  'pdf'
 ])
 
 
@@ -43,23 +46,23 @@ var acadb = angular.module('acadb', [
 	
     
 
-     	.state('employer', {
-          url: "/",
-          abstract: true,
-          templateUrl: '../partials/employer/employerHome.html',
-          controller: 'UserHomeController', 
-        })
-        .state('employer.edit', {
-          url: "^/edit",
-          templateUrl: '../partials/employer/profile.html',
-          controller: 'UserHomeController', 
-        })
-        .state('employer.jobs', {
-          url: "^/jobs",
-          templateUrl: '../partials/employer/jobs.html',
-          controller: 'formController'
-        })
-        .state('job', {
+     	      .state('employer', {
+        url: "/",
+        abstract: true,
+        templateUrl: '/partials/employer/employerHome.html',
+        controller: 'UserHomeController',
+      })
+          .state('employer.edit', {
+            url: "^/edit",
+            templateUrl: '/partials/employer/profile.html',
+            controller: 'UserHomeController',
+          })
+          .state('employer.jobs', {
+            url: "^/jobs",
+            templateUrl: '/partials/employer/jobs.html',
+            controller: 'formController'
+          })
+          .state('job', {
             parent: 'employer.jobs',
             url: '/job/:jobId',
             //  abstract: true,
@@ -71,6 +74,7 @@ var acadb = angular.module('acadb', [
 
                 templateUrl:'myModalContent.html',
                 backdrop: false,
+                size:'lg',
                 windowClass: 'right fade',
                 keyboard: true,
                 controller: 'PostModalInstanceCtrl',
@@ -83,7 +87,7 @@ var acadb = angular.module('acadb', [
 
 
               }).result.finally(function() {
-                   // $state.go('employer.jobs');
+                    // $state.go('employer.jobs');
                     console.log('job modal closed')
                   });
             }],

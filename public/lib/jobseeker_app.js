@@ -16,8 +16,13 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'checklist-model',
-    //'ui.bootstrap.modal',
-    'angularMoment'
+    'angularMoment',
+    'angularRipple',
+    'angular-toArrayFilter',
+    'angularFileUpload',
+    'pdf'
+
+
 ])
 
 
@@ -54,45 +59,99 @@ var acadb = angular.module('acadb', [
        })
        .state('jobseeker.profile', {
           url: "",
-          templateUrl: '../partials/jobseeker/profile.html'   ,
+          templateUrl: '/partials/jobseeker/profile.html'   ,
           controller:'UserHomeController'   
        })
        .state('jobseeker.findajob', {
           url: "^/findajob",
-          templateUrl: '../partials/jobseeker/findAJob.html'   ,
+          templateUrl: '/partials/jobseeker/findAJob.html'   ,
           controller:'FindajobController',
        })
 
+
+
+
+
+
+
+
+          //.state('view', {
+          //    url: '/view',
+          //    template: '<button class="btn btn-default" ui-sref="modal"> Modal</button> <ui-view />',
+          //    controller: function($scope) {
+          //    }
+          //})
+          //.state('modal', {
+          //    //abstract: true,
+          //    parent: 'view',
+          //    url: '/modal',
+          //    onEnter: ['$modal', '$state', function($modal, $state) {
+          //        console.log('Open modal');
+          //        $modal.open({
+          //            template: '<button class="btn btn-danger" ui-sref="signin"> sign-in </button> <button ui-sref="signout" class="btn btn-success"> sign-out </button> <div ui-view="modal"></div>',
+          //            backdrop: false,
+          //            windowClass: 'right fade'
+          //        }).result.finally(function() {
+          //                $state.go('list');
+          //            });
+          //    }]
+          //})
+          //.state('signin', {
+          //    url: '/signin',
+          //    parent: 'modal',
+          //    views: {
+          //        'modal@': {
+          //            template: '<p>sign-in</p>'
+          //
+          //        }
+          //    }
+          //})
+          //.state('signout', {
+          //    url: '/signout',
+          //    parent: 'modal',
+          //    views: {
+          //        'modal@': {
+          //            template: '<p>sign-out</p>'
+          //        }
+          //    }
+          //})
 
           .state('job', {
               parent: 'jobseeker.findajob',
               url: '/job/:jobId',
               controller: 'FindajobController',
-              onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+             //views:{
+             //    'general':{
+             //        templateUrl: '../partials/post/general.html',
+             //    }
+             //}
 
-                  var modalInstance = $uibModal.open({
-                      templateUrl:'myModalContent.html',
-                      backdrop: false,
-                      windowClass: 'right fade',
-                      keyboard: true,
-                      controller: 'PostModalInstanceCtrl',
-                      resolve: {
-                          job: function () {
-                              return $stateParams.jobId;
-                          },
-                      },
-                  }).result.finally(function() {
-                       $state.go('jobseeker.findajob');
-                      });
-              }],
+              //onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+              //
+              //    var modalInstance = $uibModal.open({
+              //        templateUrl:'myModalContent.html',
+              //        backdrop: false,
+              //        size: 'lg',
+              //        windowClass: 'job-modal',
+              //        keyboard: true,
+              //        controller: 'PostModalInstanceCtrl',
+              //        resolve: {
+              //            job: function () {
+              //                return $stateParams.jobId;
+              //            },
+              //        },
+              //    }).result.finally(function() {
+              //         $state.go('jobseeker.findajob');
+              //        });
+              //}],
           })
           .state('general', {
               url: '/general',
 
               parent: 'job',
               views: {
-                  'job@': {
-                      templateUrl: '../partials/post/general.html',
+                  'job': {
+                      templateUrl: '/partials/post/general.html',
                   }
               }
           })
@@ -100,8 +159,8 @@ var acadb = angular.module('acadb', [
               url: '/the_company',
               parent: 'job',
               views: {
-                  'job@': {
-                      templateUrl: '../partials/post/company.html'
+                  'job': {
+                      templateUrl: '/partials/post/company.html'
                   }
               }
           })
@@ -109,8 +168,8 @@ var acadb = angular.module('acadb', [
               url: '/company_video',
               parent: 'job',
               views: {
-                  'job@': {
-                      templateUrl: '../partials/post/company_video.html'
+                  'job': {
+                      templateUrl: '/partials/post/company_video.html'
                   }
               }
           })
@@ -118,8 +177,8 @@ var acadb = angular.module('acadb', [
               url: '/company_site',
               parent: 'job',
               views: {
-                  'job@': {
-                      templateUrl: '../partials/post/company_site.html'
+                  'job': {
+                      templateUrl: '/partials/post/company_site.html'
                   }
               }
           })
@@ -164,7 +223,7 @@ var acadb = angular.module('acadb', [
     var $state = $rootScope.$state;
     
     $http
-      .get("../lib/modules.json")
+      .get("/lib/modules.json")
       .success(function(data) {
         angular.forEach(data, function(value, key) {
           

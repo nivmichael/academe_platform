@@ -7,7 +7,7 @@ var acadb = angular.module('acadb', [
     'ui.router',
     'ngAnimate',
     'ui.bootstrap',
-    'ngAside',
+     //'ngAside',
     'flow',
     'acadb.controllers',
     'acadb.services',
@@ -16,9 +16,15 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'checklist-model',
-    'ui.bootstrap.modal',
+    //'ui.bootstrap.modal',
     'angularMoment',
-    'ui.bootstrap.showErrors'
+    'angular-toArrayFilter',
+    'ui.bootstrap.showErrors',
+    'ui.materialize',
+    'angularFileUpload',
+    'pdf',
+
+
 ])
 
 
@@ -39,7 +45,7 @@ var acadb = angular.module('acadb', [
 
       //$httpProvider.interceptors.push('httpInterceptor');
       $urlRouterProvider.otherwise("/personal_information");
-       
+
       $stateProvider
 	
     
@@ -60,7 +66,7 @@ var acadb = angular.module('acadb', [
         });
         $stateProviderRef = $stateProvider;
         $urlRouterProviderRef = $urlRouterProvider;
-      
+
 }])
 
 .run(['$q', '$rootScope', '$http', '$urlRouter', function($q, $rootScope, $http, $urlRouter) {
@@ -92,6 +98,8 @@ var acadb = angular.module('acadb', [
           });
           $rootScope.steps = stateList;
           $rootScope.steps.unshift({name:'register.personal_information',value:'personal_information'});
+
+
           angular.forEach(stateList, function(value, key) {
               var getExistingState = $state.get(value.name);
               if(getExistingState !== null){
@@ -103,7 +111,7 @@ var acadb = angular.module('acadb', [
                 "url": '^/'+value.value,
                 "templateUrl":'../../partials/register/jobseeker/personalInfo.html'  ,
                 "controller":'formController',
-                  reloadOnSearch: false
+                
 
               };
               $stateProviderRef.state(value.name, state);
@@ -111,8 +119,6 @@ var acadb = angular.module('acadb', [
       });
   }
 ]);
-
-
 
 
 

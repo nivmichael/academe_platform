@@ -13,7 +13,16 @@ var acadb = angular.module('acadb', [
   'acadb.directives',
   'xeditable',
   'ngResource',
+  'angularMoment',
   'checklist-model',
+  'angularFileUpload',
+  'pdf',
+  'angular-toArrayFilter',
+  'ui.sortable',
+    'uiSwitch',
+    //'dragtable'
+
+
 ])
 
 
@@ -33,16 +42,17 @@ var acadb = angular.module('acadb', [
       $httpProvider.defaults.xsrfCookieName = 'X-CSRF-TOKEN';
 
       //$httpProvider.interceptors.push('httpInterceptor');
-      $urlRouterProvider.otherwise("/");
+      $urlRouterProvider.otherwise("/jobs");
        
       $stateProvider
-	
-    
+
+
         .state('admin', {
+         abstract:true,
          url: "/",
          templateUrl: '../partials/db/manager.html',
-        
-        })
+         controller: 'TController',
+          })
   
         .state('admin.tables', {
           url: "^/tables",
@@ -50,10 +60,16 @@ var acadb = angular.module('acadb', [
           templateUrl: '../partials/db/tables.html'  
         })
         .state('admin.stats', {
+          parent:'admin',
           url: "^/stats",
           controller: 'TController',   
-          templateUrl: '../partials/db/stats.html'  
+          templateUrl: '../partials/db/report.html'
         })
+        //.state('admin.stats.jobseeker', {
+        //  url: "/jobseekers",
+        //  controller: 'TController',
+        //  templateUrl: '../partials/db/report.html',
+        //})
         .state('admin.tables.type_user', {
           url: "/type_user",
           controller: 'TController',   
@@ -89,10 +105,81 @@ var acadb = angular.module('acadb', [
           url: "/param_value",
           controller: 'TController',   
           templateUrl: '../partials/db/table.html'  
-        });
-     
+        })
 
-    
+          .state('employer', {
+            url: "/",
+            abstract: true,
+            templateUrl: '/partials/employer/employerHome.html',
+            controller: 'UserHomeController',
+          })
+          .state('employer.edit', {
+            url: "^/edit",
+            templateUrl: '/partials/employer/profile.html',
+            controller: 'UserHomeController',
+          })
+          .state('employer.jobs', {
+            url: "^/jobs",
+            templateUrl: '/partials/employer/jobs.html',
+            controller: 'formController'
+          })
+          .state('job', {
+            parent: 'employer.jobs',
+            url: '/job/:jobId',
+            //  abstract: true,
+            controller: 'formController',
+            onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+              console.log('Open modal');
+
+              var modalInstance = $uibModal.open({
+
+                templateUrl:'myModalContent.html',
+                backdrop: false,
+                size:'lg',
+                windowClass: 'right fade',
+                keyboard: true,
+                controller: 'PostModalInstanceCtrl',
+                resolve: {
+                  job: function () {
+                    return $stateParams.jobId;
+                  },
+                },
+              }).result.finally(function() {
+                 });
+            }],
+          })
+          .state('jobPost', {
+            parent: 'employer',
+            url: '^/new_job',
+            //  abstract: true,
+            controller: 'formController',
+            onEnter: ['$uibModal', '$state','$http','$stateParams', function( $uibModal, $state, $http,$stateParams ) {
+              console.log('Open modal');
+              var modalInstance = $uibModal.open({
+                templateUrl:'newJob.html',
+                backdrop: false,
+                windowClass: 'right fade',
+                keyboard: true,
+                controller: 'SomeCtrl',
+              }).result.finally(function() {
+                    $state.go('employer.jobs');
+                    console.log('job modal closed')
+                  }, function(){
+                    $state.go('employer.jobs');
+                  });
+            }],
+          })
+          .state('employer.jobs.system_matches', {
+            url: "/system_matches",
+            controller: 'TController',
+            templateUrl: '../partials/employer/system_matches.html',
+
+          });
+
+
+
+
+
 
       $locationProvider.html5Mode({
         enabled: false

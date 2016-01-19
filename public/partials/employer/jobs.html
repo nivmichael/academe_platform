@@ -1,30 +1,27 @@
 <div ui-view="" class="col-lg-10">
-<span > The Number of Jobs Posted:  {{allJobs.length}} </span>
-<hr>
+	<span > The Number of Jobs Posted:  {{allJobs.length}} </span>
+	<hr>
 
 
- <div ng-class="" class="postDiv text-center col-lg-6" ng-repeat="(key,job) in allJobs"> 
-		      <!-- editable element -->
+	 <div ng-class="" class="postDiv text-center col-lg-6" ng-repeat="(key,job) in allJobs">
+				  <!-- editable element -->
 
-				<div  ng-click="getPost(job.postInfo.id)">
-					<div class="postDivChild">
-						<div class="postImage">
-							
-							<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
+					<div  ng-click="getPost(job.postInfo.id)"  href="#modal1">
+						<div class="postDivChild modal-trigger">
+							<div class="postImage">
+
+								<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
+							</div>
+							<span class="">
+								<h4>{{ job.postInfo.title }}</h4>
+								<hr>
+								<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span>
+							</span>
 						</div>
-						<span class="">
-							<h4>{{ job.postInfo.title }}</h4>
-							<hr>
-							<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span> 
-						</span>
 					</div>
-				</div> 
 
- </div>
-
-
+	 </div>
 </div>
-
 
 
 
@@ -33,9 +30,11 @@
 
 	<div class="modal-header">
 		<h3 class="modal-title">
-			<b>Job Offer {{post.postInfo.id}}</b>
+			<b>{{post.postInfo.title}}</b>
+			<br>
+			<small>{{post.postInfo.id}}</small>
 		</h3>
-		<button class="btn" type="button" ng-click="cancel()" style="float:right; margin-top:-35px;">
+		<button class="btn btn-default" type="button" ng-click="cancel()" style="float:right; margin-top:-35px;">
 			&times;
 		</button>
 	</div>
@@ -43,14 +42,14 @@
 	<div class="modal-body" style="height:680px;">
 
 		<form editable-form name="editableForm" onaftersave="savePost(post)">
-			<nav class="col-md-2 sideNav">
+			<ul class="col-md-2 sideNav">
 				<div ng-click="!editableForm.$cancel()" class="postLi">
 						Job Details
 				</div>
 				<div ng-click="editableForm.$show()" class="postLi">
 							Edit
 				</div>
-			</nav>
+			</ul>
 
 
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -69,7 +68,7 @@
 									<div  ng-if="k == 'paramValue'" ng-switch="paramValues.inputType" class=""  style="float:right;padding-right: 15px;margin-bottom:10px;">
 
 										<div ng-switch-when="text">
-											<div e-class="form-control  form-con-width" e-form="rowform" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
+											<div e-class="form-control  form-con-width-modal" e-form="rowform" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
 												{{v}}
 											</div>
 										</div>
@@ -77,7 +76,7 @@
 										<div ng-switch-when="select">
 
 
-											<div editable-select="post[docParamName][paramKey][k]" e-form="rowform"  ng-model="post[docParamName][paramKey][k]" e-class="form-control  form-con-width"  e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >
+											<div editable-select="post[docParamName][paramKey][k]" e-form="rowform"  ng-model="post[docParamName][paramKey][k]" e-class="form-control  form-con-width-modal"  e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >
 												{{	showGroup(paramKey, docParamName)  }}
 											</div>
 
@@ -93,7 +92,7 @@
 										</div>
 
 										<div ng-switch-when="textarea">
-											<div e-class="form-control  form-con-width" class="" e-form="rowform" editable-textarea="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
+											<div e-class="form-control  form-con-width-modal" class="" e-form="rowform" editable-textarea="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
 												{{v}}
 											</div>
 										</div>
@@ -112,7 +111,7 @@
 										</div>
 
 										<div ng-switch-default>
-											<div e-class="form-control  form-con-width" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
+											<div e-class="form-control  form-con-width-modal" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >
 												{{v}}
 											</div>
 										</div>
@@ -147,26 +146,41 @@
 					</div>
 			</div>
 		</div>
+
+			<div  ng-show="editableForm.$visible">
+				<button class="btn btn-default" type="button" ng-click="savePost(post)">
+					Save
+				</button>
+			</div>
+
+	</div>
+
+		<div class="modal-footer" style="height:70px;">
+
+
+			<div>
+
+			</div>
+			<button class="btn btn-default" type="button" ui-sref="employer.jobs.system_matches" ng-click="ok()">
+				employer.jobs.system_matches
+			</button>
+
+			<button class="btn btn-default" type="button" ng-click="ok()">
+				OK
+			</button>
+			<button class="btn btn-default" type="button" ng-click="cancel()">
+				Cancel
+			</button>
+
+		</div>
 	</form>
-
-
-	</div>
-
-	<div class="modal-footer" style="height:70px;">
-		<button class="btn btn-primary" type="button" ui-sref="employer.jobs.system_matches" ng-click="ok()">
-			employer.jobs.system_matches
-		</button>
-		<button class="btn btn-primary" type="button" ng-click="savePost(post)">
-			Save
-		</button>
-		<button class="btn btn-primary" type="button" ng-click="ok()">
-			OK
-		</button>
-		<button class="btn btn-warning" type="button" ng-click="cancel()">
-			Cancel
-		</button>
-	</div>
-
 </script>
 
 
+<script>
+
+	$(document).ready(function(){
+//		$('.modal-trigger').leanModal();
+		$('.button-collapse').sideNav();
+	});
+</script>

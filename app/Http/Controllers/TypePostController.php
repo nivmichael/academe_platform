@@ -122,10 +122,10 @@ class TypePostController extends Controller {
 		}else{
 			$post = new Post();
 		}
-		//$post->title = $allPostInfo['title'];
+		$post->title = $all['post']['postInfo']['title'];
 		$post->user_id = $userId;
 	//	$post->description_short =$allPostInfo['description_short'];
-		//$post->description = $all['post']['general']['description']['paramValue'];
+		$post->description = $all['post']['postInfo']['description'];
 		$post->authorized = 1;
 		$post->save();
 
@@ -524,6 +524,7 @@ class TypePostController extends Controller {
 
 		$user = array();
 		$userpersonal_information = User::find($postUserId);
+
 //		$userParams =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 //										   param.name AS paramName,
 //										   param.slug AS slug,

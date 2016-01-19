@@ -17,7 +17,10 @@ var acadb = angular.module('acadb', [
   'ngResource',
   'checklist-model',
   'ui.bootstrap.modal',
-  'angularMoment'
+  'angularMoment',
+  'angularFileUpload',
+  'pdf'
+
 
 ])
 
@@ -44,6 +47,7 @@ var acadb = angular.module('acadb', [
 	
     
         .state('register', {
+         abstract:true,
          url: "/",
          templateUrl: '../../partials/register/register.html',
          controller: 'RegisterController',   
@@ -92,7 +96,8 @@ var acadb = angular.module('acadb', [
               stateList.push(step);
             });
 
-
+            $rootScope.steps = stateList;
+            //$rootScope.steps.unshift({name:'register.personal_information',value:'personal_information'});
 
 
             angular.forEach(stateList, function(value, key) {

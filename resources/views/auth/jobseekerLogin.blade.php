@@ -1,4 +1,5 @@
 @extends('app')
+{!! session('status') !!}
 @section('content')
 
     <div class="container" class="login-form" style="text-align: center;">
@@ -27,10 +28,10 @@
 
             </div>
             <div class="login-form">
-                <button type="submit" class="btn btn-lg  btn-block loginButton login-form"></button>
-                <a type="button"  href="/auth/register_jobseeker/" class="btn btn-lg  btn-block registerButton login-form"></a>
-                <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form"></a>
-                <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form"></a>
+                <button type="submit" class="btn btn-lg  btn-block loginButton login-form">Login</button>
+                <a type="button"  href="/auth/register_jobseeker/{!! session('status') !!}" class="btn btn-lg  btn-block registerButton login-form">New User</a>
+                <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form">Facebook</a>
+                <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form">LinkedIn</a>
             </div>
 
         </form>

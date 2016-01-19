@@ -17,6 +17,7 @@ var acadb = angular.module('acadb', [
     'ngResource',
     'checklist-model',
     'ui.bootstrap.modal',
+    'angularRipple',
     'angularMoment'
 ])
 

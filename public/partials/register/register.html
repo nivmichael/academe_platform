@@ -1,27 +1,23 @@
-<script type="text/ng-template" id="customTemplate.html">
-	<a style="float:left;">
-	<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-	<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-	</a>
-</script>
 <form name="registerJobSeekerForm"  novalidate>
-	
-	<nav class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sideNav ">
-		<!--<div class="docParamLi">-->
-			<!--<button ui-sref-active="" ui-sref=".personal_information" class="" ng-hide="absUrl == 'register_employer'">-->
-				<!--<span class="▶">▶ </span> Personal Information-->
-			<!--</button>-->
-		<!--</div>-->
-		<div ng-repeat="(key,step) in steps track by $index" id="status-buttons" class="docParamLi" >
 
-			<button ui-sref-active="" ui-sref="{{step.name}}" >
-				<span class="▶">▶ </span> {{ step.value | underscoreless | capitalize}}
-			</button>
-	
-		</div>
-	</nav>
-	<div ui-view="" class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
+	<ul id="nav-mobile" class="side-nav fixed col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+		<a href="#" ng-repeat="(key,step) in steps track by $index"
+			 class="docParamLi waves-effect waves-light"
+			 ng-if="true"
+			 ui-sref-active="active"
+			 ui-sref="{{step.name}}">
+			<span class="▶">▶ </span> {{ step.value | underscoreless | capitalize}}
+		</a>
+
+
+	</ul>
+
+	<div ui-view=""  class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
 
 </form>
 
-
+<script>
+	$('.button-collapse').sideNav();
+	$('html').click(function(){ $('div[id^=sidenav-overlay]').remove();});
+</script>

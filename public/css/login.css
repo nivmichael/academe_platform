@@ -59,14 +59,16 @@ form {
 }
 
 .loginButton{
-
+padding:0!important;
     cursor: pointer;
     border: 0;
     width: 207px;
     height: 60px;
     margin-top: 15px;
-    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/button_login.png') no-repeat;
-    outline: 0!important;
+    /*background: url('../img/icons/icons-32.png') no-repeat;*/
+    /*background-size: 100%  100%;*/
+    /*outline: 0!important;*/
+    /*background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/facebook_new.png') no-repeat;*/
 }
 
 .registerButton{
@@ -74,7 +76,9 @@ form {
     margin-top: 23px;
     width: 207px;
     height: 60px;
-    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/button_register.png') no-repeat;
+    /*background: url('../img/icons/icons-33.png') no-repeat;*/
+    /*background-size: 100%  100%;*/
+    /*background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/facebook_new.png') no-repeat;*/
 
 }
 
@@ -82,7 +86,7 @@ form {
     cursor: pointer;
     margin-top: 25px;
     display: block;
-    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/facebook_new.png') no-repeat;
+    /*background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/facebook_new.png') no-repeat;*/
     height: 55px;
 }
 
@@ -91,7 +95,7 @@ form {
     margin-top: 23px;
     width: 213px;
     height: 60px;
-    background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/linkedin_new.png') no-repeat;
+    /*background: url('https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/linkedin_new.png') no-repeat;*/
 }
 .login-form{
     width:210px!important;

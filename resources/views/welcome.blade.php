@@ -12,7 +12,7 @@
             width: 100%;
             display: table;
             font-weight: 100;
-            font-family: 'Lato';
+            font-family: 'Roboto';
         }
 
         .container {
@@ -47,7 +47,7 @@
             -->
             <div class="welcomeIcon col-md-3" >
                <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker"><img  src="../img/index/icons-01.png"></a>
+                    <a href="jobseeker/student"><img  src="../img/index/icons-01.png"></a>
                     <p>
                         Student
                     </p>
@@ -55,7 +55,7 @@
             </div>
             <div class="welcomeIcon col-md-3">
                 <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker"><img src="../img/index/icons-02.png"></a>
+                    <a href="jobseeker/graduate"><img src="../img/index/icons-02.png"></a>
                     <p>
                         Graduate
                     </p>
@@ -63,7 +63,7 @@
             </div>
             <div class="welcomeIcon col-md-3">
                 <div class="welcomeIconInner" style="background-color:{{ main_color }}">
-                    <a href="jobseeker"><img src="../img/index/icons-03.png"></a>
+                    <a href="jobseeker/intern"><img src="../img/index/icons-03.png"></a>
                     <p>
                         Intern
                     </p>

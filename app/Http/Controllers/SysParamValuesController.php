@@ -43,7 +43,70 @@ class SysParamValuesController extends Controller  {
 		// return Response::json(array($columns,$params));
 		return Response::json($columns);
 	}
-	
+
+	public function uploadCv(Request $request){
+		if(Auth::check()) {
+			$userId = Auth::user()->id;
+		}
+
+		$inputAll = Input::all();
+		$iteration = $inputAll['iteration'];
+
+
+		if($iteration == null){
+			$path = 'uploads/userCv/'.$userId;
+		}else{
+			$path = 'uploads/userCv/'.$userId.'/'.$iteration;
+		}
+
+		$cv = new SysParamValues();
+		if (!is_dir($path)) {
+			mkdir($path, 0777, true);
+			chmod($path, 0777);
+		}
+
+		$cv->doc_type = '1';
+		$cv->ref_id   = $userId;
+		$cv->param_id = DB::table('param')->where('name', 'cv')->where('doc_param_id', '5')->pluck('id');
+		if($iteration === null){
+			$iteration = null;
+		}elseif($iteration === ''){
+			$iteration = null;
+		}else{
+			$iteration  = $iteration;
+			$cv->iteration = $iteration;
+		}
+		$cv->value_short = $path.'/'.$_FILES[ 'file' ][ 'name' ];
+
+		$hasfileid =DB::table('sys_param_values')->where('param_id',$cv->param_id )->where('ref_id',$userId)->where('iteration',$iteration)->update(['value_short'=>$cv->value_short]);
+		//dd($hasfileid);
+		if($hasfileid == 0)
+		{
+			$cv->save();
+		}
+
+
+
+		if ( !empty( $_FILES ) ) {
+
+			$tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
+
+
+
+			$uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
+			move_uploaded_file( $tempPath, $path.'/'.$_FILES[ 'file' ][ 'name' ] );
+
+
+
+			$answer = array( 'answer' => 'File transfer completed', );
+
+			return Response::json($cv->value_short);
+
+		} else {
+			return Response::json('failed');
+		}
+
+	}
 	public function upload()
 	{
 		
@@ -98,8 +161,17 @@ class SysParamValuesController extends Controller  {
 			
 			$photo->doc_type = '';
 			$photo->ref_id = $userId;
+		//print_r($photo);
 		//	$docParamId = DB::table('doc_param')->where('name','')->pluck('id');
-			$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
+
+		$photo->param_id = DB::table('param')->where('id', $param_ref)->pluck('id');
+//			if(is_int($param_ref)){
+//				$photo->param_id = DB::table('param')->where('id', $param_ref)->pluck('id');
+//			}else{
+//				$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
+//			}
+	//	dd($param_ref);
+		//	$photo->param_id = DB::table('param')->where('name', $param_ref)->pluck('id');
 			$photo->iteration = null;
 			
 			if(!strlen($destination)){
@@ -111,10 +183,10 @@ class SysParamValuesController extends Controller  {
 			$photo->doc_type = 1;	
 			$photo->value_long= $fileName;
 			$photo->value_ref = null;
-			
+//			/dd($photo->param_id);
 			
 			//$hasfileid = DB::table('SysParamValues')->where('param_id', $photo->param_id)->where('ref_id',$userId)->pluck('id');
-			$hasfileid =DB::table('sys_param_values')->where('param_id', $photo->param_id)->where('ref_id',$userId)->update(['value_short'=>$photo->value_short]);
+			$hasfileid =DB::table('sys_param_values')->where('param_id',$photo->param_id )->where('ref_id',$userId)->update(['value_short'=>$photo->value_short]);
 			if(!$hasfileid) {
 				
 				$photo->save();
@@ -302,30 +374,37 @@ class SysParamValuesController extends Controller  {
 		//$iterable = $_POST['param'];
 		$all = Input::all();
 		$docParamArr = $all['docParam'];
-		
+
 		if(isset($all['user'])){
 		
 			$all = $all['user'];
 			$info=$all['personal_information'];
 			$docType = '1';
-			$request = Request::create('/users','POST', array($all));
+			//$request = Request::create('/users','POST', array($all));
+
+
+
 		}else if(isset($all['post'])) {
 			$iterable = $all['param'];
 			$all = $all['post'];
 			$info=$all['postInfo'];
 			$docType = '2';
-			$request = Request::create('/savePost','POST', array($all));
+			//$request = Request::create('/savePost','POST', array($all));
 		
-	 		}
+	 	}else{
+
+		}
+
+
+			/*
+			*need to check whats going on here because sometimes after delete if we save empty values it deletes the whole docParam.
+			*/
+			$delete = DB::table('sys_param_values')->where('doc_type',$docType)->where('doc_type',$docType)->where('ref_id',$info['id'])->whereNotNull('iteration')->delete();
 		
-			
-			
-			$delete = DB::table('sys_param_values')->where('doc_type',$docType)->where('ref_id',$info['id'])->whereNotNull('iteration')->delete();
-		
-			return Route::dispatch($request)->getContent();
+			//return Route::dispatch($request)->getContent();
 
 		
-		//return Response::json($request);
+		return Response::json('deleted');
 	}
 
 

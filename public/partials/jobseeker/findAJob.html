@@ -1,36 +1,41 @@
-<nav class="col-lg-2 col-sm-4 col-md-4 col-xs-2 sideNav ">
-	<div class="">
-		<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
-	</div>
+<ul id="nav-mobile" class="side-nav fixed col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
-	<div class="col-md-12" dropdown is-open="status.isopen">
-		<div>Status:  <b>{{ user.personal_information.education_status}}</b>  </div>
+		<div class="">
+			<progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
+		</div>
+		<div class="" dropdown is-open="status.isopen">
+			<div>Status:  <b>{{ user.personal_information.education_status}}</b>
+				<button angular-ripple type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+					{{user.personal_information.status }} <div class="caret"></div>
+				</button>
+			</div>
 
-		<div>Last Updated -  {{ user.personal_information.last_login}}  </div>
-		<button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
-			{{user.personal_information.status }} <div class="caret"></div>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
-				{{status.name}}
-			</li>
-		</ul>
-	</div>
+			<div>Last Updated -  {{ user.personal_information.last_login}}  </div>
+
+			<ul class="dropdown-menu" role="menu">
+				<li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+					{{status.name}}
+				</li>
+			</ul>
+		</div>
+
 
 	<div class="">
 		<h3 class="text-center">{{user.personal_information.first_name +'  '+user.personal_information.last_name}}</h3>
-		<img class="img-thumbnail" ng-src="{{ user.files.user_photo.paramValue }}" src="../../img/No-Photo.gif" alt="Generic placeholder image" >
+		<img class="profile-picture-card card" ng-src="/{{ user.files.user_photo.paramValue || '../../img/No-Photo.gif' }}"  alt="Generic placeholder image" >
 	</div>
 
-	<div class="docParamLi" ui-sref="jobseeker.findajob.interesting">Interesting</div>
-	<div class="docParamLi" ui-sref="jobseeker.findajob.my_applications">My Applications</div>
-	<div class="docParamLi" ui-sref="jobseeker.findajob.rejected">Rejected</div>
-</nav>
+	<div>
+		<div class="docParamLi" ui-sref="jobseeker.findajob.interesting">Interesting</div>
+		<div class="docParamLi" ui-sref="jobseeker.findajob.my_applications">My Applications</div>
+		<div class="docParamLi" ui-sref="jobseeker.findajob.rejected">Rejected</div>
+	</div>
+</ul>
 
 
 
 
-<div   class="col-xs-12 col-sm-8 col-md-8 col-lg-10 grey_background">
+<main class="" >
 
 	<div class="" >
 		<!--<button type="button" class="btn btn-default btn-lg openMenu" ng-click="openAside('left')"><i class="glyphicon glyphicon-align-justify"></i></button>-->
@@ -38,8 +43,8 @@
 			<!-- Filter and search section!
               <pre>Sorting predicate = {{orderByFilter}}; reverse = {{reverse}}</pre>
               -->
-			<div style="margin:5px;">
-				<div class="col-lg-2">
+			<div class="" style="margin:5px;">
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
 					<label>Main Field</label>
 					<select ng-model="reverse" class="form-control">
 						<option value="false">desc</option>
@@ -48,7 +53,7 @@
 
 				</div>
 
-				<div class="col-lg-2">
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
 					<label>Employment Type</label>
 					<select ng-model="reverse" class="form-control">
 						<option value="false">desc</option>
@@ -57,7 +62,7 @@
 
 				</div>
 
-				<div class="col-lg-2">
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
 					<label>Location</label>
 					<select ng-model="reverse" class="form-control">
 						<option value="false">desc</option>
@@ -66,7 +71,7 @@
 
 				</div>
 
-				<div class="col-lg-2">
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
 					<label>Experience</label>
 					<select ng-model="reverse" class="form-control">
 						<option value="false">desc</option>
@@ -75,84 +80,119 @@
 
 				</div>
 
-
-				<!--<div class="col-lg-2">-->
-				<!--<label>Order by:</label>-->
-				<!--<select ng-model="orderByFilter" class="form-control">-->
-					<!--<option value="postInfo.created_at">Created At</option>-->
-					<!--<option value="postInfo.title">Title</option>-->
-					<!--<option>price</option>-->
-					<!--<option value="inStock">availability</option>-->
-					<!--<option value="lastBuy">Last bought</option>-->
-				<!--</select>-->
-				<!--</div>-->
-
-
-
-
-				<div class="col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<label>Search Job:</label>
 
 					<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query"/>
 				</div>
-				<!--<label>Max items:</label>-->
 
-				<!--<select ng-model="limit" ng-init="numbers=[1,2,3,4,5,6,7,8,9,10]">-->
-					<!--<option ng-repeat="number in numbers">{{number}}</option>-->
-				<!--</select>-->
-
-				<!--<label>Price range:</label>-->
-				<!--From-->
-				<!--<input type="number" ng-model="filter.minPrice"/>-->
-				<!--To-->
-				<!--<input type="number" ng-model="filter.maxPrice"/>-->
 			</div>
 			<!-- table section!   -->
 
+			</div>
+			<div class="clear"></div>
+			<hr>
+			<div class="">
+				<div  class="col-xs-12 col-sm-6 col-lg-6 col-lg-6" ng-repeat="(key,job) in allPosts  | filter:searchText | orderBy:orderByFilter:reverse | limitTo:limit" repeat-done="initModals()">
+					<div class='modal-trigger' href='#demoModal' ng-click="getPost(job.postInfo.id)" modal>
+						<div  class="job-card card">
 
-			<div ng-class="" class="postDiv text-center col-lg-6" ng-repeat="(key,job) in allPosts  | filter:searchText | orderBy:orderByFilter:reverse | limitTo:limit">
-				<!-- editable element -->
+							<img ng-src="/{{job.postInfo.company_logo}}"   class="">
+								<h4 class="">{{ job.postInfo.title || 'Job Title' }} </h4>
+								<div class="text-muted"> View Job Info - {{job.postInfo.id}} </div>
 
-
-
-
-
-				<!--<pre style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>-->
-
-				<!--<button type="button" class="btn btn-sm btn-danger" ng-click="rate = 0" ng-disabled="isReadonly">Clear</button>-->
-				<!--<button type="button" class="btn btn-sm btn-default" ng-click="isReadonly = ! isReadonly">Toggle Readonly</button>-->
-				<!--<hr />-->
-
-				<!--<h4>Custom icons</h4>-->
-				<!--<div ng-init="x = 5"><uib-rating ng-model="x" max="15" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" aria-labelledby="custom-icons-1"></uib-rating> <b>(<i>Rate:</i> {{x}})</b></div>-->
-				<!--<div ng-init="y = 2"><uib-rating ng-model="y" rating-states="ratingStates" aria-labelledby="custom-icons-2"></uib-rating> <b>(<i>Rate:</i> {{y}})</b></div>-->
-
-
-
-
-
-				<div ng-click="getPost(job.postInfo.id)">
-					<div class="postDivChild">
-						<uib-rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></uib-rating>
-						<span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
-
-						<div class="postImage">
-
-							<img ng-src="{{job.postInfo.company_logo}}" class="col-md-3" >
-						</div>
-						<div class="">
-							<h4>{{ job.postInfo.title }}</h4>
-							<hr>
-							<span class="text-muted"> View Job Info - {{job.postInfo.id}} </span>
 						</div>
 					</div>
 				</div>
-
 			</div>
 
-
-		</div>
 	</div>
+</main>
+<!--<script type="text/ng-template" id="myModalContent.html">-->
+<!--<div class="card">-->
+<!--<div class="modal-header">-->
+<!--<h3 class="modal-title">	<b>Job Offer {{post.postInfo.title}}</b></h3>-->
+<!--</div>-->
+
+<!--<div class="modal-body">-->
+<!--<sidenav class="col-md-2">-->
+<!--<div ui-sref="general" class="postLi">-->
+<!--General-->
+<!--</div>-->
+<!--<div ui-sref="the_company" class="postLi">-->
+<!--The Company-->
+<!--</div>-->
+<!--<div ui-sref="company_video" class="postLi">-->
+<!--Company Video-->
+<!--</div>-->
+<!--<div ui-sref="company_site" class="postLi">-->
+<!--Company Site-->
+<!--</div>-->
+<!--</sidenav>-->
+
+<!--<div ui-view="job" class="col-md-10"></div>-->
+
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button class="btn btn-default dropdown-toggle statusBtn" type="button" ng-click="ok() ">-->
+<!--OK-->
+<!--</button>-->
+<!--<button class="btn btn-default dropdown-toggle statusBtn" type="button" ng-click="cancel()">-->
+<!--Cancel-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</script>-->
+
+
+<!--<script type="text/ng-template" id="myModalContent.html">-->
+
+	<!--<div class="modal-body">-->
+		<!--<div class="modal-content">-->
+			<!--<ul class="col-md-2 ">-->
+				<!--<div ui-sref="general" class="postLi">-->
+					<!--General-->
+				<!--</div>-->
+				<!--<div ui-sref="the_company" class="postLi">-->
+					<!--The Company-->
+				<!--</div>-->
+				<!--<div ui-sref="company_video" class="postLi">-->
+					<!--Company Video-->
+				<!--</div>-->
+				<!--<div ui-sref="company_site" class="postLi">-->
+					<!--Company Site-->
+				<!--</div>-->
+			<!--</ul>-->
+
+			<!--<div ui-view="job.the_company"></div>-->
+		<!--</div>-->
+		<!--<div class="modal-footer">-->
+			<!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+			<!--<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</script>-->
+
+
+
+<!--<sidenav class="col-md-2">-->
+	<!--<div ui-sref="general" class="postLi">-->
+		<!--General-->
+	<!--</div>-->
+	<!--<div ui-sref="the_company" class="postLi">-->
+		<!--The Company-->
+	<!--</div>-->
+	<!--<div ui-sref="company_video" class="postLi">-->
+		<!--Company Video-->
+	<!--</div>-->
+	<!--<div ui-sref="company_site" class="postLi">-->
+		<!--Company Site-->
+	<!--</div>-->
+<!--</sidenav>-->
+
+<!--<div ui-view="job" class="col-md-10"></div>-->
+<!-- Modal Structure -->
+
 <!--<pre>-->
 	<!--{{$state.current.name}}-->
 
@@ -212,45 +252,124 @@
 		<!--</div>-->
 	<!--</script>-->
 
-	<script type="text/ng-template" id="myModalContent.html">
-		<div class="modal-header">
-			<h3 class="modal-title">	<b>Job Offer {{post.postInfo.id}}</b></h3>
+
+
+<!-- Modal Trigger -->
+
+<div id="demoModal" class="modal modal-fixed-footer">
+	<!--<div class="">-->
+		<!--<div>-->
+			<!--<h3>{{post.postInfo.title || 'Job Title'}}</h3>-->
+			<!--<small>Job no' {{post.postInfo.id }}</small>-->
+		<!--</div>-->
+		<!--<div>-->
+			<!--<button class="btn"><i class="glyphicon glyphicon-envelope"></i></button>-->
+			<!--<span><i class="glyphicon glyphicon-heart"></i></span>-->
+			<!--<span><i class="glyphicon glyphicon-fire"></i></span>-->
+		<!--</div>-->
+
+	<!--</div>-->
+
+	<div class="modal-header">
+		{{post.postInfo.title || 'Job Title'}} <small>Job no' {{post.postInfo.id }}</small>
+		<div style="float:right;">
+			<ul >
+				<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+				<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+			</ul>
+			<!-- Dropdown Structure -->
+			<ul id='options' class='dropdown-content'>
+				<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+				<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+			</ul>
 		</div>
-		<div class="modal-body">
+	</div>
 
+	<div class="modal-content">
 
-		</div>
-		<div class="panel-body">
-			<nav class="col-md-2 ">
-				<div ui-sref="general" class="postLi">
-					General
-				</div>
-				<div ui-sref="the_company" class="postLi">
-					The Company
-				</div>
-				<div ui-sref="company_video" class="postLi">
-					Company Video
-				</div>
-				<div ui-sref="company_site" class="postLi">
-					Company Site
-				</div>
-			</nav>
+		<ul id="post-modal-nav" class="side-nav fixed post-side-nav col-md-2 ">
+			<a ui-sref="general" class="postLi">
+				General
+			</a>
+			<a ui-sref="the_company" class="postLi">
+				The Company
+			</a>
+			<a ui-sref="company_video" class="postLi">
+				Company Video
+			</a>
+			<a ui-sref="company_site" class="postLi">
+				Company Site
+			</a>
+		</ul>
 
+		<main>
+			<ui-view />
 			<div ui-view="job"></div>
+		</main>
+	</div>
+	<div class="modal-footer">
+		<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+		<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	</div>
+</div>
 
-		</div>
-		<div class="modal-footer">
-			<!--<button class="btn btn-primary" type="button" ui-sref="">-->
-				<!--<img class="transparent button__square" ng-src="https://secure.wanted.co.il//en.demo.wanted.co.il/images/global/en_button__post_edit__search.png">-->
+<script>
+
+	$(document).ready(function(){
+//		$('.dropdown-button').dropdown({
+//					inDuration: 300,
+//					outDuration: 225,
+//					constrain_width: false, // Does not change width of dropdown to that of the activator
+//					hover: true, // Activate on hover
+//					gutter: -80, // Spacing from edge
+//					belowOrigin: false, // Displays dropdown below the button
+//					alignment: 'left' // Displays dropdown with edge aligned to the left of button
+//				}
+//		);
+
+		$('.button-collapse').sideNav();
+		$('body').click(function(){ $('div[id^=sidenav-overlay]').remove();});
+	});
+
+</script>
+	<!--<script type="text/ng-template" id="myModalContent.html">-->
+		<!--<div class="card">-->
+		<!--<div class="modal-header">-->
+			<!--<h3 class="modal-title">	<b>Job Offer {{post.postInfo.title}}</b></h3>-->
+		<!--</div>-->
+
+		<!--<div class="modal-body">-->
+			<!--<sidenav class="col-md-2">-->
+				<!--<div ui-sref="general" class="postLi">-->
+					<!--General-->
+				<!--</div>-->
+				<!--<div ui-sref="the_company" class="postLi">-->
+					<!--The Company-->
+				<!--</div>-->
+				<!--<div ui-sref="company_video" class="postLi">-->
+					<!--Company Video-->
+				<!--</div>-->
+				<!--<div ui-sref="company_site" class="postLi">-->
+					<!--Company Site-->
+				<!--</div>-->
+			<!--</sidenav>-->
+
+			<!--<div ui-view="job" class="col-md-10"></div>-->
+
+		<!--</div>-->
+		<!--<div class="modal-footer">-->
+			<!--<button class="btn btn-default dropdown-toggle statusBtn" type="button" ng-click="ok() ">-->
+				<!--OK-->
 			<!--</button>-->
-			<button class="btn btn-primary" type="button" ng-click="ok()">
-				OK
-			</button>
-			<button class="btn btn-warning" type="button" ng-click="cancel()">
-				Cancel
-			</button>
-		</div>
-	</script>
+			<!--<button class="btn btn-default dropdown-toggle statusBtn" type="button" ng-click="cancel()">-->
+				<!--Cancel-->
+			<!--</button>-->
+		<!--</div>-->
+		<!--</div>-->
+	<!--</script>-->
+
+
 	<!--<div class="modal fade job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
 		<!--<div class="modal-dialog modal-lg">-->
 			<!--<div class="modal-content" style=" height: 100%; overflow: auto;">-->
@@ -286,7 +405,7 @@
 			<!--</div>-->
 		<!--</div>-->
 	<!--</div>-->
-</div>
+
 
 
 

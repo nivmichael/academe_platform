@@ -10,76 +10,76 @@
 											Company*
 										</div>
 										
-										<div editable-text="user.company.company_name.paramValue" e-class="form-control param_input" e-name="user.company.company_name.paramValue"  ng-model="user.company.company_name.paramValue" required>
-											{{user.company.company_name.paramValue}}
+										<div editable-text="user['company'][19]['paramValue']" e-class="form-control param_input" e-name="user.company.company_name.paramValue"  ng-model="user['company'][19]['paramValue']" required>
+											{{user['company'][19]['paramValue']}}
 										</div>
 										
 									</div>	
-								</br>	
+								</br>
 									<div>
-										<input type="checkbox"> hide company name	
-									</div>	
-								</br>	
+										<input type="checkbox"> hide company name
+									</div>
+								</br>
 									<div>
-										
+
 										<div class="param_label col-md-2">
 											Conatact Person*
 										</div>
-										
-										<div editable-text="user.company.contact_person.paramValue" e-class="form-control param_input" e-name="contact_person"  ng-model="user.company.contact_person.paramValue" required>
-											{{user.company.contact_person.paramValue}}
+
+										<div editable-text="user['company'][20]['paramValue']" e-class="form-control param_input" e-name="contact_person"  ng-model="user['company'][20]['paramValue']" required>
+											{{user['company'][20]['paramValue']}}
 										</div>
-										
-										
-									</div>	
-								</br>	
+
+
+									</div>
+								</br>
 									<div>
-										
+
 										<div class="param_label col-md-2">
 											Conatact Title*
 										</div>
-										
-										<div editable-text="user.company.contact_title.paramValue" e-class="form-control param_input" e-name="contact_title"  ng-model="user.company.contact_title.paramValue" required>
-											{{user.company.contact_title.paramValue}}
+
+										<div editable-text="user['company'][21]['paramValue']" e-class="form-control param_input" e-name="contact_title"  ng-model="user['company'][21]['paramValue']" required>
+											{{user['company'][21]['paramValue']}}
 										</div>
-										
-									</div>	
-								</br>	
+
+									</div>
+								</br>
 									<div>
-										
+
 										<div class="param_label col-md-2">
 											Street Address*
 										</div>
-										
+
 										<div editable-text="user.personal_information.street_1" ng-model="user.personal_information.street_1" name="street_1" e-class="form-control param_input">
 											 {{user.personal_information.street_1}}
 										</div>
-																		
-									</div>	
-									
+
+									</div>
+
 								</br>
 									<div>
 										<div class="param_label col-md-2">
 											City*
 										</div>
-										
-										
+
+
 										<div editable-text="user.personal_information.city" name="city" e-class="form-control param_input" ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personal_information.city" >
 											{{user.personal_information.city}}
-										</div>					
-										
-									</div>	
+										</div>
+
+									</div>
 								</br>
-									<div>		
+									<div>
 										<div class="param_label col-md-2">
 											State*
-										</div>	
+										</div>
 										<div editable-text="user.personal_information.state" name="state" ng-model="user.personal_information.state" placeholder="" e-class="form-control param_input" e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personal_information.state">
 											{{user.personal_information.state}}
 										</div>
-									</div>	
+									</div>
 								</br>
-									<div>	
+									<div>
 										<div class="param_label col-md-2">
 											Zip Code*
 										</div>
@@ -88,51 +88,51 @@
 										</div>
 									</div>
 								</br>
-									<div>	
+									<div>
 										<div class="param_label col-md-2">
 											Country*
 										</div>
 										<div editable-text="user.personal_information.country" ng-model="user.personal_information.country" e-class="form-control param_input" e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
 								     		{{user.personal_information.country}}
 								     	</div>
-								     </div>		
+								     </div>
 								</br>
-								
+
 									 <div>
-			
+
 											<div ng-hide="user.company.length > 0 ">
-											
+
 												<div class="param_label col-md-2">
 													Main Field*
 												</div>
-												
-												<div editable-text="user.company.main_field.paramValue" e-class="form-control param_input" e-name="main_field" e-placeholder="Main Field" ng-model="user.company.main_field.paramValue" >
-													{{user.company.main_field.paramValue}}
+
+												<div editable-text="user['company'][22]['paramValue']" e-class="form-control param_input" e-name="main_field" e-placeholder="Main Field" ng-model="user['company'][22]['paramValue']" >
+													{{user['company'][22]['paramValue']}}
 												</div>
-												
-												<div ng-show="editableForm.$visible">
-													<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',$index)">+ Add a Record</button>
-												</div>
-												
-												
-											</div>	
+
+												<!--<div ng-show="editableForm.$visible">-->
+													<!--<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',$index)">+ Add a Record</button>-->
+												<!--</div>-->
+
+
+											</div>
 											<!-- <div ng-if="user.company.length > 0 ">
 												{{user.company}}
 												<div ng-repeat="(a,b) in user.company">
-											
+
 													<div class="param_label col-md-2">
 														Main Field*
 													</div>
-													
+
 													<div editable-text="user.company[a][main_field]['paramValue']" e-class="form-control param_input" name="main_field" e-placeholder="Main Field {{a+1}}" ng-model="user.company[a][main_field]['paramValue']" >
 														{{user.company[a][main_field]['paramValue']}}
 													</div>
-													
+
 													<div ng-show="$last && editableForm.$visible">
 														<button type="button" class="btn btn-xs btn-default" ng-click="addRecordEmployer('company',a)">+ Add a Record</button>
 													</div>
-													
-													
+
+
 													<div class="iterationCtrls" >
 														<div class="iterationCtrl" ng-click="remove(user['company'],$index)">
 															X Delete
@@ -144,44 +144,44 @@
 															Move Down
 														</div>
 													</div>
-													
-													
+
+
 												</div>
-				
+
 											</div>	 -->
-										</br>	
+										</br>
 											<div >
-											
+
 												<div class="param_label col-md-2">
 													Secondary Field
 												</div>
-												
-												<div editable-text="user.company.secondary_field.paramValue" e-class="form-control param_input" name="secondary_field" placeholder="Secondary Field" ng-model="user.company.secondary_field.paramValue" >
-													{{user.company.secondary_field.paramValue}}
+
+												<div editable-text="user['company'][23]['paramValue']" e-class="form-control param_input" name="secondary_field" placeholder="Secondary Field" ng-model="user['company'][23]['paramValue']" >
+													{{user['company'][23]['paramValue']}}
 												</div>
-												
-												<div ng-show="editableForm.$visible">
-													<button type="button" class="btn btn-xs btn-default" ng-click="addIterableCompanyParam('secondary_field',$index)">+ Add a Record</button>
-												</div>
-											</div>	
-										</br>	
-											
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-									</div>		
+
+												<!--<div ng-show="editableForm.$visible">-->
+													<!--<button type="button" class="btn btn-xs btn-default" ng-click="addIterableCompanyParam('secondary_field',$index)">+ Add a Record</button>-->
+												<!--</div>-->
+											</div>
+										</br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+									</div>
 								</br>
 										
 									<div>
@@ -190,21 +190,21 @@
 											Company YouTube video
 										</div>
 										
-										<div editable-text="user.company.youtube.paramValue" name="youtube" e-class="form-control param_input" ng-model="user.company.youtube.paramValue">
-										   <a href="{{user.company.youtube.paramValue}}">{{user.company.youtube.paramValue}}</a>
+										<div editable-text="user['company'][25]['paramValue']" name="youtube" e-class="form-control param_input" ng-model="user['company'][25]['paramValue']">
+										   <a href="{{user['company'][25]['paramValue']}}">{{user['company'][25]['paramValue']}}</a>
 										</div>
 										
 									</div>	
 								</br>
 									<div>
-			
+
 										<div class="param_label col-md-2">
 											Short Company Description*
 										</div>
-										<div editable-textarea="user.company.short_company_description.paramValue" e-class="form-control param_input" name="short_company_description" ng-model="user.company.short_company_description.paramValue" e-rows="10" required>
-											{{user.company.short_company_description.paramValue}}
+										<div editable-textarea="user['company'][24]['paramValue']" e-class="form-control param_input" e-name="short_company_description" ng-model="user['company']['24']['paramValue']" e-rows="10" required>
+											{{user['company'][24]['paramValue']}}
 										</div>
-									</div>	
+									</div>
 															
 								
 								</br>
@@ -213,13 +213,13 @@
 										<div class="param_label col-md-2">
 											Site Link*
 										</div>
-										<div editable-text="user.company.site_link.paramValue" e-class="form-control param_input" name="site_link" ng-model="user.company.site_link.paramValue" >
-											<a href="{{user.company.site_link.paramValue}}">{{user.company.site_link.paramValue}}</a>
+										<div editable-text="user['company'][26]['paramValue']" e-class="form-control param_input" name="site_link" ng-model="user['company'][26]['paramValue']" >
+											<a href="{{user['company'][26]['paramValue']}}">{{user['company'][26]['paramValue']}}</a>
 										</div>
 									</div>	
 								</br>
-								
-								
+
+
 								<h2>User Information</h2>
 								
 								<div>

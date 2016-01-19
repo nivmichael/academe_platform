@@ -1,4 +1,75 @@
-<a ui-sref="admin.tables" class="btn btn-default">Tables</a>
-<a ui-sref="admin.stats" class="btn btn-default">Statistics</a>
+<!--<a ui-sref="admin.tables" class="btn btn-default">Tables</a>-->
+<!--<a ui-sref="admin.stats" class="btn btn-default">Reports System</a>-->
 
+<!--<div class="col-md-12" style="height:250px;" ng-cloak ng-controller="TController">-->
+    <!--<div class="col-md-1" ></div>-->
+
+        <!--<div class="welcomeIcon  col-md-2">-->
+            <!--<div class="welcomeIconInner" style="background-color:{{ main_color }}">-->
+                <!--<a><img src="../img/icons/mishkefet.png"></a>-->
+
+            <!--</div>-->
+            <!--<p>-->
+                <!--General Summary-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="welcomeIcon col-md-2">-->
+            <!--<div class="welcomeIconInner" ng-click="setFilter('employer')" style="background-color:{{ main_color }}"  >-->
+                <!--<a><img src="../img/index/icons-04.png"></a>-->
+
+            <!--</div>-->
+            <!--<p>-->
+                <!--Employer-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="welcomeIcon col-md-2">-->
+            <!--<div class="welcomeIconInner" style="background-color:{{ main_color }}">-->
+                <!--<a><img src="../img/index/icons-03.png"></a>-->
+
+            <!--</div>-->
+            <!--<p>-->
+                <!--Intern-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="welcomeIcon col-md-2">-->
+            <!--<div class="welcomeIconInner" style="background-color:{{ main_color }}">-->
+                <!--<a><img src="../img/index/icons-02.png"></a>-->
+
+            <!--</div>-->
+            <!--<p>-->
+                <!--Graduate-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="welcomeIcon col-md-2" >-->
+            <!--<div class="welcomeIconInner" style="background-color:{{ main_color }}" ng-click="setFilter('jobseeker')">-->
+                <!--<a><img  src="../img/index/icons-01.png"></a>-->
+
+            <!--</div>-->
+            <!--<p>-->
+                <!--Student-->
+            <!--</p>-->
+        <!--</div>-->
+
+
+
+
+    <!--<div class="col-md-1" ></div>-->
+<!--</div>-->
+
+
+
+</br>
+<uib-tabset>
+
+    <uib-tab heading="Reports"  ui-sref-active="active" ui-sref="admin.stats">
+
+    </uib-tab>
+    <uib-tab heading="Tables" ui-sref="admin.tables" >
+
+    </uib-tab>
+
+
+
+</uib-tabset>
+</hr>
 <div ui-view=""></div>

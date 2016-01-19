@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class AdminMiddleware
 {
     /**
@@ -15,10 +15,12 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-    	if ($request->user()->type != 'tech-admin')
+    	if (!in_array(Auth::user()->type,['tech-admin','system-admin','system-manager']))
         {
-             return response('401', 401);
+
+            return response('401', 401);
         }
+
         return $next($request);
     }
 }

@@ -3,38 +3,53 @@
 	<title>AcadeME</title>
 	<!-- jquery -->
 	{!! Html::script('lib/jquery-1.11.3.min.js') !!}
-			<!-- angular -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+	<!-- angular -->
 	{!! Html::script('lib/angular.1.4.7.min.js') !!}
-
-			<!-- ui-router -->
+	<!-- ui-router -->
 	{!! Html::script('../lib/ui-router.js') !!}
-
-			<!-- underscore -->
+	<!-- underscore -->
 	{!! Html::script('../lib/ng-underscore.min.js') !!}
 
-			<!-- bootstrap css -->
-	{!! Html::style('css/bootstrap.min.css') !!}
+	<!-- css -->
 
-			<!-- laravel app css -->
-
+	<!--Laravel default-->
 	<link href="{!! asset('/css/app.css') !!}" rel="stylesheet">
-
 	<!-- x-editable css -->
 	{!! Html::style('lib/xeditable/css/xeditable.css') !!}
+	<!-- bootstrap css -->
 
-			<!-- angular-aside css -->
-	{!! Html::style('../css/angular-aside.min.css') !!}
-
-			<!-- custom style css -->
-
+	{!! Html::style('css/bootstrap.min.css') !!}
+	<!-- custom style css -->
 
 	{!! Html::style('../../css/login.css') !!}
+
+
+
+	{!! Html::style('../../css/ripple.css') !!}
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">-->
+
+	{!! Html::style('css/materialize_fix.css')!!}
+
+
+
+
+	{!! Html::script('../../lib/angular-ui-switch.js') !!}
+
+	{!! Html::script('../../lib/sortable.js') !!}
+	{!! Html::style('css/materialize.css')!!}
+	{!! Html::style('css/angular-materialize.css')!!}
+
 	{!! Html::style('../../css/main.css') !!}
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
+	<style>
+		body {
+			font-family: 'Roboto', serif;
 
-			<!-- fonts -->
-	{!! Html::style('https://fonts.googleapis.com/css?family=Lato:100') !!}
-
+		}
+	</style>
 
 </head>
 
@@ -44,113 +59,199 @@
 $path = Route::getCurrentRoute()->getPath();
 
 ?>
-@if($path != '/' )
-	@if(strpos($path,'login') === false)
 
-		<nav class="navbar navbar-default" style="background-color:{{main_color}};">
+@if(Auth::check())
+	@if(Auth::user()->type == 'tech-admin' && strpos($path,'admin') === true )
+		<div class="navbar navbar-default" style="background-color:#4E75AD;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed "   ng-click="openAside('left')" ng-show="true">
-						<span class="sr-only"></span>
+
+					<button type="button" class="navbar-toggle collapsed " data-toggle="collapse"  data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle Navigation</span>
+						<i class="glyphicon glyphicon-cog"></i>
 					</button>
-					@if(Auth::guest())
-						<a class="navbar-brand" href="">
-							Sign Up
-						</a>
-					@elseif(Auth::user())
-						<a class="navbar-brand" href="jobseeker#/">My Profile </a>
-					@endif
+
+					<button type="button" class="menu navbar-toggle button-collapse" data-activates="nav-mobile" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></button>
+
+
+						<a class="navbar-brand" href="admin">Admin</a>
+
 
 				</div>
 
-
-
-				@if (Auth::user())
-
-					<ul class="col-lg-3 searchText">
-						<div class="input-group">
+				<div class="input-group searchText">
 							  <span class="input-group-btn">
 								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search" style="padding:3px;"></i></button>
 							  </span>
-							<input type="text" class="form-control searchTextInput" ng-model="searchText"  placeholder="Search Jobs">
-						</div>
-					</ul>
-
-
-<!--
-					<span type="button" class="col-lg-1 meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings</span>
-					<div class="col-lg-1 envelope">
-						<div class="notificationsCircle badge"><span>{{1}}</span></div>
-						<a href=""></a>
-					</div>
--->
-				@endif
+					<input type="text" class="form-control searchTextInput" ng-model="searchText"  placeholder="Search Jobs">
+				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
 					<ul class="nav navbar-nav">
 
 					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	@endif
+@endif
+
+
+
+@if($path != '/' )
+	@if(strpos($path,'login') === false)
+		<div class="navbar navbar-default" style="background-color:{{main_color}};">
+			<div class="container-fluid">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle collapsed " data-toggle="collapse"  data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle Navigation</span>
+						<i class="glyphicon glyphicon-cog"></i>
+					</button>
+
+					<button type="button" class="menu navbar-toggle button-collapse" data-activates="nav-mobile" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></button>
+					@if(Auth::check())
+						@if (Auth::user()->subtype == 'jobseeker')
+							<a class="navbar-brand" ui-sref="jobseeker.profile">My Profile </a>
+						@elseif (Auth::user()->subtype == 'employer')
+							<a class="navbar-brand" href="employer#/jobs">My Profile </a>
+
+						@endif
+					@endif
+
+
+				</div>
+				<!--
+				<div class="input-group searchText">
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search" style="padding:3px;"></i></button>
+							  </span>
+					<input type="text" class="form-control searchTextInput" ng-model="searchText"  placeholder="Search Jobs">
+				</div>
+				-->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+					<ul class="nav navbar-nav">
+						@if (Auth::user())
+
+						@endif
+					</ul>
+
 					<ul class="nav navbar-nav navbar-right">
 						@if (Auth::guest())
-							<li><a href="">Option</a></li>
-							<li><a href="">Another</a></li>
+							<li><a href=""><i class="glyphicon glyphicon-user"></i></a></li>
+							<li><a href=""><i class="glyphicon glyphicon-education"></i></a></li>
 						@else
 							<li>
-								<a type="button" class="meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings<span class="badge meetings_badge">3</span></a>
+								<a type="button" class="meetingsLabel" ng-click="isCollapsed = !isCollapsed">Meetings <span class="new badge">4</span></a>
 							</li>
 							<li>
-								<a href="#"><img class="envelope" ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"><span class="badge envelope_badge">14</span></a>
+								<a href="#"><img class="envelope" ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/en_demo/messages_icon.png"> <span class="new badge">4</span></a>
 							</li>
-							<li class="dropdown" ng-controller="UserHomeController">
-								@if (Auth::user()->subtype == 'jobseeker')
-									<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personal_information.first_name}}<span class="caret"></span></a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="[[ url('/jobseeker#/profile') ]]">My Profile</a></li>
-										<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
-									</ul>
-								@elseif (Auth::user()->subtype == 'employer')
-									<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.company.company_name.paramValue}}<span class="caret"></span></a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a ui-sref="employer.edit">Edit Profile</a></li>
-										<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
-									</ul>
-								@endif
+
+
+
+
+
+
+
+
+
+							<li class="" ng-controller="UserHomeController">
+
+									@if (Auth::user()->subtype == 'jobseeker')
+
+
+										<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.personal_information.first_name}}<span class="caret"></span></a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="[[ url('/jobseeker#/profile') ]]">My Profile</a></li>
+											<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
+										</ul>
+									@elseif (Auth::user()->subtype == 'employer')
+										<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.company.company_name.paramValue}}<span class="caret"></span></a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a ui-sref="employer.edit">Edit Profile</a></li>
+											<li><a href="[[ url('/auth/logout') ]]">Logout</a></li>
+											@if(Auth::user()->type != 'user')
+												<li role="separator" class="divider"></li>
+												<li><a ui-sref="admin.stats">Administrator</a></li>
+											@endif()
+
+
+										</ul>
+									@endif
+
 							</li>
 						@endif
 					</ul>
 				</div>
 			</div>
-		</nav>
+		</div>
 	@endif
 @endif
+
+
+
+
+
 
 @yield('content')
 
 
 </body>
-@if(Auth::user())
 
-@if (Auth::user()->subtype == 'employer')
-{!! Html::script('lib/employer_app.js')!!}
-@elseif (Auth::user()->subtype == 'jobseeker')
-{!! Html::script('lib/jobseeker_app.js')!!}
-@endif
 
-@elseif(Auth::guest())
+
+
+<!--
+* getting the corrct app.js :
+*
+* default with css only
+* admin
+* registering a jobseeker
+* registering an employer
+* jobseeker home
+* employer home
+*/
+-->
 <?php
-
 $path = Route::getCurrentRoute()->getPath();
 $subtype = explode('/', $path);
-$subtype = $subtype[1];
+if(isset($subtype[1])){
+	$subtype = $subtype[1];
+}
 ?>
-@if($subtype == 'register_jobseeker')
-{!! Html::script('lib/register_jobseeker_app.js')!!}
-@elseif($subtype == 'register_employer')
-{!! Html::script('lib/register_employer_app.js')!!}
+@if(Auth::guest())
+
+
+	@if($subtype == 'register_jobseeker')
+		{!! Html::script('lib/register_jobseeker_app.js')!!}
+	@elseif($subtype == 'register_employer')
+		{!! Html::script('lib/register_employer_app.js')!!}
+	@else
+		{!! Html::script('lib/app.js')!!}
+	@endif
+
+@elseif(Auth::check())
+
+	@if (!in_array(Auth::user()->type,['tech-admin','system-admin','system-manager']))
+
+		@if (Auth::user()->subtype == 'employer')
+			{!! Html::script('lib/employer_app.js')!!}
+		@elseif(Auth::user()->subtype == 'jobseeker')
+			{!! Html::script('lib/jobseeker_app.js')!!}
+		@endif
+
+	@elseif(in_array(Auth::user()->type,['tech-admin','system-admin','system-manager']))
+		{!! Html::script('lib/admin_app.js')!!}
+	@endif
+
 @else
-		<!--need to add an empty app template just for angular to init-->
-{!! Html::script('lib/app.js')!!}
-@endif
 
 @endif
 
@@ -170,6 +271,21 @@ $subtype = $subtype[1];
 {!! Html::script('lib/ngFlow/ng-flow-standalone.min.js')!!}
 {!! Html::script('lib/checklist-model.js')!!}
 {!! Html::script('lib/showErrors.js')!!}
+{!! Html::script('lib/toArrayFilter.js')!!}
+{!! Html::script('lib/angular-ripple.js')!!}
+{!! Html::script('lib/angular-file-upload.js')!!}
+{!! Html::script('lib/pdf.js')!!}
+{!! Html::script('lib/pdf.worker.js')!!}
+{!! Html::script('lib/angular-pdf.js')!!}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+{!! Html::script('lib/angular-materialize.js') !!}
+
+
+
+<!--
+*cross domain token csrf
+-->
 
 <script>angular.module("acadb").constant("CSRF_TOKEN", '{!! csrf_token() !!}');</script>
+
 </html>

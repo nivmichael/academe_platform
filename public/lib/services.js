@@ -7,26 +7,30 @@ angular.module('acadb.services', []).
 
 .factory('ParamData', ['$resource',
 	function($resource) {
-		return $resource('params/:id', {id: '@id'}, {
+		return $resource('../params/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
+			'query': {method: 'GET', isArray: true }
+
+
 			 
 		});
 }])
 
 .factory('UsersData', ['$resource',
 	function($resource) {
-		return $resource('users/:id', {id: '@id'}, {
+		return $resource('../users/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'}
+			 'delete':{method:'DELETE'},
+			'query': {method: 'GET', isArray: true }
 		});
 }])
 
 .factory('DocParamData', ['$resource',
 	function($resource) {
-		return $resource('docParam/:id', {id: '@id'}, {
+		return $resource('../docParam/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'}
@@ -35,7 +39,7 @@ angular.module('acadb.services', []).
 
 .factory('DocTypeData', ['$resource',
 	function($resource) {
-		return $resource('docType/:id', {id: '@id'}, {
+		return $resource('../docType/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'}
@@ -44,7 +48,7 @@ angular.module('acadb.services', []).
 
 .factory('ParamTypeData', ['$resource',
 	function($resource) {
-		return $resource('paramType/:id', {id: '@id'}, {
+		return $resource('../paramType/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'}
@@ -68,7 +72,7 @@ angular.module('acadb.services', []).
 }])
 .factory('ParamValueData', ['$resource',
 	function($resource) {
-		return $resource('paramValue/:id', {id: '@id'}, {
+		return $resource('../paramValue/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
@@ -80,7 +84,7 @@ angular.module('acadb.services', []).
 }])
 .factory('SysParamValuesData', ['$resource',
 	function($resource) {
-		return $resource('sysParamValues/:id', {id: '@id'}, {
+		return $resource('../sysParamValues/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},

@@ -4,8 +4,8 @@
 
 
 /* Controllers */
-
 angular.module('acadb.controllers', [])
+
 	.controller('MainCtrl', function ($scope, $http) {
 
 		$scope.getLayout = function(){
@@ -20,22 +20,94 @@ angular.module('acadb.controllers', [])
 					// or server returns response with an error status.
 				});
 		}
-
 		$scope.getLayout();
 
 		$scope.isCollapsed = true;
+		$scope.isMessagesCollapsed - true;
+		$scope.menuOpen = true;
 
+		$scope.toggleMenu = function() {
+			$scope.menuOpen = !$scope.menuOpen;
+		}
+
+		$scope.openLeftMenu = function() {
+			$scope.menuOpen = !$scope.menuOpen;
+		};
 	})
-
 	.controller("TController",['$state','$scope', '$filter', '$http', 'ParamData','UsersData','$location','ColumnData','DocParamData','DocTypeData','ParamTypeData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN', function($state, $scope, $filter, $http, ParamData,UsersData,$location,ColumnData,DocParamData,DocTypeData,ParamTypeData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN) {
 
+		$scope.sortableOptions = {
+			update: function(e, ui) {  },
+			axis: 'x'
+		};
+		$scope.showColumns = true;
+
+
+		$scope.ordered_columns = [];
+
+
+
+		$scope.$watch('all_columns', function() {
+			update_columns();
+		}, true);
+
+		var update_columns = function() {
+			$scope.ordered_columns = [];
+			for (var i = 0; i < $scope.all_columns.length; i++) {
+				var column = $scope.all_columns[i];
+				if (column.checked) {
+					$scope.ordered_columns.push(column);
+				}
+			}
+		};
+		$scope.checkAll = function () {
+			if ($scope.selectedAll) {
+				$scope.selectedAll = true;
+			} else {
+				$scope.selectedAll = false;
+			}
+			angular.forEach($scope.Items, function (item) {
+				item.Selected = $scope.selectedAll;
+			});
+
+		};
+
+
+		$scope.setOrderBy = function(param){
+			$scope.orderByField = param;
+		}
+
+		$scope.reverseSort = false;
+
+
 		$scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
 		$scope.countries = countries = ['Afghanistan', 'Åland Islands', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', '$_[', 'Croatia', 'Curaçao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Réunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'USA', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
 
 
-		console.log($state);
 
+		$scope.getAuthId = function(){
+			$http.get('/getAuthId').
+				success(function(data, status, headers, config) {
+					$scope.getUser(data);
+					$scope.userId = data;
 
+				});
+		};
+
+		$scope.getUser = function(id){
+			$http.get('/users/'+id).
+				success(function(data, status, headers, config) {
+					$scope.user = data;
+					//$stateParams.user = $scope.user;
+				}).
+				error(function(data, status, headers, config) {
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+				});
+		};
+
+		$scope.getAuthId();
 		/* fetching json from server via lib/services-ParamData, UserData
 
 		 *
@@ -43,20 +115,90 @@ angular.module('acadb.controllers', [])
 		 *
 		 *
 		 */
-
+		$scope.data = '';
+		$scope.users=[];
 		$scope.params = ParamData.query();
-		$scope.users  = UsersData.query();
+		$scope.jobseekerColumns =[];
+		$scope.employerColumns = [];
+		$scope.allColumns = [];
+
+		UsersData.get().$promise.then(function(value) {
+
+			$scope.users = value.users
+			//console.log($scope.users)
+			$scope.data = $scope.users;
+			angular.forEach( value.jobseekerColumns, function(value, key) {
+				$scope.jobseekerColumns.push({'title'   :value.title,
+					                          'type'    :value.type,
+											  'checked' :value.checked,
+					                          'docParamName' :value.docParamName
+				});
+				$scope.allColumns.push({'title'   :value.title,
+										'type'    :value.type,
+										'checked' :value.checked,
+										'docParamName' :value.docParamName
+				});
+			});
+			angular.forEach( value.employerColumns, function(value, key) {
+				$scope.employerColumns.push({'title'   :value.title,
+											 'type'    :value.type,
+											 'checked' :value.checked,
+											 'docParamName' :value.docParamName
+				});
+				$scope.allColumns.push({'title'   :value.title,
+										'type'    :value.type,
+										'checked' :value.checked,
+										'docParamName' :value.docParamName
+				});
+			});
+			//console.log($scope.employerColumns);
+		});
+
+
+
 		$scope.docParams  = DocParamData.query();
 		$scope.docTypes  = DocTypeData.query();
 		$scope.paramTypes  = ParamTypeData.query();
 		$scope.paramValues = ParamValueData.query();
 		$scope.sysParamValues = SysParamValuesData.query();
 
+		$scope.selectedAll = true;
+		$scope.all_columns = 	$scope.allColumns;
+		$scope.checkAll = function () {
+			if ($scope.selectedAll) {
+				$scope.selectedAll = true;
+			} else {
+				$scope.selectedAll = false;
+			}
+			angular.forEach($scope.all_columns, function (column) {
+				column.checked = $scope.selectedAll;
+			});
+
+		};
+//tabs varibles
 
 
+
+		$scope.filter = '';
+
+		$scope.setFilter = function(query){
+
+			$scope.filter = query;
+
+			if(query == 'jobseeker'){
+				$scope.all_columns = $scope.jobseekerColumns;
+				$scope.jobseekersTab = true;
+			}else if(query == 'employer'){
+				$scope.all_columns = $scope.employerColumns;
+				$scope.employersTab = true;
+			}else if(query == ''){
+				$scope.all_columns = $scope.allColumns;
+			}
+
+
+		}
 
 		$scope.select_type = {
-			'type_id': 'paramType',
 			'doc_param_id': 'docParam',
 			'doc_type_id' : 'docType',
 			'value_ref'   : 'paramValue',
@@ -67,8 +209,9 @@ angular.module('acadb.controllers', [])
 
 		};
 
+
 //changing variables according path.
-		if($location.path() == '/tables/type_user')
+		if($location.path() == '/tables/type_user' || $location.path() == '/stats' )
 		{
 			console.log($location.path())	;
 			$scope.table = 'type_user';
@@ -127,6 +270,8 @@ angular.module('acadb.controllers', [])
 
 
 		}
+
+
 
 
 
@@ -199,15 +344,22 @@ angular.module('acadb.controllers', [])
 		};
 
 		/*ngOptions get options*/
+		//$scope.groups = {};
+		//$scope.loadGroups = function(param) {
+		//	return $scope.groups.length ? null : $http.get('/' + $scope.select_type[param]).success(function(data) {
+		//		$scope.groups[param] = data;
+        //
+        //
+		//	});
+		//};
 		$scope.groups = {};
-		$scope.loadGroups = function(param) {
-			return $scope.groups.length ? null : $http.get('/' + $scope.select_type[param]).success(function(data) {
-				$scope.groups[param] = data;
+		$scope.loadGroups = function(paramName, docParamId) {
 
-
+			if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
+			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
+				$scope.groups[paramName] = data;
 			});
 		};
-
 		$scope.showValues = function(val){
 			console.log(val);
 		};
@@ -243,6 +395,8 @@ angular.module('acadb.controllers', [])
 			});
 		};
 
+
+
 	}])
 	.controller('FilesCtrl', function ($scope, $modalInstance, user, CSRF_TOKEN) {
 		$scope.user = user;
@@ -277,9 +431,7 @@ angular.module('acadb.controllers', [])
 		};
 
 		$scope.flowOp = function(key){
-			console.log('das');
 			return  {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
-
 		};
 		$scope.$on('flow::fileSuccess', function (event, $flow, $file, $message) {
 		
@@ -317,7 +469,7 @@ angular.module('acadb.controllers', [])
 				_token:CSRF_TOKEN,
 				from:'jobPost'
 			}).success(function(errors){
-
+				$scope.allPosts.push(post);
 				return post;
 
 			}).error(function(err) {
@@ -744,25 +896,139 @@ angular.module('acadb.controllers', [])
 
 		};
 	})
-	.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$filter', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$filter) {
+
+	.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$filter','FileUploader',
+		function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$filter,FileUploader) {
 
 
 
+			var uploader = $scope.uploader = new FileUploader({
+				url: '/uploadCv',
+				//	autoUpload:true,
+				queueLimit: 1,
+				formData: [
+					{ _token: CSRF_TOKEN,
+						iteration:''
+					},
+				]
+			});
+			//$scope.loadNewFile = function(url) {
+			//	//pdfDelegate
+			//	//	.$getByHandle('soprano')
+			//	//	.load('/uploads/userCv/87/pdf.pdf');
+			//};
 
-		//$scope.getJobPostFields = function(){
-		//	$http.get('/columns/jobPost').
-		//		success(function(data, status, headers, config) {
-        //
-        //
-        //
-		//			$scope.jobPost = data;
-		//		}).error(function(data, status, headers, config){
-        //
-		//		});
-		//};
+			$scope.resetPdfUrl = function(key){
+				$scope.hideInput = false;
+				$scope.pdfing = false;
+				$scope.pdfUrl = '';
+				$scope.uploader.queue = [];
+				document.getElementById('cvUpload').value = null;
+
+			}
+			// FILTERS
+
+			uploader.filters.push({
+					name: 'customFilter',
+					fn: function(item /*{File|FileLikeObject}*/, options) {
+						$scope.hideInput = true;
+						return this.queue.length < 10;
+					}
+				}
+			);
+
+			//uploader.filters.push({
+			//	name: 'imageFilter',
+			//	fn: function(item /*{File|FileLikeObject}*/, options) {
+			//		var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+			//		return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+			//	}
+			//});
+			// CALLBACKS
+
+			uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+				console.info('onWhenAddingFileFailed', item, filter, options);
+				$scope.pdfing = true;
+
+			};
+			uploader.onAfterAddingFile = function(fileItem) {
+				console.info('onAfterAddingFile', fileItem);
+				//$scope.pdfUrl = fileItem._file;
+				//angular.forEach(fileItem, function(value, key) {
+				//	console.log(key + ': ' + value);
+				//	$scope.fileItem = value;
+				//});
+				angular.forEach(fileItem.uploader.queue[0], function(value, key) {
+					console.log(key + ': ' + value);
+					$scope.fileItem = value;
+				});
+				//angular.forEach(fileItem.file, function(value, key) {
+				//	console.log(key + ': ' + value);
+				//	$scope.fileItem = value;
+				//});
+				//console.log(fileItem._file);
+			};
+			uploader.onAfterAddingAll = function(addedFileItems) {
+				console.info('onAfterAddingAll', addedFileItems);
+			};
+			uploader.onBeforeUploadItem = function(item) {
+				console.info('onBeforeUploadItem', item);
+				//$scope.hideInput = true;
+				$scope.pdfing = true;
+			};
+			uploader.onProgressItem = function(fileItem, progress) {
+				console.info('onProgressItem', fileItem, progress);
+			};
+			uploader.onProgressAll = function(progress) {
+				console.info('onProgressAll', progress);
+			};
+			uploader.onSuccessItem = function(fileItem, response, status, headers) {
+				console.info('onSuccessItem', fileItem, response, status, headers);
+				$scope.pdfUrl = '../../'+response;
+			};
+			uploader.onErrorItem = function(fileItem, response, status, headers) {
+				console.info('onErrorItem', fileItem, response, status, headers);
+			};
+			uploader.onCancelItem = function(fileItem, response, status, headers) {
+				console.info('onCancelItem', fileItem, response, status, headers);
+			};
+			uploader.onCompleteItem = function(fileItem, response, status, headers) {
+				console.info('onCompleteItem', fileItem, response, status, headers);
+
+			};
+			uploader.onCompleteAll = function() {
+				console.info('onCompleteAll');
+			};
+		$scope.openLeftMenu = function() {
+						$scope.menuOpen = !$scope.menuOpen;
+		};
+		$scope.getJobPostFields = function(){
+			$http.get('/columns/jobPost').
+				success(function(data, status, headers, config) {
+					$scope.jobPost = data;
+				}).error(function(data, status, headers, config){
+				});
+		};
 		//$scope.getJobPostFields();
 
+		$scope.getPost = function(id){
+			$http.get('/job/'+id ).
+				success(function(data, status, headers, config) {
+					$scope.post = data;
+					$state.go(
+						'job',
+						{
+							jobId:id,
+						} // this goes into $stateParams for
+						// state 'some'
+					);
+					console.log($state);
 
+				}).
+				error(function(data, status, headers, config) {
+
+				});
+		};
 
 		$scope.groups = {};
 		$scope.loadGroups = function(paramName, docParamId) {
@@ -892,6 +1158,22 @@ angular.module('acadb.controllers', [])
 			$http.get('/users/'+id).
 				success(function(data, status, headers, config) {
 					$scope.user = data;
+					//console.log($scope.user['career_goals'][33]['paramValue']);
+
+					//if($scope.user['career_goals'][33]['paramValue'] != '' || $scope.user['career_goals'][33]['paramValue']!= null){
+					//	$scope.pdfing = true;
+					//	$scope.pdfUrl ='/'+ $scope.user['career_goals'][33]['paramValue'];
+                     //   //
+					//	//pdfDelegate
+					//	//	.$getByHandle('my-pdf-container')
+					//	//	.load($scope.pdfUrl);
+					//}else{
+					//	$scope.pdfing = false;
+					//}
+
+
+
+
 
 					$stateParams.user = $scope.user;
 					$scope.next_keys = [];
@@ -913,7 +1195,14 @@ angular.module('acadb.controllers', [])
 				});
 		};
 
+			$scope.resetPdfUrl = function(key){
+				$scope.hideInput = false;
+				$scope.pdfing = false;
+				$scope.pdfUrl = '';
+				$scope.uploader.queue = [];
+				document.getElementById('cvUpload').value = null;
 
+			}
 
 		$scope.items = ['item1', 'item2', 'item3'];
 
@@ -943,186 +1232,186 @@ angular.module('acadb.controllers', [])
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		//$scope.openNewJob = function (size) {
-		//
-		//		console.log("UserHomeController");
-		//	var modalInstance = $uibModal.open({
-		//		animation: $scope.animationsEnabled,
-		//		templateUrl: 'newJob.html',
-		//		size: size,
-		//
-		//		resolve: {
-		//			jobPost: function () {
-		//				return $scope.jobPost;
-		//			},
-		//
-		//		},
-		//		controller: 'JobPostModalInstanceCtrl',
-		//	});
-		//
-		//	modalInstance.result.then(function (selectedItem) {
-		//		$scope.selected = selectedItem;
-		//	}, function () {
-		//		$log.info('Modal dismissed at: ' + new Date());
-		//	});
-		//};
-///Aside
+		$scope.openNewJob = function (size) {
 
-		//$scope.asideState = {
-		//	open: true
-		//};
-        //
-		//$scope.openAside = function(position, backdrop) {
-        //
-        //
-        //
-		//	$scope.asideState = {
-		//		open: true,
-		//		position: 'left'
-		//	};
-        //
-		//	function postClose() {
-		//		$scope.asideState.open = false;
-		//	}
-        //
-		//	$aside.open({
-		//		templateUrl: '../partials/jobseeker_aside.html',
-		//		placement: position,
-		//		size: 'sm',
-		//		backdrop: backdrop,
-		//		resolve: {
-		//			user: function () {
-		//				return $scope.user;
-		//			}
-		//		},
-		//		controller: function($scope, $modalInstance, user) {
-		//			$scope.user = user;
-        //
-		//			$scope.ok = function(e) {
-		//				$modalInstance.close();
-		//				e.stopPropagation();
-        //
-		//			};
-		//			$scope.cancel = function(e) {
-		//				$modalInstance.dismiss();
-		//				e.stopPropagation();
-		//			};
-		//			$scope.cancelOnResize = function() {
-		//				$modalInstance.dismiss();
-        //
-		//			};
-		//			$(window).resize(function(){
-        //
-		//				//console.log(window.innerWidth);
-		//				$scope.$apply(function(){
-		//					$scope.cancelOnResize();
-		//				});
-		//			});
-		//		}
-		//	}).result.then(postClose, postClose);
-		//}
-        //
-		//$scope.openEmployerAside = function(position, backdrop) {
-        //
-        //
-        //
-		//	$scope.asideState = {
-		//		open: true,
-		//		position: 'left'
-		//	};
-        //
-		//	function postClose() {
-		//		$scope.asideState.open = false;
-		//	}
-        //
-		//	$aside.open({
-		//		templateUrl: '../partials/employer_aside.html',
-		//		placement: position,
-		//		size: 'sm',
-		//		backdrop: backdrop,
-		//		resolve: {
-		//			user: function () {
-		//				return $scope.user;
-		//			}
-		//		},
-		//		controller: function($scope, $modalInstance, user) {
-		//			$scope.user = user;
-		//			console.log(user);
-		//			$scope.ok = function(e) {
-		//				$modalInstance.close();
-		//				e.stopPropagation();
-        //
-		//			};
-		//			$scope.cancel = function(e) {
-		//				$modalInstance.dismiss();
-		//				e.stopPropagation();
-		//			};
-		//			$scope.cancelOnResize = function() {
-		//				$modalInstance.dismiss();
-        //
-		//			};
-		//			$(window).resize(function(){
-        //
-		//				//console.log(window.innerWidth);
-		//				$scope.$apply(function(){
-		//					$scope.cancelOnResize();
-		//				});
-		//			});
-		//		}
-		//	}).result.then(postClose, postClose);
-		//}
-        //
-        //
-        //
-		//$scope.openJobseekerRegisterAside = function(position, backdrop) {
-        //
-        //
-        //
-		//	$scope.asideState = {
-		//		open: true,
-		//		position: 'left'
-		//	};
-        //
-		//	function postClose() {
-		//		$scope.asideState.open = false;
-		//	}
-        //
-		//	$aside.open({
-		//		templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
-		//		placement: position,
-		//		size: 'sm',
-		//		backdrop: backdrop,
-		//		resolve: {
-		//			user: function () {
-		//				return $scope.user;
-		//			}
-		//		},
-		//		controller: function($scope, $modalInstance, user) {
-		//			$scope.user = user;
-		//			console.log(user);
-		//			$scope.ok = function(e) {
-		//				$modalInstance.close();
-		//				e.stopPropagation();
-        //
-		//			};
-		//			$scope.cancel = function(e) {
-		//				$modalInstance.dismiss();
-		//				e.stopPropagation();
-		//			};
-		//			$scope.cancelOnResize = function() {
-		//				$modalInstance.dismiss();
-        //
-		//			};
-		//			$(window).resize(function(){
-        //
-		//				//console.log(window.innerWidth);
-		//				$scope.$apply(function(){
-		//					$scope.cancelOnResize();
-		//				});
-		//			});
-		//		}
-		//	}).result.then(postClose, postClose);
-		//}
+				console.log("UserHomeController");
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'newJob.html',
+				size: size,
+
+				resolve: {
+					jobPost: function () {
+						return $scope.jobPost;
+					},
+
+				},
+				controller: 'JobPostModalInstanceCtrl',
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+//Aside
+
+		$scope.asideState = {
+			open: true
+		};
+
+		$scope.openAside = function(position, backdrop) {
+
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/jobseeker_aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
+
+		$scope.openEmployerAside = function(position, backdrop) {
+
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/employer_aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+					console.log(user);
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
+
+
+
+		$scope.openJobseekerRegisterAside = function(position, backdrop) {
+
+
+
+			$scope.asideState = {
+				open: true,
+				position: 'left'
+			};
+
+			function postClose() {
+				$scope.asideState.open = false;
+			}
+
+			$aside.open({
+				templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
+				placement: position,
+				size: 'sm',
+				backdrop: backdrop,
+				resolve: {
+					user: function () {
+						return $scope.user;
+					}
+				},
+				controller: function($scope, $modalInstance, user) {
+					$scope.user = user;
+					console.log(user);
+					$scope.ok = function(e) {
+						$modalInstance.close();
+						e.stopPropagation();
+
+					};
+					$scope.cancel = function(e) {
+						$modalInstance.dismiss();
+						e.stopPropagation();
+					};
+					$scope.cancelOnResize = function() {
+						$modalInstance.dismiss();
+
+					};
+					$(window).resize(function(){
+
+						//console.log(window.innerWidth);
+						$scope.$apply(function(){
+							$scope.cancelOnResize();
+						});
+					});
+				}
+			}).result.then(postClose, postClose);
+		}
 
 
 		$scope.openGallery = function (size) {
@@ -1151,12 +1440,12 @@ angular.module('acadb.controllers', [])
 		$scope.isArray = angular.isArray;
 		$scope.oneAtATime = true;
 		$scope.allJobs = {};
-		//$.getJSON('/getAllJobs', function(data){
-        //
-		//	$scope.$apply(function(){
-		//		$scope.allJobs = data;
-		//	});
-		//});
+		$.getJSON('/getAllJobs', function(data){
+
+			$scope.$apply(function(){
+				$scope.allJobs = data;
+			});
+		});
 
 		// var state = $location.path();
 		// state = state.split('/');
@@ -1448,10 +1737,15 @@ angular.module('acadb.controllers', [])
 .controller("RegisterController",['$scope','$rootScope','ParamData','DocParamData','$http','UsersData','DocTypeData','ParamTypeData','$location','$state','CSRF_TOKEN','$filter', function($scope,$rootScope,ParamData,DocParamData,$http,UsersData,DocTypeData,ParamTypeData,$location,$state,CSRF_TOKEN,$filter) {
 
 
+
+
+
 		'use strict';
 		var state = $location.path();
 		var absUrl = $location.absUrl();
 		absUrl = absUrl.split('/');
+		$scope.jobseeker_type = absUrl[5]
+		$scope.jobseeker_type = $scope.jobseeker_type.replace('#','');
 		absUrl = absUrl[4];
 		absUrl = absUrl.replace('#','');
 		$scope.absUrl = absUrl;
@@ -1489,7 +1783,7 @@ angular.module('acadb.controllers', [])
 				prev_key = $scope.steps[key].value;
 
 			} else {
-				$scope.next_keys[prev_key] =$scope.steps[key].value;
+				$scope.next_keys[prev_key] = $scope.steps[key].value;
 				prev_key = $scope.steps[key].value;
 				$scope.next =$scope.steps[key].value;
 
@@ -1500,19 +1794,209 @@ angular.module('acadb.controllers', [])
 			$http.get('/columns/' + $scope.absUrl).
 				success(function(data, status, headers, config) {
 					$scope.user = data;
+					console.log(data);
+					$scope.user['personal_information']['education_status'] = 	$scope.jobseeker_type;
+
 				});
 ;
 		}
 		$scope.getForms();
+
+
+
 	}])
 
 
-	.controller('formController', function($rootScope,$window,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment) {
+	.controller('formController', function($rootScope,$window,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment,FileUploader,$timeout) {
 		'use strict';
+
+
+
+		//angular-file-upload 	https://github.com/nervgh/angular-file-upload
+
+		//if (typeof uploader == 'undefined') {
+		//	var uploader = [];
+		//	$scope.uploader = [];
+		//	$scope.pdfing = [];
+		//	$scope.hideInput = [];
+		//}
+
+		$scope.getThisLengthKey = function(key){
+			var uploader = [];
+			$scope.uploader = [];
+			$scope.pdfing = [];
+			$scope.hideInput = [];
+			$scope.pdfUrl = [];
+			$scope.pdf = []
+			uploader[key] = $scope.uploader[key] = new FileUploader({
+				url: '/uploadCv',
+				autoUpload:true,
+				//queueLimit: 1,
+				formData: [
+					{ _token: CSRF_TOKEN,
+					  iteration: key },
+				]
+			});
+
+			// FILTERS
+
+			//uploader[key].filters.push({
+			//	name: 'customFilter',
+			//	fn: function(item /*{File|FileLikeObject}*/, options) {
+			//		//$scope.hideInput = true;
+			//		return this.queue.length < 10;
+            //
+			//	}
+			//});
+
+			// CALLBACKS
+
+			uploader[key].onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+				console.info('onWhenAddingFileFailed', item, filter, options);
+			};
+			uploader[key].onAfterAddingFile = function(fileItem) {
+				console.info('onAfterAddingFile', fileItem);
+			};
+			uploader[key].onAfterAddingAll = function(addedFileItems) {
+				console.info('onAfterAddingAll', addedFileItems);
+			};
+			uploader[key].onBeforeUploadItem = function(item) {
+				console.info('onBeforeUploadItem', item);
+
+			};
+			uploader[key].onProgressItem = function(fileItem, progress) {
+				console.info('onProgressItem', fileItem, progress);
+			};
+			uploader[key].onProgressAll = function(progress) {
+				console.info('onProgressAll', progress);
+			};
+			uploader[key].onSuccessItem = function(fileItem, response, status, headers) {
+				console.info('onSuccessItem', fileItem, response, status, headers);
+				$scope.pdfUrl[key] = '/'+response;
+				$scope.hideInput[key] = true;
+				$scope.pdfing[key] = true;
+				//$scope.user['career_goals'][33][key]['paramValue'] = '/'+response;
+				//console.log(key);
+
+			};
+			uploader[key].onErrorItem = function(fileItem, response, status, headers) {
+				console.info('onErrorItem', fileItem, response, status, headers);
+			};
+			uploader[key].onCancelItem = function(fileItem, response, status, headers) {
+				console.info('onCancelItem', fileItem, response, status, headers);
+			};
+			uploader[key].onCompleteItem = function(fileItem, response, status, headers) {
+				console.info('onCompleteItem', fileItem, response, status, headers);
+			};
+			uploader[key].onCompleteAll = function() {
+				console.info('onCompleteAll');
+			};
+
+
+
+
+		}
+
+
+		$scope.resetPdfUrlIterable = function(key){
+
+			$scope.hideInput[key] = false;
+			$scope.pdfing[key] = false;
+
+			$scope.uploader[key].queue = [];
+			document.getElementById('cvUpload'+ key).value = null;
+
+		}
+
+
+
+
+
+
+
+		var uploader = $scope.uploader = new FileUploader({
+			url: '/uploadCv',
+			//	autoUpload:true,
+			queueLimit: 1,
+			formData: [
+				{ _token: CSRF_TOKEN,
+				  iteration: ''
+				},
+			]
+		});
+
+			$scope.resetPdfUrl = function(key){
+				$scope.hideInput = false;
+				$scope.pdfing = false;
+				$scope.pdfUrl = '';
+				$scope.uploader.queue = [];
+				document.getElementById('cvUpload').value = null;
+
+			}
+			// FILTERS
+
+			uploader.filters.push({
+				name: 'customFilter',
+					fn: function(item /*{File|FileLikeObject}*/, options) {
+						$scope.hideInput = true;
+						return this.queue.length < 10;
+					}
+     			}
+			);
+
+
+
+			uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+				console.info('onWhenAddingFileFailed', item, filter, options);
+				$scope.pdfing = true;
+
+			};
+			uploader.onAfterAddingFile = function(fileItem) {
+				console.info('onAfterAddingFile', fileItem);
+			};
+			uploader.onAfterAddingAll = function(addedFileItems) {
+				console.info('onAfterAddingAll', addedFileItems);
+			};
+			uploader.onBeforeUploadItem = function(item) {
+				console.info('onBeforeUploadItem', item);
+			};
+			uploader.onProgressItem = function(fileItem, progress) {
+				console.info('onProgressItem', fileItem, progress);
+			};
+			uploader.onProgressAll = function(progress) {
+				console.info('onProgressAll', progress);
+			};
+			uploader.onSuccessItem = function(fileItem, response, status, headers) {
+				console.info('onSuccessItem', fileItem, response, status, headers);
+				$scope.pdfUrl = '/'+response;
+				$scope.hideInput = true;
+				$scope.pdfing = true;
+			};
+			uploader.onErrorItem = function(fileItem, response, status, headers) {
+				console.info('onErrorItem', fileItem, response, status, headers);
+			};
+			uploader.onCancelItem = function(fileItem, response, status, headers) {
+				console.info('onCancelItem', fileItem, response, status, headers);
+			};
+			uploader.onCompleteItem = function(fileItem, response, status, headers) {
+				console.info('onCompleteItem', fileItem, response, status, headers);
+
+			};
+			uploader.onCompleteAll = function() {
+				console.info('onCompleteAll');
+			};
 
 		var state = $location.path();
 		var absUrl = $location.absUrl();
 		absUrl = absUrl.split('/');
+		$scope.jobseeker_type = absUrl[5]
+
+		if(typeof($scope.jobseeker_type) != 'undefined'){
+			$scope.jobseeker_type = $scope.jobseeker_type.replace('#','');
+		}
+
+		console.log($scope.jobseeker_type);
+
 		absUrl = absUrl[4];
 		absUrl = absUrl.replace('#','');
 		$scope.absUrl = absUrl;
@@ -1537,24 +2021,77 @@ angular.module('acadb.controllers', [])
 		$scope.steps = $rootScope.steps;
 		$scope.docParam = $state.current.name.split('.');
 		$scope.docParam = $scope.docParam[1];
-
-
-
+	//	console.log($scope.docParam);
 
 		$scope.saveUser = function(user,docParam) {
 			user.personal_information.subtype = locationSubtype;
 			user.personal_information.status = 'active';
-
+			user.personal_information
 			$http.post('/auth/register', {
 				user: user,
 				_token: CSRF_TOKEN,
 				from:'register'
 			}).success(function(data){
-				$state.go(prefix+'.'+$scope.nextDoc($scope.docParam));
-			}).error(function(err) {
+				console.log(data);
 
+				$state.go(prefix+'.'+$scope.nextDoc($scope.docParam));
+			}).error(function(errors) {
+				console.log(errors);
+				$scope.errors = errors;
 			});
 		};
+
+		//$scope.validateOnServer = function() {
+        //
+        //
+		//	$http.post('/auth/register', {
+		//		user: $scope.user,
+		//		_token: CSRF_TOKEN,
+        //
+		//	}).success(function(data){
+        //
+		//	}).error(function(errors) {
+		//		$scope.errors = errors;
+		//	});
+		//};
+
+		//$scope.validateThis = function(param) {
+        //
+        //
+		//	$http.post('/auth/register', {
+		//		user:{
+		//			param:param,
+		//			value:$scope.user.personal_information[param]
+		//		},
+		//		_token: CSRF_TOKEN,
+        //
+		//	}).success(function(data){
+        //
+		//	}).error(function(errors) {
+		//		$scope.errors[param] = errors;
+		//	});
+		//};
+
+
+		//$scope.validateEmailOnServer = function() {
+        //
+		//	$http.post('/auth/register', {
+		//		email: user.personal_information.email,
+		//		_token: CSRF_TOKEN,
+        //
+		//	}).success(function(data){
+        //
+        //
+		//	}).error(function(errors) {
+        //
+		//		$scope.emailUnique = errors;
+        //
+		//	});
+		//};
+
+
+
+
 
 		$scope.flowOp = function(key){
 			//	console.log(key);
@@ -1629,7 +2166,7 @@ angular.module('acadb.controllers', [])
 		};
 
 		$scope.addRecordEmployer =function(docParam,$index) {
-			console.log('hell');
+			console.log('');
 			$http.get('/columns/registerEmployer')
 				.success(function(data, status, headers, config) {
 
@@ -1660,8 +2197,6 @@ angular.module('acadb.controllers', [])
 					}else{
 						$scope.post[docParam].push($scope.inserted);
 					}
-
-
 				})
 				.error(function(){
 					alert('ERROR!!');
@@ -1675,30 +2210,96 @@ angular.module('acadb.controllers', [])
 
 
 		$scope.remove = function(docParam,docParamName,param) {
-			docParam.splice(param, 1);
+			$scope.new = docParam.splice(param, 1);
 			$http.post('/deleteIterable',
 				{
 					docParam:docParam,
 					post:$scope.post,
 					docParamName:docParamName,
 					param:param,
-					_token:CSRF_TOKEN}).
-				then(function(response) {
-
+					_token:CSRF_TOKEN})
+				.error(function(data){
+					console.log($scope.new);
+					$scope.user[docParamName] = $scope.new[0] ;
+					//console.log($scope.user);
+				})
+				.then(function(response) {
+					console.log($scope.new)
+					$scope.user[docParamName] = $scope.new[0] ;
+					//console.log($scope.user)
 				}, function(response) {
 
 				});
 		};
 
-		$scope.groups={};
 
+
+		$scope.countries = [{
+			"name": "USA",
+			"id": 1
+		},{
+			"name": "Canada",
+			"id": 2
+		}];
+
+		$scope.states = [{
+			"name": "Alabama",
+			"id": 1,
+			"countryId": 1
+		}, {
+			"name": "Alaska",
+			"id": 2,
+			"countryId": 1
+		}, {
+			"name": "Arizona",
+			"id": 3,
+			"countryId": 1
+		}, {
+			"name": "Alberta",
+			"id": 4,
+			"countryId": 2
+		}, {
+			"name": "British columbia",
+			"id": 5,
+			"countryId": 2
+		}];
+
+
+
+		$scope.educationStatuses = [
+			{value: 'student', text: 'Student'},
+			{value: 'graduate', text: 'Graduate'},
+			{value: 'intern', text: 'Intern'},
+
+
+		];
+		//console.log($scope.jobseeker_type);
+		//$scope.jobseeker_type = {value:$scope.jobseeker_type,text:$scope.jobseeker_type};
+		//console.log($scope.jobseeker_type);
+		//$scope.selected = $scope.jobseeker_type;
+
+// loading the options for select inputs
+
+
+
+		$scope.groups={};
 		$scope.loadGroups = function(paramName, docParamId) {
 			$scope.groups[paramName] = {};
 			return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
+
 				$scope.groups[paramName] = data;
-				//console.log($scope.groups);
+				console.log($scope.groups);
+
 			});
+
+
 		};
+
+
+
+
+////
+
 
 		$scope.today = function() {
 			$scope.dt = new Date();
@@ -1796,17 +2397,58 @@ angular.module('acadb.controllers', [])
 				});
 			});
 		};
+        //
+		//$scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
+		//$scope.countries  = ['Afghanistan', 'Åland Islands', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', '$_[', 'Croatia', 'Curaçao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Réunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'USA', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
+        //
+        //$scope.getPost = function(id){
+			//$http.get('/job/'+id ).
+			//	success(function(data, status, headers, config) {
+			//		$scope.post = data;
+			//	}).
+			//	error(function(data, status, headers, config) {
+        //
+			//	});
+        //};
 
-		$scope.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
-		$scope.countries  = ['Afghanistan', 'Åland Islands', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', '$_[', 'Croatia', 'Curaçao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Réunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'USA', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
+		$scope.savePost = function(post) {
+			console.log(post);
+			$http.post('/savePost', {
+				post:post,
+				_token:CSRF_TOKEN,
+				from:'jobPost'
+			}).success(function(errors){
+				$scope.allPosts.push(post);
+				return post;
+
+			}).error(function(err) {
 
 
+
+			});
+		};
+
+		//$scope.post = $scope.getPost(job);
 
 
 	})
 	.controller("FindajobController",['$window','$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location','$uibModal','$log', function($window,$scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$uibModal,$log) {
 
 
+
+		$scope.initModals = function() {
+			$('.dropdown-button').dropdown({
+					inDuration: 300,
+					outDuration: 225,
+					constrain_width: false, // Does not change width of dropdown to that of the activator
+					hover: true, // Activate on hover
+					gutter: -80, // Spacing from edge
+					belowOrigin: false, // Displays dropdown below the button
+					alignment: 'left' // Displays dropdown with edge aligned to the left of button
+				}
+			);
+			$('.modal-trigger').leanModal(); // Initialize the modals
+		}
 		//ratings
 		$scope.rate = 70;
 		$scope.total = 10;
@@ -1884,7 +2526,7 @@ angular.module('acadb.controllers', [])
 						} // this goes into $stateParams for
 						// state 'some'
 					);
-					console.log('once');
+
 					console.log($state);
 				}).
 				error(function(data, status, headers, config) {

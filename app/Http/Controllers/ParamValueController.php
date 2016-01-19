@@ -98,7 +98,32 @@ class ParamValueController extends Controller {
 			$paramId = DB::table('param')->where('name',$paramName)->where('doc_param_id',$user_doc_param_id)->pluck('id');
 
 		}
+
+//		$values =  DB::table('param_value')->get();
+//
+//
+//
+//
+//
+//
+//
+//
+//		foreach($values as $key => $value) {
+//			$option['id'] = $value->id;
+//			$option['parent_id'] = $value->parent_id;
+//			$option['value'] = $value->value;
+//			$option['text'] = $value->value;
+//
+//			$paramOptions[$key] = $option;
+//		}
+//		return Response::json($paramOptions);
+//
+
+
+
 		$paramValues = DB::table('param_value')->where('param_id',$paramId)->lists('value');
+
+
 
 		if(!$paramValues){
 
@@ -106,15 +131,17 @@ class ParamValueController extends Controller {
 		}else
 		{
 			foreach($paramValues as $key => $value) {
+				$id	= DB::table('param_value')->where('value',$value)->pluck('id');
+				$parent_id	= DB::table('param_value')->where('value',$value)->pluck('parent_id');
+				$option['id'] = $id;
+				$option['parent_id'] = $parent_id;
 				$option['value'] = $value;
 				$option['text'] = $value;
+
 				$paramOptions[$key] = $option;
 			}
 			return Response::json($paramOptions);
 		}
-//		if(!$paramValues || $paramValues == null) {
-//			$paramOptions = array(1,2,3);
-//		}
 
 
 	}

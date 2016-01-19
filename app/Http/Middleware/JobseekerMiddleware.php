@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class JobseekerMiddleware
 {
     /**
@@ -15,12 +15,10 @@ class JobseekerMiddleware
      */
     public function handle($request, Closure $next)
     {
-    	
-		
-    	if ($request->user()->subtype != 'jobseeker')
+        if ($request->user()->subtype != 'jobseeker')
         {
-            return redirect('employer#/');
-          //  return response('Unauthorized.', 401);
+            return redirect('employer/');
+            //    return response('Unauthorized.', 401);
         }
         return $next($request);
 

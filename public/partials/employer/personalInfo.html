@@ -1,9 +1,9 @@
-<script type="text/ng-template" id="customTemplate.html">
-  <a style="float:left;">
-      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>
-  </a>
-</script>
+<!--<script type="text/ng-template" id="customTemplate.html">-->
+  <!--<a style="float:left;">-->
+      <!--<img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">-->
+      <!--<div bind-html-unsafe="match.label | typeaheadHighlight:query"></div>-->
+  <!--</a>-->
+<!--</script>-->
 
 
 
@@ -13,7 +13,7 @@
 	</ul>
 </div> -->
 
-
+<main>
 <div ng-if="docParam == 'company'" >
 		
 	<div class="col-lg-8 fieldDiv">
@@ -23,7 +23,7 @@
 		</div>
 		
 		<div>
-			<input type='text' class="form-control param_input" name="company_name" placeholder="Company Name" ng-model="user.company.company_name.paramValue" required>
+			<input type='text' class="form-control param_input" name="company_name" placeholder="Company Name" ng-model="user['company'][19]['paramValue']" required>
 		</div>
 		
 	</div>	
@@ -42,7 +42,7 @@
 		</div>
 		
 		<div>
-			<input type='text' class="form-control param_input" name="contact_person" placeholder="Contact Person" ng-model="user.company.contact_person.paramValue" required>
+			<input type='text' class="form-control param_input" name="contact_person" placeholder="Contact Person" ng-model="user['company'][20]['paramValue']" required>
 		</div>
 		
 	</div>	
@@ -54,7 +54,7 @@
 		</div>
 		
 		<div>
-			<input type='text' class="form-control param_input" name="contact_title" placeholder="Contact Title" ng-model="user.company.contact_title.paramValue" required>
+			<input type='text' class="form-control param_input" name="contact_title" placeholder="Contact Title" ng-model="user['company'][21]['paramValue']" required>
 		</div>
 		
 	</div>	
@@ -107,7 +107,7 @@
 				</div>
 				
 				<div>
-					<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field" ng-model="user.company.main_field.paramValue" required>
+					<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field" ng-model="user['company'][22]['paramValue']" required>
 				</div>
 				
 				<div>
@@ -124,7 +124,7 @@
 					</div>
 					
 					<div>
-						<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field {{a+1}}" ng-model="user.company[a]['main_field'][paramValue]" required>
+						<input type='text' class="form-control param_input" name="main_field" placeholder="Main Field {{a+1}}" ng-model="user.company[a][22][paramValue]" required>
 					</div>
 					
 					<div ng-show="$last">
@@ -156,7 +156,7 @@
 			</div>
 			
 			<div>
-				<input type='text' class="form-control param_input" name="secondary_field" placeholder="Secondary Field" ng-model="user.company.secondary_field.paramValue" required>
+				<input type='text' class="form-control param_input" name="secondary_field" placeholder="Secondary Field" ng-model="user['company'][23]['paramValue']" required>
 			</div>
 			
 			<div>
@@ -195,7 +195,7 @@
 		</div>
 		
 		<div>
-			<input type='text' class="form-control param_input" name="youtube" placeholder="YouTube" ng-model="user.company.youtube.paramValue" required>
+			<input type='text' class="form-control param_input" name="youtube" placeholder="YouTube" ng-model="user['company'][25]['paramValue']" required>
 		</div>
 		
 	</div>	
@@ -205,7 +205,7 @@
 		<div class="param_label col-lg-8">
 			Short Company Description*
 		</div>
-		<textarea class="form-control param_input" name="short_company_description" ng-model="user.company.short_company_description.paramValue" rows="10" required>
+		<textarea class="form-control param_input" name="short_company_description" ng-model="user['company'][24]['paramValue']" rows="10" required>
 			
 		</textarea>
 	</div>	
@@ -217,7 +217,7 @@
 		</div>
 		
 		<div>
-			<input type='text' class="form-control param_input" name="site_link" placeholder="site_link" ng-model="user.company.site_link.paramValue" required>
+			<input type='text' class="form-control param_input" name="site_link" placeholder="site_link" ng-model="user['company'][26]['paramValue']" required>
 		</div>
 		
 	</div>	
@@ -406,5 +406,5 @@
 	    
 	</div>
 
-
+</main>
 
