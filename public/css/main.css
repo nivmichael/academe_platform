@@ -62,6 +62,10 @@ button:focus,button:active{
 {
     outline: none!important;
 }
+.form-control
+{
+    background-color:#FFFFFF!important;
+}
 /*top nav-bar*/
 .navbar{
    border-radius:0px;
@@ -346,6 +350,7 @@ td{
 .galleryDiv {
     border: 1px dashed rgb(78, 117, 173);
     height: 100px;
+    margin-bottom: 100px;
 
 }
 .dragNdrop {
@@ -407,6 +412,14 @@ td{
     cursor: pointer;
     border-right:1px solid white;
 }
+.thumb_preview{
+    padding: 18px;
+    display: inline-block;
+    width: 170px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
 /*the forms and inputs*/
 .editableForm{
     text-align:left;
@@ -426,6 +439,9 @@ td{
 }
 .form-con-width-modal{
     width:235px;
+}
+.datePickerInput{
+    width:260px;
 }
 .job-card{
     padding:5px;
@@ -508,9 +524,9 @@ padding:5px;
     /*-moz-transform:translate3d(100px, 0, 0);*/
     /*transform:translate3d(100px, 0, 0);*/
 /*}*/
-/*.active{*/
-    /*background-color:#5D2C87;*/
-/*}*/
+.active{
+    background-color:#5D2C87;
+}
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen

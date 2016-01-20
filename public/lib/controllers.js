@@ -913,8 +913,66 @@ angular.module('acadb.controllers', [])
 	.controller("UserHomeController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', '$stateParams','$uibModal', '$log','$filter','FileUploader',
 		function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$stateParams,$uibModal,$log,$filter,FileUploader) {
 
+			$scope.uploader = {
+				controllerFn: function ($flow, $file, $message) {
+					console.log($flow, $file, $message); // Note, you have to JSON.parse message yourself.
+					$file.msg = $message;// Just display message for a convenience
+				}
+			};
+			$scope.initDatePicker = function(){
+
+				//$('.datepicker').pickadate();
 
 
+			}
+
+			$scope.initModals = function() {
+				$('.dropdown-button').dropdown({
+						inDuration: 300,
+						outDuration: 225,
+						constrain_width: false, // Does not change width of dropdown to that of the activator
+						hover: true, // Activate on hover
+						gutter: -80, // Spacing from edge
+						belowOrigin: false, // Displays dropdown below the button
+						alignment: 'left' // Displays dropdown with edge aligned to the left of button
+					}
+				);
+				$('.modal-trigger').leanModal(); // Initialize the modals
+			}
+
+			//materialize datepicker
+			var currentTime = new Date();
+			$scope.currentTime = currentTime;
+			$scope.month = ['Januar', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+			$scope.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			$scope.weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			$scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+			$scope.disable = [false, 1, 7];
+			$scope.today = 'Today';
+			$scope.clear = 'Clear';
+			$scope.close = 'Close';
+			var days = 15;
+			$scope.minDate = (new Date($scope.currentTime.getTime() - ( 1000 * 60 * 60 *24 * days ))).toISOString();
+			$scope.maxDate = (new Date($scope.currentTime.getTime() + ( 1000 * 60 * 60 *24 * days ))).toISOString();
+			$scope.onStart = function () {
+				console.log('onStart');
+			};
+			$scope.onRender = function () {
+				console.log('onRender');
+			};
+			$scope.onOpen = function () {
+				console.log('onOpen');
+			};
+			$scope.onClose = function () {
+				console.log('onClose');
+			};
+			$scope.onSet = function () {
+				console.log('onSet');
+			};
+			$scope.onStop = function () {
+				console.log('onStop');
+			};
+			//end materialize datepicker
 			var uploader = $scope.uploader = new FileUploader({
 				url: '/uploadCv',
 				//	autoUpload:true,
@@ -1073,16 +1131,16 @@ angular.module('acadb.controllers', [])
 			}
 		};
 
-		$scope.showIterableGroup = function(paramKey, docParamName, index) {
-
-			if($scope.user[docParamName][index][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
-				var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.user[docParamName][index][paramKey]['paramValue']});
-				return selected.length ? selected[0].text : 'Not set';
-			} else {
-				//console.log($scope.user[docParamName][index][paramKey]['paramValue']);
-				return $scope.user[docParamName][index][paramKey]['paramValue'] || '';
-			}
-		};
+		//$scope.showIterableGroup = function(paramKey, docParamName, index) {
+        //
+		//	if($scope.user[docParamName][index][paramKey]['paramValue'] && typeof $scope.groups[paramKey] != 'undefined') {
+		//		var selected = $filter('filter')($scope.groups[paramKey], {value: $scope.user[docParamName][index][paramKey]['paramValue']});
+		//		return selected.length ? selected[0].text : 'Not set';
+		//	} else {
+		//		//console.log($scope.user[docParamName][index][paramKey]['paramValue']);
+		//		return $scope.user[docParamName][index][paramKey]['paramValue'] || '';
+		//	}
+		//};
 
 		$scope.showChecklistGroup = function(paramKey, docParamName) {
 
@@ -1270,185 +1328,183 @@ angular.module('acadb.controllers', [])
 		};
 //Aside
 
-		$scope.asideState = {
-			open: true
-		};
+		//$scope.asideState = {
+		//	open: true
+		//};
 
-		$scope.openAside = function(position, backdrop) {
-
-
-
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
-
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/jobseeker_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
-
-		$scope.openEmployerAside = function(position, backdrop) {
-
-
-
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
-
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/employer_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-					console.log(user);
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
-
-
-
-		$scope.openJobseekerRegisterAside = function(position, backdrop) {
+		//$scope.openAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
+        //
+		//	$aside.open({
+		//		templateUrl: '../partials/jobseeker_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+        //
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
+        //
+		//$scope.openEmployerAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
+        //
+		//	$aside.open({
+		//		templateUrl: '../partials/employer_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+		//			console.log(user);
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
 
 
 
-			$scope.asideState = {
-				open: true,
-				position: 'left'
-			};
+		//$scope.openJobseekerRegisterAside = function(position, backdrop) {
+        //
+        //
+        //
+		//	$scope.asideState = {
+		//		open: true,
+		//		position: 'left'
+		//	};
+        //
+		//	function postClose() {
+		//		$scope.asideState.open = false;
+		//	}
 
-			function postClose() {
-				$scope.asideState.open = false;
-			}
-
-			$aside.open({
-				templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
-				placement: position,
-				size: 'sm',
-				backdrop: backdrop,
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-				controller: function($scope, $modalInstance, user) {
-					$scope.user = user;
-					console.log(user);
-					$scope.ok = function(e) {
-						$modalInstance.close();
-						e.stopPropagation();
-
-					};
-					$scope.cancel = function(e) {
-						$modalInstance.dismiss();
-						e.stopPropagation();
-					};
-					$scope.cancelOnResize = function() {
-						$modalInstance.dismiss();
-
-					};
-					$(window).resize(function(){
-
-						//console.log(window.innerWidth);
-						$scope.$apply(function(){
-							$scope.cancelOnResize();
-						});
-					});
-				}
-			}).result.then(postClose, postClose);
-		}
-
-
-		$scope.openGallery = function (size) {
-
-			var modalInstance = $uibModal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'gallery.html',
-
-				controller: 'FilesCtrl',
-				resolve: {
-					user: function () {
-						return $scope.user;
-					}
-				},
-			});
-
-			modalInstance.result.then(function (selectedItem) {
-				$scope.selected = selectedItem;
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		};
+		//	$aside.open({
+		//		templateUrl: '../partials/register/jobseeker/jobseeker_register_aside.html',
+		//		placement: position,
+		//		size: 'sm',
+		//		backdrop: backdrop,
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//		controller: function($scope, $modalInstance, user) {
+		//			$scope.user = user;
+		//			console.log(user);
+		//			$scope.ok = function(e) {
+		//				$modalInstance.close();
+		//				e.stopPropagation();
+        //
+		//			};
+		//			$scope.cancel = function(e) {
+		//				$modalInstance.dismiss();
+		//				e.stopPropagation();
+		//			};
+		//			$scope.cancelOnResize = function() {
+		//				$modalInstance.dismiss();
+        //
+		//			};
+		//			$(window).resize(function(){
+        //
+		//				//console.log(window.innerWidth);
+		//				$scope.$apply(function(){
+		//					$scope.cancelOnResize();
+		//				});
+		//			});
+		//		}
+		//	}).result.then(postClose, postClose);
+		//}
 
 
+		//$scope.openGallery = function (size) {
+        //
+		//	var modalInstance = $uibModal.open({
+		//		animation: $scope.animationsEnabled,
+		//		templateUrl: 'gallery.html',
+        //
+		//		controller: 'FilesCtrl',
+		//		resolve: {
+		//			user: function () {
+		//				return $scope.user;
+		//			}
+		//		},
+		//	});
+        //
+		//	modalInstance.result.then(function (selectedItem) {
+		//		$scope.selected = selectedItem;
+		//	}, function () {
+		//		$log.info('Modal dismissed at: ' + new Date());
+		//	});
+		//};
 
 		$scope.isArray = angular.isArray;
 		$scope.oneAtATime = true;
@@ -1460,19 +1516,14 @@ angular.module('acadb.controllers', [])
 			});
 		});
 
-		// var state = $location.path();
-		// state = state.split('/');
-		// state = state[1];
-		// $state.go(state);
-//
-
+		//image upload
 		$scope.flowOp = function(key){
-
 			return {target: '/upload',  query: {'_token': CSRF_TOKEN, param_ref: key}};
-
 		};
+		//getting the "callback"
 		$scope.getFileInfo = function($file, $message, $flow){
-
+			$scope.user.files[27]['paramValue'] = $flow;
+			//console.log($file, $message, $flow);
 		}
 
 		$scope.userStatuses = [
@@ -1543,11 +1594,11 @@ angular.module('acadb.controllers', [])
 						},
 						success: function(data)
 						{
-							$scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif';
+							$scope.user.files[27]['paramValue'] = 'img/No-Photo.gif';
 							// delete $scope.user.files[item];
 							// $scope.$apply();
 						}
-					}).done($scope.user.files.profile_pic.paramValue = 'img/No-Photo.gif');
+					}).done($scope.user.files[27]['paramValue'] = 'img/No-Photo.gif');
 			};
 		};
 // DatePicker
@@ -1835,7 +1886,20 @@ angular.module('acadb.controllers', [])
 			$scope.$broadcast('show-errors-reset');
 			$scope.serverValidation = false;
 		}
-
+		//email async unique validator
+		//$scope.validateOnServer = function() {
+        //
+        //
+		//	$http.post('/auth/register', {
+		//		user: $scope.user,
+		//		_token: CSRF_TOKEN,
+        //
+		//	}).success(function(data){
+        //
+		//	}).error(function(errors) {
+		//		$scope.errors = errors;
+		//	});
+		//};
 		//angular-file-upload 	https://github.com/nervgh/angular-file-upload
 
 		//if (typeof uploader == 'undefined') {

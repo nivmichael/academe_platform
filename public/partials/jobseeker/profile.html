@@ -307,7 +307,7 @@
 					</div>
 
 				</div>
-				<div ng-repeat="(paramKey,paramValues)  in docParamValues" class="" style="" ng-class="{parameterFix:!isArray(docParamValues),parameterFix2:isArray(docParamValues)}" >
+				<div ng-repeat="(paramKey,paramValues)  in docParamValues" class="" style="" ng-class="{parameterFix:!isArray(docParamValues),parameterFix2:isArray(docParamValues)}"repeat-done="initDatePicker()">
 
 					<div ng-repeat="(k,v) in paramValues track by $index" class="parameterFix" ng-class="{notFirst:!$first}">
 
@@ -360,17 +360,54 @@
 									}
 								</style>
 								<div ng-switch-when="date">
-									<p ng-hide="editableForm.$visible">
-										{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}
-									</p>
-									<p class="input-group"  ng-show="editableForm.$visible">
-										<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="user[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />
-										  <span class="input-group-btn">
-											<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
-										  </span>
-									</p>
-								</div>
+									<p ng-hide="editableForm.$visible">{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}</p>
+									<input input-date
+										   ng-show="editableForm.$visible"
+										   type="text"
+										   name="created"
+										   id="inputCreated"
+										   e-class="form-control"
+										   class="datepicker form-control"
+										   ng-model="user[docParamName][paramKey][k]"
+										   container="body"
+										   format="MM/dd/yyyy"
+										   months-full="{{ month }}"
+										   months-short="{{ monthShort }}"
+										   weekdays-full="{{ weekdaysFull }}"
+										   weekdays-short="{{ weekdaysShort }}"
+										   weekdays-letter="{{ weekdaysLetter }}"
+										   min="{{ minDate }}"
+										   max="{{ maxDate }}"
+										   today="today"
+										   clear="clear"
+										   close="close"
+										   select-years="15"
+										   on-start="onStart()"
+										   on-render="onRender()"
+										   on-open="onOpen()"
+										   on-close="onClose()"
+										   on-set="onSet()"
+										   on-stop="onStop()" />
 
+									<!--<p ng-hide="editableForm.$visible">-->
+										<!--{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}-->
+									<!--</p>-->
+									<!--<p class="input-group"  ng-show="editableForm.$visible">-->
+										<!--<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="user[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+										  <!--<span class="input-group-btn">-->
+											<!--<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+										  <!--</span>-->
+									<!--</p>-->
+								</div>
+								<script>
+
+									$(document).ready(function(){
+
+										$('.datepicker').pickadate();
+
+									});
+
+								</script>
 								<div ng-switch-when="cv">
 									{{v}}
 									<!--<div ng-hide="pdfing "  class="col-xs-12 col-sm-4 col-md-4 col-lg-4">-->
@@ -437,12 +474,12 @@
 							<!--</div>-->
 						</div>
 
-						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="margin-bottom:20px;">
+						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="margin-bottom:20px;" repeat-done="initDatePicker()">
 
 							<div class="col-md-3" ng-if="r == 'slug'" style="float:left;font-weight:bold;">
 								{{s}}:
 							</div>
-							<div  ng-if="r == 'paramValue'" ng-switch="v.inputType" class=col-md-3" style="padding-right:15px;margin-bottom:10px; ">
+							<div  ng-if="r == 'paramValue'" ng-switch="v.inputType" class="col-md-3" style="padding-right:15px;margin-bottom:10px; ">
 
 								<div ng-switch-when="text">
 									<div e-class="form-control  form-con-width" class="" e-form="rowform" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
@@ -491,21 +528,63 @@
 
 
 								<div ng-switch-when="date">
-									<p ng-hide="editableForm.$visible">
-										{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy" }}
-									</p>
-									<div class="input-group"  ng-show="editableForm.$visible">
-										<input type="text" class="form-control " style="width:247px;" uib-datepicker-popup="{{format}}" ng-model="user[docParamName][paramKey][k][r]" is-open="openedIterable[paramKey][k]" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />
-										  <span class="input-group-btn">
-											<button type="button" class="btn btn-default" ng-click="openIterable($event,k,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
-										  </span>
-									</div>
+									<!--materialize pickDate-->
+									<p ng-hide="editableForm.$visible">{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy"}}</p>
+									<div  ng-show="editableForm.$visible" class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+										<input input-date
+
+										   type="text"
+										   placeholder="Click for calender"
+										   name="created"
+										   id="inputCreated[paramKey][k]"
+										   class="datepicker form-control form-con-width"
+										   ng-model="user[docParamName][paramKey][k][r]"
+										   container="body"
+										   format="MM/dd/yyyy"
+										   months-full="{{ month }}"
+										   months-short="{{ monthShort }}"
+										   weekdays-full="{{ weekdaysFull }}"
+										   weekdays-short="{{ weekdaysShort }}"
+										   weekdays-letter="{{ weekdaysLetter }}"
+										   min="{{ minDate }}"
+										   max="{{ maxDate }}"
+										   today="today"
+										   clear="clear"
+										   close="close"
+										   select-years="15"
+										   on-start="onStart()"
+										   on-render="onRender()"
+										   on-open="onOpen()"
+										   on-close="onClose()"
+										   on-set="onSet()"
+										   on-stop="onStop()" />
+										</div>
+									<!--end materialize pickDate-->
+									<script>
+										$('.datepicker').pickadate();
+									</script>
+									<!--materialize pickDate initiator-->
+
+
+
+									<!--<p ng-hide="editableForm.$visible">-->
+										<!--{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy" }}-->
+									<!--</p>-->
+									<!--<div class="input-group"  ng-show="editableForm.$visible">-->
+										<!--<input type="text" class="form-control " style="width:247px;" uib-datepicker-popup="{{format}}" ng-model="user[docParamName][paramKey][k][r]" is-open="openedIterable[paramKey][k]" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+										  <!--<span class="input-group-btn">-->
+											<!--<button type="button" class="btn btn-default" ng-click="openIterable($event,k,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+										  <!--</span>-->
+									<!--</div>-->
+
 								</div>
 
 								<div ng-switch-when="cv">
 									<div   class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										{{user[docParamName][paramKey][k][r]}}
 									</div>
+									<input  id="cvUpload" ng-show="editableForm.$visible"  type="file" nv-file-select uploader="uploader" />
 									<!--<div ng-hide="pdfing "  class="col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-init="getThisLengthKey(paramKey);">-->
 										<!--<input  id="cvUpload" ng-show="editableForm.$visible"  type="file" nv-file-select uploader="uploader" />-->
 										<!--<ul>-->
@@ -608,77 +687,370 @@
 	</uib-accordion>
 
 	<footer class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-		<div ng-repeat="footerNavli in footerNavlis" class="userHomeFooterNavLi " ng-click="openGallery('lg')">{{footerNavli.tag}}</div>
+		<!--ng-click="openGallery('lg')"-->
+		<div ng-repeat="footerNavli in footerNavlis" repeat-done="initModals()" class="userHomeFooterNavLi modal-trigger"  href='#{{footerNavli.tag}}'   modal>{{footerNavli.tag}}</div>
 
 	</footer>
-</div>
-</main>
-</body>
+		<div id="gallery" class="modal modal-fixed-footer">
 
 
-<script type="text/ng-template" id="gallery.html">
-	<div class="modal-header">
-		<h3 class="modal-title">I'm a modal!</h3>
-	</div>
-	<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">
-		<div flow-init="flowOp(m)"
-			 flow-files-submitted="$flow.upload()"
-			 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
-			 class="">
-			<br/>
-
-			<div class="thumbnail" >
-				<div class="thumbnail_title">{{q}}</div>
-
-				<img  ng-src="{{n.paramValue }}" width="200px">
-				<div class="btn-group">
-					<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">
-						<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>
-					</a>
+			<div class="modal-header">
+				Gallery
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='galleryoptions' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='galleryoptions' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+					</ul>
 				</div>
-
 			</div>
 
-			<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
-				<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
-				<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">
+			<div class="modal-content">
+				<!--iterating over files-->
+				<div ng-repeat="(m,n) in user.files" ng-hide="m == 'docParamId'">
+					<div flow-init="flowOp(m)"
+							 flow-files-submitted="$flow.upload()"
+							 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+						     flow-file-success="getFileInfo($flow, $file, $message)"
+							 class="">
+							<br/>
 
-					<div class="thumbnail_title">{{file.name}}</div>
-					<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >
-						<img flow-img="file" />
+						<div class="thumbnail" >
+							<div class="thumbnail_title">Image</div>
 
-						<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-							<div class="progress-bar" role="progressbar"
-								 aria-valuenow="{{file.progress() * 100}}"
-								 aria-valuemin="0"
-								 aria-valuemax="100"
-								 ng-style="{width: (file.progress() * 100) + '%'}">
-								<div class="sr-only">{{file.progress()}}% Complete</div>
+							<img  ng-src="/{{n.paramValue }}">
+							<div class="btn-group">
+								<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">
+									<i class="delBtnIcon glyphicon glyphicon-trash"></i>
+								</a>
 							</div>
+
 						</div>
-						<div class="btn-group">
-							<a class="btn btn-xs btn-danger" ng-click="file.cancel()">
-								<i class="glyphicon glyphicon-trash"></i>
-							</a>
+
+						<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+								<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+								<div ng-repeat="file in $flow.files" class="thumb_preview">
+
+									<div class="thumbnail_title">{{file.name}}</div>
+
+									<div class="thumbnail " ng-show="$flow.files.length" >
+
+										<!--file preview-->
+										<img flow-img="file" />
+
+										<!--progress bar-->
+										<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+											<div class="progress-bar" role="progressbar"
+												 aria-valuenow="{{file.progress() * 100}}"
+												 aria-valuemin="0"
+												 aria-valuemax="100"
+												 ng-style="{width: (file.progress() * 100) + '%'}">
+												<div class="sr-only">{{file.progress()}}% Complete</div>
+											</div>
+										</div>
+										<!--end progress bar-->
+
+										<div class="btn-group">
+											<a class="btn btn-xs btn-danger" ng-click="file.cancel()">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</div>
+
+								</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
 		</div>
-	</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn " type="button" ng-click="ok()">OK</button>
-		<button class="btn " type="button" ng-click="cancel()">Cancel</button>
-	</div>
-</script>
+
+		<div id="Resumes" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				CV
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				CV CV CV
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="References" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				References
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				References
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="Certifications" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				Certifications
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				Certifications
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="cover" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				Cover Letters
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+				Cover Letters
+			</div>
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+</div>
+
+		<script>
+
+			$(document).ready(function(){
+
+				$('.datepicker').pickadate();
+
+			});
+
+		</script>
+
+
+<!--<div id="demoModal" class="modal modal-fixed-footer">-->
+
+
+	<!--<div class="modal-header">-->
+		<!--{{post.postInfo.title || 'Job Title'}} <small>Job no' {{post.postInfo.id }}</small>-->
+		<!--<div style="float:right;">-->
+			<!--<ul >-->
+				<!--<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>-->
+				<!--&lt;!&ndash;<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>&ndash;&gt;-->
+			<!--</ul>-->
+			<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
+			<!--<ul id='options' class='dropdown-content'>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>-->
+
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+
+	<!--<div class="modal-content">-->
+
+		<!--<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">&ndash;&gt;-->
+			<!--<div flow-init="flowOp(m)"-->
+				 <!--flow-files-submitted="$flow.upload()"-->
+				 <!--flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"-->
+				 <!--class="">-->
+				<!--<br/>-->
+
+				<!--<div class="thumbnail" >-->
+					<!--<div class="thumbnail_title">{{q}}</div>-->
+
+					<!--<img  ng-src="{{n.paramValue }}" width="200px">-->
+					<!--<div class="btn-group">-->
+						<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">-->
+							<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+						<!--</a>-->
+					<!--</div>-->
+
+				<!--</div>-->
+
+				<!--<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">-->
+					<!--<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>-->
+					<!--<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">-->
+
+						<!--<div class="thumbnail_title">{{file.name}}</div>-->
+						<!--<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >-->
+							<!--<img flow-img="file" />-->
+
+							<!--<div class="progress progress-striped" ng-class="{active: file.isUploading()}">-->
+								<!--<div class="progress-bar" role="progressbar"-->
+									 <!--aria-valuenow="{{file.progress() * 100}}"-->
+									 <!--aria-valuemin="0"-->
+									 <!--aria-valuemax="100"-->
+									 <!--ng-style="{width: (file.progress() * 100) + '%'}">-->
+									<!--<div class="sr-only">{{file.progress()}}% Complete</div>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="btn-group">-->
+								<!--<a class="btn btn-xs btn-danger" ng-click="file.cancel()">-->
+									<!--<i class="glyphicon glyphicon-trash"></i>-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="modal-footer">-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>-->
+	<!--</div>-->
+<!--</div>-->
+
+<!--<script type="text/ng-template" id="gallery.html">-->
+	<!--<div class="modal-header">-->
+		<!--<h3 class="modal-title">I'm a modal!</h3>-->
+	<!--</div>-->
+	<!--<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">-->
+		<!--<div flow-init="flowOp(m)"-->
+			 <!--flow-files-submitted="$flow.upload()"-->
+			 <!--flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"-->
+			 <!--class="">-->
+			<!--<br/>-->
+
+			<!--<div class="thumbnail" >-->
+				<!--<div class="thumbnail_title">{{q}}</div>-->
+
+				<!--<img  ng-src="{{n.paramValue }}" width="200px">-->
+				<!--<div class="btn-group">-->
+					<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">-->
+						<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+					<!--</a>-->
+				<!--</div>-->
+
+			<!--</div>-->
+
+			<!--<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">-->
+				<!--<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>-->
+				<!--<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">-->
+
+					<!--<div class="thumbnail_title">{{file.name}}</div>-->
+					<!--<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >-->
+						<!--<img flow-img="file" />-->
+
+						<!--<div class="progress progress-striped" ng-class="{active: file.isUploading()}">-->
+							<!--<div class="progress-bar" role="progressbar"-->
+								 <!--aria-valuenow="{{file.progress() * 100}}"-->
+								 <!--aria-valuemin="0"-->
+								 <!--aria-valuemax="100"-->
+								 <!--ng-style="{width: (file.progress() * 100) + '%'}">-->
+								<!--<div class="sr-only">{{file.progress()}}% Complete</div>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="btn-group">-->
+							<!--<a class="btn btn-xs btn-danger" ng-click="file.cancel()">-->
+								<!--<i class="glyphicon glyphicon-trash"></i>-->
+							<!--</a>-->
+						<!--</div>-->
+					<!--</div>-->
+
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--</div>-->
+	<!--<div class="modal-footer">-->
+		<!--<button class="btn " type="button" ng-click="ok()">OK</button>-->
+		<!--<button class="btn " type="button" ng-click="cancel()">Cancel</button>-->
+	<!--</div>-->
+<!--</script>-->
 
 <script>
 
 	$(document).ready(function(){
 		$('.modal-trigger').leanModal();
 		$('.button-collapse').sideNav();
+		$('.datepicker').pickadate({
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15 // Creates a dropdown of 15 years to control year
+		});
 	});
 </script>

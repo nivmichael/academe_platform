@@ -133,7 +133,7 @@
 				<div class="param_label col-xs-12 col-sm-4 col-md-3 col-lg-3"> Phone/Cell* </div>
 
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group" show-errors>
-					<input type='phone_1' class="form-control " name="phone_1"   ng-change="validateOnServer()" placeholder="Phone/Cell" ng-model="user.personal_information.phone_1" >
+					<input type='text' class="form-control " name="phone_1"    placeholder="Phone/Cell" ng-model="user.personal_information.phone_1" >
 				</div>
 
 			</div>
@@ -145,7 +145,7 @@
 				<div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 form-group"  show-errors>
 					<input type='email' class="form-control " name="email" placeholder="email" ng-change="validateOnServer()"  ng-model="user.personal_information.email" required>
 				</div>
-				<span class="help-block" ng-if="emailUnique" ng-repeat="error in emailUnique">{{error}}</span>
+				<span class="help-block" ng-if="emailUnique || serverValidation" ng-repeat="error in emailUnique">{{error}}</span>
 
 				<div ng-show="registerJobSeekerForm.email.$dirty || registerJobSeekerForm.email.$touched || serverValidation">
 					<span class="help-block" ng-show="registerJobSeekerForm.email.$error.required">Required</span>
@@ -440,14 +440,48 @@
 
 						<div ng-switch-when="date">
 
-							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-								<p class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user[docParam][paramId]['paramValue']" is-open="opened[paramId]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-								  <span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="open($event,paramId)"><i class="glyphicon glyphicon-calendar"></i></button>
-								  </span>
-								</p>
+							<!--materialize pickDate-->
+							<!--<p>{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy"}}</p>-->
+							<div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4" >
+								<input input-date
+
+									   type="text"
+									   name="created"
+									   id="inputCreated[paramId]['paramValue']"
+									   class="datepicker form-control form-con-width"
+									   ng-model="user[docParam][paramId]['paramValue']"
+									   container="body"
+									   format="MM/dd/yyyy"
+									   months-full="{{ month }}"
+									   months-short="{{ monthShort }}"
+									   weekdays-full="{{ weekdaysFull }}"
+									   weekdays-short="{{ weekdaysShort }}"
+									   weekdays-letter="{{ weekdaysLetter }}"
+									   min="{{ minDate }}"
+									   max="{{ maxDate }}"
+									   today="today"
+									   clear="clear"
+									   close="close"
+									   select-years="15"
+									   on-start="onStart()"
+									   on-render="onRender()"
+									   on-open="onOpen()"
+									   on-close="onClose()"
+									   on-set="onSet()"
+									   on-stop="onStop()" />
+								<!--end materialize pickDate-->
+								<script>
+									$('.datepicker').pickadate();
+								</script>
 							</div>
+							<!--<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">-->
+								<!--<p class="input-group">-->
+									<!--<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user[docParam][paramId]['paramValue']" is-open="opened[paramId]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+								  <!--<span class="input-group-btn">-->
+									<!--<button type="button" class="btn btn-default" ng-click="open($event,paramId)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+								  <!--</span>-->
+								<!--</p>-->
+							<!--</div>-->
 							<!--<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">-->
 							<!--<select class="form-control" ng-model="user[docParam][paramId]['paramValue']['month']" ng-options="o.value as o.text for o in months">-->
 							<!--</select>-->
@@ -539,13 +573,45 @@
 
 						<div ng-switch-when="date">
 
-							<div class="col-xs-12col-sm-4 col-md-4 col-lg-4">
-								<p class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="openedIterable[paramId][paramName]" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-								  <span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="openIterable($event,paramName,paramId)"><i class="glyphicon glyphicon-calendar"></i></button>
-								  </span>
-								</p>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<!--materialize pickDate-->
+
+								<input input-date
+
+									   type="text"
+									   name="created"
+									   id="inputCreated[paramId][paramName]['paramValue']"
+									   class="datepicker form-control form-con-width"
+									   ng-model="user[docParam][paramId][paramName]['paramValue']"
+									   container="body"
+									   format="MM/dd/yyyy"
+									   months-full="{{ month }}"
+									   months-short="{{ monthShort }}"
+									   weekdays-full="{{ weekdaysFull }}"
+									   weekdays-short="{{ weekdaysShort }}"
+									   weekdays-letter="{{ weekdaysLetter }}"
+									   min="{{ minDate }}"
+									   max="{{ maxDate }}"
+									   today="today"
+									   clear="clear"
+									   close="close"
+									   select-years="15"
+									   on-start="onStart()"
+									   on-render="onRender()"
+									   on-open="onOpen()"
+									   on-close="onClose()"
+									   on-set="onSet()"
+									   on-stop="onStop()" />
+								<!--end materialize pickDate-->
+								<script>
+									$('.datepicker').pickadate();
+								</script>
+								<!--<p class="input-group">-->
+									<!--<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="openedIterable[paramId][paramName]" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+								  <!--<span class="input-group-btn">-->
+									<!--<button type="button" class="btn btn-default" ng-click="openIterable($event,paramName,paramId)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+								  <!--</span>-->
+								<!--</p>-->
 							</div>
 
 						</div>
