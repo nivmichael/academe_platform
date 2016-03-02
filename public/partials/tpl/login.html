@@ -1,0 +1,46 @@
+<div class="container" style="text-align: center; margin-top:100px;">
+
+    <!--action="/auth/login"-->
+    <img ng-src="{{logo}}" style="width:200px;">
+    <div class="" style="width:300px; margin:0 auto;">
+        <form name="loginForm" class="form-signin" method="POST" ng-submit="login()"  novalidate>
+            <!--{!! csrf_field() !!}-->
+
+            <p class="bg-danger" >{{error}}</p>
+            <!--<ul class="bg-danger">-->
+                <!--<li  ng-repeat="error in errors track by $index">-->
+                    <!--<ul>-->
+                        <!--<li ng-repeat="err in error">{{err}}</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+
+
+
+            <div class="form-group" ng-class="{'has-error': errors.email}">
+                <label class="control-label" for="email">Email</label>
+                <input type="email" class="form-control login-form" name="email" ng-model="user.email" id="email" ng-minlength="5" required autofocus>
+            </div>
+
+            <div class="form-group"  ng-class="{'has-error': errors.password}">
+                <label class="control-label" for="password">Password</label>
+                <input type="password" class="form-control login-form" name="password" ng-model="user.password" id="password" ng-minlength="5" required>
+            </div>
+
+            <div>
+                <input type="checkbox" name="remember" ng-model="user.remember"> Remember Me
+                <a ng-click="getPasswordEmail()" class="" style="float:right;">Reset</a>
+            </div>
+
+            <button type="submit" class="btn btn-lg  btn-block loginButton login-form"  ng-disabled="loginForm.$invalid">Login</button>
+
+            <!--<a type="button" ui-sref="register.personal_information({sub_type : sub_type })"   class="btn btn-lg  btn-block registerButton login-form">New User</a>-->
+            <a type="button" ui-sref=" {{ registeration_link }} "   class="btn btn-lg  btn-block registerButton login-form">New User</a>
+
+            <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form"></a>
+            <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form"></a>
+        </form>
+    </div>
+</div>
+
+<pre>{{$stateParams | json}}</pre>

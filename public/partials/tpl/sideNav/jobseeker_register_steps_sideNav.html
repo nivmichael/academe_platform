@@ -1,0 +1,33 @@
+
+<ul id="jobseeker_register_steps_sideNav" accessibleForm class="side-nav fixed" style="">
+    <li>
+        <pre>{{ $stateParams }}</pre>
+    </li>
+    <li class="logo">
+        <div style="padding-bottom:10px;">
+            <img ng-src="http://cims.nyu.edu/~oza/NYULogo.png" style="width:100%;">
+        </div>
+    </li>
+    <li ng-repeat="(key,step) in steps | toArray:true | filter:{ belongsTo : type }:true ">
+       <a href="#"
+          class="docParamLi waves-effect waves-light"
+          ng-class="{ active: $state.includes('{{step.name}}') }"
+          ui-sref=" {{step.name}} ( {docParam: '{{step.name}}' } )">
+           <span class="▶">▶ </span> {{ step.value | underscoreless | capitalize }}
+       </a>
+    </li>
+</ul>
+
+<style>
+    .affix{
+        top: 0!important;
+    }
+</style>
+
+<script>
+    $('#jobseeker_register_steps_sideNav').affix({
+        offset: {
+            top: 64,
+        }
+    });
+</script>

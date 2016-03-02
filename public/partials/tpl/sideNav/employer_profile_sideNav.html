@@ -1,0 +1,44 @@
+
+
+<ul id="nav-mobile" class="side-nav fixed col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="col-md-12" dropdown is-open="status.isopen">
+        <button type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+            {{user.personal_information.status }} <div class="caret"></div>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+                {{status.name}}
+            </li>
+        </ul>
+    </div>
+    <div>Last Updated - </div>{{user.personal_information.updated_at}}
+    <div class="col-md-12 employerDetails">
+        <h3 class="text-center">{{user.company[19]['paramValue']}}</h3>
+        <img class="profile-picture-card card" src="{{ user['files'][28]['paramValue'] }}" alt="Generic placeholder image">
+    </div>
+
+    <div class="">
+        <ul class="nav nav-sidebar col-md-12">
+            <a ui-sref-active="active" ui-sref="employer.jobs" class="docParamLi waves-effect waves-light"><span class="circle">?</span>Job Offers</a>
+
+
+            <a href="#" ng-repeat="(a,b) in user track by $index"
+               class="docParamLi waves-effect waves-light col-xs-12 col-sm-12 col-md-12"
+               ng-hide="a == 'personal_information'"
+               ui-sref-active="active"
+               ui-sref=".{{a}}">
+                <!--ng-show="a == 'files'"-->
+                <span class="circle">?</span>{{a | underscoreless | capitalize:true}}</span>
+            </a>
+        </ul>
+    </div>
+
+    <div class="findajobBtn">
+        <button class=" col-xs-12 col-sm-12 col-md-12 modal-trigger waves-effect waves-light postAJobBtn" href='#demoModal' ng-click="getJobPostFields()" style="font-size:22px;" modal>
+            Post A New Job
+        </button>
+    </div>
+
+</ul>
+<style> .affix{top: 0!important;}</style>
+<script>$('#nav-mobile').affix({offset: {top: 64}});</script>
