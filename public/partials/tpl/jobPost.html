@@ -1,0 +1,140 @@
+<main>
+
+	<form editable-form  id="" role="form" ng-model="post"  >
+
+		<div ng-repeat="(docParamName,docParamValues) in jobPost" ng-hide="docParamName == 'postInfo'">
+			<div ng-repeat="(paramName,paramValues) in docParamValues" class="" >
+
+	
+				<div class="param_label col-md-2"> 
+					{{paramValues.slug}}
+				</div>
+				
+				
+				<div ng-switch="paramValues.inputType">
+					
+					<div ng-switch-when="text">
+						<div  class="param_input" ng-if="paramValues.paramName">					
+							<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+						</div>	
+					</div>	
+		
+					<div ng-switch-when="select">
+						<select class="form-control" ng-model="user[docParam][paramId]['paramValue']"
+								ng-options="o.id as o.text for o in groups[paramValues.paramName] | toArray:true ">
+						</select>
+						<!--<div  class="param_input" ng-if="paramValues.paramName">					-->
+							<!--<select type='select' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">-->
+							  <!--<option value="volvo">Volvo</option>-->
+							  <!--<option value="saab">Saab</option>-->
+							  <!--<option value="mercedes">Mercedes</option>-->
+							  <!--<option value="audi">Audi</option>-->
+							<!--</select>-->
+						<!--</div>	-->
+					</div>	
+					
+					<div ng-switch-when="textarea">
+						<div class="param_input" ng-if="paramValues.paramName">					
+							<textarea class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']"></textarea>	
+						</div>
+					</div>	
+					
+					<div ng-switch-default>
+						<div class="param_input" ng-if="paramValues.paramName">					
+							<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName]['paramValue']" ng-model="jobPost[docParamName][paramName]['paramValue']">
+						</div>	
+					</div>	
+					
+				
+				</div>
+				
+				
+				
+				
+				
+				<div ng-repeat="(k,v) in paramValues track by $index" ng-if="isArray(docParamValues)" style="display: inline-block;">
+					<div class="param_label col-md-2" > 
+						{{v.paramName}}
+					</div>
+					
+					
+					
+					<div ng-switch="v.inputType">	
+							
+						<div ng-switch-when="text">		
+							<div  class="param_input" >					
+								<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+							</div>	
+							<br>	
+						</div>
+						
+						<div ng-switch-when="select">
+							<div  class="param_input">					
+								<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+								  <option value="volvo">Volvo</option>
+								  <option value="saab">Saab</option>
+								  <option value="mercedes">Mercedes</option>
+								  <option value="audi">Audi</option>
+								</select>
+								<br>	
+							</div>	
+							
+						</div>	
+						
+						<div ng-switch-when="textarea">
+							<div class="param_input">					
+								<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>	
+							</div>
+						</div>	
+						
+						
+						<div ng-switch-default>
+							<div  class="param_input" >					
+								<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+							</div>	
+							
+						</div>	
+					
+
+
+
+
+					</div>
+				
+		
+		
+		
+		
+				</div>	
+				</br>
+			
+				<div class="iterationCtrls" ng-show="isArray(docParamValues)">
+						<div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+							X Delete
+						</div>
+						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">
+							Move Up
+						</div>
+						<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">
+							Move Down
+						</div>
+					<hr>
+				 </div>
+
+				<div ng-show="$last && docParamName != 'postInfo'" >
+					<button type="button" class="btn btn-default" ng-click="add1(docParamName,$index)">+ Add a Record</button>
+
+				</div>
+			</div>
+
+		</div>
+	</form>
+	<div class="col-xs-6 col-xs-offset-3" >		
+	    <a ng-click="savePost(jobPost)" class="btn btn-block btn-info">
+	   		 Save &nbsp <div class="glyphicon glyphicon-circle-arrow-right "></div>
+	    </a>
+	</div>
+
+
+</main>
+

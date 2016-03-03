@@ -19,7 +19,8 @@ var acadb = angular.module('acadb', [
     'angular-toArrayFilter',
     'ngSanitize',
     'satellizer',
-    'rateYo'
+    'rateYo',
+    'ui.bootstrap.modal',
 
 ])
 
@@ -152,7 +153,7 @@ var acadb = angular.module('acadb', [
             .state('jobseeker', {
                 url:  '/',
                 abstract:true,
-                sticky: true,
+               // sticky: true,
                 deepStateRedirect: true,
                 templateUrl: '../partials/tpl/jobseeker.html',
                 resolve: {
@@ -210,52 +211,84 @@ var acadb = angular.module('acadb', [
                 }
 
             })
-
             .state('employer', {
+                url:  '/',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+               // sticky: true,
+                abstract:true,
+                deepStateRedirect: true,
+                params: {type: null,  sub_type : null},
+                templateUrl: '../partials/tpl/employer.html',
+                //views:{
+                //    'nav':{
+                //        controller:  'SideNavController',
+                //        templateUrl: '../partials/tpl/navbar/jobseeker_profile_navbar.html',
+                //    },
+                //    'sideNav':{
+                //        templateUrl: '../partials/tpl/sideNav/employer_profile_sideNav.html',
+                //        controller:  'SideNavController',
+                //    },
+                //    'main':{
+                //        templateUrl: '../partials/tpl/jobs.html',
+                //        controller: 'ProfileCtrl'
+                //    },
+                //    'footer':{
+                //        templateUrl: '../partials/tpl/footer.html'
+                //    }
+                //}
+            })
+            .state('employer.company', {
                 url:  '^/my_company',
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                params: {type: null,  sub_type : null},
+                sticky: true,
+                deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
                 views:{
-                    'nav':{
-                        controller:  'SideNavController',
-                        templateUrl: '../partials/tpl/navbar/jobseeker_profile_navbar.html',
+                    'company.nav@employer':{
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+                        controller:  'SideNavController as NC',
                     },
-                    'sideNav':{
-                        templateUrl: '../partials/tpl/sideNav/jobseeker_profile_sideNav.html',
-                        controller:  'SideNavController',
+                    'company.sideNav@employer':{
+                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+                        controller:  'SideNavController as NC',
                     },
-                    'main':{
+                    'company@employer': {
                         templateUrl: '../partials/tpl/jobs.html',
-                        controller: 'ProfileCtrl'
+                        controller: 'CompanyCtrl as PC',
                     },
-                    'footer':{
-                        templateUrl: '../partials/tpl/footer.html'
-                    }
+                }
+
+            })
+
+            .state('employer.postajob', {
+                url: '^/new_job',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
+                views:{
+                    'postajob.nav@employer':{
+
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'postajob.sideNav@employer':{
+                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'postajob@employer':{
+                        templateUrl: '../partials/tpl/jobPost.html',
+                        controller: 'PostCtrl as PC'
+                    },
+
                 }
             })
-            //.state('employer.jobs', {
-            //    url: "^/jobs",
-            //    controller: 'formController',
-            //    views:{
-            //        'nav':{
-            //            controller:  'SideNavController',
-            //            templateUrl: '../partials/tpl/navbar/jobseeker_profile_navbar.html',
-            //        },
-            //        'sideNav':{
-            //            templateUrl: '../partials/tpl/sideNav/jobseeker_profile_sideNav.html',
-            //            controller:  'SideNavController',
-            //        },
-            //        'main':{
-            //            templateUrl: '../partials/tpl/jobs.html',
-            //            controller: 'ProfileCtrl'
-            //        },
-            //        'footer':{
-            //            templateUrl: '../partials/tpl/footer.html'
-            //        }
-            //    }
-            //})
 
             function skipIfLoggedIn($q, $auth) {
                 var deferred = $q.defer();
@@ -341,7 +374,7 @@ var acadb = angular.module('acadb', [
                     "name":"register."+value.name,
                     "url": '^/'+value.name,
                     "templateUrl":'../../partials/tpl/registration_forms.html',
-                    "controller":'formController as FC',
+                    //"controller":'formController as FC',
                     "value":value.name,
                     "belongsTo": 'jobseeker'
 
@@ -412,7 +445,7 @@ var acadb = angular.module('acadb', [
                             "name":"register."+value.name,
                             "url": '^/'+value.name,
                             "templateUrl":'../../partials/tpl/employer_registration_forms.html'  ,
-                            "controller":'formController',
+                            //"controller":'formController',
                             "value":value.name,
                             "belongsTo": 'employer'
 
@@ -439,8 +472,15 @@ var acadb = angular.module('acadb', [
                         var state = {
                             "name":"register."+value.name,
                             "url": '^/'+value.value,
-                            //  "templateUrl":'../../partials/tpl/employer_registration_forms.html'  ,
-                            "controller":'formController',
+                            sticky: true,
+                            deepStateRedirect: true,
+                            "reloadOnSearch": false,
+                            params: {type: null,  sub_type : null},
+                            resolve:{
+                                docParam: function(){
+                                    return {docParam: value.value};
+                                }
+                            },
 
                             views:{
                                 'nav':{
@@ -452,7 +492,9 @@ var acadb = angular.module('acadb', [
                                 },
                                 'main@register':{
                                     "templateUrl":'../../partials/tpl/employer_registration_forms.html'  ,
-                                    "controller":'formController',
+                                    "controller":function($scope, docParam){
+                                        $scope.docParam = docParam.docParam;
+                                    }
                                 },
                                 'footer':{
                                     templateUrl: '../partials/tpl/footer.html'

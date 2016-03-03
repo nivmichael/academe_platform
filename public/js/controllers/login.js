@@ -4,14 +4,18 @@ angular.module('acadb')
 
       var type                    = $stateParams.type;
       var sub_type                = $stateParams.sub_type;
+
       if($stateParams.type == 'employer'){
 
         $scope.type               = $stateParams.type;
         $scope.registeration_link = 'register.company({type: "'+ type +'"})';
+        $scope.userHomepage       = 'employer.company';
+
       }else{
         $scope.type               =  $stateParams.type;
         $scope.sub_type           = $stateParams.sub_type;
         $scope.registeration_link = 'register.personal_information({type: "'+ type  +'" ,sub_type : "'+ sub_type  +'" })';
+        $scope.userHomepage       = 'jobseeker.profile';
       }
 
 
@@ -20,7 +24,7 @@ angular.module('acadb')
         .then(function() {
           //toastr.success('You have successfully signed in!');
           //$location.path('/');
-          $state.go($scope.type + '.profile');
+          $state.go($scope.userHomepage);
         })
         .catch(function(response) {
               $scope.error = response.data.error;

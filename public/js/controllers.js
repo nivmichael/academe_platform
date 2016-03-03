@@ -2194,7 +2194,30 @@ console.log(response);
 //	}])
 //
 //
-//	.controller('formController', function($rootScope,$window,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment,$timeout,$anchorScroll,$auth,$stateParams,SelectOptions) {
+
+//		//}
+//
+//		$scope.resetPdfUrlIterable = function(key){
+//			$scope.hideInput[key] = false;
+//			$scope.pdfing[key] = false;
+//			$scope.uploader[key].queue = [];
+//			document.getElementById('cvUpload'+ key).value = null;
+//		}
+//
+//		var state = $location.path();
+//		var absUrl = $location.absUrl();
+//		absUrl = absUrl.split('/');
+//		$scope.jobseeker_type = absUrl[5]
+//
+//		if(typeof($scope.jobseeker_type) != 'undefined'){
+//			$scope.jobseeker_type = $scope.jobseeker_type.replace('#','');
+//		}
+//
+//		absUrl = absUrl[4];
+//		absUrl = absUrl.replace('#','');
+//		$scope.absUrl = absUrl;
+//		state = state.split('/');
+///	.controller('formController', function($rootScope,$window,$scope,$location,DocParamData,$state,$http,$filter,CSRF_TOKEN,$uibModal,$log,moment,$timeout,$anchorScroll,$auth,$stateParams,SelectOptions) {
 //		'use strict';
 //
 //		console.log('form');
@@ -2463,30 +2486,7 @@ console.log(response);
 //		//	};
 //		//	uploader[key].onCompleteAll = function() {
 //		//		console.info('onCompleteAll');
-//		//	};
-//		//}
-//
-//		$scope.resetPdfUrlIterable = function(key){
-//			$scope.hideInput[key] = false;
-//			$scope.pdfing[key] = false;
-//			$scope.uploader[key].queue = [];
-//			document.getElementById('cvUpload'+ key).value = null;
-//		}
-//
-//		var state = $location.path();
-//		var absUrl = $location.absUrl();
-//		absUrl = absUrl.split('/');
-//		$scope.jobseeker_type = absUrl[5]
-//
-//		if(typeof($scope.jobseeker_type) != 'undefined'){
-//			$scope.jobseeker_type = $scope.jobseeker_type.replace('#','');
-//		}
-//
-//		absUrl = absUrl[4];
-//		absUrl = absUrl.replace('#','');
-//		$scope.absUrl = absUrl;
-//		state = state.split('/');
-//		state = state[1];
+//		//	};/		state = state[1];
 //
 //		var locationSubtype = $state.current.name;
 //		var prefix = locationSubtype;

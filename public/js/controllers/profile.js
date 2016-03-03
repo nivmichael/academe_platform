@@ -43,14 +43,7 @@ angular.module('acadb')
       /*Editable inputs. groups means options.*/
 
         $scope.move = function(array, fromIndex, toIndex){
-
-            console.log(array);
-            console.log(fromIndex);
-            console.log(toIndex);
-
             array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
-
-
         };
         $scope.remove = function(array,item) {
             array.splice(item,1);
@@ -71,14 +64,6 @@ angular.module('acadb')
             });
 
         };
-
-
-
-
-
-
-
-
 
       //$scope.loadGroups = function(paramName, docParamId) {
       //

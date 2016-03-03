@@ -15,7 +15,7 @@ use Schema;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
-use Auth;;
+
 use Illuminate\Http\Request;
 
 class TypePostController extends Controller {

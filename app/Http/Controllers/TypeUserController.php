@@ -46,7 +46,8 @@ class TypeUserController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		return response()->json([ 'user' => $this->user->all($request->user()),'posts'=> $this->posts->getAllPosts()]);
+
+		return response()->json([ 'user' => $this->user->all($request->user()),'posts'=> $this->posts->index($request->user())]);
 	}
 
 	public function postsWithMatch(Request $request)

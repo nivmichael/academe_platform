@@ -62,7 +62,9 @@
 {!! Html::script('js/filters.js') !!}
 {!! Html::script('js/directives.js') !!}
 {!! Html::script('/lib/angular-resource.js') !!}
+
 {!! Html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') !!}
+
 {!! Html::script('lib/ui-bootstrap-tpls-0.14.2.min.js') !!}
 
 {!! Html::script('lib/angular-route.js') !!}
@@ -85,6 +87,8 @@
 {!! Html::script('js/controllers/navbar.js') !!}
 {!! Html::script('js/controllers/profile.js') !!}
 {!! Html::script('js/controllers/signup.js') !!}
+{!! Html::script('js/controllers/postCtrl.js') !!}
+{!! Html::script('js/controllers/companyCtrl.js') !!}
 
 
 

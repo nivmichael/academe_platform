@@ -1,7 +1,6 @@
 
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
+
 angular.module('acadb.services', []).
   value('version', '0.1')
 
@@ -17,7 +16,6 @@ angular.module('acadb.services', []).
 			 
 		});
 }])
-
 .factory('UsersData', ['$resource',
 	function($resource) {
 		return $resource('../users/:id', {id: '@id'}, {
@@ -54,8 +52,6 @@ angular.module('acadb.services', []).
 			 'delete':{method:'DELETE'}
 		});
 }])
-
-
 .factory('ColumnData', ['$resource',
 	function($resource) {
 		return $resource('../columns/:name', {id: '@name'}, {
@@ -66,10 +62,8 @@ angular.module('acadb.services', []).
 			 	return JSON.stringify(data);
 			 	}
 			 }
-			
-			 
 		});
-}])
+	}])
 .factory('ParamValueData', ['$resource',
 	function($resource) {
 		return $resource('../paramValue/:id', {id: '@id'}, {
@@ -78,25 +72,17 @@ angular.module('acadb.services', []).
 			 'delete':{method:'DELETE'},
 			 	
 		});
-			
-			 
-		
-}])
+	}])
 .factory('SysParamValuesData', ['$resource',
 	function($resource) {
 		return $resource('../sysParamValues/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			 	
+
 		});
-}])
-//$scope.loadGroups = function(paramName, docParamId) {
-//	if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
-//	return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
-//		$scope.groups[paramName] = data;
-//	});
-//};
+	}])
+
 .factory('SelectOptions', ['$http','$q',
 	function($http, $q) {
 		//var promise;
@@ -104,49 +90,41 @@ angular.module('acadb.services', []).
 		return {
 			getOptions: function(paramName, docParamId) {
 				if ( !options[paramName] ) {
-
 					if (typeof options[paramName] == 'undefined') options[paramName] = [];
-
 					options[paramName] =  options[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).then(function(response) {
 						options[paramName] = response;
 							return $q.when(options[paramName]);
 						});
-						// $http returns a promise, which has a then function, which also returns a promise
-						//promise = $http.get('/api/me').then(function (response) {
-						//	// The then function here is an opportunity to modify the response
-                        //
-						//	// The return value gets picked up by the then in the controller.
-						//	return response.data;
-						//});
 				}
-				// Return the promise to the controller
 				return $q.when(options[paramName]);
 			},
 			getAllOptionValues: function(){
-
 				if ( !options ) {
-
 					if (typeof options == 'undefined') options = [];
-
 					options =  options.length ? null : $http.get('api/getAllOptionValues').then(function(response) {
 						options = response;
 						console.log(options);
 						return $q.when(options);
 					});
-					// $http returns a promise, which has a then function, which also returns a promise
-					//promise = $http.get('/api/me').then(function (response) {
-					//	// The then function here is an opportunity to modify the response
-					//
-					//	// The return value gets picked up by the then in the controller.
-					//	return response.data;
-					//});
-				}
-				// Return the promise to the controller
+									}
 				return $q.when(options);
 			}
-
 		};
 	}])
+//.factory('FormService', ['$http','$q',
+//	function($http, $q) {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//	}])
 .factory('Account', function($http, $rootScope) {
 
 	var promise;
@@ -170,6 +148,10 @@ angular.module('acadb.services', []).
 		broadcast: function(user) {
 			$rootScope.$broadcast('handleBroadcast', user);
 		},
+		logout: function(){
+
+			return promise = null;
+		}
 	};
 
 

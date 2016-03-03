@@ -46,10 +46,12 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::post('/authenticate', 'AuthenticateController@authenticate');
         Route::post('/signup', 'AuthenticateController@signup');
         //Route::get('/me', 'TypeUserController@index');
-        Route::get('/me', 'TypeUserController@postsWithMatch');
+        Route::get('/me', 'TypeUserController@index');
         Route::post('/me', 'TypeUserController@updateUser');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
+        Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+        Route::post('/savePost', 'PostController@savePost');
     });
     // Password reset link request routes...
     Route::get('/password/email', 'Auth\PasswordController@getEmail');

@@ -164,7 +164,7 @@ class AuthenticateController extends Controller
                 'phone_1' => $request['personal_information']['phone_1'],
                 'mobile' => $request['personal_information']['mobile'],
                 'date_of_birth' => $request['personal_information']['date_of_birth'],
-                'registration' => $request['personal_information']['registration'],
+                //'registration' => $request['personal_information']['registration'],
                 'send_newsletters' => $request['personal_information']['send_newsletters'],
                 'remember_token' => $request['personal_information']['remember_token'],
             ];
