@@ -17,19 +17,24 @@ class DocParam extends Model{
 	 */
 	protected $table = 'doc_param';
 
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+
 	public function post()
 	{
 		return $this->belongsTo(Post::class);
 	}
 
-	public function docParam()
+	public function param()
 	{
 		return $this->hasMany(Param::class);
 	}
 
 	public function docType()
 	{
-		return $this->hasMany(DocType::class);
+		return $this->hasMany(DocType::class, User::class, 'name', 'type');
 	}
 
 }

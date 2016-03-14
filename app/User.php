@@ -48,15 +48,18 @@ class User extends Authenticatable
     public $timestamps = true;
 
 
-    public function docType()
-    {
-        return $this->hasMany(DocType::class);
-    }
+
 
     public function docParam()
     {
-        return $this->hasMany(DocParam::class);
+        return $this->hasMany(DocParam::class , 'doc_sub_type', 'subtype' );
     }
+
+    public function docType()
+    {
+        return $this->hasOne(DocType::class, 'name', 'type');
+    }
+
 
     public function posts()
     {

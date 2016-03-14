@@ -19,16 +19,16 @@ class Param extends Model{
 
 	public function docParam()
 	{
-		return $this->belongsTo(DocParam::class);
+		return $this->belongsToMany(  DocParam::class, 'doc_param_id' );
 	}
 
 	public function paramType()
 	{
-		return $this->hasOne(ParamType::class);
+		return $this->belongsTo(ParamType::class, 'type_id' );
 	}
 
 	public function sysParamValues()
 	{
-		return $this->hasMany(SysParamValues::class);
+		return $this->hasMany(SysParamValues::class, 'param_id');
 	}
 }

@@ -12,6 +12,7 @@ use App\SysParamValues;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use stdClass;
 use Schema;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -101,13 +102,13 @@ class TypePostController extends Controller {
 //
 //		return Response::json($postsArr);
 	}
-	public function savePost()
+	public function savePost(Request $request)
 	{
 
 
 
-
-		$all = Input::all();
+		$all = $request->all();
+		dd($all);
 		$allPostInfo = $all['post']['postInfo'];
 		unset($all['post']['files']);
 		unset($all['post']['personal_information']);
@@ -137,85 +138,43 @@ class TypePostController extends Controller {
 				$obj[$doc_param][$param_key] = $param_value;
 			}
 		}
-		//dd($obj);
-		foreach($obj as $docParamName => $docParamVals) {
-			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 2)->pluck('id');
-			$iterableCount = 0;
-			foreach($docParamVals as $param => $props) {
 
-				if(is_int($param)) {
-					if($param['docParamId']) {
-						unset($param['docParamId']);
+		foreach($obj as $docParamName => $docParamValues) {
+
+			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 2)->value('id');
+
+			foreach($docParamValues as $iteration_count => $params) {
+
+				foreach ($params as $param_id => $param_values) {
+
+					$paramValue = $param_values['paramValue'];
+					$paramName  = $param_values['paramName'];
+					$iterable   = $iteration_count;
+
+					if (is_array($paramValue)) {
+						$paramValue = implode('|', $paramValue);
 					}
-					foreach($props as $propKey => $propVal) {
-					$paramValue = $propVal['paramValue'];
-					if(is_array($paramValue)) {
-						$paramValue = implode('|',$paramValue);
-					}
-					$paramName  = $propVal['paramName'];
 
-					$iterable = $param;
+					if ($param_id) {
+						//checking where the values come from? from param_value? or from short/long?
+						$value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
+						$existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $post->id)->where('iteration', $iteration_count)->value('id');
 
-					$param_id = DB::table('param')->where('name', $paramName)->where('doc_param_id', $doc_param_id)->pluck('id');
-						if ($param_id) {
-							//checking where the values come from? from param_value? or from short/long?
-							$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
-
-							// if($iterable){
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$post->id)->pluck('id');
-								if(!$existsId) {
-									$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$post->id)->pluck('id');
-								}
-							// }else{
-								// $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',NULL)->where('ref_id',$post->id)->pluck('id');
-							// }
-// 							
-							if($existsId) {
-
-								if(!$value_ref) {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-								} else {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-								}
-							}else {
-								if(!$value_ref) {
-									DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-								} else {
-									DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-								}
+						if ($existsId) {
+							if (!$value_ref) {
+								DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+							} else {
+								DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
 							}
-						}else if(!$param_id){
-							dd($paramName);
-                        }
-					}
-				}else if(!is_int($param)){
-
-					$paramValue = $props['paramValue'];
-					if(is_array($paramValue)) {
-						$paramValue = implode('|',$paramValue);
-					}
-					$param_id = DB::table('param')->where('name', $param)->where('doc_param_id', $doc_param_id)->pluck('id');
-                    if(!$param_id){
-                        dd($param);
-                    }
-
-					$value_ref = DB::table('param_value')->where('value', $paramValue)->pluck('id');
-					$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$post->id)->pluck('id');
-					if($existsId) {
-						if(!$value_ref) {
-							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
 						} else {
-							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-						}
-					} else {
-						if(!$value_ref) {
-							DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-						} else {
-							DB::table('sys_param_values')->insert(['doc_type'=>2,'ref_id'=>$post->id,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
+							if (!$value_ref) {
+								DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+							} else {
+								DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
+							}
 						}
 					}
 				}
-		$iterableCount ++;
 			}
 		}
 		return Response::json($obj);
@@ -363,8 +322,8 @@ class TypePostController extends Controller {
 											   param.name AS paramName, 
 											   param_type.name AS paramType,
 											   doc_param.name AS docParamName,
-											   doc_param.id AS docParamId
-
+											   doc_param.id AS docParamId,
+											   param.id AS paramId
 
 
 											   FROM	param
@@ -390,14 +349,15 @@ class TypePostController extends Controller {
 			$inputType    = $v->paramType;
 			$slug         = $v->slug;
 			$docParamId   = $v->docParamId;
-
+			$paramId      = $v->paramId;
 			//$post[$v->docParamName][$k][$paramName] = $v->value = '';
-			$post[$docParamName]['docParamId'] = $docParamId;
+			$post[$docParamName][0]['docParamId'] = $docParamId;
 		//	$post[$docParamName]['postDocParamId'] = $postDocParamId;
-			$post[$docParamName][$paramName]['paramName'] = $paramName;
-			$post[$docParamName][$paramName]['paramValue'] = '';
-			$post[$docParamName][$paramName]['inputType'] = $inputType;
-			$post[$docParamName][$paramName]['slug'] = $slug;
+			$post[$docParamName][0][$paramId]['paramName'] = $paramName;
+			$post[$docParamName][0][$paramId]['slug'] = $slug;
+			$post[$docParamName][0][$paramId]['paramValue'] = '';
+			$post[$docParamName][0][$paramId]['inputType'] = $inputType;
+			$post[$docParamName][0][$paramId]['slug'] = $slug;
 
 		}
 		// foreach($postInfo as $key=>$value) {
@@ -620,6 +580,237 @@ class TypePostController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function calculate_match_percentage($post_parameters, $user_parameters, $exclude_job_parameters, $user_id = false) {
+
+		// Note:
+		// The 'exclude' array specified whether we need to NOT calculate certain parameters.
+		// This is used if the Employer is associated with a MemberZone that defines less job-parameters than usual.
+		// This "exclude" parameter is called "exclude_job_parameters" and belongs to the Doc MemberZone.
+
+		$match['total'] = 0.05;
+
+		if ($post_parameters && $user_parameters) {
+
+//            if (!$exclude_job_parameters['experience']) {
+//                $score = 0;
+//                $num_of_variables = 0;
+//                if ($post_parameters['general']['experience']['value']) {
+//                    $experience = explode('-',$post_parameters['general']['experience']['value']);
+//                    $num_of_variables++;
+//                    if ($user_parameters['general']['experience'] >= $experience[0] && $user_parameters['general']['experience'] <= $experience[1]) {
+//                        $score++;
+//                    }
+//                }
+//                if ($num_of_variables > 0) {
+//                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+//                }
+//            }
+
+			if (!$exclude_job_parameters['education']) {
+
+				$degree_array = array();
+				foreach($post_parameters['education'] as $post_education_param) {
+					$degree_array[] = $post_education_param['degree']['value'];
+				}
+
+				$score = 0;
+				$num_of_variables = 0;
+				if (!empty($degree_array)) {
+					$num_of_variables++;
+					if (!empty($user_parameters['education'])) {
+						foreach ($user_parameters['education'] as $education_param) {
+							if (in_array($education_param['degree'], $degree_array)) {
+								$score++;
+								break;
+							}
+						}
+					}
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+				}
+				$faculty_array = array();
+				foreach($post_parameters['education'] as $post_education_param) {
+					$faculty_array[] = $post_education_param['faculty']['value'];
+				}
+
+				$score = 0;
+				$num_of_variables = 0;
+				if (!empty($faculty_array)) {
+					$num_of_variables++;
+					if (!empty($user_parameters['education'])) {
+						foreach ($user_parameters['education'] as $education_param) {
+							$user_education_array = (array)json_decode($education_param['faculty'], TRUE);
+							foreach ($faculty_array as $value) {
+								if (array_key_exists($value, $user_education_array)) {
+									$score++;
+									break 2;
+								}
+							}
+						}
+					}
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+				}
+				$class_array = array();
+				foreach($post_parameters['education'] as $post_education_param) {
+					$class_array[] = $post_education_param['class']['value'];
+				}
+				$score = 0;
+				$num_of_variables = 0;
+				if (!empty($class_array)) {
+					$num_of_variables++;
+					if (!empty($user_parameters['education'])) {
+						foreach ($user_parameters['education'] as $education_param) {
+							// see that we decode faculty from user again - this is because classes are stored in a json in faculty param
+							$user_education_array = (array)json_decode($education_param['faculty'], TRUE);
+							foreach($user_education_array as $classes) {
+								foreach ($class_array as $value) {
+									if (array_key_exists($value, $classes)) {
+										$score++;
+										break 3;
+									}
+								}
+							}
+						}
+					}
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.45;
+				}
+
+
+			}
+
+			$score = 0;
+			$num_of_variables = 0;
+			if ($post_parameters['employment']['category']['value']) {
+				$num_of_variables++;
+				if ($post_parameters['employment']['category']['value'] == $user_parameters['next_step']['category']) {
+					$score++;
+				}
+			}
+			if ($num_of_variables > 0) {
+				$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+			}
+
+			$score = 0;
+			$num_of_variables = 0;
+			if ($post_parameters['employment']['category']['value']) {
+				$num_of_variables++;
+				if (!empty($user_parameters['employment'])) {
+					foreach ($user_parameters['employment'] as $employment_param) {
+						if ($employment_param['category'] == $post_parameters['employment']['category']['value']) {
+							$score++;
+							break;
+						}
+					}
+				}
+			}
+			if ($num_of_variables > 0) {
+				$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+			}
+
+			$score = 0;
+			$num_of_variables = 0;
+			if ($post_parameters['employment']['profession']['value']) {
+				$num_of_variables++;
+				if ($post_parameters['employment']['profession']['value'] == $user_parameters['next_step']['profession']) {
+					$score++;
+				}
+			}
+			if ($num_of_variables > 0) {
+				$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+			}
+
+			$score = 0;
+			$num_of_variables = 0;
+			if ($post_parameters['employment']['profession']['value']) {
+				$num_of_variables++;
+				if (!empty($user_parameters['employment'])) {
+					foreach ($user_parameters['employment'] as $employment_param) {
+						$profession_arr = (array)json_decode($employment_param['profession']);
+						if (in_array($post_parameters['employment']['profession']['value'], $profession_arr)) {
+							$score++;
+							break;
+						}
+					}
+				}
+			}
+			if ($num_of_variables > 0) {
+				$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+			}
+
+			if (!$exclude_job_parameters['job_title']) {
+				$score = 0;
+				$num_of_variables = 0;
+				if ($post_parameters['next_step']['job_title']['value']) {
+					$num_of_variables++;
+					if ($post_parameters['next_step']['job_title']['value'] == $user_parameters['next_step']['job_title']) {
+						$score++;
+					}
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+				}
+			}
+
+			if (!$exclude_job_parameters['salary']) {
+				$score = 0;
+				$num_of_variables = 0;
+				if ($post_parameters['next_step']['salary']['value']) {
+					if ($post_parameters['next_step']['salary']['value'] == $user_parameters['next_step']['salary']) {
+						$score++;
+					}
+					$num_of_variables++;
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+				}
+			}
+
+			if (!$exclude_job_parameters['location']) {
+				$score = 0;
+				$num_of_variables = 0;
+				if ($post_parameters['next_step']['location']['value']) {
+					if ($post_parameters['next_step']['location']['value'] == $user_parameters['next_step']['location']) {
+						$score++;
+					}
+					$num_of_variables++;
+				}
+				if ($num_of_variables > 0) {
+					$match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+				}
+			}
+
+			$score = 0;
+			$num_of_variables = 0;
+			if ($post_parameters['languages']['language']['value']) {
+				$num_of_variables++;
+				if (!empty($user_parameters['languages'])) {
+					foreach ($user_parameters['languages'] as $languages_param) {
+						if ($languages_param['language'] == $post_parameters['languages']['language']['value']) {
+							$score++;
+							break;
+						}
+					}
+				}
+			}
+			if ($num_of_variables > 0) {
+				$match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+			}
+
+			if ($match['total'] > 0) {
+				return round($match['total']*100);
+			} else {
+				return 0;
+			}
+
+		}
+
 	}
 
 }

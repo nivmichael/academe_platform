@@ -72,4 +72,37 @@ angular.module('acadb')
       };
       $scope.getForms();
 
+
+
+
+      /*
+      *
+      * make a service
+      *
+      * add record
+      * move
+      * remove
+      * loadoptions already working
+      * show options
+      *
+      *
+      * */
+
+
+
+      $scope.addRecordJobSeeker =function(docParam,$index) {
+			$http.get('api/forms/register_jobseeker')
+				.success(function(data, status, headers, config) {
+
+                    $scope.inserted = data[docParam][0];
+                    $scope.user[docParam].push($scope.inserted);
+
+                })
+				.error(function(){
+					alert('ERROR!!');
+				});
+	  };
+
+
+
   });

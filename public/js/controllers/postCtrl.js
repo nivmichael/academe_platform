@@ -19,14 +19,24 @@ angular.module('acadb')
                 post:post,
 
             }).success(function(errors){
-                $scope.allJobs.push(post);
+             //   $scope.allJobs.push(post);
                 return post;
 
             }).error(function(err) {
 
-
-
             });
+        };
+
+        $scope.add1 = function(docParamName,index) {
+            $http.get('api/columns/jobPost')
+                .success(function(data, status, headers, config) {
+                    $scope.inserted = data[docParamName][0];
+                    $scope.jobPost[docParamName].push($scope.inserted);
+
+                })
+                .error(function(){
+
+                });
         };
 
         $scope.groups={};

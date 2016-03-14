@@ -17,5 +17,21 @@ class SysParamValues extends Model{
 	 */
 	protected $table = 'sys_param_values';
 
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'ref_id');
+	}
+
+	public function docType()
+	{
+		return $this->hasMany(DocType::class, 'name');
+	}
+
+	public function param()
+	{
+		return $this->belongsToMany(Param::class,'id','ref_id');
+	}
+
+
 
 }

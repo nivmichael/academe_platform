@@ -168,7 +168,7 @@ class AuthenticateController extends Controller
                 'send_newsletters' => $request['personal_information']['send_newsletters'],
                 'remember_token' => $request['personal_information']['remember_token'],
             ];
-           // dd($personal_information);
+            // dd($personal_information);
             $user = User::create($personal_information);
             $token = JWTAuth::fromUser($user);
             $authId = $user->id;
@@ -187,108 +187,47 @@ class AuthenticateController extends Controller
         }
         unset($obj['personal_information']);
 
-        foreach($obj as $docParamName => $docParamVals) {
+        foreach($obj as $docParamName => $docParamValues) {
+
             $doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->value('id');
-            $iterableCount = 0;
-            foreach($docParamVals as $param => $props) {
-                //dd(array_key_exists ( 'docParamId' , $docParamVals ));
-                //dd($docParamVals);
-                if(!array_key_exists ( 'docParamId' , $docParamVals )) {
-                    //print_r('array');
-                    foreach($props as $propKey => $propVal) {
-                        if(isset($propVal['paramValue'])){
 
-                        }else{
-                            //print_r($propKey);
-                        }
-                        if($propVal['paramValue']){
+            foreach($docParamValues as $iteration_count => $params) {
 
+                foreach ($params as $param_id => $param_values) {
 
-                            $paramValue = $propVal['paramValue'];
-                            if(is_array($paramValue)) {
-                                $paramValue = implode('|',$paramValue);
-                                //print_r($paramValue);
+                    $paramValue = $param_values['paramValue'];
+                    $paramName  = $param_values['paramName'];
+                    $iterable   = $iteration_count;
+
+                    if (is_array($paramValue)) {
+                        $paramValue = implode('|', $paramValue);
+                    }
+
+                    if ($param_id) {
+                        //checking where the values come from? from param_value? or from short/long?
+                        $value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
+                        $existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $authId)->where('iteration', $iteration_count)->value('id');
+
+                        if ($existsId) {
+                            if (!$value_ref) {
+                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+                            } else {
+                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
                             }
-
-                        }else{
-                            $paramValue='';
-                        };
-                        $paramName  = $propVal['paramName'];
-                        $iterable = $param;
-
-                        $param_id = DB::table('param')->where('name', $paramName)->where('doc_param_id', $doc_param_id)->value('id');
-
-                        if ($param_id) {
-                            //checking where the values come from? from param_value? or from short/long?
-                            $value_ref = DB::table('param_value')->where('value', $paramValue)->value('id');
-
-                            $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$authId)->value('id');
-                            if(!$existsId) {
-                                $existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->value('id');
-                            }
-
-
-
-                            if($existsId) {
-
-                                if(!$value_ref) {
-                                    DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-                                } else {
-                                    DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-                                }
-                            }else {
-                                if(!$value_ref) {
-                                    DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-                                } else {
-                                    DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-                                }
-                            }
-                        }
-
-                    }
-                }else if(array_key_exists ( 'docParamId' , $docParamVals )){
-
-                    //print_r('single');
-                    if(isset($props['paramValue'])){
-                        $paramValue = $props['paramValue'];
-                    }else{
-                        //print_r('here');
-                        $paramValue= '';
-                    }
-
-
-                    if(is_array($paramValue)) {
-                        $paramValue = implode('|',$paramValue);
-
-                    }
-                    //print_r($paramValue);
-                    $param_id = $param;
-                    //$param_id = DB::table('param')->where('id',  $param)->where('doc_param_id', $doc_param_id)->value('id');
-                    if($param_id == null) {
-                        dd('some thing wrong with param: '.$param);
-                    }
-
-                    $value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
-                    $existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$authId)->value('id');
-                    if($existsId) {
-                        if(!$value_ref) {
-                            DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
                         } else {
-                            DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-                        }
-                    } else {
-                        if(!$value_ref) {
-                            DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-                        } else {
-                            DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
+                            if (!$value_ref) {
+                                DB::table('sys_param_values')->insert(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+                            } else {
+                                DB::table('sys_param_values')->insert(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
+                            }
                         }
                     }
                 }
-                $iterableCount ++;
             }
         }
+        return response()->json(['token' => $token]);
 
-        //need to send this somhow else because its delaying the next form
+        //need to send this somehow else because its delaying the next form
 
 //        Mail::send('emails.welcome_jobseeker', $mailData, function($message) use ($mailData)
 //        {
@@ -296,13 +235,7 @@ class AuthenticateController extends Controller
 //            $message->subject("Welcome to AcadeME");
 //            $message->to($mailData['email']);
 //        });
-        //return $personal_information;
 
-    //}
-
-
-        return response()->json(['token' => $token]);
-        //return compact('token');
     }
 
 }

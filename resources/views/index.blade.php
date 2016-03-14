@@ -23,7 +23,7 @@
     {!! Html::style('css/rerouting.css') !!}
     {!! Html::style('css/jquery.rateyo.css') !!}
     <!--Fonts-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 

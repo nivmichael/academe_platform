@@ -17,13 +17,27 @@ class DocType extends Model{
 	 */
 	protected $table = 'doc_type';
 
+
+	public function sysParamValues()
+	{
+		return $this->hasMany(SysParamValues::class, 'name');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'id' , 'type' );
+	}
+
+	public function docParam()
+	{
+		return $this->hasMany(DocParam::class , 'doc_type_id');
+	}
+
+
 	public function post()
 	{
 		return $this->belongsTo(Post::class);
 	}
 
-	public function docParam()
-	{
-		return $this->hasMany(DocParam::class);
-	}
+
 }

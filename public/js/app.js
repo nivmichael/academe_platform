@@ -398,7 +398,7 @@ var acadb = angular.module('acadb', [
                 var state = {
                     "name":"register."+value.name,
                     "url": '^/'+value.value,
-                    sticky: true,
+                   // sticky: true,
                     deepStateRedirect: true,
                     "reloadOnSearch": false,
                     params: {type: null,  sub_type : null},

@@ -31,8 +31,12 @@ class TypeUserController extends Controller
 	protected $user;
 	protected $posts;
 
-	public function __construct(UserRepository $user, PostRepository $posts)
+	public function __construct(UserRepository $user, PostRepository $posts, Request $request)
 	{
+
+
+
+
 		$this->middleware('jwt.auth', ['except' => ['columnIndexJobSeeker','columnIndexEmployer']]);
 		$this->user = $user;
 		$this->posts = $posts;
@@ -46,8 +50,11 @@ class TypeUserController extends Controller
 	 */
 	public function index(Request $request)
 	{
+		//dd($this->user->all($request->user()));
+		$user  = $this->user->all(    $request->user() );
+		$posts = $this->posts->index( $user );
 
-		return response()->json([ 'user' => $this->user->all($request->user()),'posts'=> $this->posts->index($request->user())]);
+		return response()->json([ 'user' => $user,'posts'=> $posts ]);
 	}
 
 	public function postsWithMatch(Request $request)
@@ -549,14 +556,14 @@ class TypeUserController extends Controller
 //			$paramParentPosition = '';
 
 
-			$user[$docParamName]['docParamId'] = $docParamId;
-			$user[$docParamName][$paramId]['paramName'] = $paramName;
-			$user[$docParamName][$paramId]['paramId'] = $paramId;
-			$user[$docParamName][$paramId]['paramParentId'] = $paramParent;
+			$user[$docParamName][0]['docParamId'] = $docParamId;
+			$user[$docParamName][0][$paramId]['paramName'] = $paramName;
+			$user[$docParamName][0][$paramId]['paramId'] = $paramId;
+			$user[$docParamName][0][$paramId]['paramParentId'] = $paramParent;
 //			$user[$docParamName][$paramId]['paramParentPosition'] = $paramParentPosition;
-			$user[$docParamName][$paramId]['slug'] = $slug;
-			$user[$docParamName][$paramId]['paramValue'] = '';
-			$user[$docParamName][$paramId]['inputType'] = $inputType;
+			$user[$docParamName][0][$paramId]['slug'] = $slug;
+			$user[$docParamName][0][$paramId]['paramValue'] = '';
+			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
 
 		}
 
@@ -1038,250 +1045,7 @@ class TypeUserController extends Controller
 
 
 
-	public function calc_match($postId = 3, $userId = 9)
-	{
-
-
-		$postUserId;
-
-		$post = array();
-		$postInfo = Post::find($postId);
-		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
-										   param.name AS paramName,
-										   param.slug AS slug,
-										   param_type.name AS paramType,
-										   param_value.value AS paramValue,
-										   doc_param.name AS docParamName,
-										   doc_param.id AS docParamId
-										   FROM	param
-										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
-										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
-										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id
-										   LEFT JOIN param_type ON param.type_id = param_type.id
-										   WHERE  type_post.id = " . $postId));
-
-		$isMultiple = false;
-		$post['postInfo'] = $postInfo;
-		foreach ($params as $k => $v) {
-
-			$iteration = $v->iteration;
-			$docParamName = $v->docParamName;
-			$paramName = $v->paramName;
-			$inputType = $v->paramType;
-			$paramValue = $v->paramValue;
-			$docParamId = $v->docParamId;
-			$slug = $v->slug;
-			$logo_param_id = DB::table('param')->where('name', 'company_logo')->pluck('id');
-			$ref_id = DB::table('type_post')->where('id', $postId)->pluck('user_id');
-			$postUserId = $ref_id;
-			$company_logo = DB::table('sys_param_values')->where('param_id', $logo_param_id)->where('ref_id', $ref_id)->value('value_short');
-			$post['postInfo']['company_logo'] = $company_logo;
-
-
-			if ($v->value_ref == null) {
-				$value = $v->value_short;
-			} else {
-				$value = $v->value;
-			}
-
-
-			if ($iteration !== NULL) {
-				$post[$docParamName][$iteration]['docParamId'] = $docParamId;
-				$post[$docParamName][$iteration][$paramName]['paramName'] = $paramName;
-				$post[$docParamName][$iteration][$paramName]['slug'] = $slug;
-				$post[$docParamName][$iteration][$paramName]['paramValue'] = $value;
-				$post[$docParamName][$iteration][$paramName]['inputType'] = $inputType;
-
-				//$post[$docParamName][$iteration][$paramName] = $value;
-
-
-			} elseif ($iteration == NULL) {
-				$post[$docParamName]['docParamId'] = $docParamId;
-				$post[$docParamName][$paramName]['paramName'] = $paramName;
-				$post[$docParamName][$paramName]['slug'] = $slug;
-				$post[$docParamName][$paramName]['paramValue'] = $value;
-				$post[$docParamName][$paramName]['inputType'] = $inputType;
-
-
-				//$post[$docParamName][$paramName] = $value;
-
-			}
-
-		}
-
-
-		$user = array();
-		$userpersonal_information = User::find($userId);
-		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-										   param.name AS paramName,
-										   param.slug AS slug,
-										   param_type.name AS inputType,
-										   doc_param.name AS docParamName,
-										   doc_param.id AS docParamId
-										   FROM	param
-										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
-										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
-										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-										   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
-										   LEFT JOIN param_type ON param.type_id = param_type.id
-										   WHERE doc_type_id = 1
-										   AND type_user.id = " . $userId));
-
-
-		$user['personal_information'] = $userpersonal_information['original'];
-
-		foreach ($params as $k => $v) {
-			$iteration = $v->iteration;
-			$docParamId = $v->docParamId;
-			$docParamName = $v->docParamName;
-			$paramName = $v->paramName;
-			$inputType = $v->inputType;
-			$slug = $v->slug;
-
-			if ($v->value_ref == null) {
-				$value = $v->value_short;
-			} else {
-				$value = $v->value;
-			}
-
-			if ($iteration !== NULL) {
-
-
-				$values = array();
-				if ($inputType == 'checklist') {
-					$value = explode('|', $value);
-					foreach ($value as $key => $value) {
-						//			$paramOptions[$key] = [];
-//
-//						$option['value'] = $value;
-//						$option['text'] = $value;
-//						$values[]  =$option;
-						if ($value) {
-							$values[] = $value;
-						}
-					}
-				}
-				if ($values) {
-					$value = $values;
-				}
-
-				$user[$docParamName][$iteration]['docParamId'] = $docParamId;
-				$user[$docParamName][$iteration][$paramName]['paramName'] = $paramName;
-				$user[$docParamName][$iteration][$paramName]['slug'] = $slug;
-				$user[$docParamName][$iteration][$paramName]['paramValue'] = $value;
-				$user[$docParamName][$iteration][$paramName]['inputType'] = $inputType;
-
-			} elseif ($iteration == NULL) {
-
-				$values = array();
-				if ($inputType == 'checklist') {
-					$value = explode('|', $value);
-					foreach ($value as $key => $value) {
-
-						if ($value) {
-							$values[] = $value;
-						}
-					}
-				}
-				if ($values) {
-					$value = $values;
-				}
-				$user[$docParamName]['docParamId'] = $docParamId;
-				$user[$docParamName][$paramName]['paramName'] = $paramName;
-				$user[$docParamName][$paramName]['slug'] = $slug;
-				$user[$docParamName][$paramName]['paramValue'] = $value;
-				$user[$docParamName][$paramName]['inputType'] = $inputType;
-
-			}
-		}
-
-////////////////////////////////all of the above code is just waisted. need to call User::show(id) and Post::show(id)
-		$post['postInfo'] =$post['postInfo']['original'];
-		unset($user['personal_information']);
-		$match['total'] = 0;
-
-
-		$score = 0;
-
-
-		function calc($user, $post) {
-			$match['dev'] = [];
-			$match['total']=0;
-			$points = 10;
-
-			foreach($user as $userDocParamName => $userDocParamValues)
-			{
-				if (array_key_exists($userDocParamName, $post))
-				{
-						unset($userDocParamValues['docParamId']);
-						unset($post[$userDocParamName]['docParamId']);
-						foreach($userDocParamValues as $userParamName => $userParamValue)
-						{
-							if(!is_int($userParamName))
-							{
-								if (array_key_exists($userParamName, $post[$userDocParamName]))
-								{
-									//regular non-iterable
-									if($userParamValue['paramValue'] == $post[$userDocParamName][$userParamName]['paramValue'])
-									{
-										$match['dev'][] = $userParamValue['paramValue'];
-										$match['total'] = $match['total']+$points;
-										echo 'this one is a match: '. $userParamName . PHP_EOL;
-									}
-								}
-								else
-								{
-									echo 'doesnt exist in post: '. $userParamName . 'from docParam: '. $userDocParamName . PHP_EOL;
-								}
-							}
-							else if(is_int($userParamName))
-							{
-								unset($userParamValue['docParamId']);
-								foreach($userParamValue as $paramName => $paramValue)
-								{
-									if (array_key_exists($paramName, $post[$userDocParamName]))
-									{
-										//regular non-iterable
-
-										if($paramValue['paramValue'] == $post[$userDocParamName][$paramName]['paramValue'])
-										{
-											$match['dev'][] = $paramValue['paramValue'];
-											$match['total'] = $match['total']+$points;
-											echo 'this one is a match: '. $paramName . PHP_EOL;
-										}else
-										{
-											echo 'this one is not a match: '. $paramName . PHP_EOL;
-										}
-									}
-									else
-									{
-										echo 'doesnt exist in post: '. $paramName . PHP_EOL;
-
-									}
-								}
-							}
-
-						}
-				}
-				else
-				{
-
-				}
-				echo PHP_EOL;
-
-			}
-
-		return $match['total'];
-
-		}
-
-		$result = calc($user,$post);
-
-		return Response::json(array('result'=>$result, 'user'=>$user, 'post' => $post));
-
-
-	}
+	
 
 
 	/**

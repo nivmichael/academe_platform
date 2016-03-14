@@ -13,32 +13,84 @@ use response;
 class PostRepository
 {
 
-    public function index(User $user)
+    public function index($user)
     {
-        if($user->subtype == 'employer'){
+        $user_type = $user['personal_information']['subtype'];
+        if($user_type == 'employer'){
             return $this->forUser($user);
         }else{
             return $this->getAllPosts($user);
         }
     }
 
-    public function getAllPosts(User $user)
+    public function getAllPosts($user)
     {
         $posts = [];
-        foreach(Post::all() as $post) {
+        $postsArr = [];
+        $params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
+										   param.name AS paramName,
+										   param.slug AS slug,
+										   param_type.name AS paramType,
+										   param_value.value AS paramValue,
+										   doc_param.name AS docParamName,
+										   param.id AS paramId,
+										   type_post.id AS postId,
+										   param.param_parent_id AS paramParent,
+										   doc_param.id AS docParamId
+
+										   FROM	param
+										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
+										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
+										   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
+										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id
+										   LEFT JOIN param_type ON param.type_id = param_type.id"));
+										//   WHERE  type_post.id = ".$id));
+
+        foreach($params as $k=>$v) {
+
+            $iteration    = $v->iteration;
+            $docParamName = $v->docParamName;
+            $paramName    = $v->paramName;
+            $inputType    = $v->paramType;
+            $paramParentId = $v->paramParent;
+            $paramValue   = $v->paramValue;
+            $docParamId   = $v->docParamId;
+            $paramId      = $v->paramId;
+            $postId       = $v->postId;
+
+
+            if($v->value_ref == null) {
+                $value = $v->value_short;
+            } else {
+                $value = $v->value;
+            }
+            $posts[$postId][$docParamName][$iteration]['docParamId'] = $docParamId;
+            $posts[$postId][$docParamName][$iteration][$paramName]['paramValue'] = $value;
+            $posts[$postId][$docParamName][$iteration][$paramName]['paramName']  = $paramName;
+            $posts[$postId][$docParamName][$iteration][$paramName]['inputType'] = $inputType;
+            $posts[$postId][$docParamName][$iteration][$paramName]['paramParentId'] = $paramParentId;
+
+            }
+
+        unset( $posts['']);
+        foreach($posts as $post) {
+
             $match = $this->calcMatchPercentage($post, $user);
             $post['match'] = $match;
-            $posts[] = $post;
+
+            $postsArr[] = $post;
+
         }
-        //sorted on client side
-        return $posts;
+//        //sorted on client side
+
+        return $postsArr;
 
     }
 
-    public function forUser(User $user)
+    public function forUser($user)
     {
-
-        $user_posts = Post::where('user_id', $user->id)
+        $user_id = $user['personal_information']['id'];
+        $user_posts = Post::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -53,113 +105,29 @@ class PostRepository
 
     }
 
-//    public function postsWithMatch(User $user){
-//
-//        $posts = [];
-//        foreach(Post::all() as $post) {
-//            $match = $this->calcMatchPercentage($post, $user);
-//            $post['match'] = $match;
-//            $posts[] = $post;
-//        }
-//        //sorted on client side
-//        return $posts;
-//    }
+    public function calcMatchPercentage($post, $user)
+    {
+        //dd($user);
+        $match['total'] = 0.0;
 
-    public function calcMatchPercentage(Post $post, User $user){
-        $match = rand(0,5);
-        return $match;
-    }
-
-    public function calculate_match_percentage($post_parameters, $user_parameters, $exclude_job_parameters, $user_id = false) {
-
-        // Note:
-        // The 'exclude' array specified whether we need to NOT calculate certain parameters.
-        // This is used if the Employer is associated with a MemberZone that defines less job-parameters than usual.
-        // This "exclude" parameter is called "exclude_job_parameters" and belongs to the Doc MemberZone.
-
-        $match['total'] = 0.05;
-
-        if ($post_parameters && $user_parameters) {
-
-            if (!$exclude_job_parameters['experience']) {
-                $score = 0;
-                $num_of_variables = 0;
-                if ($post_parameters['general']['experience']['value']) {
-                    $experience = explode('-',$post_parameters['general']['experience']['value']);
-                    $num_of_variables++;
-                    if ($user_parameters['general']['experience'] >= $experience[0] && $user_parameters['general']['experience'] <= $experience[1]) {
-                        $score++;
-                    }
+        if ($post && $user) {
+            if ($post['education']) {
+                $degree_array = [];
+                foreach($post['education'] as $post_education_iteration_key => $params) {
+                    $degree_array[] = $params['degree']['paramValue'] ;
                 }
-                if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-                }
-            }
-
-            if (!$exclude_job_parameters['education']) {
-
-                $degree_array = array();
-                foreach($post_parameters['education'] as $post_education_param) {
-                    $degree_array[] = $post_education_param['degree']['value'];
-                }
-
                 $score = 0;
                 $num_of_variables = 0;
                 if (!empty($degree_array)) {
                     $num_of_variables++;
-                    if (!empty($user_parameters['education'])) {
-                        foreach ($user_parameters['education'] as $education_param) {
-                            if (in_array($education_param['degree'], $degree_array)) {
-                                $score++;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
-                }
-                $faculty_array = array();
-                foreach($post_parameters['education'] as $post_education_param) {
-                    $faculty_array[] = $post_education_param['faculty']['value'];
-                }
-
-                $score = 0;
-                $num_of_variables = 0;
-                if (!empty($faculty_array)) {
-                    $num_of_variables++;
-                    if (!empty($user_parameters['education'])) {
-                        foreach ($user_parameters['education'] as $education_param) {
-                            $user_education_array = (array)json_decode($education_param['faculty'], TRUE);
-                            foreach ($faculty_array as $value) {
-                                if (array_key_exists($value, $user_education_array)) {
-                                    $score++;
-                                    break 2;
-                                }
-                            }
-                        }
-                    }
-                }
-                if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-                }
-                $class_array = array();
-                foreach($post_parameters['education'] as $post_education_param) {
-                    $class_array[] = $post_education_param['class']['value'];
-                }
-                $score = 0;
-                $num_of_variables = 0;
-                if (!empty($class_array)) {
-                    $num_of_variables++;
-                    if (!empty($user_parameters['education'])) {
-                        foreach ($user_parameters['education'] as $education_param) {
-                            // see that we decode faculty from user again - this is because classes are stored in a json in faculty param
-                            $user_education_array = (array)json_decode($education_param['faculty'], TRUE);
-                            foreach($user_education_array as $classes) {
-                                foreach ($class_array as $value) {
-                                    if (array_key_exists($value, $classes)) {
+                    if (!empty($user['education'])) {
+                        foreach ($user['education'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'degree') {
+                                    if (in_array($param_properties['paramValue'], $degree_array)) {
                                         $score++;
-                                        break 3;
+                                        break 2;
                                     }
                                 }
                             }
@@ -167,143 +135,294 @@ class PostRepository
                     }
                 }
                 if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.45;
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
                 }
-
-
-            }
-
-            $score = 0;
-            $num_of_variables = 0;
-            if ($post_parameters['employment']['category']['value']) {
-                $num_of_variables++;
-                if ($post_parameters['employment']['category']['value'] == $user_parameters['next_step']['category']) {
-                    $score++;
+                $major_array = [];
+                foreach($post['education'] as $post_education_iteration_key => $params) {
+                    $major_array[] = $params['major']['paramValue'] ;
                 }
-            }
-            if ($num_of_variables > 0) {
-                $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-            }
-
-            $score = 0;
-            $num_of_variables = 0;
-            if ($post_parameters['employment']['category']['value']) {
-                $num_of_variables++;
-                if (!empty($user_parameters['employment'])) {
-                    foreach ($user_parameters['employment'] as $employment_param) {
-                        if ($employment_param['category'] == $post_parameters['employment']['category']['value']) {
-                            $score++;
-                            break;
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($major_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['education'])) {
+                        foreach ($user['education'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'major') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $major_array)) {
+                                        if(in_array($param_properties['paramParentValue'], $degree_array )) {
+                                            $score++;
+                                            break 2;
+                                        };
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
-            if ($num_of_variables > 0) {
-                $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-            }
-
-            $score = 0;
-            $num_of_variables = 0;
-            if ($post_parameters['employment']['profession']['value']) {
-                $num_of_variables++;
-                if ($post_parameters['employment']['profession']['value'] == $user_parameters['next_step']['profession']) {
-                    $score++;
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
                 }
-            }
-            if ($num_of_variables > 0) {
-                $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-            }
-
-            $score = 0;
-            $num_of_variables = 0;
-            if ($post_parameters['employment']['profession']['value']) {
-                $num_of_variables++;
-                if (!empty($user_parameters['employment'])) {
-                    foreach ($user_parameters['employment'] as $employment_param) {
-                        $profession_arr = (array)json_decode($employment_param['profession']);
-                        if (in_array($post_parameters['employment']['profession']['value'], $profession_arr)) {
-                            $score++;
-                            break;
+                $minor_array = [];
+                foreach($post['education'] as $post_education_iteration_key => $params) {
+                    $minor_array[] = $params['minor']['paramValue'] ;
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($minor_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['education'])) {
+                        foreach ($user['education'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'minor') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $minor_array)) {
+                                        if (in_array($param_properties['paramParentValue'], $major_array)) {
+                                            $score++;
+                                            break 2;
+                                        };
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
-            if ($num_of_variables > 0) {
-                $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-            }
-
-            if (!$exclude_job_parameters['job_title']) {
-                $score = 0;
-                $num_of_variables = 0;
-                if ($post_parameters['next_step']['job_title']['value']) {
-                    $num_of_variables++;
-                    if ($post_parameters['next_step']['job_title']['value'] == $user_parameters['next_step']['job_title']) {
-                        $score++;
-                    }
-                }
                 if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
                 }
             }
+            if ($post['employment']) {
 
-            if (!$exclude_job_parameters['salary']) {
-                $score = 0;
-                $num_of_variables = 0;
-                if ($post_parameters['next_step']['salary']['value']) {
-                    if ($post_parameters['next_step']['salary']['value'] == $user_parameters['next_step']['salary']) {
-                        $score++;
-                    }
-                    $num_of_variables++;
-                }
-                if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-                }
-            }
 
-            if (!$exclude_job_parameters['location']) {
-                $score = 0;
-                $num_of_variables = 0;
-                if ($post_parameters['next_step']['location']['value']) {
-                    if ($post_parameters['next_step']['location']['value'] == $user_parameters['next_step']['location']) {
-                        $score++;
-                    }
-                    $num_of_variables++;
-                }
-                if ($num_of_variables > 0) {
-                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.05;
-                }
-            }
+                $user_career_goals_main_field_array = [];
+                $user_career_goals_profession_array = [];
 
-            $score = 0;
-            $num_of_variables = 0;
-            if ($post_parameters['languages']['language']['value']) {
-                $num_of_variables++;
-                if (!empty($user_parameters['languages'])) {
-                    foreach ($user_parameters['languages'] as $languages_param) {
-                        if ($languages_param['language'] == $post_parameters['languages']['language']['value']) {
-                            $score++;
-                            break;
+                foreach($user['career_goals'] as $iteration_key => $params) {
+                    foreach($params as $param_id => $param_properties) {
+                        if($param_properties['paramName'] == 'main_field') {
+                            $user_career_goals_main_field_array[] = $param_properties['paramValue'];
+                        }
+                        if($param_properties['paramName'] == 'profession') {
+                            $user_career_goals_profession_array[] = $param_properties['paramValue'];
                         }
                     }
                 }
-            }
-            if ($num_of_variables > 0) {
-                $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
-            }
 
-            if ($match['total'] > 0) {
-                return round($match['total']*100);
-            } else {
-                return 0;
-            }
 
+
+                $main_field_array = [];
+                foreach($post['employment'] as $post_education_iteration_key => $params) {
+                    $main_field_array[] = $params['main_field']['paramValue'] ;
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($main_field_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['employment'])) {
+                        foreach ($user['employment'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+
+
+                                if($param_properties['paramName'] == 'main_field') {
+
+
+                                    if (in_array($param_properties['paramValue'], $main_field_array)) {
+                                        $score++;
+                                        break 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+                $profession_array = [];
+                foreach($post['employment'] as $post_education_iteration_key => $params) {
+                    $profession_array[] = $params['profession']['paramValue'] ;
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($profession_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['employment'])) {
+                        foreach ($user['employment'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'profession') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $profession_array)) {
+                                        if (in_array($param_properties['paramParentValue'], $main_field_array)) {
+                                            $score++;
+                                            break 2;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+            }
+            if ($post['career_goals']) {
+                $job_title_array = [];
+                foreach($post['career_goals'] as $post_education_iteration_key => $params) {
+                    $job_title_array[] = $params['job_title']['paramValue'] ;
+                    $post['career_goals'][ $post_education_iteration_key]['main_field'] = $post['employment'][ $post_education_iteration_key]['main_field'];
+                    $post['career_goals'][ $post_education_iteration_key]['profession'] = $post['employment'][ $post_education_iteration_key]['profession'];
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty( $job_title_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['career_goals'])) {
+                        foreach ($user['career_goals'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'job_title') {
+                                    if (in_array($param_properties['paramValue'], $job_title_array)) {
+                                        $score++;
+                                        break 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+                $language_array = [];
+                foreach($post['career_goals'] as $post_education_iteration_key => $params) {
+                    $language_array[] = $params['language']['paramValue'] ;
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($language_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['career_goals'])) {
+                        foreach ($user['career_goals'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'language') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $language_array)) {
+                                        if (in_array($param_properties['paramParentValue'], $job_title_array)) {
+                                            $score++;
+                                            break 2;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+                $location_array = [];
+                foreach($post['career_goals'] as $post_education_iteration_key => $params) {
+                    $location_array[] = $params['location']['paramValue'] ;
+                }
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($location_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['career_goals'])) {
+                        foreach ($user['career_goals'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'location') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $location_array)) {
+                                        if (in_array($param_properties['paramParentValue'], $language_array)) {
+                                            $score++;
+                                            break 2;
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+
+
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($user_career_goals_main_field_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['career_goals'])) {
+                        foreach ($user['career_goals'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'main_field') {
+
+
+                                    if (in_array($param_properties['paramValue'], $user_career_goals_main_field_array)) {
+                                        $score++;
+                                        break 2;
+                                    };
+
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+
+                $score = 0;
+                $num_of_variables = 0;
+                if (!empty($user_career_goals_profession_array)) {
+                    $num_of_variables++;
+                    if (!empty($user['career_goals'])) {
+                        foreach ($user['career_goals'] as $user_education_iteration_key => $params) {
+                            unset($params['docParamId']);
+                            foreach($params as $param_id => $param_properties) {
+                                if($param_properties['paramName'] == 'profession') {
+                                    if(isset($param_properties['paramParentId']) && $param_properties['paramParentId'] != null && $param_properties['paramParentId'] != 0) {
+                                        $param_properties['paramParentValue'] = $params[$param_properties['paramParentId']]['paramValue'];
+                                    }
+                                    if (in_array($param_properties['paramValue'], $user_career_goals_main_field_array)) {
+                                        if (in_array($param_properties['paramParentValue'], $user_career_goals_profession_array)) {
+                                            $score++;
+                                            break 2;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($num_of_variables > 0) {
+                    $match['total'] = $match['total'] + ($score/$num_of_variables)*0.1;
+                }
+
+            }
         }
-
+        return  round($match['total']*100)  ;
     }
-
-
-
-
-
 
 }

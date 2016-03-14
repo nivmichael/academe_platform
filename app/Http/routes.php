@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::post('/me', 'TypeUserController@updateUser');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
+
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
         Route::post('/savePost', 'PostController@savePost');
     });
