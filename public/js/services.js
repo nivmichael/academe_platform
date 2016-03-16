@@ -83,56 +83,81 @@ angular.module('acadb.services', []).
 		});
 	}])
 
-.factory('SelectOptions', ['$http','$q',
-	function($http, $q) {
-		//var promise;
-		var options;
+//.factory('SelectOptions', ['$http','$q',
+//	function($http, $q) {
+//		//var promise;
+//		var options;
+//		return {
+//			getOptions: function(paramName, docParamId) {
+//				if ( !options[paramName] ) {
+//					if (typeof options[paramName] == 'undefined') options[paramName] = [];
+//					options[paramName] =  options[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).then(function(response) {
+//						options[paramName] = response;
+//							return $q.when(options[paramName]);
+//						});
+//				}
+//				return $q.when(options[paramName]);
+//			},
+//			getAllOptionValues: function(){
+//				if ( !options ) {
+//					if (typeof options == 'undefined') options = [];
+//					options =  options.length ? null : $http.get('api/getAllOptionValues').then(function(response) {
+//						options = response;
+//						console.log(options);
+//						return $q.when(options);
+//					});
+//									}
+//				return $q.when(options);
+//			}
+//		};
+//	}])
+	.factory('Account', function($http, $rootScope ) {
+
+		var promise;
 		return {
-			getOptions: function(paramName, docParamId) {
-				if ( !options[paramName] ) {
-					if (typeof options[paramName] == 'undefined') options[paramName] = [];
-					options[paramName] =  options[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).then(function(response) {
-						options[paramName] = response;
-							return $q.when(options[paramName]);
-						});
-				}
-				return $q.when(options[paramName]);
-			},
-			getAllOptionValues: function(){
-				if ( !options ) {
-					if (typeof options == 'undefined') options = [];
-					options =  options.length ? null : $http.get('api/getAllOptionValues').then(function(response) {
-						options = response;
-						console.log(options);
-						return $q.when(options);
+			getProfile: function() {
+				if ( !promise ) {
+					// $http returns a promise, which has a then function, which also returns a promise
+					promise = $http.get('/api/me').then(function (response) {
+						// The then function here is an opportunity to modify the response
+
+						// The return value gets picked up by the then in the controller.
+						return response.data;
 					});
-									}
-				return $q.when(options);
+				}
+				// Return the promise to the controller
+				return promise;
+			},
+			updateProfile: function(profileData) {
+				return $http.post('/api/me',profileData);
+			},
+			broadcast: function(user) {
+				$rootScope.$broadcast('handleBroadcast', user);
+			},
+			logout: function(){
+
+				return promise = null;
 			}
 		};
-	}])
-//.factory('FormService', ['$http','$q',
-//	function($http, $q) {
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//	}])
-.factory('Account', function($http, $rootScope) {
 
-	var promise;
+	})
+.factory('Form', function($http, $q, $rootScope, $stateParams, $state) {
+
+	var doc =	$state.current.name.split('.');
+		doc = doc[1];
+		console.log(doc);
+	var self = this;
+	var form, options;
+	var	next_keys =Array();
+	var prev_key = false;
+	var next_form;
+
+
 	return {
-		getProfile: function() {
-			if ( !promise ) {
+		getForms: function() {
+			if ( !form ) {
 				// $http returns a promise, which has a then function, which also returns a promise
-				promise = $http.get('/api/me').then(function (response) {
+				form = $http.get('api/forms/register_' + $stateParams.type).then(function (response) {
 					// The then function here is an opportunity to modify the response
 
 					// The return value gets picked up by the then in the controller.
@@ -140,45 +165,55 @@ angular.module('acadb.services', []).
 				});
 			}
 			// Return the promise to the controller
-			return promise;
+			return form;
 		},
-		updateProfile: function(profileData) {
-			return $http.post('/api/me',profileData);
+		getAllOptionValues: function(){
+			if ( !options ) {
+				if (typeof options == 'undefined') options = [];
+				options =  options.length ? null : $http.get('api/getAllOptionValues').then(function(response) {
+					options = response;
+					return $q.when(options);
+				});
+			}
+			return $q.when(options);
 		},
-		broadcast: function(user) {
-			$rootScope.$broadcast('handleBroadcast', user);
-		},
-		logout: function(){
+		next_form: function(){
 
-			return promise = null;
+
+				for (var key in $rootScope.steps) {
+					if($rootScope.steps[key]['belongsTo'] ==  $stateParams.type){
+						if (!prev_key) {
+							prev_key = $rootScope.steps[key].value;
+						} else {
+							next_keys[prev_key] = $rootScope.steps[key].value;
+							prev_key = $rootScope.steps[key].value;
+							var next = $rootScope.steps[key].value;
+							//this.nextDoc();
+						}
+					}
+				}
+				return next_keys;
+
+
+		},
+		nextDoc: function() {
+
+				if (next_keys[doc]) {
+					doc = next_keys[doc];
+
+					return doc;
+
+				} else {
+					return false;
+				}
+
+
+
 		}
 	};
 
-
-
-		//return {
-		//	broadcast: function(user) {
-		//		$rootScope.$broadcast('handleBroadcast', user);
-		//	},
-		//	getProfile: function() {
-		//		return $http.get('/api/me');
-		//	},
-		//	updateProfile: function(profileData) {
-		//		return $http.post('/api/me',profileData);
-		//	},
-		//	getType: function() {
-		//		$http.get('/api/me')
-		//			.success(function(data){
-		//				return data.personal_information.subtype;
-		//			})
-		//			.error(function(){
-        //
-		//			})
-        //
-		//	},
-		//};
 	})
-	.factory('verifyToken', function($http) {
+.factory('verifyToken', function($http) {
 		return {
 			verify: function(stateParams){
 				console.log('verifyToken');
@@ -188,7 +223,7 @@ angular.module('acadb.services', []).
 			}
 		};
 	})
-	.factory("FlashService", function($rootScope) {
+.factory("FlashService", function($rootScope) {
 		return {
 			show: function(message) {
 				$rootScope.flash = message;
@@ -199,7 +234,7 @@ angular.module('acadb.services', []).
 		};
 	})
 
-	.factory("SessionService", function() {
+.factory("SessionService", function() {
 		return {
 			get: function(key) {
 				return sessionStorage.getItem(key);
@@ -326,43 +361,43 @@ angular.module('acadb.services', []).
 
 	})
 
-	.factory('authorization', ['$rootScope', '$state', 'AuthenticationService',
-		function($rootScope, $state, AuthenticationService) {
-			return {
-
-				handle: function(){
-
-					return AuthenticationService.isLoggedIn();
-				},
-
-				authorize: function() {
-
-
-					return AuthenticationService.identity()
-
-						.then(function() {
-							var isAuthenticated = AuthenticationService.isAuthenticated();
-
-
-
-							if ($rootScope.toState.data.roles && $rootScope.toState.data.roles.length > 0 && !AuthenticationService.isInAnyRole($rootScope.toState.data.roles)) {
-								if (isAuthenticated) $state.go('401'); // user is signed in but not authorized for desired state
-								else {
-									// user is not authenticated. stow the state they wanted before you
-									// send them to the signin state, so you can return them when you're done
-									$rootScope.returnToState = $rootScope.toState;
-									$rootScope.returnToStateParams = $rootScope.toStateParams;
-
-									// now, send them to the signin state so they can log in
-									$state.go('login');
-								}
-							}
-
-						});
-				}
-			};
-		}
-	]);
+	//.factory('authorization', ['$rootScope', '$state', 'AuthenticationService',
+	//	function($rootScope, $state, AuthenticationService) {
+	//		return {
+    //
+	//			handle: function(){
+    //
+	//				return AuthenticationService.isLoggedIn();
+	//			},
+    //
+	//			authorize: function() {
+    //
+    //
+	//				return AuthenticationService.identity()
+    //
+	//					.then(function() {
+	//						var isAuthenticated = AuthenticationService.isAuthenticated();
+    //
+    //
+    //
+	//						if ($rootScope.toState.data.roles && $rootScope.toState.data.roles.length > 0 && !AuthenticationService.isInAnyRole($rootScope.toState.data.roles)) {
+	//							if (isAuthenticated) $state.go('401'); // user is signed in but not authorized for desired state
+	//							else {
+	//								// user is not authenticated. stow the state they wanted before you
+	//								// send them to the signin state, so you can return them when you're done
+	//								$rootScope.returnToState = $rootScope.toState;
+	//								$rootScope.returnToStateParams = $rootScope.toStateParams;
+    //
+	//								// now, send them to the signin state so they can log in
+	//								$state.go('login');
+	//							}
+	//						}
+    //
+	//					});
+	//			}
+	//		};
+	//	}
+	//]);
 
 	//.factory('principal', ['$q', '$http', '$timeout',
 	//	function($q, $http, $timeout) {

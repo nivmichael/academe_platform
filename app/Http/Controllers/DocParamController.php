@@ -155,6 +155,24 @@ class DocParamController extends Controller {
 		//
 	}
 
+
+	public function deleteIterable(Request $request)
+	{
+		$all = $request->all();
+		$user_id    = $all['user_id'];
+		$iteration_key   = $all['index'];
+		$docParamId = $all['docParam'][0]['docParamId'];
+
+		DB::table('sys_param_values')
+			->leftJoin('param', 'sys_param_values.param_id', '=', 'param.id')
+			->where('ref_id', $user_id)
+			->where('doc_param_id', $docParamId)
+			->where('iteration', $iteration_key)
+			->delete();
+
+		return response()->json();
+
+	}
 	/**
 	 * Remove the specified resource from storage.
 	 *

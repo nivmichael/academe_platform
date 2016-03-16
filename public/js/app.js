@@ -390,8 +390,10 @@ var acadb = angular.module('acadb', [
 
 
             angular.forEach(stateList, function(value, key) {
+
                 var getExistingState = $state.get(value.name);
                 if(getExistingState !== null){
+
                     return;
                 }
 

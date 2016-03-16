@@ -48,6 +48,7 @@ Route::group(['middleware' => ['web','domain']], function () {
         //Route::get('/me', 'TypeUserController@index');
         Route::get('/me', 'TypeUserController@index');
         Route::post('/me', 'TypeUserController@updateUser');
+        Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
 

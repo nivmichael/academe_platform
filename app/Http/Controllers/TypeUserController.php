@@ -324,7 +324,7 @@ class TypeUserController extends Controller
 //		return response()->json($obj);
 
 
-		return response()->json([ 'user' => $obj,'posts'=> $this->posts->getAllPosts() ]);
+		return response()->json([ 'user' => $obj ]);
 	}
 
 
@@ -1175,6 +1175,9 @@ class TypeUserController extends Controller
 		//
 	}
 
+
+
+
 //	/**
 //	 * Update the specified resource in storage.
 //	 *
@@ -1199,26 +1202,5 @@ class TypeUserController extends Controller
 	}
 
 
-	public function arrayRecursiveDiff($aArray1, $aArray2)
-	{// clones two arrays with each other;
-		$aReturn = array();
 
-		foreach ($aArray1 as $mKey => $mValue) {
-			if (array_key_exists($mKey, $aArray2)) {
-				if (is_array($mValue)) {
-					$aRecursiveDiff = arrayRecursiveDiff($mValue, $aArray2[$mKey]);
-					if (count($aRecursiveDiff)) {
-						$aReturn[$mKey] = $aRecursiveDiff;
-					}
-				} else {
-					if ($mValue != $aArray2[$mKey]) {
-						$aReturn[$mKey] = $mValue;
-					}
-				}
-			} else {
-				$aReturn[$mKey] = $mValue;
-			}
-		}
-		return $aReturn;
-	}
 }

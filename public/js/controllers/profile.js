@@ -45,9 +45,9 @@ angular.module('acadb')
         $scope.move = function(array, fromIndex, toIndex){
             array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
         };
-        $scope.remove = function(array,item) {
-            array.splice(item,1);
-            $http.post('/deleteIterable', {docParam:array,user:$scope.user}).
+        $scope.remove = function(array,index,user_id) {
+            array.splice(index,1);
+            $http.post('api/deleteIterable', {docParam:array,index:index,user_id:user_id}).
                 then(function(response) {
 
                 }, function(response) {
@@ -76,14 +76,14 @@ angular.module('acadb')
       //  //});
       //};
 
-      $scope.showGroup = function(paramKey, docParamName, paramName) {
-        if($scope.user[docParamName][paramKey]['paramValue'] && typeof $scope.groups[paramName] != 'undefined') {
-          var selected = $filter('filter')($scope.groups[paramName], {value: $scope.user[docParamName][paramKey]['paramValue']});
-          return selected.length ? selected[0].text : 'Not set';
-        } else {
-          return $scope.user[docParamName][paramKey]['paramValue'] || '';
-        }
-      };
+      //$scope.showGroup = function(paramKey, docParamName, paramName) {
+      //  if($scope.user[docParamName][paramKey]['paramValue'] && typeof $scope.groups[paramName] != 'undefined') {
+      //    var selected = $filter('filter')($scope.groups[paramName], {value: $scope.user[docParamName][paramKey]['paramValue']});
+      //    return selected.length ? selected[0].text : 'Not set';
+      //  } else {
+      //    return $scope.user[docParamName][paramKey]['paramValue'] || '';
+      //  }
+      //};
 
       $scope.showIterableGroup = function(paramKey, docParamName, index, paramName) {
             paramKey = paramKey.toString();
@@ -97,14 +97,13 @@ angular.module('acadb')
       };
 
       $scope.addWhenEdit = function(docParam,$index) {
+
         $http.get('api/forms/register_jobseeker')
             .success(function(data, status, headers, config) {
                 $scope.inserted = data[docParam];
-                if(!(angular.isArray($scope.user[docParam]))){
-                    $scope.user[docParam] = Array($scope.user[docParam],$scope.inserted);
-                }else{
-                    $scope.user[docParam].push($scope.inserted);
-                }
+                console.log($scope.inserted);
+                $scope.user[docParam].push($scope.inserted[0]);
+
             })
             .error(function(){
                 alert('ERROR!!');
