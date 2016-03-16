@@ -1,6 +1,6 @@
 'use strict';
 angular.module('acadb')
-  .controller('ProfileCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, SelectOptions) {
+  .controller('ProfileCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form) {
 
       console.log('profileCTrl');
       $scope.user={};
@@ -58,9 +58,8 @@ angular.module('acadb')
 
         $scope.loadGroups = function() {
 
-            SelectOptions.getAllOptionValues().then(function(options){
+            Form.getAllOptionValues().then(function(options){
                 $scope.groups = options.data;
-                console.log($scope.groups );
             });
 
         };

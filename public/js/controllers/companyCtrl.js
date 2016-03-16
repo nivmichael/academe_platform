@@ -1,6 +1,6 @@
 'use strict';
 angular.module('acadb')
-  .controller('CompanyCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, SelectOptions, $stateParams) {
+  .controller('CompanyCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form, $stateParams) {
 
         $scope.reverse = true;
         $scope.orderByFilter = 'match';

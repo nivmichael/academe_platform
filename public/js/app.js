@@ -403,7 +403,7 @@ var acadb = angular.module('acadb', [
                    // sticky: true,
                     deepStateRedirect: true,
                     "reloadOnSearch": false,
-                    params: {type: null,  sub_type : null},
+                    params: {type: null,  sub_type : null, doc:value.value },
                     resolve:{
                         docParam: function(){
                             return {docParam: value.value};
@@ -420,8 +420,11 @@ var acadb = angular.module('acadb', [
                         },
                         'main@register':{
                             "templateUrl":'../../partials/tpl/registration_forms.html'  ,
-                            "controller":function($scope, docParam){
+                            "controller":function($scope, docParam, Form, $stateParams){
+                               //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
                                $scope.docParam = docParam.docParam;
+                               //$scope.next_keys = Form.next_form();
+                               $scope.nextDoc  = Form.nextDoc();
                             }
                         },
                         'footer':{

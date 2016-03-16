@@ -141,17 +141,12 @@ angular.module('acadb.services', []).
 		};
 
 	})
-.factory('Form', function($http, $q, $rootScope, $stateParams, $state) {
+.factory('Form', function($http, $q, $rootScope, $stateParams) {
 
-	var doc =	$state.current.name.split('.');
-		doc = doc[1];
-		console.log(doc);
-	var self = this;
-	var form, options;
-	var	next_keys =Array();
-	var prev_key = false;
-	var next_form;
 
+	var	next_keys = [];
+	var prev_key  = false;
+	var form, options, new_iteration;
 
 	return {
 		getForms: function() {
@@ -159,13 +154,35 @@ angular.module('acadb.services', []).
 				// $http returns a promise, which has a then function, which also returns a promise
 				form = $http.get('api/forms/register_' + $stateParams.type).then(function (response) {
 					// The then function here is an opportunity to modify the response
-
 					// The return value gets picked up by the then in the controller.
 					return response.data;
 				});
 			}
 			// Return the promise to the controller
 			return form;
+		},
+		next_form: function(){
+				for (var key in $rootScope.steps) {
+					if($rootScope.steps[key]['belongsTo'] ==  $stateParams.type){
+						if (!prev_key) {
+							prev_key = $rootScope.steps[key].value;
+						} else {
+							next_keys[prev_key] = $rootScope.steps[key].value;
+							prev_key = $rootScope.steps[key].value;
+							var next = $rootScope.steps[key].value;
+						}
+					}
+				}
+				return next_keys;
+		},
+		nextDoc: function() {
+				var doc = $stateParams.doc;
+				if (next_keys[doc]) {
+					doc = next_keys[doc];
+					return doc;
+				} else {
+					return false;
+				}
 		},
 		getAllOptionValues: function(){
 			if ( !options ) {
@@ -177,42 +194,18 @@ angular.module('acadb.services', []).
 			}
 			return $q.when(options);
 		},
-		next_form: function(){
-
-
-				for (var key in $rootScope.steps) {
-					if($rootScope.steps[key]['belongsTo'] ==  $stateParams.type){
-						if (!prev_key) {
-							prev_key = $rootScope.steps[key].value;
-						} else {
-							next_keys[prev_key] = $rootScope.steps[key].value;
-							prev_key = $rootScope.steps[key].value;
-							var next = $rootScope.steps[key].value;
-							//this.nextDoc();
-						}
-					}
-				}
-				return next_keys;
-
-
-		},
-		nextDoc: function() {
-
-				if (next_keys[doc]) {
-					doc = next_keys[doc];
-
-					return doc;
-
-				} else {
-					return false;
-				}
-
-
-
+		add: function() {
+			if(!new_iteration) {
+				if (typeof new_iteration == 'undefined') new_iteration = [];
+				new_iteration = new_iteration.length ? null : $http.get('api/forms/register_'+$stateParams.type).then(function(response){
+					new_iteration = response.data;
+					return $q.when(new_iteration);
+				})
+			}
+			return $q.when(new_iteration);
 		}
 	};
-
-	})
+})
 .factory('verifyToken', function($http) {
 		return {
 			verify: function(stateParams){

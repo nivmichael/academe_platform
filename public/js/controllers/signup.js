@@ -3,6 +3,7 @@ angular.module('acadb')
   .controller('SignupCtrl', function($scope, $rootScope, $state, $location, $auth, $stateParams, $http, Form) {
       'use strict';
       console.log('signupCtrl');
+        $scope.docParam = $stateParams.doc;
       $scope.educationStatuses = [
         {value: 'student',  text: 'Student'},
         {value: 'graduate', text: 'Graduate'},
@@ -35,7 +36,7 @@ angular.module('acadb')
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);
-              $state.go('register.' + $scope.nextDoc($scope.docParam));
+              $state.go('register.' + $scope.nextDoc);
             })
             .error(function(response) {
               $scope.errors = response;
@@ -43,8 +44,8 @@ angular.module('acadb')
             });
       };
 
-      $scope.next_keys = Form.next_form();
-      $scope.nextDoc   = Form.nextDoc();
+       $scope.next_keys = Form.next_form();
+      //$scope.nextDoc   = Form.nextDoc();
       //$scope.nextDoc = function(doc){
       //      console.log(doc);
       //    return Form.nextDoc(doc);
@@ -92,20 +93,27 @@ angular.module('acadb')
       *
       * */
 
+        $scope.add = function(docParam,$index) {
+            Form.add().then(function(data){
+                console.log(docParam);
+                $scope.inserted = data[docParam][0];
+                $scope.user[docParam].push($scope.inserted);
 
+            })
+        };
 
-      $scope.addRecordJobSeeker =function(docParam,$index) {
-			$http.get('api/forms/register_jobseeker')
-				.success(function(data, status, headers, config) {
-
-                    $scope.inserted = data[docParam][0];
-                    $scope.user[docParam].push($scope.inserted);
-
-                })
-				.error(function(){
-					alert('ERROR!!');
-				});
-	  };
+      //$scope.addRecordJobSeeker =function(docParam,$index) {
+		//	$http.get('api/forms/register_jobseeker')
+		//		.success(function(data, status, headers, config) {
+      //
+       //             $scope.inserted = data[docParam][0];
+       //             $scope.user[docParam].push($scope.inserted);
+      //
+       //         })
+		//		.error(function(){
+		//			alert('ERROR!!');
+		//		});
+	  //};
 
 
 
