@@ -2,26 +2,43 @@
 angular.module('acadb')
   .controller('ProfileCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form) {
 
-      console.log('profileCTrl');
-      $scope.user={};
-      $scope.groups = {};
+      $scope.user    = {};
+      $scope.groups  = {};
       $scope.isArray = angular.isArray;
 
       $scope.saveUser = function() {
           Account.updateProfile($scope.user)
             .then(function(response) {
-
               Account.broadcast(response.data);
-              //toastr.success('Profile has been updated');
             })
             .catch(function(response) {
-              //toastr.error(response.data.message, response.status);
             });
       };
+      $scope.loadGroups = function() {
+           Form.getAllOptionValues().then(function(options){
+               $scope.groups = options.data;
+           });
+      };
+
       $scope.$on('handleBroadcast', function(event, user) {
           $scope.user = user.user;
           //$scope.allPosts = user.posts;
       });
+
+      $scope.add = function(docParam,$index) {
+           Form.add().then(function(data){
+               $scope.inserted = data[docParam][0];
+               $scope.user[docParam].push($scope.inserted);
+           })
+      };
+      $scope.move = function(array, fromIndex, toIndex){
+            array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
+      };
+      $scope.remove = function(array,index,user_id) {
+            Form.remove(array,index,user_id);
+            array.splice(index,1);
+
+      };
       //$scope.saveUser = function(user) {
       //
       //      return $http.post('/users',{user:user})
@@ -39,50 +56,6 @@ angular.module('acadb')
       //      });
       //};
 
-
-      /*Editable inputs. groups means options.*/
-
-        $scope.move = function(array, fromIndex, toIndex){
-            array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
-        };
-        $scope.remove = function(array,index,user_id) {
-            array.splice(index,1);
-            $http.post('api/deleteIterable', {docParam:array,index:index,user_id:user_id}).
-                then(function(response) {
-
-                }, function(response) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
-        };
-
-        $scope.loadGroups = function() {
-
-            Form.getAllOptionValues().then(function(options){
-                $scope.groups = options.data;
-            });
-
-        };
-
-      //$scope.loadGroups = function(paramName, docParamId) {
-      //
-      //   SelectOptions.getOptions(paramName,docParamId).then(function(options){
-      //       $scope.groups[paramName] = options.data;
-      //   });
-      //  //if (typeof $scope.groups[paramName] == 'undefined') $scope.groups[paramName] = [];
-      //  //return $scope.groups[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).success(function(data) {
-      //  //  $scope.groups[paramName] = data;
-      //  //});
-      //};
-
-      //$scope.showGroup = function(paramKey, docParamName, paramName) {
-      //  if($scope.user[docParamName][paramKey]['paramValue'] && typeof $scope.groups[paramName] != 'undefined') {
-      //    var selected = $filter('filter')($scope.groups[paramName], {value: $scope.user[docParamName][paramKey]['paramValue']});
-      //    return selected.length ? selected[0].text : 'Not set';
-      //  } else {
-      //    return $scope.user[docParamName][paramKey]['paramValue'] || '';
-      //  }
-      //};
 
       $scope.showIterableGroup = function(paramKey, docParamName, index, paramName) {
             paramKey = paramKey.toString();

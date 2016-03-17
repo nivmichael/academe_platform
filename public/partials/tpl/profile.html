@@ -16,7 +16,7 @@
 
 				<form editable-form class="editableForm" e-name="editableForm" name="editableForm" onaftersave="saveUser(user)" ng-init="loadGroups()" shown="0" e-ng-model="user">
 					<div ng-if="docParamName == 'personal_information'" class="">
-						<ng-include src="'partials/forms/profile_personal_information.html'"></ng-include>
+						<ng-include src="'partials/forms/profile/jobseeker_profile_personal_information.html'"></ng-include>
 					</div>
 					<div ng-repeat="(key,params) in iteration_key"  style="" repeat-done="initDatePicker()" ng-show="isArray(iteration_key)" style="margin-bottom:20px;">
 
@@ -62,7 +62,7 @@
 								</div>
 
 								<div ng-switch-default>
-
+									{{ user[docParamName][key][param_id]['paramValue'] }}
 
 								</div>
 							</div>

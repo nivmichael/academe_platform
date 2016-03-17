@@ -1,9 +1,11 @@
 'use strict';
 angular.module('acadb')
-  .controller('SignupCtrl', function($scope, $rootScope, $state, $location, $auth, $stateParams, $http, Form) {
-      'use strict';
-      console.log('signupCtrl');
-        $scope.docParam = $stateParams.doc;
+  .controller('SignupCtrl', function($scope, $rootScope, $state, $auth, $stateParams, $http, Form) {
+
+      $scope.docParam  = $stateParams.doc;
+      $scope.next_keys = Form.next_form();
+      $scope.groups = {};
+
       $scope.educationStatuses = [
         {value: 'student',  text: 'Student'},
         {value: 'graduate', text: 'Graduate'},
@@ -18,14 +20,16 @@ angular.module('acadb')
 
       $scope.getForms = function() {
           Form.getForms().then(function(form){
+              $scope.form = angular.copy(form);
               $scope.user = form;
               $scope.user['personal_information']['education_status'] = $stateParams.sub_type;
               $scope.user['personal_information']['subtype']          = $stateParams.type;
+              //next line should be conditional
+              $scope.user['personal_information']['status']           = 'active';
               $scope.loadGroups();
           })
       }
 
-      $scope.groups={};
       $scope.loadGroups = function() {
           Form.getAllOptionValues().then(function(options){
           $scope.groups = options.data;
@@ -36,84 +40,37 @@ angular.module('acadb')
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);
-              $state.go('register.' + $scope.nextDoc);
+              $state.go('register.' + Form.nextDoc());
             })
             .error(function(response) {
               $scope.errors = response;
-
             });
       };
 
-       $scope.next_keys = Form.next_form();
-      //$scope.nextDoc   = Form.nextDoc();
-      //$scope.nextDoc = function(doc){
-      //      console.log(doc);
-      //    return Form.nextDoc(doc);
-      //};
-        //$scope.nextDoc = function(doc){
-        //    if($scope.next_keys[doc]){
-        //        $scope.doc = $scope.next_keys[doc];
-        //        return $scope.doc ;
-        //    }else{
-        //        return false ;
-        //    }
-        //};
-
-
-        //$scope.next_keys =Array();
-        //var prev_key = false;
-        //for (var key in $scope.steps) {
-        //    if($scope.steps[key]['belongsTo'] ==  $scope.type){
-        //        if (!prev_key) {
-        //            prev_key = $scope.steps[key].value;
-        //        } else {
-        //            $scope.next_keys[prev_key] = $scope.steps[key].value;
-        //            prev_key = $scope.steps[key].value;
-        //            $scope.next = $scope.steps[key].value;
-        //            $scope.nextDoc();
-        //        }
-        //    }
-        //}
-
-      $scope.getForms();
-
-
-
-
-      /*
-      *
-      * make a service
-      *
-      * add record
-      * move
-      * remove
-      * loadoptions already working
-      * show options
-      *
-      *
-      * */
-
         $scope.add = function(docParam,$index) {
-            Form.add().then(function(data){
-                console.log(docParam);
-                $scope.inserted = data[docParam][0];
-                $scope.user[docParam].push($scope.inserted);
-
-            })
+            $scope.inserted = angular.copy($scope.form[docParam][0]);
+            $scope.user[docParam].push($scope.inserted);
         };
 
-      //$scope.addRecordJobSeeker =function(docParam,$index) {
-		//	$http.get('api/forms/register_jobseeker')
-		//		.success(function(data, status, headers, config) {
-      //
-       //             $scope.inserted = data[docParam][0];
-       //             $scope.user[docParam].push($scope.inserted);
-      //
-       //         })
-		//		.error(function(){
-		//			alert('ERROR!!');
-		//		});
-	  //};
+
+      //$scope.add = function(docParam,$index) {
+      //        Form.add().then(function(data){
+      //            $scope.inserted = data[docParam];
+      //            $scope.user[docParam].push($scope.inserted[0]);
+      //        })
+      //};
+
+      $scope.move = function(array, fromIndex, toIndex){
+            array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
+      };
+
+      $scope.remove = function(array,index,user_id) {
+        Form.remove(array,index,user_id);
+        array.splice(index,1);
+
+      };
+      $scope.getForms();
+
 
 
 

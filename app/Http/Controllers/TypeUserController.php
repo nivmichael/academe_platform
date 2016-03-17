@@ -566,7 +566,7 @@ class TypeUserController extends Controller
 			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
 
 		}
-
+//var_dump($user);
 		return Response::json($user);
 	}
 

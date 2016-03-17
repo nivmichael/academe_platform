@@ -169,7 +169,6 @@ angular.module('acadb.services', []).
 						} else {
 							next_keys[prev_key] = $rootScope.steps[key].value;
 							prev_key = $rootScope.steps[key].value;
-							var next = $rootScope.steps[key].value;
 						}
 					}
 				}
@@ -179,6 +178,7 @@ angular.module('acadb.services', []).
 				var doc = $stateParams.doc;
 				if (next_keys[doc]) {
 					doc = next_keys[doc];
+					console.log(doc);
 					return doc;
 				} else {
 					return false;
@@ -194,15 +194,21 @@ angular.module('acadb.services', []).
 			}
 			return $q.when(options);
 		},
-		add: function() {
-			if(!new_iteration) {
-				if (typeof new_iteration == 'undefined') new_iteration = [];
-				new_iteration = new_iteration.length ? null : $http.get('api/forms/register_'+$stateParams.type).then(function(response){
-					new_iteration = response.data;
-					return $q.when(new_iteration);
-				})
-			}
-			return $q.when(new_iteration);
+		//add: function() {
+		//	if(!new_iteration) {
+		//		if (typeof new_iteration == 'undefined') new_iteration = [];
+		//		new_iteration = $http.get('api/forms/register_'+$stateParams.type).then(function(response){
+		//			new_iteration = response.data;
+        //
+        //
+        //
+		//			return $q.when(new_iteration);
+		//		})
+		//	}
+		//	return $q.when(angular.copy(new_iteration));
+		//},
+		remove: function(array,index,user_id) {
+			$http.post('api/deleteIterable', {docParam:array,index:index,user_id:user_id});
 		}
 	};
 })
