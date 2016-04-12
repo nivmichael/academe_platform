@@ -1,5 +1,6 @@
 angular.module('acadb.filters', [])
 
+
 .filter('checkDate', [function() {
     return function(input) {
     	//console.log('The input from the user is :'+input);
@@ -28,6 +29,19 @@ angular.module('acadb.filters', [])
     	return returnedInput;
     };
 }])
+	.filter("positioning", function() {
+		return _.memoize(function(collection, field) {
+			return _.sortBy(collection, function(item) {
+
+				return item.position;
+				console.log(collection);
+			});
+		}, function resolver(collection, field) {
+
+			return collection.length + field;
+		})
+	})
+
 .filter('checkmark', [function() {
     return function(input) {
         // This is V or X characters

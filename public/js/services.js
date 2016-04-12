@@ -146,9 +146,21 @@ angular.module('acadb.services', []).
 
 	var	next_keys = [];
 	var prev_key  = false;
-	var form, options, new_iteration;
+	var form, getJobPostForm, options, new_iteration;
 
 	return {
+		getJobPostForm: function() {
+			if ( !getJobPostForm ) {
+				// $http returns a promise, which has a then function, which also returns a promise
+				getJobPostForm = $http.get('api/forms/jobPost').then(function (response) {
+					// The then function here is an opportunity to modify the response
+					// The return value gets picked up by the then in the controller.
+					return response.data;
+				});
+			}
+			// Return the promise to the controller
+			return getJobPostForm;
+		},
 		getForms: function() {
 			if ( !form ) {
 				// $http returns a promise, which has a then function, which also returns a promise

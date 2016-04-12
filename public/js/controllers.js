@@ -51,6 +51,34 @@ console.log(response);
 			{value: 'inactive', text: 'Inactive'}
 		]
 	})
+	.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
+
+
+
+		//$scope.upload = function (dataUrl, name) {
+		//	Upload.upload({
+		//		url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+		//		data: {
+		//			file: Upload.dataUrltoBlob(dataUrl, name)
+		//		},
+		//	}).then(function (response) {
+		//		$timeout(function () {
+		//			$scope.result = response.data;
+		//		});
+		//	}, function (response) {
+		//		if (response.status > 0) $scope.errorMsg = response.status
+		//			+ ': ' + response.data;
+		//	}, function (evt) {
+		//		$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+		//	});
+		//}
+        //
+		$scope.open = function(){
+			console.log('dor');
+			$scope.modalOpen = true;
+			$scope.openModal = true;
+		};
+	}])
 	.controller('PasswordCtrl', function ($scope, $http, $state, $auth, CSRF_TOKEN, $stateParams) {
 		$scope.postPasswordEmail = function(){
 			$http.post('/password/email', { email:$scope.user.email	})

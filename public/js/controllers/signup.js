@@ -47,27 +47,19 @@ angular.module('acadb')
             });
       };
 
-        $scope.add = function(docParam,$index) {
-            $scope.inserted = angular.copy($scope.form[docParam][0]);
-            $scope.user[docParam].push($scope.inserted);
-        };
-
-
-      //$scope.add = function(docParam,$index) {
-      //        Form.add().then(function(data){
-      //            $scope.inserted = data[docParam];
-      //            $scope.user[docParam].push($scope.inserted[0]);
-      //        })
-      //};
+      $scope.add = function(docParam,$index) {
+           $scope.inserted = angular.copy($scope.form[docParam][0]);
+           $scope.user[docParam].push($scope.inserted);
+      };
 
       $scope.move = function(array, fromIndex, toIndex){
+          console.log(array);
             array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
       };
 
       $scope.remove = function(array,index,user_id) {
         Form.remove(array,index,user_id);
         array.splice(index,1);
-
       };
       $scope.getForms();
 

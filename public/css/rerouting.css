@@ -254,3 +254,125 @@ and (min-width : 990px) {
     float:left;
     margin-left:10px;
 }
+.jobPost_field{
+    margin-top:10px;
+}
+.jobPost_education{
+    margin-left:25%;
+}
+.add{
+    margin-left: 10px;
+}
+
+/*images uplaod*/
+
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+.drop-box{
+    border: 5px dashed gray;
+
+}
+.dragover{
+
+    border: 5px dashed #19789F;
+    background-image:url('../img/upload_brainfolder.gif');
+    background-size:100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+.cropArea{
+    width:100%;
+    background-color:transparent;
+    /*height: 280px;*/
+}
+.cropArea {
+
+    overflow: hidden;
+
+}
+.croppedData{
+    /*margin-left:100px;*/
+}
+.croppedData.thumbnail{
+    margin-top:10px;
+    margin-left:60px;
+    padding:10px 0px;
+
+}
+.croppedData.croppedDataUrl{
+    margin-top:10px;
+    /*margin-left:60px;*/
+    /*padding:10px 0px;*/
+
+}
+.select_files_btn{
+    background-color:white;
+    color:black;
+}
+img-crop{
+   width:100%;
+
+
+}
+
+.imageUploadControls{
+    height:203px;
+    width:50px;
+     padding:0;
+}
+.imageUploadControls > li + li + li{
+    border-bottom:none;
+}
+.imageUploadControls > li {
+    height:33%;
+    text-align:center;
+    border-bottom:1px solid #DDDDDD
+}
+.imageUploadControls::last-child{
+    border-bottom:0px solid #DDDDDD
+}
+.imageUploadControls > li:hover,  .imageUploadControls > li a:hover  {
+   background-color:#5D2C87;
+   color:white;
+   cursor:pointer;
+}
+
+.imageUploadControls > li > a > i {
+
+    line-height:70px;
+}
+.thumb{
+    height:33%;
+}
+/*.add_profile_pic_overlay{*/
+    /*position:absolute;*/
+    /*bottom:0;*/
+    /*width: 308px;*/
+    /*height: 0px;*/
+    /*overflow:hidden;*/
+    /*-webkit-transition: all 0.2s linear;*/
+    /*-moz-transition: all 0.2s linear;*/
+    /*-o-transition: all 0.2s linear;*/
+    /*transition: all 0.2s linear;*/
+
+/*}*/
+/*.add_profile_pic:hover + .add_profile_pic_overlay, .add_profile_pic_overlay:hover{*/
+    /*margin-top:0;*/
+    /*height:30px;*/
+/*}*/
+
+/*.left{*/
+    /*float:left;*/
+/*}*/

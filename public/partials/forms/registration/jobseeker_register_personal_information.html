@@ -94,18 +94,38 @@
     </div>
 </div>
 
-<!-- <div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3">Birth Date</div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors >
+    <input  input-date
+            type="text"
+            name="created"
+            id=""
+            class="form-control"
+            ng-model="user.personal_information.date_of_birth"
+            container="body"
+            format="mm/dd/yyyy"
+            months-full="{{ month }}"
+            months-short="{{ monthShort }}"
+            weekdays-full="{{ weekdaysFull }}"
+            weekdays-short="{{ weekdaysShort }}"
+            weekdays-letter="{{ weekdaysLetter }}"
+            min="{{ minDate }}"
+            max="{{ maxDate }}"
+            today="today"
+            clear="clear"
+            close="close"
+            select-years="15"
+            on-start="onStart()"
+            on-render="onRender()"
+            on-open="onOpen()"
+            on-close="onClose()"
+            on-set="onSet()"
+            on-stop="onStop()" />
+        </div>
 
-<div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3">
-Birthdate*
 </div>
 
-<div>
-<input type='date' class="form-control " name="date_of_birth" placeholder="Birthdate" ng-model="user.personal_information.date_of_birth" required>
-</div>
-
-</div>
-     -->
 <div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
 
     <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Marital Status </div>

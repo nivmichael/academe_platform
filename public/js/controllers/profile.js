@@ -6,6 +6,28 @@ angular.module('acadb')
       $scope.groups  = {};
       $scope.isArray = angular.isArray;
 
+      $scope.getProfile = function() {
+           Account.getProfile()
+               .then(function(response) {
+
+                   $scope.user  = response.user;
+                   $scope.posts = response.posts;
+                   $scope.status  = $scope.user.personal_information.status;
+                   Account.broadcast(response);
+
+               })
+               .catch(function(response) {
+                   //toastr.error(response.data.message, response.status);
+               });
+      };
+
+
+      $scope.$on('handleBroadcast', function(event, user) {
+         // $scope.user = user.user;
+         // $scope.form = user.user;
+         //$scope.allPosts = user.posts;
+      });
+
       $scope.saveUser = function() {
           Account.updateProfile($scope.user)
             .then(function(response) {
@@ -20,10 +42,10 @@ angular.module('acadb')
            });
       };
 
-      $scope.$on('handleBroadcast', function(event, user) {
-          $scope.user = user.user;
-          //$scope.allPosts = user.posts;
-      });
+      //$scope.add = function(docParam,$index) {
+      //     $scope.inserted = angular.copy($scope.form[docParam][0]);
+      //     $scope.user[docParam].push($scope.inserted);
+      //};
 
       $scope.add = function(docParam,$index) {
            Form.add().then(function(data){
@@ -31,6 +53,7 @@ angular.module('acadb')
                $scope.user[docParam].push($scope.inserted);
            })
       };
+
       $scope.move = function(array, fromIndex, toIndex){
             array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
       };
@@ -214,19 +237,6 @@ angular.module('acadb')
           //toastr.error(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', response.status);
         });
     };
-        $scope.getProfile = function() {
-            Account.getProfile()
-                .then(function(response) {
-                    $scope.user  = response.user;
-                    $scope.posts = response.posts;
-                    $scope.status  = $scope.user.personal_information.status;
-                    Account.broadcast(response);
-                    console.log(response);
 
-                })
-                .catch(function(response) {
-                    //toastr.error(response.data.message, response.status);
-                });
-        };
     $scope.getProfile();
   });

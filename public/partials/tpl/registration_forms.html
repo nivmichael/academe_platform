@@ -11,8 +11,6 @@
 			</ul>
 		</div>
 
-
-
 		<div ng-if="docParam == 'personal_information'">
 			<ng-include src="'partials/forms/registration/jobseeker_register_personal_information.html'"></ng-include>
 		</div>
@@ -22,7 +20,7 @@
 			<div ng-repeat="(param_id, param) in docParamValues track by $index" class="form_field" ng-if="param_id != 'docParamId'">
 
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<b>{{param.paramName}}</b>
+					<b>{{param.paramName }}</b>
 				</div>
 
 				<div ng-switch="param.inputType" >
@@ -31,14 +29,13 @@
 						<div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<select class="form-control"
 									ng-model="user[docParam][iteration_key][param_id]['paramValue']"
-									ng-options="s.id as s.value for s in groups[param.paramName]  | toArray:true "
+									ng-options="s.id as s.value for s in groups[param.paramName]  | toArray:true |  filter:{parent_id: user[docParam][iteration_key][user[docParam][iteration_key][param_id]['paramParentId']]['paramValue'] }:true "
 									ng-disabled="!groups[param.paramName]">
 							</select>
 						</div>
 					</div>
 
 					<div ng-switch-when="date">
-
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<input  input-date
 									type="text"
@@ -66,8 +63,32 @@
 									on-set="onSet()"
 									on-stop="onStop()" />
 						</div>
-						<br />
 					</div>
+					<!--<div ng-switch-when="files">-->
+						<!--<div  ng-controller="MyCtrl">-->
+								<!--<form name="myForm">-->
+									<!--<div>Crop Image and Upload</div>-->
+									<!--<button ngf-select ng-model="picFile" accept="image/*">-->
+										<!--Select Picture</button>-->
+									<!--<div ngf-drop ng-model="picFile" ngf-pattern="image/*"-->
+										 <!--class="cropArea">-->
+										<!--<img-crop image="picFile  | ngfDataUrl"-->
+												  <!--result-image="croppedDataUrl" ng-init="croppedDataUrl=''">-->
+										<!--</img-crop>-->
+									<!--</div>-->
+									<!--<div>-->
+										<!--<img ng-src="{{croppedDataUrl}}" />-->
+									<!--</div>-->
+									<!--<button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>-->
+
+									<!--<span class="progress" ng-show="progress >= 0">-->
+									  <!--<div style="width:{{progress}}%" ng-bind="progress + '%'"></div>-->
+									<!--</span>-->
+									<!--<span ng-show="result">Upload Successful</span>-->
+									<!--<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
+								<!--</form>-->
+						<!--</div>-->
+					<!--</div>-->
 
 					<div ng-switch-default>
 						<div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -93,18 +114,32 @@
 
 			<div  ng-if="docParam != 'personal_information' && $last">
 				<a class="waves-effect waves-light btn-flat" ng-click="add(docParam,$index)" style="padding-left:10px;">
-					<i class="glyphicon glyphicon-plus" style="font-size:10px;"></i>Add a Record
+					<i class="glyphicon glyphicon-plus" style="font-size:15px;"></i>&nbsp; Add a Record
 				</a>
 			</div>
 		</div>
 
 
+
+		<div ng-if="docParam == 'files'" >
+			<ng-include src="'partials/forms/registration/jobseeker_register_files.html'"></ng-include>
+		</div>
+
+
+
+
+
+
+
+
 		<div class="clearfix"></div>
 		<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
 			<div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"></div>
+
 			<div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6">
-				<div class="">
-					<div class="" ng-if="nextDoc" >
+				<div>
+					<div ng-if="nextDoc" >
 						<button  ng-click="signup(user,docParam)"  class="waves-effect waves-light btn-flat" ng-disabled="registerJobSeekerForm.$invalid"> Proceed To {{nextDoc | underscoreless | capitalize}} &nbsp <div class="glyphicon glyphicon-circle-arrow-right"></div> </button>
 					</div>
 					<div class=""  ng-if="nextDoc == false">
@@ -113,6 +148,9 @@
 				</div>
 			</div>
 		</div>
+
+
+
 
 </main>
 

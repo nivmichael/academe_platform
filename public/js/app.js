@@ -21,7 +21,8 @@ var acadb = angular.module('acadb', [
     'satellizer',
     'rateYo',
     'ui.bootstrap.modal',
-
+    'ngFileUpload',
+        'ngImgCrop'
 ])
 
 
@@ -170,7 +171,7 @@ var acadb = angular.module('acadb', [
                 },
                 sticky: true,
                 deepStateRedirect: true,
-                //params: {type: null,  sub_type : null},
+                params: {type: null,  sub_type : null},
                 views:{
                     'profile.nav@jobseeker':{
                         templateUrl: '../partials/tpl/navbar/jobseeker_profile_navbar.html',
@@ -263,13 +264,37 @@ var acadb = angular.module('acadb', [
                 }
 
             })
+            .state('employer.edit', {
+                url: '^/edit',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
+                views:{
+                    'edit.nav@employer':{
 
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'edit.sideNav@employer':{
+                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'edit@employer':{
+                        templateUrl: '../partials/tpl/edit.html',
+                        controller: 'CompanyCtrl as PC'
+                    },
+
+                }
+            })
             .state('employer.postajob', {
                 url: '^/new_job',
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                sticky: true,
+                //sticky: true,
                 deepStateRedirect: true,
                 //params: {type: null,  sub_type : null},
                 views:{
@@ -330,6 +355,7 @@ var acadb = angular.module('acadb', [
 
                 return deferred.promise;
             };
+
 
 
 

@@ -290,36 +290,13 @@ class TypePostController extends Controller {
 		$postInfo = new stdClass();
 		$post = array();
 
-//
-//		$postDocParams =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-//											   param.slug AS slug,
-//											   param.name AS paramName,
-//											   param_type.name AS paramType,
-//											   doc_param.name AS docParamName,
-//											   doc_param.id AS postDocParamId
-//
-//											   FROM	param
-//											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
-//											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
-//											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-//											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
-//											   LEFT JOIN param_type ON param.type_id = param_type.id
-//											   WHERE doc_type_id = 1 AND authorized = 1"));
-//
-//		foreach($postDocParams as $k=>$v) {
-//			print_r($k);
-//			print_r($v);
-//			$postDocParamId   = $v->postDocParamId;
-//
-//
-//
-//		}
 
 
 
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 											   param.slug AS slug,
-											   param.name AS paramName, 
+											   param.name AS paramName,
+											   param.position AS position,
 											   param_type.name AS paramType,
 											   doc_param.name AS docParamName,
 											   doc_param.id AS docParamId,
@@ -333,7 +310,7 @@ class TypePostController extends Controller {
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id 
 											   LEFT JOIN param_type ON param.type_id = param_type.id
 
-											   WHERE doc_type_id = 2 AND authorized = 1"));
+											   WHERE doc_type_id = 2 AND authorized = 1 ORDER BY position"));
 
 		$postInfo = Schema::getColumnListing('type_post');
 
@@ -345,29 +322,27 @@ class TypePostController extends Controller {
 		foreach($params as $k=>$v) {
 			$paramName    = $v->paramName;
 			$docParamName = $v->docParamName;
-			//$value = $v->type_id;
 			$inputType    = $v->paramType;
 			$slug         = $v->slug;
 			$docParamId   = $v->docParamId;
 			$paramId      = $v->paramId;
-			//$post[$v->docParamName][$k][$paramName] = $v->value = '';
+			$position     = $v->position;
+
+
 			$post[$docParamName][0]['docParamId'] = $docParamId;
-		//	$post[$docParamName]['postDocParamId'] = $postDocParamId;
 			$post[$docParamName][0][$paramId]['paramName'] = $paramName;
 			$post[$docParamName][0][$paramId]['slug'] = $slug;
 			$post[$docParamName][0][$paramId]['paramValue'] = '';
 			$post[$docParamName][0][$paramId]['inputType'] = $inputType;
-			$post[$docParamName][0][$paramId]['slug'] = $slug;
+			$post[$docParamName][0][$paramId]['position'] = $position;
+
 
 		}
-		// foreach($postInfo as $key=>$value) {
-			// if($value){
-				// $postInfo[$value] = '';
-			// }
-// 		
+
+
 		 $post['postInfo'] = $postInfoKeys;
 
-		// }
+
 
 		return Response::json($post);
 	}

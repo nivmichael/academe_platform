@@ -25,9 +25,9 @@ class PostRepository
 
     public function getAllPosts($user)
     {
-        $posts = [];
+        $posts    = [];
         $postsArr = [];
-        $params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
+        $params   = DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName,
 										   param.slug AS slug,
 										   param_type.name AS paramType,
@@ -280,7 +280,9 @@ class PostRepository
             if ($post['career_goals']) {
                 $job_title_array = [];
                 foreach($post['career_goals'] as $post_education_iteration_key => $params) {
+
                     $job_title_array[] = $params['job_title']['paramValue'] ;
+
                     $post['career_goals'][ $post_education_iteration_key]['main_field'] = $post['employment'][ $post_education_iteration_key]['main_field'];
                     $post['career_goals'][ $post_education_iteration_key]['profession'] = $post['employment'][ $post_education_iteration_key]['profession'];
                 }

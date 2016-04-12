@@ -1,5 +1,96 @@
 (function (angular) {
-    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin", "ui.materialize.scrollspy", "ui.materialize.parallax","ui.materialize.modal", "ui.materialize.tooltipped",  "ui.materialize.slider", "ui.materialize.materialboxed"]);
+    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin", "ui.materialize.scrollspy", "ui.materialize.parallax","ui.materialize.modal", "ui.materialize.tooltipped",  "ui.materialize.slider", "ui.materialize.materialboxed", "ui.materialize.scrollFire"]);
+
+    /*     example usage:
+     <div scroll-fire="func('Scrolled', 2000)" ></scroll-fire>
+     */
+    angular.module("ui.materialize.scrollFire", [])
+        .directive("scrollFire", ["$compile", "$timeout", function ($compile, $timeout) {
+            return {
+                restrict: "A",
+                scope: {
+                    offset: "@",
+                    scrollFire: "&"
+                },
+                link: function (scope, element, attrs) {
+                    var offset = scope.offset;
+                    if (!angular.isDefined(scope.offset)) {
+                        offset = 0;
+                    }
+                    offset = Number(offset) || 0;
+
+
+                    var fired = false;
+                    var handler = throttle(function () {
+                        console.log("Handler");
+                        if (fired) {
+                            return;
+                        }
+                        var windowScroll = window.pageYOffset + window.innerHeight;
+
+                        var elementOffset = element[0].getBoundingClientRect().top + window.pageYOffset;
+
+                        console.log(typeof offset);
+                        console.log((windowScroll - (elementOffset + offset)) + " left");
+
+                        if (windowScroll > (elementOffset + offset)) {
+                            fired = true;
+                            scope.scrollFire({});
+                            stop();
+                        }
+                    }, 100);
+
+                    function stop() {
+                        $(window).off("scroll resize blur focus", handler);
+                    }
+
+                    $(window).on("scroll resize blur focus", handler);
+                    handler();
+
+                    scope.$on('$destroy', stop);
+                }
+            };
+        }]);
+
+    // The throttle function from underscore: https://github.com/jashkenas/underscore/blob/master/underscore.js
+    function throttle(func, wait) {
+        var timeout, context, args, result;
+        var previous = 0;
+
+        var later = function() {
+            previous = + new Date();
+            timeout = null;
+            result = func.apply(context, args);
+            if (!timeout) context = args = null;
+        };
+
+        var throttled = function() {
+            var now = + new Date();
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+            if (remaining <= 0 || remaining > wait) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
+                previous = now;
+                result = func.apply(context, args);
+                if (!timeout) context = args = null;
+            } else if (!timeout) {
+                timeout = setTimeout(later, remaining);
+            }
+            return result;
+        };
+
+        throttled.cancel = function() {
+            clearTimeout(timeout);
+            previous = 0;
+            timeout = context = args = null;
+        };
+
+        return throttled;
+    };
 
     angular.module("ui.materialize.ngModel", [])
         .directive("ngModel",["$timeout", function($timeout){
@@ -22,9 +113,9 @@
         }]);
 
 
-    /* example usage: 
-     <div slider height='500' transition='400'></div>
-     */
+    /* example usage:
+    <div slider height='500' transition='400'></div>
+    */
     angular.module("ui.materialize.slider", [])
         .directive("slider", ["$timeout", function($timeout){
             return {
@@ -159,7 +250,7 @@
                 },
                 link: function (scope, element, attrs) {
                     element.sideNav({
-                        menuWidth: (angular.isDefined(scope.menuwidth)) ? scope.menuwidth : undefined,
+                        menuWidth: (angular.isDefined(scope.menuwidth)) ? parseInt(scope.menuwidth, 10) : undefined,
                         edge: attrs.sidenav ? attrs.sidenav : "left",
                         closeOnClick: (angular.isDefined(scope.closeonclick)) ? scope.closeonclick == "true" : undefined
                     });
@@ -175,7 +266,9 @@
                     if (element.is("select")) {
                         function initSelect() {
                             element.siblings(".caret").remove();
-                            element.material_select();
+                            scope.$evalAsync(function() {
+                              element.material_select();
+                            });
                         }
                         $timeout(initSelect);
                         if (attrs.ngModel) {
@@ -198,9 +291,9 @@
     /*
      Example usage, notice the empty dropdown tag in the dropdown trigger.
      <!-- Dropdown Trigger -->
-     <a class='dropdown-button btn' href='javascript:void(0);' data-activates='demoDropdown' 
-     dropdown constrain-width="false">
-     Select a demo
+     <a class='dropdown-button btn' href='javascript:void(0);' data-activates='demoDropdown'
+        dropdown constrain-width="false">
+        Select a demo
      </a>
      <!-- Dropdown Structure -->
      <ul id='demoDropdown' class='dropdown-content'>
@@ -293,26 +386,26 @@
      * Type text is mandatory
      * Example:
      <input input-date
-     type="text"
-     name="created"
-     id="inputCreated"
-     ng-model="currentTime"
-     format="dd/mm/yyyy"
-     months-full="{{ monthFr }}"
-     months-short="{{ monthShortFr }}"
-     weekdays-full="{{ weekdaysFullFr }}"
-     weekdays-short="{{ weekdaysShortFr }}"
-     weekdays-letter="{{ weekdaysLetterFr }}"
-     disable="disable"
-     today="today"
-     clear="clear"
-     close="close"
-     on-start="onStart()"
-     on-render="onRender()"
-     on-open="onOpen()"
-     on-close="onClose()"
-     on-set="onSet()"
-     on-stop="onStop()" />
+        type="text"
+        name="created"
+        id="inputCreated"
+        ng-model="currentTime"
+        format="dd/mm/yyyy"
+        months-full="{{ monthFr }}"
+        months-short="{{ monthShortFr }}"
+        weekdays-full="{{ weekdaysFullFr }}"
+        weekdays-short="{{ weekdaysShortFr }}"
+        weekdays-letter="{{ weekdaysLetterFr }}"
+        disable="disable"
+        today="today"
+        clear="clear"
+        close="close"
+        on-start="onStart()"
+        on-render="onRender()"
+        on-open="onOpen()"
+        on-close="onClose()"
+        on-set="onSet()"
+        on-stop="onStop()" />
      */
     angular.module("ui.materialize.input_date", [])
         .directive('inputDate', ["$compile", "$timeout", function ($compile, $timeout) {
@@ -409,7 +502,7 @@
 
             // Some common format strings
             dateFormat.masks = {
-                "default":      "ddd mmm dd yyyy HH:MM:ss",
+               "default":      "ddd mmm dd yyyy HH:MM:ss",
                 shortDate:      "m/d/yy",
                 mediumDate:     "mmm d, yyyy",
                 longDate:       "mmmm d, yyyy",
@@ -461,6 +554,7 @@
                     monthsFull: "@",
                     monthsShort: "@",
                     weekdaysFull: "@",
+                    weekdaysShort: "@",
                     weekdaysLetter: "@",
                     firstDay: "=",
                     disable: "=",
@@ -491,6 +585,7 @@
                     var monthsFull = (angular.isDefined(scope.monthsFull)) ? scope.$eval(scope.monthsFull) : undefined,
                         monthsShort = (angular.isDefined(scope.monthsShort)) ? scope.$eval(scope.monthsShort) : undefined,
                         weekdaysFull = (angular.isDefined(scope.weekdaysFull)) ? scope.$eval(scope.weekdaysFull) : undefined,
+                        weekdaysShort = (angular.isDefined(scope.weekdaysShort)) ? scope.$eval(scope.weekdaysShort) : undefined,
                         weekdaysLetter = (angular.isDefined(scope.weekdaysLetter)) ? scope.$eval(scope.weekdaysLetter) : undefined;
 
 
@@ -504,6 +599,7 @@
                                 monthsFull: (angular.isDefined(monthsFull)) ? monthsFull : undefined,
                                 monthsShort: (angular.isDefined(monthsShort)) ? monthsShort : undefined,
                                 weekdaysFull: (angular.isDefined(weekdaysFull)) ? weekdaysFull : undefined,
+                                weekdaysShort: (angular.isDefined(weekdaysShort)) ? weekdaysShort : undefined,
                                 weekdaysLetter: (angular.isDefined(weekdaysLetter)) ? weekdaysLetter : undefined,
                                 firstDay: (angular.isDefined(scope.firstDay)) ? scope.firstDay : 0,
                                 disable: (angular.isDefined(scope.disable)) ? scope.disable : undefined,
@@ -543,11 +639,11 @@
     /**
      * Example:
      <pagination
-     page="1"
-     page-size="10"
-     total="100"
-     pagination-action="changePage(page)"
-     ul-class="customClass">
+        page="1"
+        page-size="10"
+        total="100"
+        pagination-action="changePage(page)"
+        ul-class="customClass">
      * ul-class could be either an object or a string
      *
      * Based on https://github.com/brantwills/Angular-Paging
@@ -652,15 +748,15 @@
             }
 
             /**
-             * Add the first, previous, next, and last buttons if desired
-             * The logic is defined by the mode of interest
-             * This method will simply return if the scope.showPrevNext is false
-             * This method will simply return if there are no pages to display
-             *
-             * @param {Object} scope - The local directive scope object
-             * @param {int} pageCount - The last page number or total page count
-             * @param {string} mode - The mode of interest either prev or last
-             */
+            * Add the first, previous, next, and last buttons if desired
+            * The logic is defined by the mode of interest
+            * This method will simply return if the scope.showPrevNext is false
+            * This method will simply return if there are no pages to display
+            *
+            * @param {Object} scope - The local directive scope object
+            * @param {int} pageCount - The last page number or total page count
+            * @param {string} mode - The mode of interest either prev or last
+            */
             function addPrevNext(scope, pageCount, mode){
 
                 // Ignore if we are not showing
@@ -796,15 +892,15 @@
                     ulClass: '=?'
                 },
                 template:
-                '<ul ng-hide="Hide" ng-class="ulClass"> ' +
-                '<li ' +
-                'ng-class="Item.liClass" ' +
-                'ng-click="Item.action()" ' +
-                'ng-repeat="Item in List"> ' +
-                '<a href> ' +
-                '<span ng-bind="Item.value"></span> ' +
-                '</a>' +
-                '</ul>',
+                    '<ul ng-hide="Hide" ng-class="ulClass"> ' +
+                        '<li ' +
+                        'ng-class="Item.liClass" ' +
+                        'ng-click="Item.action()" ' +
+                        'ng-repeat="Item in List"> ' +
+                        '<a href> ' +
+                        '<span ng-bind="Item.value"></span> ' +
+                        '</a>' +
+                    '</ul>',
                 link: function (scope, element, attrs) {
 
                     // Hook in our watched items
@@ -836,17 +932,48 @@
                     dismissible: "=",
                     opacity: "@",
                     inDuration: "@",
-                    outDuration: "@"
+                    outDuration: "@",
+                    ready: '&?',
+                    complete: '&?',
+                    open: '=?',
+                    enableTabs: '@?'
                 },
                 link: function (scope, element, attrs) {
                     $timeout(function () {
+                        var modalEl = $(attrs.href ? attrs.href : '#' + attrs.target);
                         $compile(element.contents())(scope);
-                        element.leanModal({
+
+                        var complete = function () {
+                            angular.isFunction(scope.complete) && scope.$eval(scope.complete());
+
+                            scope.open = false;
+                            scope.$apply();
+                        };
+                        var ready = function() {
+                          angular.isFunction(scope.ready) && scope.$eval(scope.ready());
+                          // If tab support is enabled we need to re-init the tabs
+                          // See https://github.com/Dogfalo/materialize/issues/1634
+                          if (scope.enableTabs) {
+                             modalEl.find('ul.tabs').tabs();
+                          }
+                        };
+                        var options = {
                             dismissible: (angular.isDefined(scope.dismissible)) ? scope.dismissible : undefined,
                             opacity: (angular.isDefined(scope.opacity)) ? scope.opacity : undefined,
                             in_duration: (angular.isDefined(scope.inDuration)) ? scope.inDuration : undefined,
-                            out_duration: (angular.isDefined(scope.outDuration)) ? scope.outDuration : undefined
-                        });
+                            out_duration: (angular.isDefined(scope.outDuration)) ? scope.outDuration : undefined,
+                            ready: ready,
+                            complete: complete,
+                        };
+                        element.leanModal(options);
+
+                        // Setup watch for opening / closing modal programatically.
+                        if (angular.isDefined(attrs.open) && modalEl.length > 0) {
+                          scope.$watch('open', function(value, lastValue) {
+                            if (!angular.isDefined(value)) { return; }
+                            (value === true) ? modalEl.openModal(options) : modalEl.closeModal();
+                          });
+                        }
                     });
                 }
             };
@@ -854,9 +981,9 @@
 
 
     /*     example usage:
-     <!-- data-position can be : bottom, top, left, or right -->
-     <!-- data-delay controls delay before tooltip shows (in milliseconds)-->
-     <a class="btn" tooltipped data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
+    <!-- data-position can be : bottom, top, left, or right -->
+    <!-- data-delay controls delay before tooltip shows (in milliseconds)-->
+    <a class="btn" tooltipped data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
      */
     angular.module("ui.materialize.tooltipped", [])
         .directive("tooltipped", ["$compile", "$timeout", function ($compile, $timeout) {
@@ -878,11 +1005,11 @@
         }]);
 
     /*     example usage:
-     <!-- normal materialboxed -->
-     <img materialboxed class="materialboxed responsive-img" width="650" src="images/sample-1.jpg">
+    <!-- normal materialboxed -->
+    <img materialboxed class="materialboxed responsive-img" width="650" src="images/sample-1.jpg">
 
-     <!-- caption materialboxed -->
-     <img materialboxed class="materialboxed" data-caption="A picture of some deer and tons of trees" width="250" src="iamges/nature_portrait_by_pw_fotografie-d63tx0n.jpg">
+    <!-- caption materialboxed -->
+    <img materialboxed class="materialboxed" data-caption="A picture of some deer and tons of trees" width="250" src="iamges/nature_portrait_by_pw_fotografie-d63tx0n.jpg">
 
      */
     angular.module("ui.materialize.materialboxed", [])

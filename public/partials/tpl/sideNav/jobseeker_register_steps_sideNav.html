@@ -1,8 +1,9 @@
 
 <ul id="jobseeker_register_steps_sideNav" accessibleForm class="side-nav fixed" style="">
     <li class="logo">
-        <div style="padding-bottom:10px;">
-            <img ng-src="http://cims.nyu.edu/~oza/NYULogo.png" style="width:100%;">
+        <div class="profile_pic" style="padding-bottom:10px;">
+            <img   ng-src="../../img/profile-ph.gif"  class="thumbnail add_profile_pic" />
+            <!--<div class="add_profile_pic_overlay">Add Profile Picture</div>-->
         </div>
     </li>
     <li ng-repeat="(key,step) in steps | toArray:true | filter:{ belongsTo : type }:true ">

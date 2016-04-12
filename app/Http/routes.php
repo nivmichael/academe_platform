@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web','domain']], function () {
 
     Route::get('/', function () { return view('index'); });
     Route::get('layout', 'SitesController@getLayout');
+
     Route::group(['prefix' => 'api'], function()
     {
         Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
@@ -45,16 +46,18 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::post('/password/reset', 'Auth\PasswordController@postReset');
         Route::post('/authenticate', 'AuthenticateController@authenticate');
         Route::post('/signup', 'AuthenticateController@signup');
-        //Route::get('/me', 'TypeUserController@index');
+        //get my account
         Route::get('/me', 'TypeUserController@index');
         Route::post('/me', 'TypeUserController@updateUser');
+        Route::get('/forms/jobPost', 'TypePostController@jobPostColumnIndex');
         Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
-
+        //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
-        Route::post('/savePost', 'PostController@savePost');
+        Route::post('savePost', 'PostController@savePost');
     });
+
     // Password reset link request routes...
     Route::get('/password/email', 'Auth\PasswordController@getEmail');
     Route::post('/password/email', 'Auth\PasswordController@postEmail');

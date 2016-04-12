@@ -97,7 +97,7 @@
 						<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible" style="float:right;">Edit</button>
 
 						<div ng-show="editableForm.$visible" style="float:left;">
-							<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
+							<button type="button" class="btn btn-default" ng-click="add(docParamName,$index)">+ Add a Record</button>
 						</div>
 						<div ng-show="editableForm.$visible" style="float:right;">
 							<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting" >Save</button>

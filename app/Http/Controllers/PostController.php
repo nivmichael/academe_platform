@@ -52,7 +52,7 @@ class PostController extends Controller
     {
         $all = request()->all($request);
 
-//dd($all);
+
 
 
         $allPostInfo = $all['post']['postInfo'];

@@ -20,6 +20,8 @@
     {!! Html::style('css/angular-materialize.css') !!}
     <!--Custom CSS-->
     {!! Html::style('css/statevis.css') !!}
+    {!! Html::style('css/ng-img-crop.css') !!}
+
     {!! Html::style('css/rerouting.css') !!}
     {!! Html::style('css/jquery.rateyo.css') !!}
     <!--Fonts-->
@@ -73,7 +75,8 @@
 
 {!! Html::script('lib/materialize.js') !!}
 {!! Html::script('lib/angular-sanitize.min.js') !!}
-
+{!! Html::script('lib/ng-img-crop.js') !!}
+{!! Html::script('lib/ng-file-upload-all.min.js') !!}
 {!! Html::script('lib/underscore.js') !!}
 {!! Html::script('lib/angular-materialize.js') !!}
 {!! Html::script('lib/angular-animate.min.js') !!}
@@ -81,6 +84,7 @@
 {!! Html::script('lib/rating/jquery.rateyo.js')!!}
 {!! Html::script('lib/rating/angular-rating-yo.js')!!}
 {!! Html::script('lib/xeditable/js/xeditable.js')!!}
+{{--angular controllers--}}
 {!! Html::script('js/controllers/home.js') !!}
 {!! Html::script('js/controllers/login.js') !!}
 {!! Html::script('js/controllers/logout.js') !!}
@@ -94,7 +98,7 @@
 
 
 <script>angular.module("acadb").constant("CSRF_TOKEN", '{!! csrf_token() !!}');</script>
-
+{{--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdBZvkZDB2Q3lllTCO3RU7zvj7Bal-rVE&libraries=places"></script>--}}
 
 <!-- Application Scripts
 

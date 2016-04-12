@@ -9,13 +9,15 @@ angular.module('acadb')
 
         $scope.type               = $stateParams.type;
         $scope.registeration_link = 'register.company({type: "'+ type +'"})';
-        $scope.userHomepage       = 'employer.company';
+        /*this has to be resolved before state loads*/
+        $scope.userHomepage       ="employer.company"
 
       }else{
         $scope.type               =  $stateParams.type;
         $scope.sub_type           = $stateParams.sub_type;
         $scope.registeration_link = 'register.personal_information({type: "'+ type  +'" ,sub_type : "'+ sub_type  +'" })';
-        $scope.userHomepage       = 'jobseeker.profile';
+        /*this has to be resolved before state loads*/
+        $scope.userHomepage       = "jobseeker.profile";
       }
 
 
@@ -23,8 +25,8 @@ angular.module('acadb')
       $auth.login($scope.user)
         .then(function() {
           //toastr.success('You have successfully signed in!');
-          //$location.path('/');
-          $state.go($scope.userHomepage);
+          //$location.path('/my_profile');
+        $state.go( $scope.userHomepage);
         })
         .catch(function(response) {
               $scope.error = response.data.error;
