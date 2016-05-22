@@ -605,6 +605,7 @@ class TypeUserController extends Controller
 											   WHERE doc_type_id = 1
 											   AND doc_param.doc_sub_type = 'employer'
 											   AND authorized = 1"));
+
 		if (!Auth::user()) {
 			$userpersonal_information = Schema::getColumnListing('type_user');
 			$userpersonal_information = (object)$userpersonal_information;
@@ -626,20 +627,21 @@ class TypeUserController extends Controller
 			$paramName = $v->paramName;
 			$inputType = $v->paramType;
 			$slug = $v->slug;
-			$position = $v->position;
+			$position = $v->paramPosition;
 			$paramId = $v->paramId;
 			$paramParent = $v->paramParent;
 //			$paramParentPosition = '';
 
 
-			$user[$docParamName]['docParamId'] = $docParamId;
-			$user[$docParamName][$paramId]['paramName'] = $paramName;
-			$user[$docParamName][$paramId]['paramId'] = $paramId;
-			$user[$docParamName][$paramId]['paramParentId'] = $paramParent;
-//			$user[$docParamName][$paramId]['paramParentPosition'] = $paramParentPosition;
-			$user[$docParamName][$paramId]['slug'] = $slug;
-			$user[$docParamName][$paramId]['paramValue'] = '';
-			$user[$docParamName][$paramId]['inputType'] = $inputType;
+			$user[$docParamName][0]['docParamId'] = $docParamId;
+			$user[$docParamName][0][$paramId]['paramName'] = $paramName;
+			$user[$docParamName][0][$paramId]['paramId'] = $paramId;
+			$user[$docParamName][0][$paramId]['paramParentId'] = $paramParent;
+//			$user[$docParamName][0][$paramId]['paramParentPosition'] = $paramParentPosition;
+			$user[$docParamName][0][$paramId]['slug'] = $slug;
+			$user[$docParamName][0][$paramId]['paramValue'] = '';
+			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
+			$user[$docParamName][0][$paramId]['position'] = $position;
 
 		}
 

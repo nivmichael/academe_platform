@@ -1,6 +1,13 @@
 <main >
+	<div ng-if="errors" class="errors alert alert-danger" >
+		{{errors}}
+		<div ng-repeat="(key,error) in errors track by $index">
+			<span ng-if="$first">Please Check the following :<br><br></span>
 
-	<form editable-form  id="" role="form" ng-model="post"  >
+			- {{key}}
+		</div>
+	</div>
+	<form editable-form name="" id="" role="form" ng-model="post"  >
 
 
 

@@ -55,7 +55,20 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
         //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+        Route::get('/job/{id}', 'TypePostController@show');
         Route::post('savePost', 'PostController@savePost');
+        //Steps
+        Route::get('/steps' ,'StepController@index');
+        //validate
+        Route::post('/validate', 'AuthenticateController@validateThis');
+
+
+
+        //post CRUD
+
+        Route::resource('/post', 'PostController');
+
+
     });
 
     // Password reset link request routes...
@@ -68,5 +81,6 @@ Route::group(['middleware' => ['web','domain']], function () {
     Route::post('verifyToken', 'Auth\PasswordController@verifyToken');
     Route::post('/setStatus' ,'TypeUserController@setStatus');
     Route::get('/param/{paramName}/{docParamId}/{isPost?}', ['as'=>'whatever','uses'=>'ParamValueController@getOptionValues']);
+//    Route::resource('/api/posts/{userId?}', 'PostController');
 });
 

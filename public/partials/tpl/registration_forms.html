@@ -1,15 +1,26 @@
 
+
 <form id="registerForm" name="registerForm" ng-init="loadGroups()" novalidate>
 
-<main>
+<main ng-form="registerForm" >
 
-		<div class="errors alert alert-danger" ng-if="errors">
-			<ul>
-				<li ng-repeat="(key,error) in errors track by $index">
-					{{error[0] }}
-				</li>
-			</ul>
-		</div>
+		<!--<div class="errors alert alert-danger" ng-if="errors">-->
+			<!--<ul>-->
+				<!--<li ng-repeat="(key,error) in errors track by $index" ng-if="registerForm[key].$name == key && registerForm[key].$dirty" >-->
+					<!--{{error[0]}}-->
+
+                    <!--<br>-->
+                    <!--<br>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</div>-->
+    <div ng-if="sent && errors" class="errors alert alert-danger" >
+            <div ng-repeat="(key,error) in errors track by $index" ng-if="registerForm[key].$name == key"  >
+				<span ng-if="$first">Please Check the following :<br><br></span>
+
+                - {{key | underscoreless | capitalize}}
+            </div>
+    </div>
 
 		<div ng-if="docParam == 'personal_information'">
 			<ng-include src="'partials/forms/registration/jobseeker_register_personal_information.html'"></ng-include>

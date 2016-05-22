@@ -22,7 +22,7 @@ var acadb = angular.module('acadb', [
     'rateYo',
     'ui.bootstrap.modal',
     'ngFileUpload',
-        'ngImgCrop'
+    'ngImgCrop'
 ])
 
 
@@ -55,7 +55,7 @@ var acadb = angular.module('acadb', [
       //$httpProvider.interceptors.push('httpInterceptor');
       $urlRouterProvider.otherwise("/");
 
-
+        var modal;
         $stateProvider
 
             .state('welcome', {
@@ -142,7 +142,7 @@ var acadb = angular.module('acadb', [
                         controller:  'SideNavController',
                     },
                     'main':{
-                        template: '<div ui-view="main"></div>',
+                        template: "<div ui-view='main'></div>",
                         controller:  'SignupCtrl',
 
                     },
@@ -213,7 +213,7 @@ var acadb = angular.module('acadb', [
 
             })
             .state('employer', {
-                url:  '/',
+                //url:  '/',
                 resolve: {
                     loginRequired: loginRequired,
                 },
@@ -245,9 +245,9 @@ var acadb = angular.module('acadb', [
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                sticky: true,
-                deepStateRedirect: true,
-                //params: {type: null,  sub_type : null},
+                //sticky: true,
+                //deepStateRedirect: true,
+                params: {type: null,  sub_type : null},
                 views:{
                     'company.nav@employer':{
                         templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
@@ -264,6 +264,42 @@ var acadb = angular.module('acadb', [
                 }
 
             })
+
+
+            .state('employer.company.job', {
+
+                url:  '/:jobId',
+                params: {type: null,  sub_type : null},
+                resolve: {
+                    loginRequired: loginRequired,
+
+                },
+                //sticky: true,
+                deepStateRedirect: true,
+                onEnter: ["$state","ModalService","$stateParams", function($state, ModalService, $stateParams) {
+                    modal =  ModalService.openTextEditModal($stateParams.jobId);
+                }],
+                onExit: ["$state","ModalService", function($state) {
+
+                }],
+
+                views:{
+                    'company.nav@employer':{
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'company.sideNav@employer':{
+                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    //'company@employer': {
+                    //    templateUrl: '../partials/tpl/jobs.html',
+                    //    controller: 'CompanyCtrl as PC',
+                    //},
+                }
+
+            })
+
             .state('employer.edit', {
                 url: '^/edit',
                 resolve: {
@@ -313,6 +349,41 @@ var acadb = angular.module('acadb', [
                     },
 
                 }
+            })
+            .state('admin', {
+                url:  '/',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                // sticky: true,
+                abstract:true,
+                deepStateRedirect: true,
+                params: {type: null,  sub_type : null},
+                templateUrl: '../partials/admin/admin.html',
+            })
+            .state('admin.steps', {
+                url:  '^/step_management',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
+                views:{
+                    'steps.nav@admin':{
+                        templateUrl: '../partials/admin/tpl/steps_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'steps.sideNav@admin':{
+                        templateUrl: '../partials/admin/tpl/steps_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'steps@admin': {
+                        templateUrl: '../partials/admin/steps_management.html',
+                        controller: 'StepManagerCtrl as SMC',
+                    },
+                }
+
             })
 
             function skipIfLoggedIn($q, $auth) {
@@ -506,7 +577,7 @@ var acadb = angular.module('acadb', [
                             sticky: true,
                             deepStateRedirect: true,
                             "reloadOnSearch": false,
-                            params: {type: null,  sub_type : null},
+                            params: {type: null,  sub_type : null , doc:value.value},
                             resolve:{
                                 docParam: function(){
                                     return {docParam: value.value};
@@ -523,8 +594,9 @@ var acadb = angular.module('acadb', [
                                 },
                                 'main@register':{
                                     "templateUrl":'../../partials/tpl/employer_registration_forms.html'  ,
-                                    "controller":function($scope, docParam){
+                                    "controller":function($scope, docParam, Form){
                                         $scope.docParam = docParam.docParam;
+                                        $scope.nextDoc  = Form.nextDoc();
                                     }
                                 },
                                 'footer':{
@@ -559,12 +631,18 @@ var acadb = angular.module('acadb', [
             // or server returns response with an error status.
         });
 }])
-.run(function ($rootScope, $state, $location, AuthenticationService,$stateParams) {
+.run(function ($rootScope, $state, $location, AuthenticationService,$stateParams,$uibModalStack) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if (toState.name === 'login' && toParams.type === null){
             event.preventDefault();
             $state.go('welcome');
         }
+
+        var top = $uibModalStack.getTop();
+        if (top) {
+            $uibModalStack.dismiss(top.key);
+        }
+
     });
 })
 ;

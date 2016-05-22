@@ -1,6 +1,6 @@
 'use strict';
 angular.module('acadb')
-  .controller('SignupCtrl', function($scope, $rootScope, $state, $auth, $stateParams, $http, Form) {
+  .controller('SignupCtrl', function($scope, $rootScope, $state, $auth, $stateParams, $http, Form, $element) {
 
       $scope.docParam  = $stateParams.doc;
       $scope.next_keys = Form.next_form();
@@ -19,6 +19,7 @@ angular.module('acadb')
       $scope.steps          = $rootScope.steps;
 
       $scope.getForms = function() {
+
           Form.getForms().then(function(form){
               $scope.form = angular.copy(form);
               $scope.user = form;
@@ -27,6 +28,7 @@ angular.module('acadb')
               //next line should be conditional
               $scope.user['personal_information']['status']           = 'active';
               $scope.loadGroups();
+
           })
       }
 
@@ -36,7 +38,17 @@ angular.module('acadb')
         });
       };
 
+      $scope.validate = function(param) {
+
+          Form.validate($scope.user['personal_information'], param).then(function(response){
+            console.log(response);
+              $scope.errors = response.data;
+          })
+      }
+
+
       $scope.signup = function() {
+        $scope.sent=true;
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);
@@ -61,8 +73,12 @@ angular.module('acadb')
         Form.remove(array,index,user_id);
         array.splice(index,1);
       };
+
+
+
       $scope.getForms();
 
+      //console.log($scope.main);
 
 
 

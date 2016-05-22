@@ -408,10 +408,10 @@ class TypePostController extends Controller {
 			$paramValue   = $v->paramValue;
 			$docParamId   = $v->docParamId;
 			$slug = $v->slug;
-			$logo_param_id = DB::table('param')->where('name','company_logo')->pluck('id');
-			$ref_id = DB::table('type_post')->where('id',$id)->pluck('user_id');
+			$logo_param_id = DB::table('param')->where('name','company_logo')->value('id');
+			$ref_id = DB::table('type_post')->where('id',$id)->value('user_id');
 			$postUserId = $ref_id;
-			$company_logo  = DB::table('sys_param_values')->where('param_id',$logo_param_id)->where('ref_id',$ref_id)->pluck('value_short');
+			$company_logo  = DB::table('sys_param_values')->where('param_id',$logo_param_id)->where('ref_id',$ref_id)->value('value_short');
 			$post['postInfo']['company_logo'] = $company_logo;
 
 

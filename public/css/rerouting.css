@@ -1,26 +1,39 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,200,300,100);
 
 
-html,body {
+body {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    position: relative;
+    /*font-weight: 300;*/
+    /*position: relative;*/
     height:100%;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
+    /*margin: 0 auto -50px;*/
 
 }
+
 
 main {
     position: relative;;
 }
-.footer, .push {
-    height: 70px; /* '.push' must be the same height as 'footer' */
-    clear: both;
+nav{
+    overflow: visible!important;
+}
+.dropdown-menu.navdrop{
+    left: auto!important;
+    right:0!important;
+}
+.middle {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width:100%;
+    height:20px;
 }
 .wrapper {
     height: auto !important;
     height: 100%;
 }
+
 
 .material-tooltip {
     padding: 10px 8px;
@@ -356,6 +369,83 @@ img-crop{
 .thumb{
     height:33%;
 }
+#welcome_wrapper {
+    min-height: 100%;
+    height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+    height: 100%;
+    margin-bottom: -50px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer{
+    background-color:#EFEFEF;
+
+    color:white;
+
+}
+.footer, .push {
+    height: 50px; /* '.push' must be the same height as 'footer' */
+    clear: both;
+
+}.footer_logo{
+
+     height:60%;
+ }
+ .brand-logo{
+     border-right:1px solid white;
+     width:210px;
+ }
+ #back{
+     cursor:pointer;
+     margin:10px 0;
+ }
+
+#steps_man_profile_lab{
+    display:inline-block;
+
+
+}
+#steps_man_profile_lab > * > img{
+    width:30px;
+    margin-right:10px;
+}
+#steps_man_profile_lab > * > i{
+    width:30px;
+    margin-right:10px;
+}
+#steps_man_profile_lab_opt{
+
+    margin-left:30px;
+}
+#steps_man_profile_lab_opt > i{
+    cursor:pointer;
+}
+.steps_man_profile_name{
+    font-size:26px;
+}
+.step{
+    float:left;
+    width:25%;
+    padding-right:55px;
+}
+.step_label{
+    color:#ADD8E6;
+}
+.step_label_count{
+    font-size:20px;
+    color:white;
+   background-color:#4E75AD;
+}
+.step_opt{
+    background-color:#ADD8E6;
+}
+.task{
+
+
+    margin-top:10px;
+}
+.task > label{
+    /*font-size:16px;*/
+    margin-left:10px;
+}
 /*.add_profile_pic_overlay{*/
     /*position:absolute;*/
     /*bottom:0;*/
@@ -376,3 +466,18 @@ img-crop{
 /*.left{*/
     /*float:left;*/
 /*}*/
+.has-error{
+    border-color:red!important;
+}
+.modal-dialog{
+
+    margin: 0;
+    width: 100%;
+    border-radius: 0px;
+}
+.modal{
+    border-radius:6px;
+    background-color:transparent;
+    outline:none;
+    width:95%;
+}

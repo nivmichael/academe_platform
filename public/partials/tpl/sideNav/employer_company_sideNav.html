@@ -17,7 +17,7 @@
         <h5 class="text-center">{{user.personal_information.first_name +'  '+user.personal_information.last_name}}</h5>
         <!--<img materialboxed class="materialboxed responsive-img initialized" width="650" ng-src="{{ user.files.user_photo.paramValue }}" src="../../img/No-Photo.gif">-->
         <div ng-repeat="file in user.files" ng-if="$first">
-            <img class="profile-picture-card card" ng-src="/	{{file['paramValue'] || '../../img/No-Photo.gif'  }}" alt="Generic placeholder image">
+            <img class="profile-picture-card card" ng-src="/	{{file['paramValue'] || '../../img/profile-ph.gif'  }}" alt="Generic placeholder image">
         </div>
     </div>
     <div class="text-center" style="position: absolute;top: 420px;width: 100%;left: 0;">

@@ -1,17 +1,17 @@
 
 <style>
-    html, body {
-        height: 100%;
-    }
+    /*html, body {*/
+        /*height: 100%;*/
+    /*}*/
 
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        display: table;
-        font-weight: 100;
-        font-family: 'Roboto';
-    }
+    /*body {*/
+        /*margin: 0;*/
+        /*padding: 0;*/
+        /*width: 100%;*/
+        /*display: table;*/
+        /*font-weight: 100;*/
+        /*font-family: 'Roboto';*/
+    /*}*/
 
     .container {
         text-align: center;
@@ -24,11 +24,11 @@
         display: inline-block;
     }
 
-    .title {
-        font-size: 96px;
-    }
+    /*.title {*/
+        /*font-size: 96px;*/
+    /*}*/
 </style>
-<div class="container">
+<div class="container" id="welcome_wrapper">
 
     <img ng-src="{{logo}}" style="width:300px;margin-top:100px;">
     <div class="welcomeIcons">
@@ -80,5 +80,32 @@
             </div>
         </div>
     </div>
+    <div class="push"></div>
 </div>
+
+<div class="footer">
+
+        <div class="">
+
+                <a ui-sref="admin.steps">
+                    <img class="footer_logo" src="../img/icons/academe_brand.png" >
+                </a>
+
+
+                 <a class="right" href="http://www.acade-me.com" ><p>AcadeME &copy; 2015</p></a>
+
+        </div>
+
+</div>
+
+<!--<div >-->
+    <!--<div class="row center">-->
+        <!--<a ui-sref="admin.steps">-->
+            <!--<img class="footer_logo" src="../img/icons/academe_brand.png" >-->
+        <!--</a>-->
+    <!--</div>-->
+
+    <!--<a class="right" href="http://www.acade-me.com" ><p>AcadeME &copy; 2015</p></a>-->
+<!--</div>-->
+
 

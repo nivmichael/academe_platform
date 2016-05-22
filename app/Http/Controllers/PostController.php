@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Response;
+use Validator;
 use DB;
 use Auth;
 use App\Http\Requests;
@@ -38,8 +39,6 @@ class PostController extends Controller
     }
 
 
-
-
     public function index(Request $request)
     {
         //$posts = Post::where('user_id', $request->user()->id)->get();
@@ -50,16 +49,29 @@ class PostController extends Controller
 
     public function savePost(Request $request)
     {
+
+
+
+//        $all = request()->all($request);
+//
+//
+//
+//
+//        $allPostInfo = $all['post']['postInfo'];
+//        unset($all['post']['files']);
+//
+//        unset($all['post']['personal_information']);
+//        unset($all['post']['company']);
+//        $id = $allPostInfo['id'];
+
+
         $all = request()->all($request);
 
+        $allPostInfo = $all['postInfo'];
+        unset($all['files']);
 
-
-
-        $allPostInfo = $all['post']['postInfo'];
-        unset($all['post']['files']);
-
-        unset($all['post']['personal_information']);
-        unset($all['post']['company']);
+        unset($all['personal_information']);
+        unset($all['company']);
         $id = $allPostInfo['id'];
 
         $userId = Auth::user()->id;
@@ -70,16 +82,16 @@ class PostController extends Controller
         }else{
             $post = new Post();
         }
-        $post->title = $all['post']['postInfo']['title'];
+        $post->title = $all['postInfo']['title'];
         $post->user_id = $userId;
         //	$post->description_short =$allPostInfo['description_short'];
-        $post->description = $all['post']['postInfo']['description'];
+        $post->description = $all['postInfo']['description'];
         $post->authorized = 1;
         $post->save();
 
 
-        unset($all['post']['postInfo']);
-        foreach($all['post'] as $doc_param => $param_object){
+        unset($all['postInfo']);
+        foreach($all as $doc_param => $param_object){
             unset($param_object['docParamId']);
             foreach ($param_object as $param_key => $param_value) {
                 $obj[$doc_param][$param_key] = $param_value;
@@ -124,19 +136,38 @@ class PostController extends Controller
                 }
             }
         }
+        $obj['postInfo'] = $post;
         return Response::json($obj);
 
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-        ]);
+//      $postInfo = $request->get('postInfo');
+//      dd($postInfo['title']);
+        $rules = [
+            'title' => 'required|min:3',
+        ];
+        $messages = [
+            'title.required' => 'This is the Title, it`s important'
+        ];
 
-        $request->user()->posts()->create([
-            'name' => $request->name,
-        ]);
+        $validator = Validator::make( $request->get('postInfo'), $rules, $messages);
+
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            return response()->json($messages, 422);
+        }
+        $this->savePost($request);
+
+//        $request->user()->posts()->create([
+//            'description' => $postInfo['title'],
+//        ]);
+    }
+
+
+    public function show($id){
+        return response()->json($id);
     }
 
 }

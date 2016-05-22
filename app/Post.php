@@ -18,6 +18,9 @@ class Post extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	//protected $connection = 'connection-name';
 	protected $table = 'type_post';
+
+	protected $fillable =  ['title', 'description_short', 'created_at', 'updated_at'];
+
 	public $timestamps = true ;
 
 	public function docType()

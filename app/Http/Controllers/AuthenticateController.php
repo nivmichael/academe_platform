@@ -26,7 +26,7 @@ class AuthenticateController extends Controller
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate','signup']]);
+        $this->middleware('jwt.auth', ['except' => ['authenticate','signup','validateThis']]);
 
     }
 
@@ -98,7 +98,7 @@ class AuthenticateController extends Controller
     public function logout(Request $request)
     {
         $token = JWTAuth::getToken();
-        $res = JWTAuth::invalidate($token);
+        $res   = JWTAuth::invalidate($token);
     }
 
     public function getAuthenticatedUser()
@@ -126,6 +126,37 @@ class AuthenticateController extends Controller
         // the token is valid and we have found the user via the sub claim
         return compact('user');
     }
+    public function validateThis(Request $request)
+    {
+        $all = $request->get('all');
+        $param = $request->get('param');
+        $rules = [
+            'first_name' => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
+            'last_name'  => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
+            'email'      => 'email|required|max:255|unique:type_user',
+            'password'   => 'required|min:6|max:10',
+        ];
+        $messages = [
+            'regex' => 'Please insert only english characters.'
+        ];
+        $validator = Validator::make( $all, $rules, $messages);
+
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+
+            return response()->json($messages);
+        }
+//        $rules = [
+//            'first_name' => 'required|min:3',
+//            'last_name'  => 'required|min:3',
+//            'email'      => 'email|required|max:255|unique:type_user',
+//            'password'   => 'required|min:6',
+//        ];
+//
+//        $validator = Validator::make($request->all(), $rules);
+//        return $validator;
+    }
+
 
     public function signup(Request $request)
     {
@@ -134,14 +165,17 @@ class AuthenticateController extends Controller
         $all = $request->all();
 
         $rules = [
-            'first_name' => 'required|min:3',
-            'last_name'  => 'required|min:3',
+            'first_name' => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
+            'last_name'  => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
             'email'      => 'email|required|max:255|unique:type_user',
-            'password'   => 'required|min:6',
+            'password'   => 'required|min:6|max:10',
+        ];
+        $messages = [
+            'regex' => 'Please insert only english characters.'
         ];
 
         if(!Auth::check()){
-            $validator = Validator::make($request->get('personal_information'), $rules);
+            $validator = Validator::make($request->get('personal_information'), $rules, $messages);
             if ($validator->fails()) {
                 return response()->json( $validator->messages() , 422);
             }
@@ -186,6 +220,7 @@ class AuthenticateController extends Controller
             }
         }
         unset($obj['personal_information']);
+//        unset($obj['files']);
 
         foreach($obj as $docParamName => $docParamValues) {
 
@@ -194,7 +229,7 @@ class AuthenticateController extends Controller
             foreach($docParamValues as $iteration_count => $params) {
 
                 foreach ($params as $param_id => $param_values) {
-
+//                    var_dump($param_values);
                     $paramValue = $param_values['paramValue'];
                     $paramName  = $param_values['paramName'];
                     $iterable   = $iteration_count;
@@ -229,12 +264,12 @@ class AuthenticateController extends Controller
 
         //need to send this somehow else because its delaying the next form
 
-//        Mail::send('emails.welcome_jobseeker', $mailData, function($message) use ($mailData)
-//        {
-//            $message->from('no-reply@site.com', "AcadeME");
-//            $message->subject("Welcome to AcadeME");
-//            $message->to($mailData['email']);
-//        });
+        Mail::send('emails.welcome_jobseeker', $mailData, function($message) use ($mailData)
+        {
+            $message->from('no-reply@site.com', "AcadeME");
+            $message->subject("Welcome to AcadeME");
+            $message->to($mailData['email']);
+        });
 
     }
 

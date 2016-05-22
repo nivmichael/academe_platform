@@ -45,7 +45,7 @@ class PostRepository
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id
 										   LEFT JOIN param_type ON param.type_id = param_type.id"));
 										//   WHERE  type_post.id = ".$id));
-
+//        dd($params);
         foreach($params as $k=>$v) {
 
             $iteration    = $v->iteration;
@@ -69,14 +69,15 @@ class PostRepository
             $posts[$postId][$docParamName][$iteration][$paramName]['paramName']  = $paramName;
             $posts[$postId][$docParamName][$iteration][$paramName]['inputType'] = $inputType;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramParentId'] = $paramParentId;
+//            $posts[$postId]['postInfo']['id'] = $postId;
 
             }
 
         unset( $posts['']);
         foreach($posts as $post) {
 
-            $match = $this->calcMatchPercentage($post, $user);
-            $post['match'] = $match;
+//            $match = $this->calcMatchPercentage($post, $user);
+//            $post['match'] = $match;
 
             $postsArr[] = $post;
 

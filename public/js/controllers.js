@@ -1,6 +1,43 @@
 /* Controllers */
 'use strict';
 angular.module('acadb.controllers', [])
+	//.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+    //
+	//	//$scope.items = ['item1', 'item2', 'item3'];
+     //   //
+	//	//$scope.animationsEnabled = true;
+     //   //
+	//	//$scope.open = function (size) {
+     //   //
+	//	//	var modalInstance = $uibModal.open({
+	//	//		animation: $scope.animationsEnabled,
+	//	//		templateUrl: 'myModalContent.html',
+	//	//		controller: 'ModalInstanceCtrl',
+	//	//		size: size,
+	//	//		resolve: {
+	//	//			items: function () {
+	//	//				return $scope.items;
+	//	//			}
+	//	//		}
+	//	//	});
+     //   //
+	//	//	modalInstance.result.then(function (selectedItem) {
+	//	//		$scope.selected = selectedItem;
+	//	//	}, function () {
+	//	//		$log.info('Modal dismissed at: ' + new Date());
+	//	//	});
+	//	//};
+     //   //
+	//	//$scope.toggleAnimation = function () {
+	//	//	$scope.animationsEnabled = !$scope.animationsEnabled;
+	//	//};
+    //
+	//})
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+
 	.controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, $rootScope) {
 
 		console.log('sideNAv');
@@ -742,19 +779,19 @@ console.log(response);
 		
 		})
 	})
-	.controller('ModalInstanceCtrl', function ($scope, $modalInstance, user, post) {
-
-		$scope.user = user;
-		$scope.post = post;
-
-		$scope.ok = function () {
-			$modalInstance.close();
-		};
-
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
-	})
+	//.controller('ModalInstanceCtrl', function ($scope, $modalInstance, user, post) {
+    //
+	//	$scope.user = user;
+	//	$scope.post = post;
+    //
+	//	$scope.ok = function () {
+	//		$modalInstance.close();
+	//	};
+    //
+	//	$scope.cancel = function () {
+	//		$modalInstance.dismiss('cancel');
+	//	};
+	//})
 	.controller('PostModalInstanceCtrl', function ($scope,$http,$state, $modalInstance, job, CSRF_TOKEN, $filter) {
 
 		$scope.getPost = function(id){

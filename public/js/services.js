@@ -22,7 +22,7 @@ angular.module('acadb.services', []).
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			'query': {method: 'GET', isArray: true }
+			 'query': {method: 'GET', isArray: true }
 		});
 }])
 
@@ -82,65 +82,158 @@ angular.module('acadb.services', []).
 
 		});
 	}])
+.factory('PostData', ['$resource',
+	function($resource) {
+		return $resource('api/post/:id', {id: '@id'}, {
+			'save':   {method:'POST'},
+			'update': { method:'PUT' },
+			'delete':{method:'DELETE'},
+			'query': {method: 'GET', isArray: true }
+		});
+	 }])
 
-//.factory('SelectOptions', ['$http','$q',
-//	function($http, $q) {
-//		//var promise;
-//		var options;
-//		return {
-//			getOptions: function(paramName, docParamId) {
-//				if ( !options[paramName] ) {
-//					if (typeof options[paramName] == 'undefined') options[paramName] = [];
-//					options[paramName] =  options[paramName].length ? null : $http.get('/param/'+ paramName + '/' + docParamId).then(function(response) {
-//						options[paramName] = response;
-//							return $q.when(options[paramName]);
-//						});
-//				}
-//				return $q.when(options[paramName]);
-//			},
-//			getAllOptionValues: function(){
-//				if ( !options ) {
-//					if (typeof options == 'undefined') options = [];
-//					options =  options.length ? null : $http.get('api/getAllOptionValues').then(function(response) {
-//						options = response;
-//						console.log(options);
-//						return $q.when(options);
-//					});
-//									}
-//				return $q.when(options);
-//			}
-//		};
-//	}])
-	.factory('Account', function($http, $rootScope ) {
+.factory('Steps', function($http, $rootScope ) {
 
-		var promise;
+	var steps;
+	return {
+		getAllSteps: function() {
+			if ( !steps ) {
+				// $http returns a promise, which has a then function, which also returns a promise
+				steps = $http.get('api/steps').then(function (response) {
+					// The then function here is an opportunity to modify the response
+
+					// The return value gets picked up by the then in the controller.
+					return response.data;
+				});
+			}
+			// Return the promise to the controller
+			return steps;
+		}
+
+	};
+
+})
+.factory('Account', function($http, $rootScope ) {
+
+	var promise;
+	return {
+		getProfile: function() {
+			if ( !promise ) {
+				// $http returns a promise, which has a then function, which also returns a promise
+				promise = $http.get('/api/me').then(function (response) {
+					// The then function here is an opportunity to modify the response
+
+					// The return value gets picked up by the then in the controller.
+					return response.data;
+				});
+			}
+			// Return the promise to the controller
+			return promise;
+		},
+		updateProfile: function(profileData) {
+			return $http.post('/api/me',profileData);
+		},
+		broadcast: function(user) {
+			$rootScope.$broadcast('handleBroadcast', user);
+		},
+		logout: function(){
+
+			return promise = null;
+		}
+	};
+
+})
+	.factory('ModalService', function($uibModal, $state, $http, $stateParams, Account, Form) {
+
 		return {
-			getProfile: function() {
-				if ( !promise ) {
-					// $http returns a promise, which has a then function, which also returns a promise
-					promise = $http.get('/api/me').then(function (response) {
-						// The then function here is an opportunity to modify the response
+			openTextEditModal: function(id, post, $stateParams) {
 
-						// The return value gets picked up by the then in the controller.
-						return response.data;
-					});
-				}
-				// Return the promise to the controller
-				return promise;
-			},
-			updateProfile: function(profileData) {
-				return $http.post('/api/me',profileData);
-			},
-			broadcast: function(user) {
-				$rootScope.$broadcast('handleBroadcast', user);
-			},
-			logout: function(){
+				var modalInstance = $uibModal.open({
+					templateUrl: '../partials/tpl/modal.html',
+					//backdrop: 'static',
+					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams) {
 
-				return promise = null;
+						$scope.jobPost = post;
+
+						Form.getAllOptionValues().then(function(options){
+							$scope.groups = options.data;
+						});
+
+
+						Form.getJobPostForm().then(function(form){
+							$scope.jobPostForm = angular.copy(form);
+						})
+
+						$scope.add = function(docParam,$index) {
+							$scope.inserted = angular.copy($scope.jobPost[docParam][0]);
+							$scope.jobPost[docParam].push($scope.inserted);
+						};
+						var clone = {};
+						//angular.copy(post, clone);
+
+
+						$scope.clone = clone;
+						$scope.close = function() {
+							$uibModalInstance.dismiss('cancel');
+							$state.go('employer.company');
+						};
+						$scope.save = function() {
+							angular.extend(post, clone);
+							$uibModalInstance.close();
+						};
+						$scope.savePost = function() {
+
+							$http.post('api/savePost', {
+								post:$scope.jobPost,
+							}).success(function(errors){
+								//Account.broadcast(errors);
+								console.log(errors);
+
+
+							}).error(function(err) {
+
+							}).then(function(){
+								$state.go('employer.company');
+							});
+						};
+
+					},
+					size: '',
+					resolve: {
+						post: function($http) {
+
+							var post = $http.get('api/job/'+ id ).then(function(response){
+
+								return response.data;
+							})
+							return post;
+						}
+					}
+				});
+
+			},
+			close:function(){
+				$uibModal.close();
 			}
 		};
-
 	})
+//.service('Post', function($stateParams, $http) {
+//		console.log($stateParams.jobId);
+//		var postList =  {};
+//		return {
+//			 getPost : function(){
+//				$http.get('api/job/'+ $stateParams.jobId ).then(function(response){
+//					console.log(response.data);
+//					return response.data;
+//				})
+//			},
+//			getPosts : function(callback) {
+//				if( ! storage.storedData){
+//			}
+//		}
+//
+//
+//})
 .factory('Form', function($http, $q, $rootScope, $stateParams) {
 
 
@@ -221,7 +314,18 @@ angular.module('acadb.services', []).
 		//},
 		remove: function(array,index,user_id) {
 			$http.post('api/deleteIterable', {docParam:array,index:index,user_id:user_id});
+		},
+		validate: function(param, value) {
+			var response;
+			console.log(param, value);
+			response = $http.post('api/validate', {all: param, param: value}).then(function(response) {
+
+				return response;
+
+			});
+			return	response;
 		}
+
 	};
 })
 .factory('verifyToken', function($http) {

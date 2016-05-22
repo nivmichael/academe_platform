@@ -1,5 +1,6 @@
 (function (angular) {
-    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin", "ui.materialize.scrollspy", "ui.materialize.parallax","ui.materialize.modal", "ui.materialize.tooltipped",  "ui.materialize.slider", "ui.materialize.materialboxed", "ui.materialize.scrollFire"]);
+    var undefined;
+    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin", "ui.materialize.scrollspy", "ui.materialize.parallax","ui.materialize.modal", "ui.materialize.tooltipped",  "ui.materialize.slider", "ui.materialize.materialboxed", "ui.materialize.scrollFire", "ui.materialize.nouislider", "ui.materialize.input_clock"]);
 
     /*     example usage:
      <div scroll-fire="func('Scrolled', 2000)" ></scroll-fire>
@@ -98,8 +99,14 @@
                 restrict: 'A',
                 priority: -1, // lower priority than built-in ng-model so it runs first
                 link: function(scope, element, attr) {
-                    scope.$watch(attr.ngModel,function(value){
+                    scope.$watch(attr.ngModel,function(value, oldValue){
                         $timeout(function () {
+                            // To stop an infinite feedback-loop with material multiple-select.
+                            if (value instanceof Array && oldValue instanceof Array) {
+                                if (value.length == oldValue.length) {
+                                    return;
+                                }
+                            }
                             if (value){
                                 element.trigger("change");
                             } else if(element.attr('placeholder') === undefined) {
@@ -114,8 +121,8 @@
 
 
     /* example usage:
-    <div slider height='500' transition='400'></div>
-    */
+     <div slider height='500' transition='400'></div>
+     */
     angular.module("ui.materialize.slider", [])
         .directive("slider", ["$timeout", function($timeout){
             return {
@@ -231,10 +238,13 @@
         }]);
 
     angular.module("ui.materialize.tabs", [])
-        .directive("tabs", [function(){
+        .directive("tabs", ["$timeout", function($timeout){
             return {
                 link: function (scope, element, attrs) {
-                    element.tabs();
+                    element.addClass("tabs");
+                    $timeout(function() {
+                        element.tabs();
+                    });
                 }
             };
         }]);
@@ -264,10 +274,29 @@
             return {
                 link: function (scope, element, attrs) {
                     if (element.is("select")) {
-                        function initSelect() {
+                        //BugFix 139: In case of multiple enabled. Avoid the circular looping.
+                        function initSelect(newVal, oldVal) {
+                            if(attrs.multiple){
+                                if(oldVal !== undefined && newVal !== undefined){
+                                    if(oldVal.length === newVal.length){
+                                        return;
+                                    }
+                                }
+                                var activeUl = element.siblings("ul.active");
+                                if (newVal !== undefined && activeUl.length) { // If select is open
+                                    var selectedOptions = activeUl.children("li.active").length; // Number of selected elements
+                                    if (selectedOptions == newVal.length) {
+                                        return;
+                                    }
+                                }
+                            } else {
+                                if (newVal == element.val()){
+                                    return;
+                                }
+                            }
                             element.siblings(".caret").remove();
                             scope.$evalAsync(function() {
-                              element.material_select();
+                                element.material_select();
                             });
                         }
                         $timeout(initSelect);
@@ -292,8 +321,8 @@
      Example usage, notice the empty dropdown tag in the dropdown trigger.
      <!-- Dropdown Trigger -->
      <a class='dropdown-button btn' href='javascript:void(0);' data-activates='demoDropdown'
-        dropdown constrain-width="false">
-        Select a demo
+     dropdown constrain-width="false">
+     Select a demo
      </a>
      <!-- Dropdown Structure -->
      <ul id='demoDropdown' class='dropdown-content'>
@@ -386,26 +415,26 @@
      * Type text is mandatory
      * Example:
      <input input-date
-        type="text"
-        name="created"
-        id="inputCreated"
-        ng-model="currentTime"
-        format="dd/mm/yyyy"
-        months-full="{{ monthFr }}"
-        months-short="{{ monthShortFr }}"
-        weekdays-full="{{ weekdaysFullFr }}"
-        weekdays-short="{{ weekdaysShortFr }}"
-        weekdays-letter="{{ weekdaysLetterFr }}"
-        disable="disable"
-        today="today"
-        clear="clear"
-        close="close"
-        on-start="onStart()"
-        on-render="onRender()"
-        on-open="onOpen()"
-        on-close="onClose()"
-        on-set="onSet()"
-        on-stop="onStop()" />
+     type="text"
+     name="created"
+     id="inputCreated"
+     ng-model="currentTime"
+     format="dd/mm/yyyy"
+     months-full="{{ monthFr }}"
+     months-short="{{ monthShortFr }}"
+     weekdays-full="{{ weekdaysFullFr }}"
+     weekdays-short="{{ weekdaysShortFr }}"
+     weekdays-letter="{{ weekdaysLetterFr }}"
+     disable="disable"
+     today="today"
+     clear="clear"
+     close="close"
+     on-start="onStart()"
+     on-render="onRender()"
+     on-open="onOpen()"
+     on-close="onClose()"
+     on-set="onSet()"
+     on-stop="onStop()" />
      */
     angular.module("ui.materialize.input_date", [])
         .directive('inputDate', ["$compile", "$timeout", function ($compile, $timeout) {
@@ -502,7 +531,7 @@
 
             // Some common format strings
             dateFormat.masks = {
-               "default":      "ddd mmm dd yyyy HH:MM:ss",
+                "default":      "ddd mmm dd yyyy HH:MM:ss",
                 shortDate:      "m/d/yy",
                 mediumDate:     "mmm d, yyyy",
                 longDate:       "mmmm d, yyyy",
@@ -636,20 +665,62 @@
             };
         }]);
 
+
+
+    /**
+     * time-picker directive
+     * Example:
+     <label for="input_starttime">Time</label>
+     <input id="input_starttime" input-clock data-twelvehour="false" type="text">
+     */
+    angular.module("ui.materialize.input_clock", [])
+        .directive('inputClock', [function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    default: "@",
+                    fromnow: "=?",
+                    donetext: "@",
+                    autoclose: "=?",
+                    ampmclickable: "=?",
+                    darktheme: "=?",
+                    twelvehour: "=?",
+                    vibrate: "=?"
+                },
+                link: function (scope, element) {
+                    $(element).addClass("timepicker");
+                    if (!(scope.ngReadonly)) {
+                        element.clockpicker({
+                            default: (angular.isDefined(scope.default)) ? scope.default : '',
+                            fromnow: (angular.isDefined(scope.fromnow)) ? scope.fromnow : 0,
+                            donetext: (angular.isDefined(scope.donetext)) ? scope.donetext : 'Done',
+                            autoclose: (angular.isDefined(scope.autoclose)) ? scope.autoclose : false,
+                            ampmclickable: (angular.isDefined(scope.ampmclickable)) ? scope.ampmclickable : false,
+                            darktheme: (angular.isDefined(scope.darktheme)) ? scope.darktheme : false,
+                            twelvehour: (angular.isDefined(scope.twelvehour)) ? scope.twelvehour : true,
+                            vibrate: (angular.isDefined(scope.vibrate)) ? scope.vibrate : true
+                        });
+                    }
+                }
+            };
+        }]);
+
+
+
     /**
      * Example:
      <pagination
-        page="1"
-        page-size="10"
-        total="100"
-        pagination-action="changePage(page)"
-        ul-class="customClass">
+     page="1"
+     page-size="10"
+     total="100"
+     pagination-action="changePage(page)"
+     ul-class="customClass">
      * ul-class could be either an object or a string
      *
      * Based on https://github.com/brantwills/Angular-Paging
      */
     angular.module("ui.materialize.pagination", [])
-        .directive('pagination', function () {
+        .directive('pagination', ["$sce", function ($sce) {
 
             // Assign null-able scope values from settings
             function setScopeValues(scope, attrs) {
@@ -666,6 +737,7 @@
                 scope.scrollTop = scope.$eval(attrs.scrollTop);
                 scope.hideIfEmpty = scope.$eval(attrs.hideIfEmpty);
                 scope.showPrevNext = scope.$eval(attrs.showPrevNext);
+                scope.useSimplePrevNext = scope.$eval(attrs.useSimplePrevNext);
             }
 
             // Validate and clean up any scope values
@@ -718,7 +790,7 @@
                 var i = 0;
                 for (i = start; i <= finish; i++) {
                     var item = {
-                        value: i.toString(),
+                        value: $sce.trustAsHtml(i.toString()),
                         liClass: scope.page == i ? scope.activeClass : 'waves-effect',
                         action: function() {
                             internalAction(scope, this.value);
@@ -732,7 +804,7 @@
             // Add Dots ie: 1 2 [...] 10 11 12 [...] 56 57
             function addDots(scope) {
                 scope.List.push({
-                    value: scope.dots
+                    value: $sce.trustAsHtml(scope.dots)
                 });
             }
 
@@ -748,15 +820,15 @@
             }
 
             /**
-            * Add the first, previous, next, and last buttons if desired
-            * The logic is defined by the mode of interest
-            * This method will simply return if the scope.showPrevNext is false
-            * This method will simply return if there are no pages to display
-            *
-            * @param {Object} scope - The local directive scope object
-            * @param {int} pageCount - The last page number or total page count
-            * @param {string} mode - The mode of interest either prev or last
-            */
+             * Add the first, previous, next, and last buttons if desired
+             * The logic is defined by the mode of interest
+             * This method will simply return if the scope.showPrevNext is false
+             * This method will simply return if there are no pages to display
+             *
+             * @param {Object} scope - The local directive scope object
+             * @param {int} pageCount - The last page number or total page count
+             * @param {string} mode - The mode of interest either prev or last
+             */
             function addPrevNext(scope, pageCount, mode){
 
                 // Ignore if we are not showing
@@ -774,22 +846,33 @@
                     disabled = scope.page - 1 <= 0;
                     var prevPage = scope.page - 1 <= 0 ? 1 : scope.page - 1;
 
-                    alpha = { value : "<<", title: 'First Page', page: 1 };
-                    beta = { value: "<", title: 'Previous Page', page: prevPage };
+                    if (scope.useSimplePrevNext) {
+                        alpha = {value: "<<", title: 'First Page', page: 1};
+                        beta = {value: "<", title: 'Previous Page', page: prevPage };
+                    } else {
+                        alpha = {value: "<i class=\"material-icons\">first_page</i>", title: 'First Page', page: 1};
+                        beta = {value: "<i class=\"material-icons\">chevron_left</i>", title: 'Previous Page', page: prevPage };
+                    }
 
                 } else {
 
                     disabled = scope.page + 1 > pageCount;
                     var nextPage = scope.page + 1 >= pageCount ? pageCount : scope.page + 1;
 
-                    alpha = { value : ">", title: 'Next Page', page: nextPage };
-                    beta = { value: ">>", title: 'Last Page', page: pageCount };
+                    if (scope.useSimplePrevNext) {
+                        alpha = { value : ">", title: 'Next Page', page: nextPage };
+                        beta = { value: ">>", title: 'Last Page', page: pageCount };
+                    } else {
+                        alpha = { value : "<i class=\"material-icons\">chevron_right</i>", title: 'Next Page', page: nextPage };
+                        beta = { value: "<i class=\"material-icons\">last_page</i>", title: 'Last Page', page: pageCount };
+                    }
+
                 }
 
                 // Create the Add Item Function
                 var addItem = function(item, disabled){
                     scope.List.push({
-                        value: item.value,
+                        value: $sce.trustAsHtml(item.value),
                         title: item.title,
                         liClass: disabled ? scope.disabledClass : '',
                         action: function(){
@@ -888,19 +971,20 @@
                     adjacent: '@',
                     scrollTop: '@',
                     showPrevNext: '@',
+                    useSimplePrevNext: '@',
                     paginationAction: '&',
                     ulClass: '=?'
                 },
                 template:
-                    '<ul ng-hide="Hide" ng-class="ulClass"> ' +
-                        '<li ' +
-                        'ng-class="Item.liClass" ' +
-                        'ng-click="Item.action()" ' +
-                        'ng-repeat="Item in List"> ' +
-                        '<a href> ' +
-                        '<span ng-bind="Item.value"></span> ' +
-                        '</a>' +
-                    '</ul>',
+                '<ul ng-hide="Hide" ng-class="ulClass"> ' +
+                '<li ' +
+                'ng-class="Item.liClass" ' +
+                'ng-click="Item.action()" ' +
+                'ng-repeat="Item in List"> ' +
+                '<a href> ' +
+                '<span ng-bind-html="Item.value"></span> ' +
+                '</a>' +
+                '</ul>',
                 link: function (scope, element, attrs) {
 
                     // Hook in our watched items
@@ -909,7 +993,7 @@
                     });
                 }
             };
-        });
+        }]);
 
     /*     example usage:
      <!-- Modal Trigger -->
@@ -950,12 +1034,12 @@
                             scope.$apply();
                         };
                         var ready = function() {
-                          angular.isFunction(scope.ready) && scope.$eval(scope.ready());
-                          // If tab support is enabled we need to re-init the tabs
-                          // See https://github.com/Dogfalo/materialize/issues/1634
-                          if (scope.enableTabs) {
-                             modalEl.find('ul.tabs').tabs();
-                          }
+                            angular.isFunction(scope.ready) && scope.$eval(scope.ready());
+                            // If tab support is enabled we need to re-init the tabs
+                            // See https://github.com/Dogfalo/materialize/issues/1634
+                            if (scope.enableTabs) {
+                                modalEl.find('ul.tabs').tabs();
+                            }
                         };
                         var options = {
                             dismissible: (angular.isDefined(scope.dismissible)) ? scope.dismissible : undefined,
@@ -969,10 +1053,10 @@
 
                         // Setup watch for opening / closing modal programatically.
                         if (angular.isDefined(attrs.open) && modalEl.length > 0) {
-                          scope.$watch('open', function(value, lastValue) {
-                            if (!angular.isDefined(value)) { return; }
-                            (value === true) ? modalEl.openModal(options) : modalEl.closeModal();
-                          });
+                            scope.$watch('open', function(value, lastValue) {
+                                if (!angular.isDefined(value)) { return; }
+                                (value === true) ? modalEl.openModal(options) : modalEl.closeModal();
+                            });
                         }
                     });
                 }
@@ -981,9 +1065,9 @@
 
 
     /*     example usage:
-    <!-- data-position can be : bottom, top, left, or right -->
-    <!-- data-delay controls delay before tooltip shows (in milliseconds)-->
-    <a class="btn" tooltipped data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
+     <!-- data-position can be : bottom, top, left, or right -->
+     <!-- data-delay controls delay before tooltip shows (in milliseconds)-->
+     <a class="btn" tooltipped data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
      */
     angular.module("ui.materialize.tooltipped", [])
         .directive("tooltipped", ["$compile", "$timeout", function ($compile, $timeout) {
@@ -1005,11 +1089,11 @@
         }]);
 
     /*     example usage:
-    <!-- normal materialboxed -->
-    <img materialboxed class="materialboxed responsive-img" width="650" src="images/sample-1.jpg">
+     <!-- normal materialboxed -->
+     <img materialboxed class="materialboxed responsive-img" width="650" src="images/sample-1.jpg">
 
-    <!-- caption materialboxed -->
-    <img materialboxed class="materialboxed" data-caption="A picture of some deer and tons of trees" width="250" src="iamges/nature_portrait_by_pw_fotografie-d63tx0n.jpg">
+     <!-- caption materialboxed -->
+     <img materialboxed class="materialboxed" data-caption="A picture of some deer and tons of trees" width="250" src="iamges/nature_portrait_by_pw_fotografie-d63tx0n.jpg">
 
      */
     angular.module("ui.materialize.materialboxed", [])
@@ -1022,6 +1106,51 @@
                         element.materialbox();
                     });
 
+                }
+            };
+        }]);
+
+    /* example usage:
+     <div nouislider ng-model='value' min="0" max="100"></div>
+     */
+    angular.module("ui.materialize.nouislider", [])
+        .directive("nouislider", ["$timeout", function($timeout){
+            return {
+                restrict: 'A',
+                scope: {
+                    ngModel: '=',
+                    min: '@',
+                    max: '@',
+                    step: '@?',
+                    connect: '@?',
+                    tooltips: '@?'
+                },
+                link: function (scope, element, attrs) {
+                    $timeout(function () {
+                        noUiSlider.create(element[0], {
+                            start: scope.ngModel || 0,
+                            step: parseFloat(scope.step || 1),
+                            tooltips: angular.isDefined(scope.connect) ? scope.tooltips : undefined,
+                            connect: angular.isDefined(scope.connect) ? scope.connect : 'lower',
+                            range: {
+                                'min': parseFloat(scope.min || 0),
+                                'max': parseFloat(scope.max || 100),
+                            },
+                            format: {
+                                to: function (number) {
+                                    return Math.round(number * 100) / 100;
+                                },
+                                from: function (number) {
+                                    return Number(number);
+                                }
+                            }
+                        });
+
+                        element[0].noUiSlider.on('update', function(values, input) {
+                            scope.ngModel = parseInt(values[0], 10);
+                            scope.$apply();
+                        });
+                    });
                 }
             };
         }]);

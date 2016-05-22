@@ -1,10 +1,6 @@
 'use strict';
 angular.module('acadb')
-  .controller('PostCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form) {
-
-
-
-
+  .controller('PostCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form, $state, PostData) {
 
         $scope.getJobPostFields = function(){
            Form.getJobPostForm().then(function(form){
@@ -14,14 +10,29 @@ angular.module('acadb')
             })
         };
         $scope.savePost = function(post) {
-            $http.post('api/savePost', {
-                post:post,
-            }).success(function(errors){
-                return post;
-            }).error(function(err) {
+            PostData.save(post).$promise
+                .then(function(res) {
 
-            });
+                })
+                .catch(function(err) {
+                    $scope.errors = err.data;
+                    console.log(err.data)
+                    Account.broadcast(err.data);
+                })
         };
+        //$scope.savePost = function(post) {
+        //    $http.post('api/savePost', {
+        //        post:post,
+        //    }).success(function(errors){
+        //        Account.broadcast(errors);
+        //        console.log(errors);
+        //
+        //    }).error(function(err) {
+        //
+        //    }).then(function(){
+        //        $state.go('employer.company');
+        //    });
+        //};
         $scope.add = function(docParamName,index) {
             $scope.inserted = angular.copy($scope.form[docParamName][0]);
             $scope.jobPost[docParamName].push($scope.inserted);
