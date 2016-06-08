@@ -29,29 +29,26 @@ class DocParamController extends Controller {
 	}
 
 	public function jobseekerSteps(){
-		$query = DB::table('doc_param')->where('doc_sub_type','jobSeeker')->get();
-		$docParam = [];
-		$docParams=[];
+		$query     = DB::table('doc_param')->where('doc_sub_type','jobseeker')->orderBy('position', 'desc')->get();
+		$docParam  = [];
+		$docParams =[];
+
 		foreach($query as $result) {
 			$docParam['name'] = $result->name;
-			$docParam['slug'] = $result->slug;
 			$docParam['belongsTo'] = 'jobseeker';
-
-			$docParams[] = $docParam;
+			$docParams[$result->position] = $docParam;
 		}
-
 
 		return Response::json($docParams);
 	}
 	public function employerSteps(){
-		$query = DB::table('doc_param')->where('doc_sub_type','employer')->get();
+		$query = DB::table('doc_param')->where('doc_sub_type','employer')->orderBy('position', 'desc')->get();
 		$docParam = [];
 		$docParams=[];
 		foreach($query as $result) {
 			$docParam['name'] = $result->name;
-			$docParam['slug'] = $result->slug;
 			$docParam['belongsTo'] = 'employer';
-			$docParams[] = $docParam;
+			$docParams[$result->position] = $docParam;
 		}
 
 
@@ -63,8 +60,7 @@ class DocParamController extends Controller {
 		
 		$columns = Schema::getColumnListing('doc_param');
 		$columns = (object) $columns;
-// 		
-		// return Response::json(array($columns,$params));
+
 		return Response::json($columns);
 	}
 	/**
@@ -94,11 +90,12 @@ class DocParamController extends Controller {
 			$param = new DocParam();
 		}
 		$name = $all['name'];
-		$slug = $all['slug'];
+//		$slug = $all['slug'];
 		$doc_type_id = $all['doc_type_id'];
 		$doc_sub_type = $all['doc_sub_type'];
+
 		$param->name = $name;
-		$param->slug = $slug;
+//		$param->slug = $slug;
 		$param->doc_type_id = $doc_type_id;
 		$param->doc_sub_type = $doc_sub_type;
 		$param->save();
@@ -130,7 +127,7 @@ class DocParamController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		DB::table();
 	}
 
 	/**

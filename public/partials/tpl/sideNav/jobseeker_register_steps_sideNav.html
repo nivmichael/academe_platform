@@ -6,7 +6,7 @@
             <!--<div class="add_profile_pic_overlay">Add Profile Picture</div>-->
         </div>
     </li>
-    <li ng-repeat="(key,step) in steps | toArray:true | filter:{ belongsTo : type }:true " ">
+    <li ng-repeat="(key,step) in steps  | toArray:true  | filter:{ belongsTo : type }:true | orderBy : 'position' : false ">
        <a href="#"
           class="docParamLi waves-effect waves-light"
           ng-class="{ active: $state.includes('{{step.name}}') }"
@@ -14,7 +14,7 @@
 
            <span class="▶">▶ </span> {{ step.value | underscoreless | capitalize }}
        </a>
-
+    <!--{{step.position}}-->
     </li>
 </ul>
 <style> .affix{ top: 0!important;}</style>

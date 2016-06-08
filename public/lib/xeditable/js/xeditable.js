@@ -695,6 +695,7 @@ angular.module('xeditable').factory('editableController',
       self.scope.$data = self.useCopy ? 
         angular.copy(valueGetter($scope.$parent)) : 
         valueGetter($scope.$parent);
+
     };
 
     //show
@@ -871,9 +872,14 @@ angular.module('xeditable').factory('editableController',
     attach/detach `editable-empty` class to element
     */
     self.handleEmpty = function() {
+
       var val = valueGetter($scope.$parent);
-      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
+
+     
+      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0) ;
+
       $element.toggleClass('editable-empty', isEmpty);
+
     };
 
     /*

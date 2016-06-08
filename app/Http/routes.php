@@ -33,41 +33,65 @@ Route::group(['middleware' => ['web','domain']], function () {
 
     Route::group(['prefix' => 'api'], function()
     {
+
+        //get the forms steps
         Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
         Route::get('/employerSteps', 'DocParamController@employerSteps');
+
         Route::get('/forms/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
         Route::get('/forms/register_employer', 'TypeUserController@columnIndexEmployer');
+
+
         Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
         Route::get('auth/unlink/{provider}', ['middleware' => 'auth', 'uses' => 'AuthController@unlink']);
         Route::get('/password/email', 'Auth\PasswordController@getEmail');
         Route::post('/password/email', 'Auth\PasswordController@postEmail');
+
         // Password reset routes...
         Route::get('/password/reset/{token}', 'Auth\PasswordController@getReset');
         Route::post('/password/reset', 'Auth\PasswordController@postReset');
         Route::post('/authenticate', 'AuthenticateController@authenticate');
         Route::post('/signup', 'AuthenticateController@signup');
+
         //get my account
-        Route::get('/me', 'TypeUserController@index');
+        Route::get('/me', 'TypeUserController@getAccount');
         Route::post('/me', 'TypeUserController@updateUser');
         Route::get('/forms/jobPost', 'TypePostController@jobPostColumnIndex');
         Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
+
         //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
         Route::get('/job/{id}', 'TypePostController@show');
         Route::post('savePost', 'PostController@savePost');
+
         //Steps
         Route::get('/steps' ,'StepController@index');
+
         //validate
         Route::post('/validate', 'AuthenticateController@validateThis');
 
 
 
-        //post CRUD
+        //resource CRUD
 
         Route::resource('/post', 'PostController');
+        Route::resource('/param', 'ParamController');
+        Route::resource('/sysParamValues', 'SysParamValuesController');
+        Route::resource('/paramValue', 'ParamValueController');
+        Route::resource('/paramType', 'ParamTypeController');
+        Route::resource('/docType', 'DocTypeController');
+        Route::resource('/docParam', 'DocParamController');
+        Route::resource('/users', 'TypeUserController');
+        Route::resource('/db', 'DBController');
 
+        Route::resource('/form', 'FormController');
+
+        //admin form manager
+        Route::get('/admin/forms/{form}', 'FormController@form');
+        Route::post('/admin/forms/jobseeker', 'FormController@saveJobseekerForm');
+        Route::post('/admin/forms/options', 'FormController@saveOptions');
 
     });
 

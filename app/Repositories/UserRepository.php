@@ -24,7 +24,7 @@ class UserRepository
         $user = array();
         $userpersonal_information = User::find($id);
         $params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-										   param.slug AS slug,
+
 											   param.id AS paramId,
 											   param.name AS paramName,
 											   param.position AS paramPosition,
@@ -50,7 +50,7 @@ class UserRepository
             $docParamName = $v->docParamName;
             $paramName = $v->paramName;
             $inputType = $v->paramType;
-            $slug = $v->slug;
+
             $position = $v->position;
             $paramId = $v->paramId;
             $paramParent = $v->paramParent;
@@ -87,7 +87,7 @@ class UserRepository
                 $user[$docParamName][$iteration][$paramId]['paramName'] = $paramName;
                 $user[$docParamName][$iteration][$paramId]['paramId'] = $paramId;
                 $user[$docParamName][$iteration][$paramId]['paramParentId'] = $paramParent;
-                $user[$docParamName][$iteration][$paramId]['slug'] = $slug;
+
                 $user[$docParamName][$iteration][$paramId]['paramValue'] = $value;
                 $user[$docParamName][$iteration][$paramId]['inputType'] = $inputType;
             } elseif ($iteration == NULL) {
@@ -109,7 +109,7 @@ class UserRepository
                 $user[$docParamName][$paramId]['paramName'] = $paramName;
                 $user[$docParamName][$paramId]['paramId'] = $paramId;
                 $user[$docParamName][$paramId]['paramParentId'] = $paramParent;
-                $user[$docParamName][$paramId]['slug'] = $slug;
+
                 $user[$docParamName][$paramId]['paramValue'] = $value;
                 $user[$docParamName][$paramId]['inputType'] = $inputType;
 

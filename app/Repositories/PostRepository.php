@@ -29,7 +29,7 @@ class PostRepository
         $postsArr = [];
         $params   = DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName,
-										   param.slug AS slug,
+
 										   param_type.name AS paramType,
 										   param_value.value AS paramValue,
 										   doc_param.name AS docParamName,
@@ -37,7 +37,6 @@ class PostRepository
 										   type_post.id AS postId,
 										   param.param_parent_id AS paramParent,
 										   doc_param.id AS docParamId
-
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
@@ -64,6 +63,7 @@ class PostRepository
             } else {
                 $value = $v->value;
             }
+
             $posts[$postId][$docParamName][$iteration]['docParamId'] = $docParamId;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramValue'] = $value;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramName']  = $paramName;
@@ -82,7 +82,7 @@ class PostRepository
             $postsArr[] = $post;
 
         }
-//        //sorted on client side
+        //sorted on client side
 
         return $postsArr;
 

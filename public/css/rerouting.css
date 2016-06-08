@@ -14,9 +14,11 @@ body {
 
 main {
     position: relative;;
+    /*top:64px;*/
 }
 nav{
     overflow: visible!important;
+
 }
 .dropdown-menu.navdrop{
     left: auto!important;
@@ -481,3 +483,64 @@ img-crop{
     outline:none;
     width:95%;
 }
+.st-sort-ascent:before{
+    content: '\25B2';
+}
+
+.st-sort-descent:before{
+    content: '\25BC';
+}
+
+
+.lr-drop-target-before{
+    border-left: 2px solid orange;
+}
+
+.lr-drop-target-after{
+    border-right: 2px solid orange;
+}
+.editable-click, a.editable-click{
+    color:black;
+    border-bottom:none;
+
+}
+.editable-buttons > button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.editable-empty:before{
+    content:'';
+    width:100%;
+}
+.affix {
+    top: 64px!important;
+}
+.tools.affix{
+    top: 64px!important;
+    right:0;
+    width:520px;
+}
+/*.editable-buttons > button[type=button], input[type=reset]{*/
+    /*background-color:white;*/
+/*}*/
+/*.editable-buttons > button[type=submit]{*/
+     /*background-color:#337AB7;*/
+/*}*/
+

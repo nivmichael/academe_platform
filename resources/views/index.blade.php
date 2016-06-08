@@ -13,12 +13,14 @@
     {!! Html::script('lib/jquery-2.2.3.js') !!}
     {!! Html::script('lib/jquery-ui.min.js') !!}
     <!--CSS Libraries: bootstrap, materialize, angular-materialize-->
-    {!! Html::style('lib/xeditable/css/xeditable.css') !!}
-    {!! Html::style('css/bootstrap.min.css') !!}
 
+
+    {!! Html::style('css/bootstrap.min.css') !!}
+    {!! Html::style('css/angular-responsive-tables.min.css') !!}
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
     {!! Html::style('css/angular-materialize.css') !!}
+    {!! Html::style('lib/xeditable/css/xeditable.css') !!}
     <!--Custom CSS-->
 
 
@@ -26,6 +28,8 @@
 
 
     {!! Html::style('css/rerouting.css') !!}
+
+    {!! Html::style('css/dnd.css') !!}
     {!! Html::style('css/jquery.rateyo.css') !!}
     <!--Fonts-->
 
@@ -81,12 +85,19 @@
 {!! Html::script('lib/ng-img-crop.js') !!}
 {!! Html::script('lib/ng-file-upload-all.min.js') !!}
 {!! Html::script('lib/underscore.js') !!}
-{!! Html::script('lib/angular-materialize.js') !!}
+{{--{!! Html::script('lib/angular-materialize.js') !!}--}}
 {!! Html::script('lib/angular-animate.min.js') !!}
 {!! Html::script('lib/toArrayFilter.js') !!}
 {!! Html::script('lib/rating/jquery.rateyo.js')!!}
 {!! Html::script('lib/rating/angular-rating-yo.js')!!}
 {!! Html::script('lib/xeditable/js/xeditable.js')!!}
+{!! Html::script('lib/smart-table.min.js') !!}
+{!! Html::script('lib/angular-responsive-tables/angular-responsive-tables.min.js') !!}
+{!! Html::script('lib/angular-responsive-tables/irDragNDrop.js') !!}
+
+{!! Html::script('lib/sortable.js') !!}
+{!! Html::script('lib/ng-sortable.js') !!}
+{!! Html::script('lib/angular-drag-and-drop-lists.min.js') !!}
 {{--angular controllers--}}
 {!! Html::script('js/controllers/home.js') !!}
 {!! Html::script('js/controllers/login.js') !!}
@@ -97,6 +108,11 @@
 {!! Html::script('js/controllers/postCtrl.js') !!}
 {!! Html::script('js/controllers/steps.js') !!}
 {!! Html::script('js/controllers/companyCtrl.js') !!}
+{!! Html::script('js/controllers/manager.js') !!}
+{!! Html::script('js/controllers/sidenav.js') !!}
+{!! Html::script('js/controllers/findajob.js') !!}
+{!! Html::script('js/controllers/editForm.js') !!}
+{!! Html::script('lib/angular-filter.js') !!}
 
 
 

@@ -15,20 +15,28 @@ var acadb = angular.module('acadb', [
     'xeditable',
     'ngResource',
     'angularMoment',
-    'ui.materialize',
+    //'ui.materialize',
     'angular-toArrayFilter',
     'ngSanitize',
     'satellizer',
     'rateYo',
     'ui.bootstrap.modal',
     'ngFileUpload',
-    'ngImgCrop'
+    'ngImgCrop',
+    'smart-table',
+    'wt.responsive',
+    'lrDragNDrop',
+    'ui.sortable',
+    'angular.filter',
+    'dndLists'
 ])
 
 
 .run(['$rootScope', '$state', '$stateParams','$http', function($rootScope, $state, $stateParams,$http) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        acadb.theme = 'bs3';
+            console.log( acadb.theme);
 }])
 .config(function($authProvider) {
     $authProvider.httpInterceptor = function() { return true; },
@@ -213,7 +221,6 @@ var acadb = angular.module('acadb', [
 
             })
             .state('employer', {
-                //url:  '/',
                 resolve: {
                     loginRequired: loginRequired,
                 },
@@ -222,23 +229,7 @@ var acadb = angular.module('acadb', [
                 deepStateRedirect: true,
                 params: {type: null,  sub_type : null},
                 templateUrl: '../partials/tpl/employer.html',
-                //views:{
-                //    'nav':{
-                //        controller:  'SideNavController',
-                //        templateUrl: '../partials/tpl/navbar/jobseeker_profile_navbar.html',
-                //    },
-                //    'sideNav':{
-                //        templateUrl: '../partials/tpl/sideNav/employer_profile_sideNav.html',
-                //        controller:  'SideNavController',
-                //    },
-                //    'main':{
-                //        templateUrl: '../partials/tpl/jobs.html',
-                //        controller: 'ProfileCtrl'
-                //    },
-                //    'footer':{
-                //        templateUrl: '../partials/tpl/footer.html'
-                //    }
-                //}
+
             })
             .state('employer.company', {
                 url:  '^/my_company',
@@ -361,6 +352,30 @@ var acadb = angular.module('acadb', [
                 params: {type: null,  sub_type : null},
                 templateUrl: '../partials/admin/admin.html',
             })
+            .state('admin.manager', {
+                url:  '^/manager',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
+                views:{
+                    'manager.nav@admin':{
+                        templateUrl: '../partials/admin/tpl/steps_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'manager.sideNav@admin':{
+                        templateUrl: '../partials/admin/tpl/admin_tables_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'manager@admin': {
+                        templateUrl: '../partials/admin/manager.html',
+                        controller: 'ManagerCtrl as MC',
+                    },
+                }
+
+            })
             .state('admin.steps', {
                 url:  '^/step_management',
                 resolve: {
@@ -381,6 +396,86 @@ var acadb = angular.module('acadb', [
                     'steps@admin': {
                         templateUrl: '../partials/admin/steps_management.html',
                         controller: 'StepManagerCtrl as SMC',
+                    },
+                }
+
+            })
+            .state('admin.forms', {
+                url:  '^/forms',
+                abstract:true,
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                //deepStateRedirect: true,
+                //params: {type: null,  sub_type : null},
+                views:{
+                    'forms.nav@admin':{
+                        templateUrl: '../partials/admin/tpl/steps_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'forms.sideNav@admin':{
+                        templateUrl: '../partials/admin/tpl/admin_forms_sideNav.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'forms@admin': {
+                        template: '<div ui-view="form"></div>',
+                        //controller: 'editFormCtrl as EFC',
+                    },
+                }
+
+            })
+            .state('admin.forms.jobseeker', {
+                url:  '/jobseeker',
+                resolve: {
+                    formFor: function(Form,  $timeout){
+                        return Form.getAdminForm('jobseeker');
+                    },
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                views:{
+                    'form@admin.forms': {
+                        templateUrl: '../partials/admin/forms.html',
+                        controller: 'editFormCtrl as EFC',
+                    },
+                }
+
+            })
+            .state('admin.forms.employer', {
+                url:  '/employer',
+                resolve: {
+                    loginRequired: loginRequired,
+                    formFor: function(Form , $timeout){
+                        return Form.getAdminForm('employer');
+                    },
+                },
+
+                sticky: true,
+                deepStateRedirect: true,
+                views:{
+                    'form@admin.forms': {
+                        templateUrl: '../partials/admin/forms.html',
+                        controller: 'editFormCtrl as EFC',
+                    },
+                }
+
+            })
+            .state('admin.forms.job', {
+                url:  '/job',
+                resolve: {
+                    loginRequired: loginRequired,
+                    formFor: function(Form,  $timeout){
+                        return Form.getAdminForm('job');
+                    },
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                views:{
+                    'form@admin.forms': {
+                        templateUrl: '../partials/admin/forms.html',
+                        controller: 'editFormCtrl as EFC',
                     },
                 }
 
@@ -473,17 +568,19 @@ var acadb = angular.module('acadb', [
                     "templateUrl":'../../partials/tpl/registration_forms.html',
                     //"controller":'formController as FC',
                     "value":value.name,
-                    "belongsTo": 'jobseeker'
+                    "belongsTo": 'jobseeker',
+                    "position": value.position
 
                 }
                 stateList.push(step);
 
-            });
 
+            });
+            //console.log(stateList);
             /*asigning the steps*/
             $rootScope.steps = stateList;
             /*prepending personal information to steps*/
-            $rootScope.steps.unshift({name:'register.personal_information',value:'personal_information', "belongsTo": 'jobseeker'});
+            //$rootScope.steps.unshift({name:'register.personal_information',value:'personal_information', "belongsTo": 'jobseeker'});
 
 
             angular.forEach(stateList, function(value, key) {
@@ -516,7 +613,7 @@ var acadb = angular.module('acadb', [
                             controller:  'SideNavController',
                         },
                         'main@register':{
-                            "templateUrl":'../../partials/tpl/registration_forms.html'  ,
+                            "templateUrl":'../../partials/tpl/signup.html'  ,
                             "controller":function($scope, docParam, Form, $stateParams){
                                //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
                                $scope.docParam = docParam.docParam;

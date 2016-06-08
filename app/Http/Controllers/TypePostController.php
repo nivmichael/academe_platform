@@ -294,7 +294,7 @@ class TypePostController extends Controller {
 
 
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-											   param.slug AS slug,
+
 											   param.name AS paramName,
 											   param.position AS position,
 											   param_type.name AS paramType,
@@ -320,24 +320,22 @@ class TypePostController extends Controller {
 		}
 
 		foreach($params as $k=>$v) {
-			$paramName    = $v->paramName;
-			$docParamName = $v->docParamName;
-			$inputType    = $v->paramType;
-			$slug         = $v->slug;
-			$docParamId   = $v->docParamId;
-			$paramId      = $v->paramId;
-			$position     = $v->position;
+		$paramName    = $v->paramName;
+		$docParamName = $v->docParamName;
+		$inputType    = $v->paramType;
+		$docParamId   = $v->docParamId;
+		$paramId      = $v->paramId;
+		$position     = $v->position;
 
 
-			$post[$docParamName][0]['docParamId'] = $docParamId;
-			$post[$docParamName][0][$paramId]['paramName'] = $paramName;
-			$post[$docParamName][0][$paramId]['slug'] = $slug;
-			$post[$docParamName][0][$paramId]['paramValue'] = '';
-			$post[$docParamName][0][$paramId]['inputType'] = $inputType;
-			$post[$docParamName][0][$paramId]['position'] = $position;
+		$post[$docParamName][0]['docParamId'] = $docParamId;
+		$post[$docParamName][0][$paramId]['paramName'] = $paramName;
+		$post[$docParamName][0][$paramId]['paramValue'] = '';
+		$post[$docParamName][0][$paramId]['inputType'] = $inputType;
+		$post[$docParamName][0][$paramId]['position'] = $position;
 
 
-		}
+	}
 
 
 		 $post['postInfo'] = $postInfoKeys;

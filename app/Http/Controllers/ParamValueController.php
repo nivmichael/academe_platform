@@ -85,7 +85,7 @@ class ParamValueController extends Controller {
 	{
 
 		$param_values = DB::table('param_value')
-							->select('param_value.id','param_value.param_id as paramId','param_value.parent_id','param_value.value','param.name as paramName','param.param_parent_id')
+							->select('param_value.id','param_value.param_id as paramId','param_value.parent_id','param_value.value','param.name as paramName','param.param_parent_id', 'param.modify')
 							->leftJoin('param', 'param_value.param_id', '=', 'param.id')->get();
 
 
@@ -95,7 +95,7 @@ class ParamValueController extends Controller {
 			$option['paramId']	       = $value->paramId;
 			$option['parent_id'] 	   = $value->parent_id;
 			$option['param_parent_id'] = $value->param_parent_id;
-
+			$option['modify']    	   = $value->modify;
 			$option['value']    	   = $value->value;
 			$option['text']      	   = $value->value;
 			$option['paramName'] 	   = $value->paramName;

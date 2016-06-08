@@ -21,9 +21,10 @@ class ParamController extends Controller {
 	public function index()
 	{
 		$params = DB::table('param')
-		
+//					->leftJoin('doc_param', 'param.doc_param_id', '=', 'doc_param.id')
+					->get();
 		//->leftJoin('param_value', 'param.id', '=', 'param_value.param_id')
-		->get();
+
 		
 // 		
 		// $columns = Schema::getColumnListing('param');
@@ -58,23 +59,24 @@ class ParamController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		
+
 		$all = Input::all();
 		$all = $all['user'];
 		$id = $all['id'];
+
 		$param = Param::find($id);
 		if($param){
-			$param->id = $id;	
+			$param->id = $id;
 		}else{
 			$param = new Param();
 		}
-		$slug = $all['slug'];
+
 		$name = $all['name'];
 		$param->authorized = $all['authorized'];
 		$param->name = $name;
-		$param->slug = $slug;
+
 		$param->type_id = $all['type_id'];
 		$param->doc_param_id = $all['doc_param_id'];
 		$param->save();
@@ -109,15 +111,16 @@ class ParamController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
-		 
-		// $param = TypeUserParams::find($id);
-		// $param->p_name = '$name';
+		 $all = $request->input();
+
+		 $param = Param::find($id);
+		 $param->$all['key'] = $all['value'];
 // 		
-		// $param->save();
+		 $param->save();
 // 		
-		// return Response::json(array('param'=>$param))		 ;
+		 return Response::json(array('param'=>$param))		 ;
 // 		
 	}
 

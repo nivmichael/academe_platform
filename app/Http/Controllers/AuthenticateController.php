@@ -128,7 +128,13 @@ class AuthenticateController extends Controller
     }
     public function validateThis(Request $request)
     {
-        $all = $request->get('all');
+        $all   = $request->get('all');
+        $validateObj = [];
+        unset($all[0]['docParamId']);
+        foreach($all[0] as $param_id => $param){
+            $validateObj[$param['paramName']] = $param['paramValue'];
+        }
+
         $param = $request->get('param');
         $rules = [
             'first_name' => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
@@ -139,7 +145,7 @@ class AuthenticateController extends Controller
         $messages = [
             'regex' => 'Please insert only english characters.'
         ];
-        $validator = Validator::make( $all, $rules, $messages);
+        $validator = Validator::make( $validateObj, $rules, $messages);
 
         if ($validator->fails()) {
             $messages = $validator->messages();
@@ -164,6 +170,12 @@ class AuthenticateController extends Controller
         $AuthedUser = $this->getAuthenticatedUser();
         $all = $request->all();
 
+        unset($all['personal_information'][0]['docParamId']);
+
+        foreach($all['personal_information'][0] as $param_id => $param){
+            $validateObj[$param['paramName']] = $param['paramValue'];
+        }
+
         $rules = [
             'first_name' => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
             'last_name'  => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
@@ -175,33 +187,33 @@ class AuthenticateController extends Controller
         ];
 
         if(!Auth::check()){
-            $validator = Validator::make($request->get('personal_information'), $rules, $messages);
+            $validator = Validator::make($validateObj, $rules, $messages);
             if ($validator->fails()) {
                 return response()->json( $validator->messages() , 422);
             }
 
-            $personal_information = [
-                'first_name' => $request['personal_information']['first_name'],
-                'last_name'  => $request['personal_information']['last_name'],
-                'email'      => $request['personal_information']['email'],
-                'password'   => Hash::make($request['personal_information']['password']),
-                'subtype' => $request['personal_information']['subtype'],
-                'status' => $request['personal_information']['status'],
-                'gender' => $request['personal_information']['gender'],
-                'martial_status' => $request['personal_information']['martial_status'],
-                'education_status' => $request['personal_information']['education_status'],
-                'street_1' => $request['personal_information']['street_1'],
-                'city' => $request['personal_information']['city'],
-                'state' => $request['personal_information']['state'],
-                'country' => $request['personal_information']['country'],
-                'zipcode' => $request['personal_information']['zipcode'],
-                'phone_1' => $request['personal_information']['phone_1'],
-                'mobile' => $request['personal_information']['mobile'],
-                'date_of_birth' => $request['personal_information']['date_of_birth'],
-                //'registration' => $request['personal_information']['registration'],
-                'send_newsletters' => $request['personal_information']['send_newsletters'],
-                'remember_token' => $request['personal_information']['remember_token'],
-            ];
+//            $personal_information = [
+//                'first_name' => $request['personal_information']['first_name'],
+//                'last_name'  => $request['personal_information']['last_name'],
+//                'email'      => $request['personal_information']['email'],
+//                'password'   => Hash::make($request['personal_information']['password']),
+//                'subtype' => $request['personal_information']['subtype'],
+//                'status' => $request['personal_information']['status'],
+//                'gender' => $request['personal_information']['gender'],
+//                'martial_status' => $request['personal_information']['martial_status'],
+//                'education_status' => $request['personal_information']['education_status'],
+//                'street_1' => $request['personal_information']['street_1'],
+//                'city' => $request['personal_information']['city'],
+//                'state' => $request['personal_information']['state'],
+//                'country' => $request['personal_information']['country'],
+//                'zipcode' => $request['personal_information']['zipcode'],
+//                'phone_1' => $request['personal_information']['phone_1'],
+//                'mobile' => $request['personal_information']['mobile'],
+//                'date_of_birth' => $request['personal_information']['date_of_birth'],
+//                //'registration' => $request['personal_information']['registration'],
+//                'send_newsletters' => $request['personal_information']['send_newsletters'],
+//                'remember_token' => $request['personal_information']['remember_token'],
+//            ];
             // dd($personal_information);
             $user = User::create($personal_information);
             $token = JWTAuth::fromUser($user);

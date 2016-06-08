@@ -43,14 +43,22 @@ class TypeUserController extends Controller
 
 	}
 
+	public function index()
+	{
+		$users = DB::table('type_user')->get();
+
+		return Response::json($users);
+	}
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function getAccount(Request $request)
 	{
-		//dd($this->user->all($request->user()));
+//		//dd($this->user->all($request->user()));
 		$user  = $this->user->all(    $request->user() );
 		$posts = $this->posts->index( $user );
 
@@ -74,14 +82,13 @@ class TypeUserController extends Controller
 		$user = array();
 		$userpersonal_information = User::find($id);
 		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-										   param.slug AS slug,
-											   param.id AS paramId,
-											   param.name AS paramName,
-											   param.position AS paramPosition,
-											   param.param_parent_id AS paramParent,
-											   doc_param.name AS docParamName,
-											   param_type.name AS paramType,
-											   doc_param.id AS docParamId
+										   param.id AS paramId,
+										   param.name AS paramName,
+										   param.position AS paramPosition,
+										   param.param_parent_id AS paramParent,
+										   doc_param.name AS docParamName,
+										   param_type.name AS paramType,
+										   doc_param.id AS docParamId
 										   FROM	param
 										   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
 										   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
@@ -507,10 +514,9 @@ class TypeUserController extends Controller
 	{
 
 
-		$personal_information = new stdClass();
+//		$personal_information = new stdClass();
 		$user = array();
 		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-											   param.slug AS slug,
 											   param.id AS paramId,
 											   param.name AS paramName,
 											   param.position AS paramPosition,
@@ -524,48 +530,49 @@ class TypeUserController extends Controller
 											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
 											   LEFT JOIN param_type ON param.type_id = param_type.id
-											   WHERE doc_type_id = 1 
+											   WHERE doc_type_id = 1
+
 											   AND doc_param.doc_sub_type = 'jobSeeker'
-											   AND authorized = 1"));
-		if (!Auth::user()) {
-			$userpersonal_information = Schema::getColumnListing('type_user');
-			$userpersonal_information = (object)$userpersonal_information;
-			foreach ($userpersonal_information as $key => $value) {
-				$personal_information->$value = '';
-			}
-		} else {
-			$id = Auth::user()->id;
-			$personal_information = User::find($id);
-		}
-		$user['personal_information'] = $personal_information;
-		// $user['personal_information']->password_confirmation = '';
-		$idx = 0;
+											   AND authorized = 1
+											   ORDER BY paramPosition ASC;"));
+
+//		if (!Auth::user()) {
+//			$userpersonal_information = Schema::getColumnListing('type_user');
+//			$userpersonal_information = (object)$userpersonal_information;
+//			foreach ($userpersonal_information as $key => $value) {
+//				$personal_information->$value = '';
+//			}
+//		} else {
+//			$id = Auth::user()->id;
+//			$personal_information = User::find($id);
+//		}
+//		$user['personal_information'] = $personal_information;
+//		// $user['personal_information']->password_confirmation = '';
+//		$idx = 0;
 		foreach ($params as $k => $v) {
 
-			//$user[$v->docParamName][$paramName] = $v->value = '';
 
 			$iteration = $v->iteration;
 			$docParamId = $v->docParamId;
 			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
 			$inputType = $v->paramType;
-			$slug = $v->slug;
 			$position = $v->position;
 			$paramId = $v->paramId;
 			$paramParent = $v->paramParent;
-//			$paramParentPosition = '';
+
 
 
 			$user[$docParamName][0]['docParamId'] = $docParamId;
 			$user[$docParamName][0][$paramId]['paramName'] = $paramName;
 			$user[$docParamName][0][$paramId]['paramId'] = $paramId;
 			$user[$docParamName][0][$paramId]['paramParentId'] = $paramParent;
-//			$user[$docParamName][$paramId]['paramParentPosition'] = $paramParentPosition;
-			$user[$docParamName][0][$paramId]['slug'] = $slug;
+			$user[$docParamName][0][$paramId]['position'] = $position;
 			$user[$docParamName][0][$paramId]['paramValue'] = '';
 			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
 
 		}
+//		dd($user);
 //var_dump($user);
 		return Response::json($user);
 	}
@@ -588,7 +595,7 @@ class TypeUserController extends Controller
 //											   AND doc_param.doc_sub_type = 'employer'
 //											   AND authorized = 1"));
 		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-											   param.slug AS slug,
+
 											   param.id AS paramId,
 											   param.name AS paramName,
 											   param.position AS paramPosition,
@@ -603,20 +610,21 @@ class TypeUserController extends Controller
 											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
 											   LEFT JOIN param_type ON param.type_id = param_type.id
 											   WHERE doc_type_id = 1
+
 											   AND doc_param.doc_sub_type = 'employer'
 											   AND authorized = 1"));
 
-		if (!Auth::user()) {
-			$userpersonal_information = Schema::getColumnListing('type_user');
-			$userpersonal_information = (object)$userpersonal_information;
-			foreach ($userpersonal_information as $key => $value) {
-				$personal_information->$value = '';
-			}
-		} else {
-			$id = Auth::user()->id;
-			$personal_information = User::find($id);
-		}
-		$user['personal_information'] = $personal_information;        // $user['personal_information']->password_confirmation = '';
+//		if (!Auth::user()) {
+//			$userpersonal_information = Schema::getColumnListing('type_user');
+//			$userpersonal_information = (object)$userpersonal_information;
+//			foreach ($userpersonal_information as $key => $value) {
+//				$personal_information->$value = '';
+//			}
+//		} else {
+//			$id = Auth::user()->id;
+//			$personal_information = User::find($id);
+//		}
+//		$user['personal_information'] = $personal_information;        // $user['personal_information']->password_confirmation = '';
 		foreach ($params as $k => $v) {
 
 			//$user[$v->docParamName][$paramName] = $v->value = '';
@@ -626,7 +634,7 @@ class TypeUserController extends Controller
 			$docParamName = $v->docParamName;
 			$paramName = $v->paramName;
 			$inputType = $v->paramType;
-			$slug = $v->slug;
+
 			$position = $v->paramPosition;
 			$paramId = $v->paramId;
 			$paramParent = $v->paramParent;
@@ -638,7 +646,7 @@ class TypeUserController extends Controller
 			$user[$docParamName][0][$paramId]['paramId'] = $paramId;
 			$user[$docParamName][0][$paramId]['paramParentId'] = $paramParent;
 //			$user[$docParamName][0][$paramId]['paramParentPosition'] = $paramParentPosition;
-			$user[$docParamName][0][$paramId]['slug'] = $slug;
+
 			$user[$docParamName][0][$paramId]['paramValue'] = '';
 			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
 			$user[$docParamName][0][$paramId]['position'] = $position;

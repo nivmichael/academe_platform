@@ -1,93 +1,66 @@
 /* Controllers */
 'use strict';
 angular.module('acadb.controllers', [])
-	//.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+
+	//.controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, Tables, $rootScope, TableData) {
     //
-	//	//$scope.items = ['item1', 'item2', 'item3'];
-     //   //
-	//	//$scope.animationsEnabled = true;
-     //   //
-	//	//$scope.open = function (size) {
-     //   //
-	//	//	var modalInstance = $uibModal.open({
-	//	//		animation: $scope.animationsEnabled,
-	//	//		templateUrl: 'myModalContent.html',
-	//	//		controller: 'ModalInstanceCtrl',
-	//	//		size: size,
-	//	//		resolve: {
-	//	//			items: function () {
-	//	//				return $scope.items;
-	//	//			}
-	//	//		}
-	//	//	});
-     //   //
-	//	//	modalInstance.result.then(function (selectedItem) {
-	//	//		$scope.selected = selectedItem;
-	//	//	}, function () {
-	//	//		$log.info('Modal dismissed at: ' + new Date());
-	//	//	});
-	//	//};
-     //   //
-	//	//$scope.toggleAnimation = function () {
-	//	//	$scope.animationsEnabled = !$scope.animationsEnabled;
-	//	//};
+	//	$scope.tables = Tables.tablesObj;
     //
+    //
+	//	//TableData.list().$promise.then(function(tables){
+	//	//	$scope.tables = tables;
+	//	//});
+	//	//$scope.getTable = function(table){
+	//	//	$scope.table = Tables.getTable(table)
+	//	//	console.log('1');
+	//	//	$scope.columns = $scope.table;
+	//	//}
+    //
+	//	$scope.$on('handleBroadcast', function(event, user) {
+	//		$scope.user = user.user;
+	//		//$scope.allJobs = user.posts;
+	//	});
+    //
+    //
+	//	$scope.type = $stateParams.type;
+	//	$scope.sub_type = $stateParams.sub_type;
+	//	if ($auth.isAuthenticated()) {
+	//		Account.getProfile().then(function (response) {
+    //
+	//			$scope.user = response.user;
+	//			$scope.currentStatus = response.user.personal_information.status;
+	//		})
+	//	}
+	//	$scope.ToolbarModel = {
+	//		IsVisible: true,
+	//		ViewUrl: null,
+	//	};
+	//	$scope.ToolbarModel.close = function () {
+	//		this.IsVisible = false;
+	//		this.ViewUrl = null;
+	//	}
+	//	$scope.isAuthenticated = function () {
+	//		return $auth.isAuthenticated();
+	//	};
+	//	$scope.changeStatus = function(status){
+	//		//$.post('/setStatus', {status:status,_token:CSRF_TOKEN,from:'tables'}).success(function(callBack){
+	//		//	$scope.user.status = status;
+	//		//	console.log(callBack);
+	//		//})
+	//		$http.post('/setStatus',{status:$scope.currentStatus})
+	//			.success(function(data){
+	//				console.log(data);
+	//			}).error(function(data){
+	//				console.log(data);
+    //
+	//			})
+	//	};
+    //
+	//	$scope.userStatuses = [
+	//		{value: 'active', text: 'Active'},
+	//		{value: 'inactive', text: 'Inactive'}
+	//	]
 	//})
-
-// Please note that $uibModalInstance represents a modal window (instance) dependency.
-// It is not the same as the $uibModal service used above.
-
-
-	.controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, $rootScope) {
-
-		console.log('sideNAv');
-		$scope.$on('handleBroadcast', function(event, user) {
-			$scope.user = user.user;
-			//$scope.allJobs = user.posts;
-
-
-		});
-
-
-		$scope.type = $stateParams.type;
-		$scope.sub_type = $stateParams.sub_type;
-		if ($auth.isAuthenticated()) {
-			Account.getProfile().then(function (response) {
-console.log(response);
-				$scope.user = response.user;
-				$scope.currentStatus = response.user.personal_information.status;
-			})
-		}
-		$scope.ToolbarModel = {
-			IsVisible: true,
-			ViewUrl: null,
-		};
-		$scope.ToolbarModel.close = function () {
-			this.IsVisible = false;
-			this.ViewUrl = null;
-		}
-		$scope.isAuthenticated = function () {
-			return $auth.isAuthenticated();
-		};
-		$scope.changeStatus = function(status){
-			//$.post('/setStatus', {status:status,_token:CSRF_TOKEN,from:'tables'}).success(function(callBack){
-			//	$scope.user.status = status;
-			//	console.log(callBack);
-			//})
-			$http.post('/setStatus',{status:$scope.currentStatus})
-				.success(function(data){
-					console.log(data);
-				}).error(function(data){
-					console.log(data);
-
-				})
-		};
-
-		$scope.userStatuses = [
-			{value: 'active', text: 'Active'},
-			{value: 'inactive', text: 'Inactive'}
-		]
-	})
 	.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
 
 
@@ -2885,189 +2858,189 @@ console.log(response);
 //
 //
 //	})
-	.controller("FindajobController",['$window','$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location','$uibModal','$log','Account', function($window,$scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$uibModal,$log,Account) {
-
-		//		$scope.user = user.user;
-		Account.getProfile().then(function(user){
-			$scope.allPosts = user.posts;
-		});
-
-		$scope.options = {
-			ratedFill: '#F8BB1E',
-			readOnly: true,
-			halfStar: true,
-			fullStar: false
-		};
-		//console.log(allPosts);
-
-		$scope.initModals = function() {
-			$('.dropdown-button').dropdown({
-					inDuration: 300,
-					outDuration: 225,
-					constrain_width: false, // Does not change width of dropdown to that of the activator
-					hover: true, // Activate on hover
-					gutter: -80, // Spacing from edge
-					belowOrigin: false, // Displays dropdown below the button
-					alignment: 'left' // Displays dropdown with edge aligned to the left of button
-				}
-			);
-			$('.modal-trigger').leanModal(); // Initialize the modals
-		}
-		//ratings
-		$scope.rate = 70;
-		$scope.total = 10;
-		//	$scope.rate = $window.Math.round(($scope.rate) / $scope.total);
-		$scope.max = 5;
-		$scope.isReadonly = true;
-
-		$scope.hoveringOver = function(value) {
-			$scope.overStar = value;
-			$scope.percent = 100 * (value / $scope.max);
-		};
-
-		$scope.ratingStates = [
-
-			{stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
-
-		];
-
-		//modal
-		//$scope.openPost = function (size) {
-        //
-		//	var modalInstance = $uibModal.open({
-		//		animation: $scope.animationsEnabled,
-		//		templateUrl: 'myModalContent.html',
-		//		controller: 'ModalInstanceCtrl',
-		//		size: size,
-		//		resolve: {
-        //
-		//			post: function () {
-		//				return $scope.post;
-		//			},
-		//			user:function () {
-		//				return $scope.user;
-		//			}
-		//		}
-		//	});
-        //
-		//	modalInstance.result.then(function (selectedItem) {
-		//		$scope.selected = selectedItem;
-		//	}, function () {
-		//		$log.info('Modal dismissed at: ' + new Date());
-		//	});
-		//};
-
-
-
-
-
-
-		//$scope.getAllPosts = function(){
-        //
-		//	$http.get('api/getAllPosts').
-		//		success(function(data, status, headers, config) {
-        //
-		//			$scope.allPosts = data.posts;
-        //
-		//		}).
-		//		error(function(data, status, headers, config) {
-		//			// called asynchronously if an error occurs
-		//			// or server returns response with an error status.
-		//		});
-		//};
-		//$scope.getAllPosts();
-		$scope.getPost = function(id){
-			$http.get('/job/'+id ).
-				success(function(data, status, headers, config) {
-
-
-					$scope.post = data;
-					// $scope.openPost();
-
-					$state.go(
-						'general',
-						{
-							jobId:id,
-						} // this goes into $stateParams for
-						// state 'some'
-					);
-
-					console.log($state);
-				}).
-				error(function(data, status, headers, config) {
-
-				});
-		};
-
-
-
-
-		$scope.reverse = true;
-
-		$scope.orderByFilter = 'match';
-
-		//set the timestamp on the $scope.filter after choosing a date
-		$scope.setTimestamp = function(data,index){
-
-			var timestamp = new Date(data).getTime();
-			$scope.items[index].lastBuy = timestamp;
-
-		};
-
-
-		$scope.orderOptions = function(value){
-			$scope.orderByFilter = value;
-			// $scope.reverse = !$scope.reverse;
-		};
-
-
-		$scope.filter = {};
-
-		$scope.filter.minPrice = "";
-		$scope.filter.maxPrice = "";
-
-		$scope.checkPriceFilter = function(price){
-
-			var min =  $scope.filter.minPrice;
-			var max =  $scope.filter.maxPrice;
-
-			if(!min && !max){
-				return true;
-			}
-
-			var check = false;
-
-			if (min && !max){
-				if(min<=price){
-					check = true;
-				}
-			}
-
-			if (!min && max){
-				if(max >=price){
-					check = true;
-				}
-			}
-
-
-			if (min && max){
-
-				if( min <= price && max > price){
-					check = true;
-				} else if (min < price && max >=price){
-					check = true;
-				}
-			}
-
-
-			return check;
-		};
-
-		$scope.limit = 50;
-
-
-	}])
-;
+//	.controller("FindajobController",['$window','$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location','$uibModal','$log','Account', function($window,$scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location,$uibModal,$log,Account) {
+//
+//		//		$scope.user = user.user;
+//		Account.getProfile().then(function(user){
+//			$scope.allPosts = user.posts;
+//		});
+//
+//		$scope.options = {
+//			ratedFill: '#F8BB1E',
+//			readOnly: true,
+//			halfStar: true,
+//			fullStar: false
+//		};
+//		//console.log(allPosts);
+//
+//		$scope.initModals = function() {
+//			$('.dropdown-button').dropdown({
+//					inDuration: 300,
+//					outDuration: 225,
+//					constrain_width: false, // Does not change width of dropdown to that of the activator
+//					hover: true, // Activate on hover
+//					gutter: -80, // Spacing from edge
+//					belowOrigin: false, // Displays dropdown below the button
+//					alignment: 'left' // Displays dropdown with edge aligned to the left of button
+//				}
+//			);
+//			$('.modal-trigger').leanModal(); // Initialize the modals
+//		}
+//		//ratings
+//		$scope.rate = 70;
+//		$scope.total = 10;
+//		//	$scope.rate = $window.Math.round(($scope.rate) / $scope.total);
+//		$scope.max = 5;
+//		$scope.isReadonly = true;
+//
+//		$scope.hoveringOver = function(value) {
+//			$scope.overStar = value;
+//			$scope.percent = 100 * (value / $scope.max);
+//		};
+//
+//		$scope.ratingStates = [
+//
+//			{stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+//
+//		];
+//
+//		//modal
+//		//$scope.openPost = function (size) {
+//        //
+//		//	var modalInstance = $uibModal.open({
+//		//		animation: $scope.animationsEnabled,
+//		//		templateUrl: 'myModalContent.html',
+//		//		controller: 'ModalInstanceCtrl',
+//		//		size: size,
+//		//		resolve: {
+//        //
+//		//			post: function () {
+//		//				return $scope.post;
+//		//			},
+//		//			user:function () {
+//		//				return $scope.user;
+//		//			}
+//		//		}
+//		//	});
+//        //
+//		//	modalInstance.result.then(function (selectedItem) {
+//		//		$scope.selected = selectedItem;
+//		//	}, function () {
+//		//		$log.info('Modal dismissed at: ' + new Date());
+//		//	});
+//		//};
+//
+//
+//
+//
+//
+//
+//		//$scope.getAllPosts = function(){
+//        //
+//		//	$http.get('api/getAllPosts').
+//		//		success(function(data, status, headers, config) {
+//        //
+//		//			$scope.allPosts = data.posts;
+//        //
+//		//		}).
+//		//		error(function(data, status, headers, config) {
+//		//			// called asynchronously if an error occurs
+//		//			// or server returns response with an error status.
+//		//		});
+//		//};
+//		//$scope.getAllPosts();
+//		$scope.getPost = function(id){
+//			$http.get('/job/'+id ).
+//				success(function(data, status, headers, config) {
+//
+//
+//					$scope.post = data;
+//					// $scope.openPost();
+//
+//					$state.go(
+//						'general',
+//						{
+//							jobId:id,
+//						} // this goes into $stateParams for
+//						// state 'some'
+//					);
+//
+//					console.log($state);
+//				}).
+//				error(function(data, status, headers, config) {
+//
+//				});
+//		};
+//
+//
+//
+//
+//		$scope.reverse = true;
+//
+//		$scope.orderByFilter = 'match';
+//
+//		//set the timestamp on the $scope.filter after choosing a date
+//		$scope.setTimestamp = function(data,index){
+//
+//			var timestamp = new Date(data).getTime();
+//			$scope.items[index].lastBuy = timestamp;
+//
+//		};
+//
+//
+//		$scope.orderOptions = function(value){
+//			$scope.orderByFilter = value;
+//			// $scope.reverse = !$scope.reverse;
+//		};
+//
+//
+//		$scope.filter = {};
+//
+//		$scope.filter.minPrice = "";
+//		$scope.filter.maxPrice = "";
+//
+//		$scope.checkPriceFilter = function(price){
+//
+//			var min =  $scope.filter.minPrice;
+//			var max =  $scope.filter.maxPrice;
+//
+//			if(!min && !max){
+//				return true;
+//			}
+//
+//			var check = false;
+//
+//			if (min && !max){
+//				if(min<=price){
+//					check = true;
+//				}
+//			}
+//
+//			if (!min && max){
+//				if(max >=price){
+//					check = true;
+//				}
+//			}
+//
+//
+//			if (min && max){
+//
+//				if( min <= price && max > price){
+//					check = true;
+//				} else if (min < price && max >=price){
+//					check = true;
+//				}
+//			}
+//
+//
+//			return check;
+//		};
+//
+//		$scope.limit = 50;
+//
+//
+//	}])
+//;
 	//.controller("NewController",['$scope','UsersData','$http','$routeParams','DocParamData','ParamData','ParamValueData','SysParamValuesData','$state','CSRF_TOKEN','$location', function($scope,UsersData,$http,$routeParams,DocParamData,ParamData,ParamValueData,SysParamValuesData,$state,CSRF_TOKEN,$location) {
 	//	console.log('NEW');
 	//	$scope.getColumns = function(){

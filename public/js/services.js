@@ -6,59 +6,62 @@ angular.module('acadb.services', []).
 
 .factory('ParamData', ['$resource',
 	function($resource) {
-		return $resource('../params/:id', {id: '@id'}, {
+		return $resource('api/param/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			'query': {method: 'GET', isArray: true }
+			 'list': {method: 'GET', isArray: true }
 
 
 			 
 		});
 }])
-.factory('UsersData', ['$resource',
+.factory('UserData', ['$resource',
 	function($resource) {
-		return $resource('../users/:id', {id: '@id'}, {
+		return $resource('api/users/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			 'query': {method: 'GET', isArray: true }
+			 'list': {method: 'GET', isArray: true }
 		});
 }])
 
 .factory('DocParamData', ['$resource',
 	function($resource) {
-		return $resource('../docParam/:id', {id: '@id'}, {
+		return $resource('api/docParam/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'}
+			 'delete':{method:'DELETE'},
+			'list': {method: 'GET', isArray: true }
 		});
 }])
 
 .factory('DocTypeData', ['$resource',
 	function($resource) {
-		return $resource('../docType/:id', {id: '@id'}, {
+		return $resource('api/docType/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'}
+			 'delete':{method:'DELETE'},
+			'list': {method: 'GET', isArray: true }
 		});
 }])
 
 .factory('ParamTypeData', ['$resource',
 	function($resource) {
-		return $resource('../paramType/:id', {id: '@id'}, {
+		return $resource('api/paramType/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'}
+			 'delete':{method:'DELETE'},
+			'list': {method: 'GET', isArray: true }
 		});
 }])
 .factory('ColumnData', ['$resource',
 	function($resource) {
-		return $resource('../columns/:name', {id: '@name'}, {
+		return $resource('api/columns/:name', {id: '@name'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			 'query':{method:'GET', transformRequest: function(data, headerFn){
+			 'list':{method:'GET', transformRequest: function(data, headerFn){
 			 	return JSON.stringify(data);
 			 	}
 			 }
@@ -66,19 +69,20 @@ angular.module('acadb.services', []).
 	}])
 .factory('ParamValueData', ['$resource',
 	function($resource) {
-		return $resource('../paramValue/:id', {id: '@id'}, {
+		return $resource('api/paramValue/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
-			 	
+			'list': {method: 'GET', isArray: true }
 		});
 	}])
 .factory('SysParamValuesData', ['$resource',
 	function($resource) {
-		return $resource('../sysParamValues/:id', {id: '@id'}, {
+		return $resource('api/sysParamValues/:id', {id: '@id'}, {
 			 'update': { method:'PUT' },
 			 'insertNew': { method:'POST' },
 			 'delete':{method:'DELETE'},
+			 'list': {method: 'GET', isArray: true }
 
 		});
 	}])
@@ -88,10 +92,46 @@ angular.module('acadb.services', []).
 			'save':   {method:'POST'},
 			'update': { method:'PUT' },
 			'delete':{method:'DELETE'},
-			'query': {method: 'GET', isArray: true }
+			'list': {method: 'GET', isArray: true }
 		});
 	 }])
+.factory('TableData', ['$resource',
+		function($resource) {
+			return $resource('api/db/:table', {table: '@table'}, {
+				'save':     {method:'POST'},
+				'update':   {method:'PUT' },
+				'delete':   {method:'DELETE'},
+				'list':     {method: 'GET', isArray: true },
+			});
+	}])
+.factory('Tables', function($http, TableData, $q, $rootScope ) {
+		var tables = [];
+		var table_name;
 
+		return {
+			getTable: function(table){
+				table_name = table;
+				var defer= $q.defer();
+
+				if ( !tables[table] ) {
+					tables[table] = TableData.list({table:table});
+					defer.resolve(tables[table]);
+				}else if(tables[table]){
+					defer.resolve(tables[table]);
+				}else{
+					defer.reject();
+				}
+
+				return defer.promise;
+			},
+			broadcast: function(tables) {
+				console.log(tables);
+				$rootScope.$broadcast('table', tables, table_name);
+			},
+
+		};
+
+	})
 .factory('Steps', function($http, $rootScope ) {
 
 	var steps;
@@ -236,12 +276,44 @@ angular.module('acadb.services', []).
 //})
 .factory('Form', function($http, $q, $rootScope, $stateParams) {
 
-
+	var forms     = [];
 	var	next_keys = [];
 	var prev_key  = false;
 	var form, getJobPostForm, options, new_iteration;
 
 	return {
+		getAdminForm: function(form){
+			var defer= $q.defer();
+
+			if ( !forms[form] ) {
+				forms[form] =  $http.get('/api/admin/forms/'+form).then(function(res){
+					forms[form] = forms[form];
+					defer.resolve(res.data);
+				});
+			}else if(forms[form]){
+
+				defer.resolve(forms[form]);
+			}
+			console.log(defer.promise);
+			return defer.promise;
+		},
+		getForm: function(form){
+			var defer= $q.defer();
+
+			if ( !forms[form] ) {
+				forms[form] =  $http.get('/api/form/'+form , function(form){
+					console.log(form);
+				});
+
+				defer.resolve(forms[form]);
+			}else if(forms[form]){
+				defer.resolve(forms[form]);
+			}else{
+				defer.reject();
+			}
+
+			return defer.promise;
+		},
 		getJobPostForm: function() {
 			if ( !getJobPostForm ) {
 				// $http returns a promise, which has a then function, which also returns a promise
